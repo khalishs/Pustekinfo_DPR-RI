@@ -21,10 +21,14 @@
     --line:rgba(255,255,255,.18);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
+
+  html{
+    scroll-behavior:smooth;
+}
   body{
     font-family:'Plus Jakarta Sans',system-ui,sans-serif;
     color:var(--ink);
-    background:var(--white);
+    background: var(--white);
   }
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
@@ -46,7 +50,7 @@
     height:50px;
     object-fit:contain;
 }
-  .brand-text .name{font-weight:800;font-size:16px;color:#0A2E45;line-height:1.1;}
+  .brand-text .name{font-weight:800;font-size:23px;color:#0A2E45;line-height:1.1;}
   .brand-text .sub{font-size:10px;letter-spacing:.08em;color: #3bc0de;;font-weight:600;}
 
   .nav-links{display:flex;align-items:center;gap:34px;}
@@ -84,6 +88,7 @@
   /* ---------- Hero ---------- */
   .hero{
     position:relative;
+    background: var(--white);
     min-height:523px;
     display:flex;
     align-items:center;
@@ -140,7 +145,7 @@
     transition:transform .15s ease, background .15s ease;
   }
   .btn:hover{transform:translateY(-2px);}
-  .btn-primary{background:var(--teal-500);color:var(--white);}
+  .btn-primary{background:#D4B378;color:var(--white);}
   .btn-primary:hover{background:var(--teal-300);}
   .btn-ghost{background:transparent;color:var(--white);border-color:rgba(255,255,255,.6);}
   .btn-ghost:hover{background:rgba(255,255,255,.12);}
@@ -187,7 +192,7 @@
 }
   .stat-label{color:rgba(255,255,255,.75);font-size:13px;font-weight:600;margin-top:6px;}
 
-  .spacer{height:120px;background:var(--mist);}
+  .spacer{height:60px;background:var(--mist);display: none;}
 
   @media (max-width:900px){
     .navbar{padding:14px 20px;}
@@ -197,6 +202,154 @@
     .stat{border-right:none;border-bottom:1px solid var(--line);padding:24px 20px;}
     .hero{padding:90px 20px 200px;}
   }
+
+  /* ---------- Profil Singkat ---------- */
+  .profil{
+    background:var(--white);
+    padding:70px 100px 110px;
+    opacity:0;
+    transform:translateY(80px);
+    transition:
+        opacity .9s ease,
+        transform .9s ease;
+  }
+
+  .profil.show{opacity:1;transform:translateY(0);}
+  .profil-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    align-items:center;
+    margin: 40px auto;
+    max-width:1240px;
+  }
+  .profil-media{
+    position: relative;
+  }
+
+  .profil-media:hover {
+    transition:.3s;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15),
+                0 15px 40px rgba(0,0,0,.25);
+    border-radius:1px 15px 10px 15px;
+    transform:scale(1.02) rotate(0.5deg);
+  }
+
+  .profil-media-frame{
+    position:relative;
+    padding-top:1px;
+    aspect-ratio:4/4.5;
+    border-radius:1px 15px 10px 15px;
+    overflow:hidden;
+    background:
+      radial-gradient(120% 120% at 20% 15%, var(--teal-700) 0%, transparent 55%),
+      linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--teal-700) 100%);
+  }
+  .profil-badge{
+    position:absolute;
+    top:0px;left:0px;
+    background:var(--teal-500);
+    color:var(--white);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.08em;
+    padding:8px 14px;
+    border-radius:1px 10px 1px 10px;
+  }
+  .profil-stat-card{
+    position:absolute;
+    right:-28px;
+    bottom:-28px;
+    background:var(--white);
+    border-radius:8px 8px 1px 8px;
+    padding:22px 26px;
+    box-shadow:10px 10px 34px -14px rgba(11,34,51,.3);
+    min-width:150px;
+  }
+  .profil-stat-card .num{
+    color:#D4B378;
+    font-size:28px;
+    font-weight:800;
+    line-height:1;
+  }
+  .profil-stat-card .label{
+    margin-top:8px;
+    color:#7a8a92;
+    font-size:12.5px;
+    font-weight:600;
+  }
+
+  .profil-copy .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#D4B378;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.12em;
+  }
+  .profil-copy .eyebrow::before{
+    content:"";
+    width:22px;height:2px;
+    background:#D4B378;
+    display:inline-block;
+  }
+  .profil-copy h2{
+    margin-top:16px;
+    font-size:32px;
+    font-weight:800;
+    color:var(--navy-900);
+    line-height:1.28;
+    letter-spacing:-.01em;
+  }
+  .profil-copy p{
+    margin-top:18px;
+    color:#5b6b73;
+    font-size:15px;
+    line-height:1.75;
+    max-width:520px;
+  }
+
+  .profil-features{
+    margin-top:8px;
+  }
+  .feature-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:36px;
+    border-top:3px solid #D4B378;
+    padding-top:22px;
+    margin-top:22px;
+  }
+  .feature .icon{
+    width: 30px; height: 30px;
+    filter: brightness(0) saturate(100%)
+            invert(13%) sepia(29%)
+            saturate(1724%)
+            hue-rotate(170deg)
+            brightness(95%)
+            contrast(96%);
+    line-height:1;
+  }
+  .feature .title{
+    margin-top:12px;
+    font-size:15px;
+    font-weight:700;
+    color:var(--navy-900);
+  }
+  .feature .desc{
+    margin-top:6px;
+    font-size:13.5px;
+    line-height:1.6;
+    color:#7a8a92;
+  }
+
+  @media (max-width:900px){
+    .profil{padding:50px 20px 70px;}
+    .profil-grid{grid-template-columns:1fr;gap:60px;}
+    .profil-stat-card{right:16px;bottom:-24px;}
+    .feature-row{gap:24px;}
+  }
 </style>
 </head>
 <body>
@@ -205,14 +358,14 @@
     <div class="brand">
         <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
       <div class="brand-text">
-        <div class="name">Pustekinfo</div>
-        <div class="sub">PUSAT TEKNOLOGI INFORMASI</div>
+        <div class="name">PUSTEKINFO</div>
+        <div class="sub">Sekretariat Jendral DPR RI</div>
       </div>
     </div>
 
     <ul class="nav-links">
       <li class="active"><a href="#">Beranda</a></li>
-      <li><a href="#">Profil <span class="caret">▾</span></a></li>
+      <li><a href="#profil">Profil <span class="caret">▾</span></a></li>
       <li><a href="#">Layanan <span class="caret">▾</span></a></li>
       <li><a href="#">Informasi <span class="caret">▾</span></a></li>
       <li><a href="#">Galeri</a></li>
@@ -270,6 +423,54 @@
 
   <div class="spacer"></div>
 
+  {{-- ================= PROFIL SINGKAT ================= --}}
+  <section id="profil" class="profil">
+    <div class="profil-grid">
+
+      <div class="profil-media">
+        <div class="profil-media-frame">
+          <span class="profil-badge">TENTANG KAMI</span>
+        </div>
+        <div class="profil-stat-card">
+          <div class="num" data-target="40+">0</div>
+          <div class="label">Tahun melayani</div>
+        </div>
+      </div>
+
+      <div class="profil-copy">
+        <div class="eyebrow">PROFIL SINGKAT</div>
+        <h2>Unit pendukung teknologi informasi lembaga</h2>
+        <p>Bertanggung jawab atas pengelolaan jaringan, sistem informasi, data, dan keamanan siber di lingkungan lembaga, agar seluruh proses kerja berjalan efisien dan akuntabel.</p>
+
+        <div class="profil-features">
+          <div class="feature-row">
+            <div class="feature">
+              <img class="icon" src="{{ asset('images/Tugas.png') }}" alt="Server">
+              <div class="title">Tugas pokok</div>
+              <div class="desc">Mengelola infrastruktur TI, jaringan, dan pusat data.</div>
+            </div>
+            <div class="feature">
+              <img class="icon" src="{{ asset('images/Fungsi.png') }}" alt="Fungsi">
+              <div class="title">Fungsi utama</div>
+              <div class="desc">Mengembangkan dan memelihara sistem lintas unit kerja.</div>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature">
+              <img class="icon" src="{{ asset('images/Keamanan.png') }}" alt="Keamanan">
+              <div class="title">Keamanan</div>
+              <div class="desc">Menjaga data sesuai standar ISO 27001.</div>
+            </div>
+            <div class="feature">
+              <img class="icon" src="{{ asset('images/Pelayanan.png') }}" alt="Pelayanan">
+              <div class="title">Pelayanan</div>
+              <div class="desc">Dukungan teknis responsif untuk seluruh pengguna.</div>
+            </div>
+          </div>
+      </div>
+
+    </div>
+  </section>
 
   <script>
 const counters = document.querySelectorAll('.stat-num');
@@ -318,13 +519,87 @@ document.querySelectorAll(".stat").forEach(stat => {
     observer.observe(stat);
 
     // Hover = hitung ulang
-    stat.addEventListener("mouseenter", () => {
+    stat.addEventListener("click", () => {
         const counter = stat.querySelector(".stat-num");
         counter.innerText = "0";
         animateCounter(counter);
     });
 
 });
+
+const profileCounter = document.querySelector(".profil-media .num");
+const profileCard = document.querySelector(".profil-media");
+
+function animateProfileCounter() {
+
+    const target = parseInt(profileCounter.dataset.target);
+    const duration = 1200;
+    const startTime = performance.now();
+
+    profileCounter.style.color = "#d4b378"; // Reset warna saat animasi dimulai
+
+    function update(currentTime){
+
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const value = Math.floor(target * progress);
+
+        profileCounter.innerText = value + "+";
+
+        if(progress < 1){
+            requestAnimationFrame(update);
+        }else{
+          profileCounter.style.color = "#0a2e45";
+          profileCounter.style.textShadow = "0 0 15px rgba(212,179,120,.6)"; 
+        }
+    }
+
+    requestAnimationFrame(update);
+}
+
+// Animasi saat pertama kali muncul
+const profileObserver = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+            animateProfileCounter();
+            profileObserver.unobserve(entry.target);
+        }
+
+    });
+
+},{
+    threshold:0.5
+});
+
+profileObserver.observe(profileCard);
+
+// Hover = hitung ulang
+profileCard.addEventListener("click",()=>{
+
+    profileCounter.innerText = "0";
+    animateProfileCounter();
+
+});
+
+const profilSection = document.querySelector(".profil");
+
+const profilObserver = new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+            profilObserver.unobserve(entry.target);
+        }
+
+    });
+
+},{
+    threshold:0.2
+});
+
+profilObserver.observe(profilSection);
 </script>
 </body>
 </html>
