@@ -6,14 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pustekinfo - Pusat Teknologi Informasi DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy-900:#0b2233;
-    --navy-800:#0f3a52;
-    --teal-700:#0e5f6b;
-    --teal-500:#14808c;
-    --teal-300:#4fb3ac;
+    --navy:#12242E;
+    --teal:#14839C;
     --gold:#c9a34e;
     --ink:#0b2233;
     --white:#ffffff;
@@ -26,12 +23,30 @@
     scroll-behavior:smooth;
 }
   body{
-    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
     background: var(--white);
   }
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
+
+  h1, h2, h3,
+  .brand-text .name,
+  .footer-brand-text .name,
+  .stat-num,
+  .profil-stat-card .num,
+  .layanan-card .title,
+  .feature .title,
+  .akses-col h2,
+  .akses-item-body .title,
+  .berita-featured-body h3,
+  .berita-item-body .title,
+  .sambutan-content h2,
+  .sambutan-photo .who .name,
+  .agenda-cal-head .month,
+  .agenda-event-top .title {
+    font-family:'Plus Jakarta Sans', system-ui, sans-serif;
+  }
 
   /* ---------- Navbar ---------- */
   .navbar{
@@ -47,11 +62,7 @@
     left:0;
     width:100%;
     z-index:9999;
-    transform:translateY(0);
-    transition:transform .35s ease;
   }
-  .navbar.hide{transform:translateY(-100%);}
-
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{
     width:50px;
@@ -59,7 +70,7 @@
     object-fit:contain;
 }
   .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
-  .brand-text .sub{font-size:10px;letter-spacing:.08em;color: #0F6B7F;;font-weight:600;}
+  .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color: #0F6B7F;;font-weight:600;}
 
   .nav-links{display:flex;align-items:center;gap:34px;}
 
@@ -67,11 +78,11 @@
     font-size:14.5px;font-weight:600;color:#3c4a52;
     display:flex;align-items:center;gap:4px;
   }
-  .nav-links li.active a{color:var(--teal-700);}
+  .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
   .nav-links li.active::after{
     content:"";position:absolute;left:0;right:0;bottom:-18px;
-    height:2px;background:var(--teal-700);
+    height:2px;background:var(--teal);
   }
 
   /* ---------- Dropdown Profil ---------- */
@@ -108,10 +119,10 @@
   color:#5b6b73;
   transition:.15s ease;
 }
-.nav-dropdown a:hover{background:var(--mist);color:var(--navy-900);}
+.nav-dropdown a:hover{background:var(--mist);color:var(--navy);}
 .nav-dropdown a .dd-icon{
   width:18px;height:18px;
-  color:var(--gold);
+  color:var(--teal);
   flex-shrink:0;
 }
 .nav-dropdown a .dd-icon svg{
@@ -151,7 +162,7 @@
   }
   .btn-login{
     padding:10px 22px;border-radius:20px;border:none;
-    background:var(--navy-900);color:var(--white);
+    background:var(--navy);color:var(--white);
     font-size:14px;font-weight:700;cursor:pointer;
   }
  
@@ -229,7 +240,7 @@
   }
   .btn:hover{transform:translateY(-2px);}
   .btn-primary{background:#067788;color:var(--white);}
-  .btn-primary:hover{background:var(--teal-300);}
+  .btn-primary:hover{background:var(--teal);}
   .btn-ghost{background:transparent;color:var(--white);border-color:rgba(255,255,255,.6);}
   .btn-ghost:hover{background:rgba(255,255,255,.12);}
 
@@ -412,13 +423,13 @@
     border-radius:1px 15px 10px 15px;
     overflow:hidden;
     background:
-      radial-gradient(120% 120% at 20% 15%, var(--teal-700) 0%, transparent 55%),
-      linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--teal-700) 100%);
+      radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
   }
   .profil-badge{
     position:absolute;
     top:0px;left:0px;
-    background:var(--teal-500);
+    background:var(--teal);
     color:var(--white);
     font-size:11px;
     font-weight:800;
@@ -453,7 +464,7 @@
     display:flex;
     align-items:center;
     gap:10px;
-    color:#D4B378;
+    color: var(--teal);
     font-size:12px;
     font-weight:800;
     letter-spacing:.12em;
@@ -461,14 +472,14 @@
   .profil-copy .eyebrow::before{
     content:"";
     width:22px;height:2px;
-    background:#D4B378;
+    background:var(--teal);
     display:inline-block;
   }
   .profil-copy h2{
     margin-top:16px;
     font-size:32px;
     font-weight:800;
-    color:var(--navy-900);
+    color:var(--navy);
     line-height:1.28;
     letter-spacing:-.01em;
   }
@@ -487,25 +498,21 @@
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:36px;
-    border-top:3px solid #D4B378;
+    border-top:2px solid #D2D6DA;
     padding-top:22px;
     margin-top:22px;
   }
   .feature .icon{
     width: 30px; height: 30px;
-    filter: brightness(0) saturate(100%)
-            invert(13%) sepia(29%)
-            saturate(1724%)
-            hue-rotate(170deg)
-            brightness(95%)
-            contrast(96%);
+    color: var(--teal);
+    stroke:currentColor;
     line-height:1;
   }
   .feature .title{
     margin-top:12px;
     font-size:15px;
     font-weight:700;
-    color:var(--navy-900);
+    color:var(--navy);
   }
   .feature .desc{
     margin-top:6px;
@@ -524,7 +531,7 @@
   /* ---------- Layanan (Apa yang kami kerjakan) ---------- */
   .layanan{
     position:relative;
-    background:var(--navy-900);
+    background:var(--navy);
     padding:150px 100px 110px;
     clip-path:polygon(0 64px, 100% 0, 100% 100%, 0 100%);
     margin-top:-64px;
@@ -673,7 +680,7 @@
     display:flex;
     align-items:center;
     gap:10px;
-    color:var(--navy-900);
+    color:var(--teal);
     font-size:12px;
     font-weight:800;
     letter-spacing:.12em;
@@ -681,7 +688,7 @@
   .sambutan .eyebrow::before{
     content:"";
     width:22px;height:2px;
-    background:var(--navy-900);
+    background:var(--teal);
     display:inline-block;
   }
 
@@ -702,8 +709,8 @@
     align-items:flex-end;
     padding:32px;
     background:
-      radial-gradient(120% 120% at 25% 20%, var(--teal-700) 0%, transparent 55%),
-      linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 50%, var(--teal-700) 100%);
+      radial-gradient(120% 120% at 25% 20%, var(--teal) 0%, transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy) 50%, var(--teal) 100%);
   }
   .sambutan-photo .who .name{
     color:var(--white);
@@ -737,19 +744,19 @@
     width:6px;
     height:34px;
     border-radius:4px;
-    background:#ede2cd;
+    background:var(--teal);
   }
   .sambutan-content .eyebrow{
-    color:#D4B378;
+    color:var(--teal);
   }
   .sambutan-content .eyebrow::before{
-    background:#D4B378;
+    background:var(--teal);
   }
   .sambutan-content h2{
     margin-top:14px;
     font-size:27px;
     font-weight:800;
-    color:var(--navy-900);
+    color:var(--navy);
     line-height:1.32;
     max-width:420px;
   }
@@ -766,7 +773,7 @@
     font-family:'Dancing Script', cursive;
     font-weight:700;
     font-size:30px;
-    color:var(--navy-800);
+    color:var(--navy);
   }
   .sambutan-content .sign-role{
     margin-top:4px;
@@ -806,7 +813,7 @@
     display:flex;
     align-items:center;
     gap:10px;
-    color:#D4B378;
+    color:var(--teal);
     font-size:12px;
     font-weight:800;
     letter-spacing:.12em;
@@ -814,25 +821,25 @@
   .berita .eyebrow::before{
     content:"";
     width:22px;height:2px;
-    background:#D4B378;
+    background:var(--teal);
     display:inline-block;
   }
   .berita-head h2{
     margin-top:16px;
     font-size:32px;
     font-weight:800;
-    color:var(--navy-900);
+    color:var(--navy);
     letter-spacing:-.01em;
   }
   .berita-link{
     display:flex;
     align-items:center;
     gap:6px;
-    color:var(--teal-700);
+    color:var(--teal);
     font-size:12.5px;
     font-weight:800;
     letter-spacing:.06em;
-    border-bottom:2px solid var(--teal-700);
+    border-bottom:2px solid var(--teal);
     padding-bottom:4px;
     white-space:nowrap;
   }
@@ -855,13 +862,13 @@
     flex-direction:column;
     overflow:hidden;
     background:
-      radial-gradient(120% 120% at 15% 10%, var(--teal-700) 0%, transparent 55%),
-      linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--teal-700) 100%);
+      radial-gradient(120% 120% at 15% 10%, var(--teal) 0%, transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
     box-shadow:0 30px 60px -24px rgba(11,34,51,.35);
   }
   .berita-featured .badge{
     align-self:flex-start;
-    background:var(--gold);
+    background:var(--teal);
     color:var(--white);
     font-size:11px;
     font-weight:800;
@@ -911,7 +918,7 @@
     font-size:12.5px;
     font-weight:800;
     letter-spacing:.06em;
-    border-bottom:2px solid var(--gold);
+    border-bottom:2px solid var(--teal);
     padding-bottom:5px;
     width:max-content;
   }
@@ -933,11 +940,11 @@
     height:76px;
     border-radius:8px;
     background:
-      radial-gradient(120% 120% at 20% 15%, var(--teal-700) 0%, transparent 55%),
-      linear-gradient(160deg, var(--navy-900) 0%, var(--teal-700) 100%);
+      radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--teal) 100%);
   }
   .berita-item-body .cat{
-    color:var(--teal-700);
+    color:var(--teal);
     font-size:11px;
     font-weight:800;
     letter-spacing:.08em;
@@ -947,7 +954,7 @@
     margin-top:6px;
     font-size:14.5px;
     font-weight:700;
-    color:var(--navy-900);
+    color:var(--navy);
     line-height:1.4;
   }
   .berita-item-body .meta{
@@ -992,7 +999,7 @@
     display:flex;
     align-items:center;
     gap:10px;
-    color:var(--teal-700);
+    color:var(--teal);
     font-size:12px;
     font-weight:800;
     letter-spacing:.12em;
@@ -1000,14 +1007,14 @@
   .agenda .eyebrow::before{
     content:"";
     width:22px;height:2px;
-    background:var(--teal-700);
+    background:var(--teal);
     display:inline-block;
   }
   .agenda-inner > h2{
     margin-top:16px;
     font-size:32px;
     font-weight:800;
-    color:var(--navy-900);
+    color:var(--navy);
     letter-spacing:-.01em;
   }
 
@@ -1034,7 +1041,7 @@
   .agenda-cal-head .month{
     font-size:18px;
     font-weight:800;
-    color:var(--navy-900);
+    color:var(--navy);
   }
   .agenda-cal-nav{
     display:flex;
@@ -1059,7 +1066,7 @@
     height:30px;
     font-size:11.5px;
     font-weight:700;
-    color:var(--teal-700);
+    color:var(--teal);
     border-color:#d7e6e8;
   }
 
@@ -1091,15 +1098,15 @@
     justify-content:center;
     font-size:13.5px;
     font-weight:600;
-    color:var(--navy-900);
+    color:var(--navy);
     border-radius:10px;
     cursor:pointer;
   }
   .agenda-day.muted{color:#c7d0d4;font-weight:500;}
   .agenda-day.today{
     background:rgba(20,128,140,.08);
-    border:1.5px solid var(--teal-500);
-    color:var(--teal-700);
+    border:1.5px solid var(--teal);
+    color:var(--teal);
     font-weight:800;
   }
   .agenda-day .dot{
@@ -1138,7 +1145,7 @@
 
   /* --- Panel Hari Ini --- */
   .agenda-today{
-    background:linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--teal-700) 100%);
+    background:linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
     border-radius:16px;
     padding:26px 26px 30px;
     display:flex;
@@ -1164,7 +1171,7 @@
     content:"";
     width:6px;height:6px;
     border-radius:50%;
-    background:var(--gold);
+    background:var(--teal);
   }
   .agenda-today-head .date{
     color:rgba(255,255,255,.6);
@@ -1185,7 +1192,7 @@
     margin-top:6px;
     width:7px;height:7px;
     border-radius:50%;
-    background:var(--gold);
+    background:var(--teal);
     flex-shrink:0;
   }
   .agenda-event-top .title{
@@ -1255,7 +1262,7 @@
   display:flex;
   align-items:center;
   gap:10px;
-  color:#D4B378;
+  color:var(--teal);
   font-size:12px;
   font-weight:800;
   letter-spacing:.12em;
@@ -1263,25 +1270,25 @@
 .galeri .eyebrow::before{
   content:"";
   width:22px;height:2px;
-  background:#D4B378;
+  background:var(--teal);
   display:inline-block;
 }
 .galeri-head h2{
   margin-top:16px;
   font-size:32px;
   font-weight:800;
-  color:var(--navy-900);
+  color:var(--navy);
   letter-spacing:-.01em;
 }
 .galeri-link{
   display:flex;
   align-items:center;
   gap:6px;
-  color:var(--teal-700);
+  color:var(--teal);
   font-size:12.5px;
   font-weight:800;
   letter-spacing:.06em;
-  border-bottom:2px solid var(--teal-700);
+  border-bottom:2px solid var(--teal);
   padding-bottom:4px;
   white-space:nowrap;
 }
@@ -1305,10 +1312,10 @@
   transition:.2s ease;
   font-family:inherit;
 }
-.galeri-filter:hover{border-color:var(--teal-500);color:var(--teal-700);}
+.galeri-filter:hover{border-color:var(--teal);color:var(--teal);}
 .galeri-filter.active{
-  background:var(--navy-900);
-  border-color:var(--navy-900);
+  background:var(--navy);
+  border-color:var(--navy);
   color:var(--white);
 }
 
@@ -1338,8 +1345,8 @@
   justify-content:center;
   cursor:pointer;
   background:
-    radial-gradient(120% 120% at 20% 15%, var(--teal-700) 0%, transparent 55%),
-    linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--teal-700) 100%);
+    radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
+    linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
   transition:transform .3s ease, box-shadow .3s ease;
 }
 .galeri-card img{
@@ -1409,7 +1416,7 @@
   display:flex;
   align-items:center;
   gap:10px;
-  color:var(--teal-700);
+  color:var(--teal);
   font-size:12px;
   font-weight:800;
   letter-spacing:.12em;
@@ -1417,7 +1424,7 @@
 .akses-col .eyebrow::before{
   content:"";
   width:22px;height:2px;
-  background:var(--teal-700);
+  background:var(--teal);
   display:inline-block;
 }
 .akses-col h2{
@@ -1427,12 +1434,12 @@
   gap:10px;
   font-size:24px;
   font-weight:800;
-  color:var(--navy-900);
+  color:var(--navy);
   letter-spacing:-.01em;
 }
 .akses-col h2 .head-icon{
   width:24px;height:24px;
-  color:var(--teal-700);
+  color:var(--teal);
   flex-shrink:0;
 }
 .akses-col h2 .head-icon svg{
@@ -1471,7 +1478,7 @@
   width:44px;height:44px;
   border-radius:10px;
   background:rgba(20,128,140,.1);
-  color:var(--teal-700);
+  color:var(--teal);
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
@@ -1488,7 +1495,7 @@
 .akses-item-body .title{
   font-size:14.5px;
   font-weight:700;
-  color:var(--navy-900);
+  color:var(--navy);
 }
 .akses-item-body .desc{
   margin-top:3px;
@@ -1511,13 +1518,13 @@
   stroke-linecap:round;
   stroke-linejoin:round;
 }
-.akses-item:hover .akses-arrow{color:var(--teal-700);transform:translateX(3px);}
+.akses-item:hover .akses-arrow{color:var(--teal);transform:translateX(3px);}
 
 /* --- Dokumen (varian dengan tombol download) --- */
 .akses-item.dokumen .akses-icon{
   border-radius:8px;
   background:rgba(11,34,51,.06);
-  color:var(--navy-800);
+  color:var(--navy);
 }
 .dl-btn{
   width:36px;height:36px;
@@ -1539,8 +1546,8 @@
   stroke-linejoin:round;
 }
 .akses-item:hover .dl-btn{
-  border-color:var(--teal-500);
-  color:var(--teal-700);
+  border-color:var(--teal);
+  color:var(--teal);
   background:rgba(20,128,140,.06);
 }
 
@@ -1552,7 +1559,7 @@
 /* ---------- CTA Bantuan Teknis ---------- */
 .cta-bantuan{
   position:relative;
-  background:linear-gradient(120deg, var(--navy-900) 0%, var(--navy-800) 55%, var(--teal-700) 100%);
+  background:linear-gradient(120deg, var(--navy) 0%, var(--navy) 55%, var(--teal) 100%);
   padding:56px 100px;
   clip-path: polygon(0 0, 100% 34px, 100% 100%, 0 100%);
   margin-top:-35px;
@@ -1587,14 +1594,14 @@
   color:var(--white);
   max-width:520px;
 }
-.cta-bantuan h2 .accent{color:var(--teal-300);}
+.cta-bantuan h2 .accent{color:var(--teal);}
 
 .cta-btn{
   display:flex;
   align-items:center;
   gap:10px;
   background:var(--white);
-  color:var(--navy-900);
+  color:var(--navy);
   border:none;
   padding:16px 26px;
   border-radius:24px;
@@ -1612,7 +1619,7 @@
 }
 .cta-btn .icon{
   width:16px;height:16px;
-  color:var(--teal-700);
+  color:var(--teal);
 }
 .cta-btn .icon svg{
   width:100%;height:100%;
@@ -1635,12 +1642,13 @@
 }
 
 .footer-divider{
+  margin-top: -1px;
     height: 3px;
     background:linear-gradient(10deg, #057888 0%, #0b2233 55% ,#0b2233 100%);
 }
 /* ---------- Footer ---------- */
 .footer{
-  background:var(--navy-900);
+  background:var(--navy);
   padding:64px 100px 0;
 }
 .footer-inner{
@@ -1656,13 +1664,12 @@
 .footer-brand{display:flex;align-items:center;gap:12px;}
 .footer-brand-logo{
   width:50px;
-  height:50px;
   object-fit:contain;
 }
 
-.footer-brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
+.footer-brand-text .name{font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
 
-.footer-brand-text .sub{font-size:10px;letter-spacing:.08em;color: #0F6B7F;;font-weight:600;}
+.footer-brand-text .sub{font-size:10px;letter-spacing:.08em;color: var(--white);;font-weight:600;}
 
 .footer-desc{
   margin-top:18px;
@@ -1686,8 +1693,8 @@
   transition:.2s ease;
 }
 .footer-social a:hover{
-  background:var(--teal-600, var(--teal-700));
-  border-color:var(--teal-700);
+  background:var(--teal, var(--teal));
+  border-color:var(--teal);
   color:var(--white);
 }
 .footer-social svg{
@@ -1706,7 +1713,7 @@
   font-weight:800;
   letter-spacing:.1em;
   padding-bottom:12px;
-  border-bottom:2px solid var(--teal-700);
+  border-bottom:2px solid var(--teal);
   display:inline-block;
 }
 .footer-links{
@@ -1727,7 +1734,7 @@
 }
 .footer-links a .chev{
   font-size:11px;
-  color:var(--teal-300);
+  color:var(--teal);
 }
 .footer-links a:hover{color:var(--white);}
 
@@ -1748,7 +1755,7 @@
 }
 .footer-contact .item svg{
   width:16px;height:16px;
-  stroke:var(--teal-300);
+  stroke:var(--teal);
   fill:none;
   stroke-width:1.8;
   stroke-linecap:round;
@@ -1820,8 +1827,8 @@
           </a>
         </div>
       </li>
-      <li><a href="#layanan">Layanan <span class="caret">▾</span></a></li>
-      <li><a href="#">Informasi <span class="caret">▾</span></a></li>
+      <li><a href="#layanan">Layanan <span class="caret"></span></a></li>
+      <li><a href="#">Informasi <span class="caret"></span></a></li>
       <li><a href="#">Galeri</a></li>
       <li><a href="#">Kontak</a></li>
     </ul>
@@ -1915,24 +1922,37 @@
         <div class="profil-features">
           <div class="feature-row">
             <div class="feature">
-              <img class="icon" src="{{ asset('images/Tugas.png') }}" alt="Server">
+              <div class="icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="4 6 5.5 7.5 8 5"></polyline>
+                      <line x1="10" y1="6" x2="20" y2="6"></line><polyline points="4 12 5.5 13.5 8 11"></polyline><line x1="10" y1="12" x2="20" y2="12"></line>
+                      <polyline points="4 18 5.5 19.5 8 17"></polyline><line x1="10" y1="18" x2="20" y2="18"></line>
+                  </svg>
+              </div>
               <div class="title">Tugas pokok</div>
               <div class="desc">Mengelola infrastruktur TI, jaringan, dan pusat data.</div>
             </div>
             <div class="feature">
-              <img class="icon" src="{{ asset('images/Fungsi.png') }}" alt="Fungsi">
+              <div class="icon">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7"></rect><rect x="14" y="13" width="7" height="7"></rect><line x1="10" y1="7.5" x2="14" y2="7.5"></line><line x1="14" y1="7.5" x2="14" y2="16.5"></line></svg>
+              </div>
               <div class="title">Fungsi utama</div>
               <div class="desc">Mengembangkan dan memelihara sistem lintas unit kerja.</div>
             </div>
           </div>
           <div class="feature-row">
             <div class="feature">
-              <img class="icon" src="{{ asset('images/Keamanan.png') }}" alt="Keamanan">
+              <div class="icon">
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L5 5v6c0 5 3.5 9.5 7 11 3.5-1.5 7-6 7-11V5l-7-3z"></path><polyline points="9.5 11.5 11.5 13.5 15 10"></polyline></svg>
+               </div>
               <div class="title">Keamanan</div>
               <div class="desc">Menjaga data sesuai standar ISO 27001.</div>
             </div>
             <div class="feature">
-              <img class="icon" src="{{ asset('images/Pelayanan.png') }}" alt="Pelayanan">
+              <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="8" r="3"></circle><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"></path><path d="M13 19c0-2.5 2-4.5 5-4.5"></path></svg>
+              </div>
               <div class="title">Pelayanan</div>
               <div class="desc">Dukungan teknis responsif untuk seluruh pengguna.</div>
             </div>
@@ -2508,31 +2528,7 @@
 
 <script>
 
-const navbar = document.querySelector(".navbar");
-let lastScroll = 0;
 
-window.addEventListener("scroll", () => {
-
-    const currentScroll = window.pageYOffset;
-
-    // Kalau di paling atas, navbar selalu tampil
-    if (currentScroll <= 0) {
-        navbar.classList.remove("hide");
-        lastScroll = 0;
-        return;
-    }
-
-    // Scroll ke bawah
-    if (currentScroll > lastScroll) {
-        navbar.classList.add("hide");
-    }
-    // Scroll ke atas
-    else {
-        navbar.classList.remove("hide");
-    }
-
-    lastScroll = currentScroll;
-});
 
 const profilDropdown = document.getElementById("profilDropdown");
 if (window.innerWidth <= 900) {
@@ -2622,7 +2618,7 @@ function animateProfileCounter() {
     const duration = 1200;
     const startTime = performance.now();
 
-    profileCounter.style.color = "#d4b378"; // Reset warna saat animasi dimulai
+    profileCounter.style.color = "var(--teal)"; // Reset warna saat animasi dimulai
 
     function update(currentTime){
 

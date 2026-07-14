@@ -6,15 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Profil - Pustekinfo | Pusat Teknologi Informasi DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy-900:#0b2233;
-    --navy-800:#0f3a52;
-    --teal-700:#0e5f6b;
-    --teal-500:#14808c;
-    --teal-300:#4fb3ac;
-    --gold:#c9a34e;
+    --navy:#12242E;
+    --teal:#14839C;
     --ink:#0b2233;
     --white:#ffffff;
     --mist:#eef4f6;
@@ -23,13 +19,31 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
     background:var(--white);
   }
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
   img{max-width:100%;display:block;}
+
+  h1, h2, h3, h4,
+  .brand-text .name,
+  .footer-brand-text .name,
+  .section-inner > h2,
+  .dark-head h2,
+  .timeline-year,
+  .timeline-item h4,
+  .info-card h4,
+  .sambutan-photo .who .name,
+  .bio-dark-item span,
+  .photo-info strong,
+  .org-node strong,
+  .unit-card h4,
+  .vm-card h3,
+  .value-card h4 {
+    font-family:'Plus Jakarta Sans', system-ui, sans-serif;
+  }
 
   /* ================= NAVBAR (sama seperti beranda) ================= */
   .navbar{
@@ -42,16 +56,15 @@
     transform:translateY(0);
     transition:transform .35s ease;
   }
-  .navbar.hide{transform:translateY(-100%);}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
   .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
-  .brand-text .sub{font-size:10px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
+  .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
-  .nav-links li.active a{color:var(--teal-700);}
+  .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
-  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal-700);}
+  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);}
 
   .nav-item-dropdown{position:relative;}
   .nav-dropdown{
@@ -66,8 +79,8 @@
   }
   .nav-item-dropdown:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
   .nav-dropdown a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;font-size:14px;font-weight:600;color:#5b6b73;transition:.15s ease;}
-  .nav-dropdown a:hover{background:var(--mist);color:var(--navy-900);}
-  .nav-dropdown a.active{background:var(--mist);color:var(--teal-700);}
+  .nav-dropdown a:hover{background:var(--mist);color:var(--navy);}
+  .nav-dropdown a.active{background:var(--mist);color:var(--teal);}
   .nav-dropdown a .dd-icon{width:18px;height:18px;color:var(--gold);flex-shrink:0;}
   .nav-dropdown a .dd-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
   @media (max-width:900px){
@@ -79,7 +92,7 @@
   .nav-actions{display:flex;align-items:center;gap:12px;}
   .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;display:flex;align-items:center;justify-content:center;font-size:14px;color:#5b6b73;background:var(--white);cursor:pointer;}
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;}
-  .btn-login{padding:10px 22px;border-radius:20px;border:none;background:var(--navy-900);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;}
+  .btn-login{padding:10px 22px;border-radius:20px;border:none;background:var(--navy);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;}
   .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;background:var(--white);cursor:pointer;align-items:center;}
   .burger span{width:16px;height:2px;background:#3c4a52;border-radius:2px;transition:.25s ease;}
   .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
@@ -109,7 +122,7 @@
   .hero-profil{
     margin-top:70px;
     position:relative;
-    background:linear-gradient(150deg,var(--navy-900) 0%, var(--navy-800) 45%, var(--teal-700) 100%);
+    background:linear-gradient(150deg,var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
     padding:90px 24px 0;
     overflow:hidden;
   }
@@ -120,7 +133,7 @@
   }
   .hero-profil-inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;text-align:center;}
   .breadcrumb{color:rgba(255,255,255,.55);font-size:13px;font-weight:600;margin-bottom:18px;}
-  .breadcrumb span{color:var(--teal-300);}
+  .breadcrumb span{color:var(--teal);}
   .hero-profil h1{
     color:var(--white);font-size:34px;font-weight:800;line-height:1.28;letter-spacing:-.01em;
     max-width:680px;margin:0 auto;
@@ -147,7 +160,7 @@
   }
   .tab-link::after{
     content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;
-    background:var(--teal-300);border-radius:2px 2px 0 0;
+    background:var(--teal);border-radius:2px 2px 0 0;
     transform:scaleX(0);transform-origin:left;transition:transform .25s ease;
   }
   .tab-link.active{color:var(--white);}
@@ -156,28 +169,34 @@
   /* sticky pill saat sudah lewat hero */
   .tabs-nav-sticky{
     position:fixed;
-    top:-80px;
+    top:-70px;
     left:0;
     width:100%;
     z-index:9998;
 
-    background:var(--navy-900);
+    background:var(--navy);
     border-bottom:1px solid rgba(255,255,255,.1);
     box-shadow:0 12px 24px -18px rgba(11,34,51,.5);
 
     transition:.35s ease;
 }
-  .tabs-nav-sticky.show{top:0;}
+
+.tabs-nav-sticky.show{
+    top:70px; /* tinggi navbar */
+}
   .tabs-nav-sticky .tabs-scroll{border-bottom:none;}
 
   /* ================= GENERIC SECTION ================= */
   .eyebrow{
-    display:flex;align-items:center;gap:10px;
-    color:var(--teal-700);font-size:12px;font-weight:800;letter-spacing:.12em;
+    display:flex;align-items:center;gap:8px;
+    color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.12em;
   }
-  .eyebrow::before{content:"";width:22px;height:2px;background:var(--teal-700);display:inline-block;}
+  .eyebrow svg{
+    width:16px;height:16px;flex-shrink:0;
+    stroke:currentColor;fill:none;stroke-width:2;
+    stroke-linecap:round;stroke-linejoin:round;
+  }
   .eyebrow.on-dark{color:var(--gold);}
-  .eyebrow.on-dark::before{background:var(--gold);}
 
   section.page-section{
     padding:80px 100px;
@@ -189,7 +208,7 @@
   section.page-section:nth-child(even){background:var(--mist);}
   .section-inner{max-width:1240px;margin:0 auto;}
   .section-inner > h2{
-    margin-top:14px;font-size:30px;font-weight:800;color:var(--navy-900);
+    margin-top:14px;font-size:30px;font-weight:800;color:var(--navy);
     letter-spacing:-.01em;max-width:640px;
   }
   .section-inner > .desc{
@@ -222,18 +241,18 @@
   .timeline{position:relative;padding-left:40px;margin-top:44px;}
   .timeline::before{
     content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
-    background:linear-gradient(var(--teal-500), rgba(20,128,140,.15));
+    background:linear-gradient(var(--teal), rgba(20,128,140,.15));
   }
   .timeline-item{position:relative;padding-bottom:38px;}
   .timeline-item:last-child{padding-bottom:0;}
   .timeline-dot{
     position:absolute;left:-40px;top:2px;width:20px;height:20px;border-radius:50%;
-    background:var(--navy-900);border:3px solid var(--gold);
+    background:var(--navy);border:3px solid var(--gold);
   }
   .timeline-year{
-    display:inline-block;font-weight:800;color:var(--teal-700);font-size:18px;margin-bottom:6px;
+    display:inline-block;font-weight:800;color:var(--teal);font-size:18px;margin-bottom:6px;
   }
-  .timeline-item h4{font-size:16px;font-weight:700;color:var(--navy-900);margin-bottom:6px;}
+  .timeline-item h4{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px;}
   .timeline-item p{color:#7a8a92;font-size:13.5px;line-height:1.65;max-width:520px;}
 
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px;}
@@ -247,12 +266,11 @@
 
   .overview-card{
     margin-top:28px;
-    background:linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--teal-700) 100%);
+    background:linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
     border-radius:1px 16px 1px 16px;padding:34px;color:#fff;
     box-shadow:0 30px 60px -30px rgba(11,34,51,.4);
   }
   .overview-card .eyebrow{color:var(--gold);}
-  .overview-card .eyebrow::before{background:var(--gold);}
   .overview-card p{color:rgba(255,255,255,.72);font-size:13.5px;line-height:1.75;margin-top:14px;max-width:640px;}
 
   /* ================= SAMBUTAN PIMPINAN ================= */
@@ -264,19 +282,16 @@
   .sambutan-photo{
     flex:0 0 38%;position:relative;min-height:360px;
     display:flex;align-items:flex-end;padding:32px;
-    background:radial-gradient(120% 120% at 25% 20%, var(--teal-700) 0%, transparent 55%),
-      linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 50%, var(--teal-700) 100%);
+    background:radial-gradient(120% 120% at 25% 20%, var(--teal) 0%, transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy) 50%, var(--teal) 100%);
   }
   .sambutan-photo .who .name{color:var(--white);font-size:16px;font-weight:700;}
   .sambutan-photo .who .role{margin-top:4px;color:rgba(255,255,255,.7);font-size:11px;font-weight:700;letter-spacing:.1em;}
   .sambutan-content{flex:1;position:relative;padding:50px 56px;display:flex;flex-direction:column;justify-content:center;}
   .sambutan-content .quote-mark{position:absolute;top:40px;right:48px;display:flex;gap:5px;}
-  .sambutan-content .quote-mark span{width:6px;height:34px;border-radius:4px;background:#ede2cd;}
-  .sambutan-content .eyebrow{color:var(--gold);}
-  .sambutan-content .eyebrow::before{background:var(--gold);}
-  .sambutan-content h2{margin-top:14px;font-size:25px;font-weight:800;color:var(--navy-900);line-height:1.32;max-width:420px;}
-  .sambutan-content .desc{margin-top:16px;font-style:italic;color:#6b7b83;font-size:14px;line-height:1.75;max-width:440px;}
-  .sambutan-content .signature{margin-top:26px;font-family:'Dancing Script',cursive;font-weight:700;font-size:28px;color:var(--navy-800);}
+  .sambutan-content .eyebrow{color:var(--teal);}
+  .sambutan-content .desc{margin-top:16px;font-style:italic;color:#6b7b83;font-size:14px;line-height:1.75;border-left: 2px solid #057888 ;max-width:440px; padding-left: 10px;}
+  .sambutan-content .signature{margin-top:26px;font-family:'Dancing Script',cursive;font-weight:700;font-size:28px;color:var(--navy);}
   .sambutan-content .sign-role{margin-top:4px;color:#7a8a92;font-size:13px;font-weight:500;}
   @media (max-width:900px){
     .sambutan-card{flex-direction:column;}
@@ -284,23 +299,43 @@
     .sambutan-content{padding:36px 26px;}
   }
 
-  /* ================= BIODATA ================= */
-  .bio-card{
-    margin-top:40px;background:var(--white);border-radius:14px;overflow:hidden;
-    box-shadow:0 20px 40px -24px rgba(11,34,51,.2);
+  /* ================= SECTION NAVY (dark) ================= */
+  section.page-section.dark{
+    background:var(--navy) !important;
   }
-  .bio-grid{display:grid;grid-template-columns:repeat(3,1fr);}
-  .bio-item{padding:22px 26px;border-right:1px solid #eef1f3;border-bottom:1px solid #eef1f3;}
-  .bio-item:nth-child(3n){border-right:none;}
-  .bio-item:nth-last-child(-n+3){border-bottom:none;}
-  .bio-item label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#9aa8af;margin-bottom:6px;font-weight:700;}
-  .bio-item span{font-size:14.5px;font-weight:700;color:var(--navy-900);}
-  @media (max-width:900px){
-    .bio-grid{grid-template-columns:1fr 1fr;}
-    .bio-item:nth-child(3n){border-right:1px solid #eef1f3;}
-    .bio-item:nth-child(2n){border-right:none;}
+  .dark-head{
+    display:flex;align-items:center;gap:14px;margin-bottom:8px;
   }
-  @media (max-width:560px){.bio-grid{grid-template-columns:1fr;}}
+  .dark-head .badge{
+    width:38px;height:38px;border-radius:10px;flex-shrink:0;
+    background:rgba(255,255,255,.12);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .dark-head .badge svg{
+    width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;
+    stroke-linecap:round;stroke-linejoin:round;
+  }
+  .dark-head h2{
+    margin:0;font-size:22px;font-weight:800;color:#fff;letter-spacing:-.01em;
+  }
+
+  /* ================= BIODATA (versi navy, tanpa kartu putih) ================= */
+  .bio-dark-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    column-gap:56px;margin-top:36px;
+  }
+  .bio-dark-item{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    padding:18px 0;border-bottom:1px solid rgba(255,255,255,.14);
+  }
+  .bio-dark-item:nth-child(n+5){border-bottom:none;}
+  .bio-dark-item label{font-size:13px;color:rgba(255,255,255,.55);font-weight:600;}
+  .bio-dark-item span{font-size:14px;font-weight:700;color:#fff;text-align:right;}
+  @media (max-width:700px){
+    .bio-dark-grid{grid-template-columns:1fr;column-gap:0;}
+    .bio-dark-item:nth-child(n+5){border-bottom:1px solid rgba(255,255,255,.14);}
+    .bio-dark-item:last-child{border-bottom:none;}
+  }
 
   /* ================= FOTO PIMPINAN ================= */
   .photo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px;}
@@ -308,12 +343,12 @@
   .photo-card:hover{transform:translateY(-6px);box-shadow:0 26px 44px -20px rgba(11,34,51,.3);}
   .photo-thumb{
     aspect-ratio:1/1;
-    background:radial-gradient(120% 120% at 20% 15%, var(--teal-700) 0%, transparent 55%),
-      linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--teal-700) 100%);
+    background:radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
     display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.32);font-size:12px;font-weight:600;
   }
   .photo-info{padding:14px 16px;}
-  .photo-info strong{display:block;font-size:13.5px;color:var(--navy-900);}
+  .photo-info strong{display:block;font-size:13.5px;color:var(--navy);}
   .photo-info span{font-size:12px;color:#8a97a0;}
   @media (max-width:900px){.photo-grid{grid-template-columns:repeat(2,1fr);}}
 
@@ -323,9 +358,9 @@
     background:var(--white);border-radius:12px;padding:16px 28px;text-align:center;
     box-shadow:0 16px 32px -20px rgba(11,34,51,.25);min-width:210px;
   }
-  .org-node strong{display:block;font-size:14.5px;color:var(--navy-900);}
+  .org-node strong{display:block;font-size:14.5px;color:var(--navy);}
   .org-node span{font-size:12px;color:#8a97a0;}
-  .org-node.top{background:linear-gradient(150deg,var(--navy-900) 40%,var(--teal-700) 100%);}
+  .org-node.top{background:linear-gradient(150deg,var(--navy) 40%,var(--teal) 100%);}
   .org-node.top strong{color:#fff;}
   .org-node.top span{color:rgba(255,255,255,.6);}
   .org-connector{width:2px;height:30px;background:#d7e6e8;}
@@ -339,11 +374,11 @@
   }
   .unit-card:hover{transform:translateY(-6px);box-shadow:0 22px 38px -18px rgba(11,34,51,.3);}
   .unit-icon{
-    width:44px;height:44px;border-radius:10px;background:rgba(20,128,140,.1);color:var(--teal-700);
+    width:44px;height:44px;border-radius:10px;background:rgba(20,128,140,.1);color:var(--teal);
     display:flex;align-items:center;justify-content:center;
   }
   .unit-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-  .unit-card h4{margin-top:16px;font-size:14.5px;font-weight:700;color:var(--navy-900);}
+  .unit-card h4{margin-top:16px;font-size:14.5px;font-weight:700;color:var(--navy);}
   .unit-card p{margin-top:8px;font-size:12.5px;color:#8a97a0;line-height:1.6;}
   @media (max-width:900px){.unit-grid{grid-template-columns:1fr 1fr;}}
   @media (max-width:560px){.unit-grid{grid-template-columns:1fr;}}
@@ -355,14 +390,13 @@
     box-shadow:0 20px 40px -24px rgba(11,34,51,.2);
   }
   .vm-card.dark{
-    background:linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--teal-700) 100%);
+    background:linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
     color:#fff;
   }
-  .vm-card.dark .eyebrow{color:var(--gold);}
-  .vm-card.dark .eyebrow::before{background:var(--gold);}
+  .vm-card.dark .eyebrow{color:var(--teal);}
   .vm-card h3{margin-top:16px;font-size:18px;font-weight:800;}
   .vm-card.dark h3{color:#fff;}
-  .vm-card:not(.dark) h3{color:var(--navy-900);}
+  .vm-card:not(.dark) h3{color:var(--navy);}
   .vm-card p{margin-top:12px;color:rgba(255,255,255,.75);font-size:14px;line-height:1.75;}
   .vm-card ol{margin-top:14px;padding-left:18px;color:#5b6b73;font-size:13.5px;line-height:1.7;}
   .vm-card ol li{margin-bottom:10px;padding-left:4px;}
@@ -376,36 +410,36 @@
   }
   .value-card:hover{transform:translateY(-6px);box-shadow:0 22px 38px -18px rgba(11,34,51,.3);}
   .value-icon{
-    width:40px;height:40px;border-radius:10px;background:rgba(201,163,78,.14);color:var(--gold);
+    width:40px;height:40px;border-radius:10px;background:rgba(201,163,78,.14);color:var(--teal);
     display:flex;align-items:center;justify-content:center;
   }
   .value-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-  .value-card h4{margin-top:14px;font-size:14.5px;font-weight:700;color:var(--navy-900);}
+  .value-card h4{margin-top:14px;font-size:14.5px;font-weight:700;color:var(--navy);}
   .value-card p{margin-top:6px;font-size:12.5px;color:#8a97a0;line-height:1.6;}
   @media (max-width:900px){.values-grid{grid-template-columns:1fr 1fr;}}
   @media (max-width:560px){.values-grid{grid-template-columns:1fr;}}
 
   /* ================= FOOTER (sama seperti beranda) ================= */
   .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #0b2233 55%, #0b2233 100%);}
-  .footer{background:var(--navy-900);padding:64px 100px 0;}
+  .footer{background:var(--navy);padding:64px 100px 0;}
   .footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}
   .footer-brand-logo{width:50px;height:50px;object-fit:contain;}
-  .footer-brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
-  .footer-brand-text .sub{font-size:10px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
+  .footer-brand-text .name{font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
+  .footer-brand-text .sub{font-size:10px;letter-spacing:.08em;color:var(--white);font-weight:600;}
   .footer-desc{margin-top:18px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.75;max-width:260px;}
   .footer-social{margin-top:22px;display:flex;gap:10px;}
   .footer-social a{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:.2s ease;}
-  .footer-social a:hover{background:var(--teal-700);border-color:var(--teal-700);color:var(--white);}
+  .footer-social a:hover{background:var(--teal);border-color:var(--teal);color:var(--white);}
   .footer-social svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-  .footer-col .head{color:rgba(255,255,255,.85);font-size:11.5px;font-weight:800;letter-spacing:.1em;padding-bottom:12px;border-bottom:2px solid var(--teal-700);display:inline-block;}
+  .footer-col .head{color:rgba(255,255,255,.85);font-size:11.5px;font-weight:800;letter-spacing:.1em;padding-bottom:12px;border-bottom:2px solid var(--teal);display:inline-block;}
   .footer-links{margin-top:20px;display:flex;flex-direction:column;gap:14px;}
   .footer-links a{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:500;transition:.2s ease;width:max-content;}
-  .footer-links a .chev{font-size:11px;color:var(--teal-300);}
+  .footer-links a .chev{font-size:11px;color:var(--teal);}
   .footer-links a:hover{color:var(--white);}
   .footer-contact{margin-top:20px;display:flex;flex-direction:column;gap:16px;}
   .footer-contact .item{display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,.65);font-size:13px;line-height:1.6;}
-  .footer-contact .item svg{width:16px;height:16px;stroke:var(--teal-300);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:1px;}
+  .footer-contact .item svg{width:16px;height:16px;stroke:var(--teal);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:1px;}
   .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:22px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
   .footer-bottom p{color:rgba(255,255,255,.45);font-size:12.5px;font-weight:500;}
   @media (max-width:900px){
@@ -499,53 +533,47 @@
   {{-- ================= TENTANG KAMI ================= --}}
   <section id="tentang-kami" class="page-section">
     <div class="section-inner">
-      <div class="eyebrow">SEJARAH INSTANSI</div>
-      <h2>Perjalanan Pustekinfo dari masa ke masa</h2>
-      <p class="desc">Pustekinfo telah melalui perjalanan panjang mengikuti perkembangan teknologi, dari unit pengolahan data sederhana hingga menjadi pusat teknologi informasi yang mengelola infrastruktur digital lembaga.</p>
+      <div class="eyebrow">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+        SEJARAH INSTANSI
+      </div>
+      <h2>Perjalanan panjang Pustekinfo</h2>
+      <p class="desc">
+        Pustekinfo telah melalui perjalanan panjang mengikuti perkembangan teknologi, dari unit
+        pengolahan data sederhana hingga menjadi pusat teknologi informasi yang mengelola
+        infrastruktur digital lembaga.
+      </p>
 
       <div class="timeline">
+
         <div class="timeline-item">
-          <div class="timeline-dot"></div>
+          <span class="timeline-dot"></span>
           <span class="timeline-year">1985</span>
           <h4>Pembentukan unit pengolahan data</h4>
           <p>Cikal bakal Pustekinfo dibentuk untuk menangani pengolahan data secara elektronik.</p>
         </div>
+
         <div class="timeline-item">
-          <div class="timeline-dot"></div>
+          <span class="timeline-dot"></span>
           <span class="timeline-year">2005</span>
           <h4>Modernisasi infrastruktur jaringan</h4>
           <p>Pembangunan jaringan terpadu dan pusat data untuk mendukung operasional lembaga.</p>
         </div>
+
         <div class="timeline-item">
-          <div class="timeline-dot"></div>
+          <span class="timeline-dot"></span>
           <span class="timeline-year">2015</span>
           <h4>Transformasi digital layanan</h4>
           <p>Pengembangan berbagai aplikasi dan sistem informasi berbasis web dan mobile.</p>
         </div>
+
         <div class="timeline-item">
-          <div class="timeline-dot"></div>
+          <span class="timeline-dot"></span>
           <span class="timeline-year">2025</span>
           <h4>Sertifikasi ISO 27001:2022</h4>
           <p>Pencapaian standar keamanan informasi internasional sebagai komitmen mutu layanan.</p>
         </div>
-      </div>
 
-      <div class="two-col">
-        <div class="info-card">
-          <div class="eyebrow">LATAR BELAKANG</div>
-          <p>Kebutuhan akan tata kelola informasi yang cepat, akurat, dan aman mendorong pembentukan unit khusus yang menangani teknologi informasi di lingkungan lembaga.</p>
-          <p>Seiring meningkatnya volume layanan digital dan tuntutan transparansi publik, peran Pustekinfo menjadi semakin strategis dalam mendukung kinerja seluruh unit kerja.</p>
-        </div>
-        <div class="info-card">
-          <div class="eyebrow">GAMBARAN UMUM</div>
-          <p>Pustekinfo mengelola jaringan, pusat data, aplikasi, serta keamanan informasi lembaga secara terintegrasi.</p>
-          <p>Didukung sumber daya manusia yang kompeten dan infrastruktur modern, Pustekinfo terus berinovasi menghadirkan solusi teknologi yang tepat guna.</p>
-        </div>
-      </div>
-
-      <div class="overview-card">
-        <div class="eyebrow">KOMITMEN KAMI</div>
-        <p>Unit ini memastikan seluruh layanan digital tersedia, andal, dan aman bagi setiap pengguna di lingkungan lembaga, dari sistem akademik hingga keamanan data.</p>
       </div>
     </div>
   </section>
@@ -553,7 +581,10 @@
   {{-- ================= PROFIL PIMPINAN ================= --}}
   <section id="profil-pimpinan" class="page-section">
     <div class="section-inner">
-      <div class="eyebrow">SAMBUTAN PIMPINAN</div>
+      <div class="eyebrow">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        SAMBUTAN PIMPINAN
+      </div>
       <h2>Kata sambutan Kepala Pustekinfo</h2>
 
       <div class="sambutan-card">
@@ -565,28 +596,20 @@
           </div>
         </div>
         <div class="sambutan-content">
-          <div class="quote-mark"><span></span><span></span></div>
-          <div class="eyebrow">SELAMAT DATANG</div>
-          <h2>Teknologi untuk pelayanan yang lebih baik</h2>
+          <div class="eyebrow">
+            <svg viewBox="0 0 24 24"><path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 21c0-4-3-7-3-7s-3 3-3 7"/></svg>
+            SELAMAT DATANG
+          </div>
           <p class="desc">Kami berkomitmen menghadirkan layanan teknologi informasi yang andal dan aman untuk mendukung seluruh kegiatan lembaga. Melalui inovasi berkelanjutan, kami berupaya menjadi mitra teknologi yang terpercaya bagi setiap unit kerja.</p>
           <div class="signature">Nama Kepala Pusat</div>
           <div class="sign-role">Kepala Pusat Teknologi Informasi</div>
         </div>
       </div>
 
-      <div class="eyebrow" style="margin-top:56px;">BIODATA SINGKAT</div>
-      <div class="bio-card">
-        <div class="bio-grid">
-          <div class="bio-item"><label>Nama</label><span>Nama Kepala Pusat, S.Kom., M.T.</span></div>
-          <div class="bio-item"><label>Jabatan</label><span>Kepala Pustekinfo</span></div>
-          <div class="bio-item"><label>Pendidikan</label><span>S2 Teknik Informatika</span></div>
-          <div class="bio-item"><label>Masa jabatan</label><span>2023 — sekarang</span></div>
-          <div class="bio-item"><label>Bidang keahlian</label><span>Tata kelola TI &amp; keamanan informasi</span></div>
-          <div class="bio-item"><label>Email</label><span>kepala@pustekinfo.go.id</span></div>
-        </div>
+      <div class="eyebrow" style="margin-top:56px;">
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        FOTO PIMPINAN
       </div>
-
-      <div class="eyebrow" style="margin-top:56px;">FOTO PIMPINAN</div>
       <div class="photo-grid">
         <div class="photo-card">
           <div class="photo-thumb">Foto</div>
@@ -608,10 +631,34 @@
     </div>
   </section>
 
+  {{-- ================= BIODATA SINGKAT (section navy tersendiri) ================= --}}
+  <section id="biodata-singkat" class="page-section dark">
+    <div class="section-inner">
+      <div class="dark-head">
+        <span class="badge">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/></svg>
+        </span>
+        <h2>Biodata singkat</h2>
+      </div>
+
+      <div class="bio-dark-grid">
+        <div class="bio-dark-item"><label>Nama</label><span>Nama Kepala Pusat, S.Kom., M.T.</span></div>
+        <div class="bio-dark-item"><label>Jabatan</label><span>Kepala Pustekinfo</span></div>
+        <div class="bio-dark-item"><label>Pendidikan</label><span>S2 Teknik Informatika</span></div>
+        <div class="bio-dark-item"><label>Masa jabatan</label><span>2023 — sekarang</span></div>
+        <div class="bio-dark-item"><label>Bidang keahlian</label><span>Tata kelola TI &amp; keamanan informasi</span></div>
+        <div class="bio-dark-item"><label>Email</label><span>kepala@pustekinfo.go.id</span></div>
+      </div>
+    </div>
+  </section>
+
   {{-- ================= STRUKTUR ORGANISASI ================= --}}
   <section id="struktur-organisasi" class="page-section">
     <div class="section-inner">
-      <div class="eyebrow">BAGAN ORGANISASI</div>
+      <div class="eyebrow">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+        BAGAN ORGANISASI
+      </div>
       <h2>Struktur organisasi Pustekinfo</h2>
 
       <div class="org-chart">
@@ -625,8 +672,19 @@
           <div class="org-node"><strong>Bidang Data &amp; Keamanan</strong><span>Keamanan &amp; pangkalan data</span></div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="eyebrow" style="margin-top:56px;">URAIAN UNIT KERJA</div>
+  {{-- ================= URAIAN UNIT KERJA (section navy tersendiri) ================= --}}
+  <section id="uraian-unit-kerja" class="page-section dark">
+    <div class="section-inner">
+      <div class="dark-head">
+        <span class="badge">
+          <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </span>
+        <h2>Uraian unit kerja</h2>
+      </div>
+
       <div class="unit-grid">
         <div class="unit-card">
           <div class="unit-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></div>
@@ -655,17 +713,26 @@
   {{-- ================= VISI & MISI ================= --}}
   <section id="visi-misi" class="page-section">
     <div class="section-inner">
-      <div class="eyebrow">VISI &amp; MISI</div>
+      <div class="eyebrow">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+        VISI &amp; MISI
+      </div>
       <h2>Arah dan komitmen kami</h2>
 
       <div class="vm-grid">
         <div class="vm-card dark">
-          <div class="eyebrow">VISI</div>
+          <div class="eyebrow">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+            VISI
+          </div>
           <h3>Menjadi pusat teknologi informasi yang terpercaya</h3>
           <p>Menjadi pusat teknologi informasi yang andal, aman, dan inovatif dalam mendukung tata kelola lembaga yang modern dan transparan.</p>
         </div>
         <div class="vm-card">
-          <div class="eyebrow">MISI</div>
+          <div class="eyebrow">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            MISI
+          </div>
           <h3>Empat langkah strategis kami</h3>
           <ol>
             <li>Mengembangkan sistem informasi yang terintegrasi dan tepat guna.</li>
@@ -676,7 +743,10 @@
         </div>
       </div>
 
-      <div class="eyebrow" style="margin-top:56px;">NILAI-NILAI ORGANISASI (CORE VALUES)</div>
+      <div class="eyebrow" style="margin-top:56px;">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        NILAI-NILAI ORGANISASI (CORE VALUES)
+      </div>
       <div class="values-grid">
         <div class="value-card">
           <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
@@ -779,17 +849,7 @@
   </footer>
 
 <script>
-  // ---- Navbar hide/show saat scroll (sama seperti beranda) ----
-  const navbar = document.querySelector(".navbar");
-  let lastScroll = 0;
-  window.addEventListener("scroll", () => {
-    const currentScroll = window.pageYOffset;
-    if (currentScroll <= 0) { navbar.classList.remove("hide"); lastScroll = 0; return; }
-    if (currentScroll > lastScroll) navbar.classList.add("hide");
-    else navbar.classList.remove("hide");
-    lastScroll = currentScroll;
-  });
-
+ 
   // ---- Dropdown Profil di mobile ----
   const profilDropdown = document.getElementById("profilDropdown");
   if (window.innerWidth <= 900) {
