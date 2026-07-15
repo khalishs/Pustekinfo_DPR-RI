@@ -165,7 +165,29 @@
     background:var(--navy);color:var(--white);
     font-size:14px;font-weight:700;cursor:pointer;
   }
- 
+
+  .profile-box{
+    display:flex;align-items:center;gap:10px;
+    padding:6px 16px 6px 6px;border-radius:24px;
+    border:1px solid #dfe4e7;background:var(--white);
+  }
+  .profile-avatar{
+    width:32px;height:32px;border-radius:50%;
+    object-fit:cover;flex-shrink:0;
+  }
+  .profile-name{
+    font-size:13.5px;font-weight:700;color:var(--navy);
+    white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis;
+  }
+  #logout-form{display:flex;align-items:center;}
+  .logout-btn{
+    padding:9px 18px;border-radius:20px;
+    border:1px solid #e3b8b8;background:var(--white);
+    color:#b0413e;font-size:13px;font-weight:700;
+    cursor:pointer;transition:.2s ease;
+  }
+  .logout-btn:hover{background:#b0413e;color:var(--white);border-color:#b0413e;}
+
 
   /* ---------- Hero ---------- */
   .hero{
@@ -335,6 +357,10 @@
     .icon-btn{width:30px;height:30px;font-size:12px;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
+    .profile-box{padding:4px 10px 4px 4px;gap:6px;}
+    .profile-avatar{width:26px;height:26px;}
+    .profile-name{font-size:11.5px;max-width:80px;}
+    .logout-btn{padding:6px 12px;font-size:11px;white-space:nowrap;}
 
     .burger{display:flex;}
     .nav-links{
@@ -382,6 +408,8 @@
 
   @media (max-width:420px){
     .btn-login{padding:8px 10px;}
+    .profile-name{display:none;}
+    .profile-box{padding:4px;}
   }
 
   /* ---------- Profil Singkat ---------- */
@@ -1790,8 +1818,114 @@
   .footer-inner{grid-template-columns:1fr;}
 }
 
-  
+/* ---------- Dark mode ---------- */
+[data-theme="dark"] html{background:#0b1720;}
+[data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+
+[data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+[data-theme="dark"] .brand-text .name{color:#eaf3f5;}
+[data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
+[data-theme="dark"] .nav-links li a{color:#c3cdd2;}
+[data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
+[data-theme="dark"] .nav-links li.active::after{background:#5FC0D1;}
+[data-theme="dark"] .nav-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
+[data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
+[data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
+
+[data-theme="dark"] .icon-btn,
+[data-theme="dark"] .lang-btn,
+[data-theme="dark"] .profile-box,
+[data-theme="dark"] .logout-btn,
+[data-theme="dark"] .dl-btn,
+[data-theme="dark"] .galeri-filter,
+[data-theme="dark"] .agenda-cal-nav button{
+  background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
+}
+[data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
+[data-theme="dark"] .agenda-cal-nav button:hover{background:rgba(255,255,255,.08);}
+[data-theme="dark"] .agenda-cal-nav .today-btn{color:#5FC0D1;border-color:rgba(95,192,209,.35);}
+[data-theme="dark"] .galeri-filter:hover{border-color:#5FC0D1;color:#5FC0D1;}
+[data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
+[data-theme="dark"] .profile-name{color:#eaf3f5;}
+[data-theme="dark"] .logout-btn{color:#ff8f8a;border-color:rgba(255,143,138,.35);}
+[data-theme="dark"] .logout-btn:hover{background:#b0413e;color:#fff;border-color:#b0413e;}
+
+@media (max-width:900px){
+  [data-theme="dark"] .nav-links{background:#0f1e28;border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
+}
+
+[data-theme="dark"] .profil,
+[data-theme="dark"] .sambutan,
+[data-theme="dark"] .berita,
+[data-theme="dark"] .agenda,
+[data-theme="dark"] .galeri,
+[data-theme="dark"] .akses-dokumen{
+  background:#0b1720;
+}
+
+[data-theme="dark"] .profil .eyebrow,
+[data-theme="dark"] .sambutan .eyebrow,
+[data-theme="dark"] .berita .eyebrow,
+[data-theme="dark"] .agenda .eyebrow,
+[data-theme="dark"] .galeri .eyebrow,
+[data-theme="dark"] .akses-dokumen .eyebrow{
+  color:#5FC0D1;
+}
+[data-theme="dark"] .profil .eyebrow::before,
+[data-theme="dark"] .sambutan .eyebrow::before,
+[data-theme="dark"] .berita .eyebrow::before,
+[data-theme="dark"] .agenda .eyebrow::before,
+[data-theme="dark"] .galeri .eyebrow::before,
+[data-theme="dark"] .akses-dokumen .eyebrow::before{
+  background:#5FC0D1;
+}
+
+[data-theme="dark"] .profil-copy h2,
+[data-theme="dark"] .sambutan-content h2,
+[data-theme="dark"] .berita-head h2,
+[data-theme="dark"] .agenda-inner > h2,
+[data-theme="dark"] .galeri-head h2,
+[data-theme="dark"] .akses-col h2{
+  color:#eaf3f5;
+}
+[data-theme="dark"] .profil-copy p{color:#8ea0a8;}
+[data-theme="dark"] .feature-row{border-top-color:rgba(255,255,255,.1);}
+[data-theme="dark"] .feature .title{color:#eaf3f5;}
+[data-theme="dark"] .feature .desc{color:#8ea0a8;}
+[data-theme="dark"] .profil-stat-card{background:#122530;box-shadow:10px 10px 34px -14px rgba(0,0,0,.5);}
+[data-theme="dark"] .profil-stat-card .label{color:#8ea0a8;}
+
+[data-theme="dark"] .sambutan-card{background:#122530;box-shadow:0 40px 70px -30px rgba(0,0,0,.6);}
+[data-theme="dark"] .sambutan-content .desc{color:#8ea0a8;}
+[data-theme="dark"] .sambutan-content .signature{color:#eaf3f5;}
+[data-theme="dark"] .sambutan-content .sign-role{color:#8ea0a8;}
+
+[data-theme="dark"] .berita-item{border-bottom-color:rgba(255,255,255,.08);}
+[data-theme="dark"] .berita-item-body .title{color:#eaf3f5;}
+[data-theme="dark"] .berita-item-body .meta{color:#8ea0a8;}
+[data-theme="dark"] .berita-link{color:#5FC0D1;border-bottom-color:#5FC0D1;}
+
+[data-theme="dark"] .agenda-cal{background:#122530;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);}
+[data-theme="dark"] .agenda-cal-daynames span{color:#6d8189;}
+[data-theme="dark"] .agenda-day{color:#eaf3f5;}
+[data-theme="dark"] .agenda-day.muted{color:#3d4d54;}
+[data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.12);}
+[data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
+[data-theme="dark"] .agenda-legend span{color:#8ea0a8;}
+
+[data-theme="dark"] .galeri-link{color:#5FC0D1;border-bottom-color:#5FC0D1;}
+
+[data-theme="dark"] .akses-item{background:#122530;box-shadow:0 6px 20px -10px rgba(0,0,0,.5);}
+[data-theme="dark"] .akses-item-body .title{color:#eaf3f5;}
+[data-theme="dark"] .akses-item-body .desc{color:#8ea0a8;}
+[data-theme="dark"] .akses-item.dokumen .akses-icon{background:rgba(255,255,255,.08);color:#c3cdd2;}
 </style>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+</script>
 </head>
 <body>
 
@@ -1834,11 +1968,25 @@
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" aria-label="Ganti tema">◐</button>
+      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       <button class="lang-btn">EN</button>
-      <button class="btn-login">Masuk</button>
+     @auth
+        <div class="profile-box">
+          <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=0e5f6b&color=fff&size=128" alt="Foto profil" class="profile-avatar">
+          <div>
+            <div class="profile-name">{{ auth()->user()->name }}</div>
+          </div>
+        </div>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" class="logout-btn">Logout</button>
+        </form>
+
+      @else
+        <a href="{{ route('login') }}" class="btn-login">Masuk</a>
+      @endauth
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
-         <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
@@ -2545,6 +2693,23 @@ const navLinks = document.querySelector(".nav-links");
 burgerBtn.addEventListener("click", () => {
     burgerBtn.classList.toggle("open");
     navLinks.classList.toggle("open");
+});
+
+const themeToggle = document.getElementById("themeToggle");
+
+function applyTheme(isDark) {
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+    themeToggle.classList.toggle("active", isDark);
+    themeToggle.setAttribute("aria-pressed", String(isDark));
+    themeToggle.textContent = isDark ? "◑" : "◐";
+}
+
+applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
+
+themeToggle.addEventListener("click", () => {
+    const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    applyTheme(isDark);
 });
 
 // Tutup menu kalau salah satu link diklik
