@@ -7,6 +7,7 @@
 <title>Pustekinfo - Pusat Teknologi Informasi DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 <style>
   :root{
     --navy:#12242E;
@@ -34,7 +35,7 @@
   .brand-text .name,
   .footer-brand-text .name,
   .stat-num,
-  .profil-stat-card .num,
+  .num,
   .layanan-card .title,
   .feature .title,
   .akses-col h2,
@@ -75,9 +76,12 @@
   .nav-links{display:flex;align-items:center;gap:34px;}
 
   .nav-links li a{
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size:14.5px;font-weight:600;color:#3c4a52;
     display:flex;align-items:center;gap:4px;
+    transition:color .2s ease;
   }
+  .nav-links li a:hover{color:var(--teal);}
   .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
   .nav-links li.active::after{
@@ -154,16 +158,35 @@
     display:flex;align-items:center;justify-content:center;
     font-size:14px;color:#5b6b73;background:var(--white);
     cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .icon-btn:hover{
+    background:var(--mist);
+    border-color:var(--teal);
+    color:var(--teal);
+    transform:translateY(-2px);
   }
   .lang-btn{
     padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;
     font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);
     cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .lang-btn:hover{
+    background:var(--mist);
+    border-color:var(--teal);
+    color:var(--teal);
   }
   .btn-login{
     padding:10px 22px;border-radius:20px;border:none;
     background:var(--navy);color:var(--white);
     font-size:14px;font-weight:700;cursor:pointer;
+    transition:background .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-login:hover{
+    background:var(--teal);
+    transform:translateY(-2px);
+    box-shadow:0 10px 22px -10px rgba(20,128,140,.55);
   }
 
   .profile-box{
@@ -225,6 +248,7 @@
     content:"";
     position:absolute;inset:0;
     background:linear-gradient(180deg, rgba(11,49,74,.55) 0%, rgba(11,60,86,.72) 55%, rgba(9,46,58,.88) 100%);
+    pointer-events:none;
   }
   .hero-content{position:relative;z-index:2;max-width:900px;}
   .hero-content h1{
@@ -414,7 +438,6 @@
 
   /* ---------- Profil Singkat ---------- */
   .profil{
-    background:var(--white);
     padding:70px 100px 110px;
     opacity:0;
     transform:translateY(80px);
@@ -425,6 +448,9 @@
 
   .profil.show{opacity:1;transform:translateY(0);}
   .profil-grid{
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 30px;
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:80px;
@@ -434,10 +460,10 @@
   }
   .profil-media{
     position: relative;
+    transition:box-shadow .3s ease, border-radius .3s ease, transform .3s ease;
   }
 
   .profil-media:hover {
-    transition:.3s;
     box-shadow: 0 0 0 1px rgba(0,0,0,.15),
                 0 15px 40px rgba(0,0,0,.25);
     border-radius:1px 15px 10px 15px;
@@ -465,36 +491,15 @@
     padding:8px 14px;
     border-radius:1px 10px 1px 10px;
   }
-  .profil-stat-card{
-    position:absolute;
-    right:-28px;
-    bottom:-28px;
-    background:var(--white);
-    border-radius:8px 8px 1px 8px;
-    padding:22px 26px;
-    box-shadow:10px 10px 34px -14px rgba(11,34,51,.3);
-    min-width:150px;
-  }
-  .profil-stat-card .num{
-    color:#D4B378;
-    font-size:28px;
-    font-weight:800;
-    line-height:1;
-  }
-  .profil-stat-card .label{
-    margin-top:8px;
-    color:#7a8a92;
-    font-size:12.5px;
-    font-weight:600;
-  }
-
+ 
   .profil-copy .eyebrow{
     display:flex;
     align-items:center;
+    font-family: plus-jakarta-sans, system-ui, sans-serif;
     gap:10px;
     color: var(--teal);
     font-size:12px;
-    font-weight:800;
+    font-weight:600;
     letter-spacing:.12em;
   }
   .profil-copy .eyebrow::before{
@@ -552,24 +557,41 @@
   @media (max-width:900px){
     .profil{padding:50px 20px 70px;}
     .profil-grid{grid-template-columns:1fr;gap:60px;}
-    .profil-stat-card{right:16px;bottom:-24px;}
     .feature-row{gap:24px;}
   }
 
   /* ---------- Layanan (Apa yang kami kerjakan) ---------- */
   .layanan{
     position:relative;
-    background:var(--navy);
+    background:#073D5F;
     padding:150px 100px 110px;
     clip-path:polygon(0 64px, 100% 0, 100% 100%, 0 100%);
     margin-top:-64px;
     opacity:0;
     transform:translateY(60px);
     transition:opacity .9s ease, transform .9s ease;
+    overflow:hidden;
   }
   .layanan.show{opacity:1;transform:translateY(0);}
 
+  /* Pola batik versi terang khusus untuk background navy, supaya tetap kontras & tidak menyatu dengan warna navy */
+  .layanan::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+    filter:brightness(0) invert(1);
+    opacity:.40;
+    pointer-events:none;
+    z-index:0;
+  }
+
   .layanan-inner{
+    position:relative;
+    z-index:1;
     max-width:1240px;
     margin:0 auto;
   }
@@ -577,15 +599,16 @@
     display:flex;
     align-items:center;
     gap:10px;
-    color:#D4B378;
+    color:var(--white);
     font-size:12px;
-    font-weight:800;
+    font-family: plus-jakarta-sans, system-ui, sans-serif;
+    font-weight:600;
     letter-spacing:.12em;
   }
   .layanan .eyebrow::before{
     content:"";
     width:22px;height:2px;
-    background:#D4B378;
+    background:var(--teal);
     display:inline-block;
   }
   .layanan h2{
@@ -614,11 +637,12 @@
     pointer-events:none;
 }
   .layanan-card{
+    position:relative;
     background: linear-gradient(155deg,#073D5F 40%,#057888 100%);
     border:2px solid rgba(255,255,255,.12);
     border-radius:15px;
     padding:30px 28px;
-    transition:background .3s ease, border-color .3s ease, box-shadow .3s ease;
+    transition:background .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease;
     will-change:transform;
   }
 
@@ -650,7 +674,7 @@
     background: linear-gradient(150deg,#073D5F 20%,#057888 100%);
     border-color:#FFCE88;
     box-shadow:0 20px 40px -14px rgba(0,0,0,.45);
-    animation-play-state:paused;
+    animation:none;
     transform:translateY(-10px) rotate(0deg) scale(1.02);
   }
   .layanan-card .icon{
@@ -692,7 +716,6 @@
 
   /* ---------- Sambutan Pimpinan ---------- */
   .sambutan{
-    background:var(--mist);
     padding:90px 100px 110px;
     opacity: 0;
     transform:translateY(60px);
@@ -710,7 +733,8 @@
     gap:10px;
     color:var(--teal);
     font-size:12px;
-    font-weight:800;
+    font-weight:600;
+    font-family: plus-jakarta-sans, system-ui, sans-serif;
     letter-spacing:.12em;
   }
   .sambutan .eyebrow::before{
@@ -820,7 +844,6 @@
 
   /* ---------- Berita & Kegiatan ---------- */
   .berita{
-    background:var(--white);
     padding:90px 100px 120px;
     opacity:0;
     transform:translateY(60px);
@@ -840,10 +863,11 @@
   .berita .eyebrow{
     display:flex;
     align-items:center;
+    font-family: plus-jakarta-sans, system-ui, sans-serif;
     gap:10px;
     color:var(--teal);
     font-size:12px;
-    font-weight:800;
+    font-weight:600;
     letter-spacing:.12em;
   }
   .berita .eyebrow::before{
@@ -855,7 +879,7 @@
   .berita-head h2{
     margin-top:16px;
     font-size:32px;
-    font-weight:800;
+    font-weight:700;
     color:var(--navy);
     letter-spacing:-.01em;
   }
@@ -870,7 +894,10 @@
     border-bottom:2px solid var(--teal);
     padding-bottom:4px;
     white-space:nowrap;
+    transition:color .2s ease, gap .2s ease, opacity .2s ease;
   }
+  .berita-link:hover{color:var(--navy);opacity:.8;gap:10px;}
+  [data-theme="dark"] .berita-link:hover{color:#eaf3f5;}
 
   .berita-grid{
     margin-top:44px;
@@ -893,6 +920,11 @@
       radial-gradient(120% 120% at 15% 10%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
     box-shadow:0 30px 60px -24px rgba(11,34,51,.35);
+    transition:box-shadow .3s ease, transform .3s ease;
+  }
+  .berita-featured:hover{
+    box-shadow:0 34px 70px -22px rgba(11,34,51,.5);
+    transform:translateY(-4px);
   }
   .berita-featured .badge{
     align-self:flex-start;
@@ -949,6 +981,11 @@
     border-bottom:2px solid var(--teal);
     padding-bottom:5px;
     width:max-content;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .berita-featured .read-more:hover{
+    color:#5FC0D1;
+    border-color:#5FC0D1;
   }
 
   /* --- List berita kecil --- */
@@ -958,9 +995,14 @@
     gap:18px;
     padding:20px 0;
     border-bottom:1px solid #eef1f3;
+    cursor:pointer;
+    transition:padding-left .2s ease;
   }
   .berita-item:first-child{padding-top:0;}
   .berita-item:last-child{border-bottom:none;padding-bottom:0;}
+  .berita-item:hover{padding-left:6px;}
+  .berita-item:hover .berita-item-body .title{color:var(--teal);}
+  .berita-item:hover .berita-thumb{transform:scale(1.04);}
 
   .berita-thumb{
     flex-shrink:0;
@@ -970,6 +1012,7 @@
     background:
       radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--teal) 100%);
+    transition:transform .3s ease;
   }
   .berita-item-body .cat{
     color:var(--teal);
@@ -984,6 +1027,7 @@
     font-weight:700;
     color:var(--navy);
     line-height:1.4;
+    transition:color .2s ease;
   }
   .berita-item-body .meta{
     margin-top:10px;
@@ -1013,7 +1057,6 @@
 
   /* ---------- Agenda Kegiatan ---------- */
   .agenda{
-    background:var(--mist);
     padding:90px 100px 120px;
     opacity:0;
     transform:translateY(60px);
@@ -1026,10 +1069,11 @@
   .agenda .eyebrow{
     display:flex;
     align-items:center;
+    font-family: plus-jakarta-sans, system-ui, sans-serif;
     gap:10px;
     color:var(--teal);
     font-size:12px;
-    font-weight:800;
+    font-weight:600;
     letter-spacing:.12em;
   }
   .agenda .eyebrow::before{
@@ -1041,7 +1085,7 @@
   .agenda-inner > h2{
     margin-top:16px;
     font-size:32px;
-    font-weight:800;
+    font-weight:700;
     color:var(--navy);
     letter-spacing:-.01em;
   }
@@ -1085,8 +1129,9 @@
     display:flex;align-items:center;justify-content:center;
     cursor:pointer;
     font-size:13px;
+    transition:background .2s ease, border-color .2s ease, color .2s ease;
   }
-  .agenda-cal-nav button:hover{background:var(--mist);}
+  .agenda-cal-nav button:hover{background:var(--mist);border-color:var(--teal);color:var(--teal);}
   .agenda-cal-nav .today-btn{
     width:auto;
     border-radius:8px;
@@ -1129,8 +1174,11 @@
     color:var(--navy);
     border-radius:10px;
     cursor:pointer;
+    transition:background .2s ease, color .2s ease;
   }
+  .agenda-day:hover{background:rgba(20,128,140,.1);color:var(--teal);}
   .agenda-day.muted{color:#c7d0d4;font-weight:500;}
+  .agenda-day.muted:hover{background:rgba(20,128,140,.06);color:#9aa8af;}
   .agenda-day.today{
     background:rgba(20,128,140,.08);
     border:1.5px solid var(--teal);
@@ -1269,7 +1317,6 @@
   }
   /* ---------- Galeri Kegiatan ---------- */
 .galeri{
-  background:var(--white);
   padding:90px 100px 120px;
   opacity:0;
   transform:translateY(60px);
@@ -1289,10 +1336,11 @@
 .galeri .eyebrow{
   display:flex;
   align-items:center;
+  font-family: plus-jakarta-sans, system-ui, sans-serif;
   gap:10px;
   color:var(--teal);
   font-size:12px;
-  font-weight:800;
+  font-weight:600;
   letter-spacing:.12em;
 }
 .galeri .eyebrow::before{
@@ -1319,7 +1367,10 @@
   border-bottom:2px solid var(--teal);
   padding-bottom:4px;
   white-space:nowrap;
+  transition:color .2s ease, gap .2s ease, opacity .2s ease;
 }
+.galeri-link:hover{color:var(--navy);opacity:.8;gap:10px;}
+[data-theme="dark"] .galeri-link:hover{color:#eaf3f5;}
 
 /* --- Filter pills --- */
 .galeri-filters{
@@ -1346,6 +1397,7 @@
   border-color:var(--navy);
   color:var(--white);
 }
+.galeri-filter.active:hover{color:var(--white);}
 
 /* --- Grid bento --- */
 .galeri-grid{
@@ -1392,6 +1444,11 @@
   width:34px;height:34px;
   color:rgba(255,255,255,.32);
   z-index:1;
+  transition:color .3s ease, transform .3s ease;
+}
+.galeri-card:hover .icon{
+  color:rgba(255,255,255,.55);
+  transform:scale(1.1);
 }
 .galeri-card .icon svg{
   width:100%;height:100%;
@@ -1424,7 +1481,6 @@
 
 /* ---------- Akses Cepat & Dokumen ---------- */
 .akses-dokumen{
-  background:var(--mist);
   padding:90px 100px 120px;
   opacity:0;
   transform:translateY(60px);
@@ -1443,10 +1499,11 @@
 .akses-col .eyebrow{
   display:flex;
   align-items:center;
+  font-family: plus-jakarta-sans, system-ui, sans-serif;
   gap:10px;
   color:var(--teal);
   font-size:12px;
-  font-weight:800;
+  font-weight:600;
   letter-spacing:.12em;
 }
 .akses-col .eyebrow::before{
@@ -1565,13 +1622,10 @@
   cursor:pointer;
   transition:.2s ease;
 }
-.dl-btn svg{
-  width:16px;height:16px;
-  stroke:currentColor;
-  fill:none;
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+.dl-btn:hover{
+  border-color:var(--teal);
+  color:var(--teal);
+  background:rgba(20,128,140,.08);
 }
 .akses-item:hover .dl-btn{
   border-color:var(--teal);
@@ -1584,27 +1638,53 @@
   .akses-dokumen-inner{grid-template-columns:1fr;gap:44px;}
 }
 
+/* ---------- Pola Batik (satu gambar besar saja, tidak diulang/ditile, ikut discroll bersama halaman) ---------- */
+.konten-batik{
+  position:relative;
+  background-color:#14839C1A;
+  background-image:url('{{ asset('images/pola-batik.png') }}');
+  background-repeat:no-repeat;
+  background-position:center top;
+  background-size:5000px auto;
+  /* sengaja TIDAK pakai background-attachment:fixed, supaya gambar ikut scroll natural bersama halaman */
+}
+
+@media (max-width:900px){
+  .konten-batik{background-size:3000px auto;}
+  .layanan::before{background-size:3000px auto;}
+}
+
 /* ---------- CTA Bantuan Teknis ---------- */
 .cta-bantuan{
   position:relative;
   background:linear-gradient(120deg, var(--navy) 0%, var(--navy) 55%, var(--teal) 100%);
-  padding:56px 100px;
+  padding:56px 100px 30px;
   clip-path: polygon(0 0, 100% 34px, 100% 100%, 0 100%);
   margin-top:-35px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  border-bottom:3px solid var(--teal);
+}
+
+.cta-bantuan-top{
+  width:100%;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:30px;
   flex-wrap:wrap;
+  padding-bottom:38px;
 }
 
 .cta-bantuan .eyebrow{
   display:flex;
   align-items:center;
+  font-family: plus-jakarta-sans, system-ui, sans-serif;
   gap:10px;
   color:rgba(255,255,255,.65);
   font-size:12px;
-  font-weight:800;
+  font-weight:600;
   letter-spacing:.12em;
 }
 .cta-bantuan .eyebrow::before{
@@ -1623,6 +1703,17 @@
   max-width:520px;
 }
 .cta-bantuan h2 .accent{color:var(--teal);}
+
+.cta-footer-img{
+  display:block;
+  width:280px;
+  max-width:60%;
+  height:auto;
+  margin:0 auto;
+  margin-bottom: -140px;
+  pointer-events:none;
+  user-select:none;
+}
 
 .cta-btn{
   display:flex;
@@ -1660,20 +1751,19 @@
 
 @media (max-width:900px){
   .cta-bantuan{
-    padding:60px 20px 40px;
+    padding:60px 20px 24px;
     clip-path:polygon(0 20px, 100% 0, 100% 100%, 0 100%);
+  }
+  .cta-bantuan-top{
     flex-direction:column;
     align-items:flex-start;
+    padding-bottom:28px;
   }
   .cta-bantuan h2{font-size:20px;}
   .cta-btn{width:100%;justify-content:center;}
+  .cta-footer-img{width:220px;max-width:70%;}
 }
 
-.footer-divider{
-  margin-top: -1px;
-    height: 3px;
-    background:linear-gradient(10deg, #057888 0%, #0b2233 55% ,#0b2233 100%);
-}
 /* ---------- Footer ---------- */
 .footer{
   background:var(--navy);
@@ -1695,9 +1785,9 @@
   object-fit:contain;
 }
 
-.footer-brand-text .name{font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
+.footer-brand-text .name{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
 
-.footer-brand-text .sub{font-size:10px;letter-spacing:.08em;color: var(--white);;font-weight:600;}
+.footer-brand-text .sub{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:10px;letter-spacing:.08em;color: var(--white);;font-weight:600;}
 
 .footer-desc{
   margin-top:18px;
@@ -1764,7 +1854,7 @@
   font-size:11px;
   color:var(--teal);
 }
-.footer-links a:hover{color:var(--white);}
+.footer-links a:hover{color:var(--white);gap:10px;}
 
 /* --- Kolom kontak --- */
 .footer-contact{
@@ -1826,6 +1916,7 @@
 [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
 [data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
 [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
+[data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
 [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
 [data-theme="dark"] .nav-links li.active::after{background:#5FC0D1;}
 [data-theme="dark"] .nav-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
@@ -1842,10 +1933,13 @@
   background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
 }
 [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
-[data-theme="dark"] .agenda-cal-nav button:hover{background:rgba(255,255,255,.08);}
+[data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+[data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+[data-theme="dark"] .agenda-cal-nav button:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
 [data-theme="dark"] .agenda-cal-nav .today-btn{color:#5FC0D1;border-color:rgba(95,192,209,.35);}
 [data-theme="dark"] .galeri-filter:hover{border-color:#5FC0D1;color:#5FC0D1;}
 [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
+[data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
 [data-theme="dark"] .profile-name{color:#eaf3f5;}
 [data-theme="dark"] .logout-btn{color:#ff8f8a;border-color:rgba(255,143,138,.35);}
 [data-theme="dark"] .logout-btn:hover{background:#b0413e;color:#fff;border-color:#b0413e;}
@@ -1855,13 +1949,9 @@
   [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
 }
 
-[data-theme="dark"] .profil,
-[data-theme="dark"] .sambutan,
-[data-theme="dark"] .berita,
-[data-theme="dark"] .agenda,
-[data-theme="dark"] .galeri,
-[data-theme="dark"] .akses-dokumen{
-  background:#0b1720;
+[data-theme="dark"] .konten-batik{
+  background-color:#0b1720;
+  background-image:none;
 }
 
 [data-theme="dark"] .profil .eyebrow,
@@ -1893,8 +1983,6 @@
 [data-theme="dark"] .feature-row{border-top-color:rgba(255,255,255,.1);}
 [data-theme="dark"] .feature .title{color:#eaf3f5;}
 [data-theme="dark"] .feature .desc{color:#8ea0a8;}
-[data-theme="dark"] .profil-stat-card{background:#122530;box-shadow:10px 10px 34px -14px rgba(0,0,0,.5);}
-[data-theme="dark"] .profil-stat-card .label{color:#8ea0a8;}
 
 [data-theme="dark"] .sambutan-card{background:#122530;box-shadow:0 40px 70px -30px rgba(0,0,0,.6);}
 [data-theme="dark"] .sambutan-content .desc{color:#8ea0a8;}
@@ -1903,12 +1991,14 @@
 
 [data-theme="dark"] .berita-item{border-bottom-color:rgba(255,255,255,.08);}
 [data-theme="dark"] .berita-item-body .title{color:#eaf3f5;}
+[data-theme="dark"] .berita-item:hover .berita-item-body .title{color:#5FC0D1;}
 [data-theme="dark"] .berita-item-body .meta{color:#8ea0a8;}
 [data-theme="dark"] .berita-link{color:#5FC0D1;border-bottom-color:#5FC0D1;}
 
 [data-theme="dark"] .agenda-cal{background:#122530;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);}
 [data-theme="dark"] .agenda-cal-daynames span{color:#6d8189;}
 [data-theme="dark"] .agenda-day{color:#eaf3f5;}
+[data-theme="dark"] .agenda-day:hover{background:rgba(95,192,209,.12);color:#5FC0D1;}
 [data-theme="dark"] .agenda-day.muted{color:#3d4d54;}
 [data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.12);}
 [data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
@@ -1920,6 +2010,7 @@
 [data-theme="dark"] .akses-item-body .title{color:#eaf3f5;}
 [data-theme="dark"] .akses-item-body .desc{color:#8ea0a8;}
 [data-theme="dark"] .akses-item.dokumen .akses-icon{background:rgba(255,255,255,.08);color:#c3cdd2;}
+[data-theme="dark"] .dl-btn:hover{background:rgba(255,255,255,.1);border-color:#5FC0D1;color:#5FC0D1;}
 </style>
 <script>
   if (localStorage.getItem('theme') === 'dark') {
@@ -1962,34 +2053,22 @@
         </div>
       </li>
       <li><a href="#layanan">Layanan <span class="caret"></span></a></li>
-      <li><a href="#">Informasi <span class="caret"></span></a></li>
-      <li><a href="#">Galeri</a></li>
-      <li><a href="#">Kontak</a></li>
+      <li><a href="#Informasi">Informasi <span class="caret"></span></a></li>
+      <li><a href="{{ route('galeri') }}">Galeri</a></li>
+      <li><a href="{{ route('kontak') }}">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
       <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       <button class="lang-btn">EN</button>
-     @auth
-        <div class="profile-box">
-          <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=0e5f6b&color=fff&size=128" alt="Foto profil" class="profile-avatar">
-          <div>
-            <div class="profile-name">{{ auth()->user()->name }}</div>
-          </div>
-        </div>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST">
-          @csrf
-          <button type="submit" class="logout-btn">Logout</button>
-        </form>
-
-      @else
         <a href="{{ route('login') }}" class="btn-login">Masuk</a>
-      @endauth
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
+
+  <div class="konten-batik">
 
   <header class="hero">
     <div class="hero-slider">
@@ -2008,113 +2087,91 @@
   </header>
 
   <section class="stats-bar">
-    <div class="stat">
-      <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-      </div>
-      <div>
-        <div class="stat-num" data-target="1250+">0</div>
-        <div class="stat-label">Aplikasi Terkelola</div>
-      </div>
-    </div>
-    <div class="stat">
-      <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg>
-      </div>
-      <div>
-        <div class="stat-num" data-target="135">0</div>
-        <div class="stat-label">Karyawan Pustekinfo</div>
-      </div>
-    </div>
-    <div class="stat">
-      <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <div>
-        <div class="stat-num" data-target="12400">0</div>
-        <div class="stat-label">Pengguna Terlayani</div>
-      </div>
-    </div>
-    <div class="stat">
-      <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-      </div>
-      <div>
-        <div class="stat-num" data-target="3.57">0</div>
-        <div class="stat-label">Indeks SPBE</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="spacer"></div>
-
-  {{-- ================= PROFIL SINGKAT ================= --}}
-  <section id="profil" class="profil">
-    <div class="profil-grid">
-
-      <div class="profil-media">
-        <div class="profil-media-frame">
-          <span class="profil-badge">TENTANG KAMI</span>
+      @php $icons = [
+        'apps' => '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
+        'karyawan' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg>',
+        'pengguna' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+        'spbe' => '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>',
+      ]; @endphp
+      @forelse($stats as $stat)
+        <div class="stat">
+          <div class="stat-icon">{!! $icons[$stat->key] ?? $icons['apps'] !!}</div>
+          <div>
+            <div class="stat-num" data-target="{{ $stat->value }}" data-suffix="{{ $stat->suffix }}" data-decimals="{{ $stat->decimals }}">0</div>
+            <div class="stat-label">{{ $stat->label }}</div>
+          </div>
         </div>
-        <div class="profil-stat-card">
-          <div class="num" data-target="40+">0</div>
-          <div class="label">Tahun melayani</div>
-        </div>
-      </div>
+      @empty
+        <div class="stat"><div><div class="stat-label">Belum ada data statistik</div></div></div>
+      @endforelse
+    </section>
+      <div class="spacer"></div>
 
-      <div class="profil-copy">
-        <div class="eyebrow">PROFIL SINGKAT</div>
-        <h2>Unit pendukung teknologi informasi lembaga</h2>
-        <p>Bertanggung jawab atas pengelolaan jaringan, sistem informasi, data, dan keamanan siber di lingkungan lembaga, agar seluruh proses kerja berjalan efisien dan akuntabel.</p>
+      {{-- Pembungkus: satu pola batik menyatu untuk seluruh section di bawah ini (Profil s/d Akses & Dokumen) --}}
 
-        <div class="profil-features">
-          <div class="feature-row">
-            <div class="feature">
-              <div class="icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="4 6 5.5 7.5 8 5"></polyline>
-                      <line x1="10" y1="6" x2="20" y2="6"></line><polyline points="4 12 5.5 13.5 8 11"></polyline><line x1="10" y1="12" x2="20" y2="12"></line>
-                      <polyline points="4 18 5.5 19.5 8 17"></polyline><line x1="10" y1="18" x2="20" y2="18"></line>
-                  </svg>
-              </div>
-              <div class="title">Tugas pokok</div>
-              <div class="desc">Mengelola infrastruktur TI, jaringan, dan pusat data.</div>
-            </div>
-            <div class="feature">
-              <div class="icon">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7"></rect><rect x="14" y="13" width="7" height="7"></rect><line x1="10" y1="7.5" x2="14" y2="7.5"></line><line x1="14" y1="7.5" x2="14" y2="16.5"></line></svg>
-              </div>
-              <div class="title">Fungsi utama</div>
-              <div class="desc">Mengembangkan dan memelihara sistem lintas unit kerja.</div>
+      {{-- ================= PROFIL SINGKAT ================= --}}
+      <section id="profil" class="profil">
+        <div class="profil-grid">
+
+          <div class="profil-media">
+            <div class="profil-media-frame">
+              <span class="profil-badge">TENTANG KAMI</span>
             </div>
           </div>
-          <div class="feature-row">
-            <div class="feature">
-              <div class="icon">
-               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L5 5v6c0 5 3.5 9.5 7 11 3.5-1.5 7-6 7-11V5l-7-3z"></path><polyline points="9.5 11.5 11.5 13.5 15 10"></polyline></svg>
-               </div>
-              <div class="title">Keamanan</div>
-              <div class="desc">Menjaga data sesuai standar ISO 27001.</div>
-            </div>
-            <div class="feature">
-              <div class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="8" r="3"></circle><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"></path><path d="M13 19c0-2.5 2-4.5 5-4.5"></path></svg>
-              </div>
-              <div class="title">Pelayanan</div>
-              <div class="desc">Dukungan teknis responsif untuk seluruh pengguna.</div>
-            </div>
-          </div>
-      </div>
 
-    </div>
-  </section>
+          <div class="profil-copy">
+            <div class="eyebrow">PROFIL SINGKAT</div>
+            <h2>Unit pendukung teknologi informasi lembaga</h2>
+            <p>Bertanggung jawab atas pengelolaan jaringan, sistem informasi, data, dan keamanan siber di lingkungan lembaga, agar seluruh proses kerja berjalan efisien dan akuntabel.</p>
+
+            <div class="profil-features">
+              <div class="feature-row">
+                <div class="feature">
+                  <div class="icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="4 6 5.5 7.5 8 5"></polyline>
+                          <line x1="10" y1="6" x2="20" y2="6"></line><polyline points="4 12 5.5 13.5 8 11"></polyline><line x1="10" y1="12" x2="20" y2="12"></line>
+                          <polyline points="4 18 5.5 19.5 8 17"></polyline><line x1="10" y1="18" x2="20" y2="18"></line>
+                      </svg>
+                  </div>
+                  <div class="title">Tugas pokok</div>
+                  <div class="desc">Mengelola infrastruktur TI, jaringan, dan pusat data.</div>
+                </div>
+                <div class="feature">
+                  <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7"></rect><rect x="14" y="13" width="7" height="7"></rect><line x1="10" y1="7.5" x2="14" y2="7.5"></line><line x1="14" y1="7.5" x2="14" y2="16.5"></line></svg>
+                  </div>
+                  <div class="title">Fungsi utama</div>
+                  <div class="desc">Mengembangkan dan memelihara sistem lintas unit kerja.</div>
+                </div>
+              </div>
+              <div class="feature-row">
+                <div class="feature">
+                  <div class="icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L5 5v6c0 5 3.5 9.5 7 11 3.5-1.5 7-6 7-11V5l-7-3z"></path><polyline points="9.5 11.5 11.5 13.5 15 10"></polyline></svg>
+                  </div>
+                  <div class="title">Keamanan</div>
+                  <div class="desc">Menjaga data sesuai standar ISO 27001.</div>
+                </div>
+                <div class="feature">
+                  <div class="icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="8" r="3"></circle><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"></path><path d="M13 19c0-2.5 2-4.5 5-4.5"></path></svg>
+                  </div>
+                  <div class="title">Pelayanan</div>
+                  <div class="desc">Dukungan teknis responsif untuk seluruh pengguna.</div>
+                </div>
+              </div>
+          </div>
+
+        </div>
+      </section>
 
   {{-- ================= APA YANG KAMI KERJAKAN (LAYANAN) ================= --}}
   <section id="layanan" class="layanan">
     <div class="layanan-inner">
       <div class="eyebrow">APA YANG KAMI KERJAKAN</div>
-      <h2>Layanan teknologi informasi menyeluruh</h2>
+      <h2>Layanan teknologi informasi</h2>
 
       <div class="layanan-grid">
         <div class="layanan-card">
@@ -2174,12 +2231,10 @@
       <div class="eyebrow">SAMBUTAN PIMPINAN</div>
 
       <div class="sambutan-card">
-        <div class="sambutan-photo">
-          {{-- ganti dengan foto asli kepala unit --}}
-          {{-- <img src="{{ asset('images/kepala-unit.jpg') }}" alt="Kepala Pustekinfo"> --}}
+                <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
           <div class="who">
-            <div class="name">Nama Kepala Unit</div>
-            <div class="role">KEPALA PUSTEKINFO</div>
+            <div class="name">{{ $leadership->name ?? 'Nama Kepala Unit' }}</div>
+            <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
           </div>
         </div>
 
@@ -2187,11 +2242,11 @@
           <div class="quote-mark"><span></span><span></span></div>
 
           <div class="eyebrow">SELAMAT DATANG</div>
-          <h2>Teknologi untuk pelayanan yang lebih baik</h2>
-          <p class="desc">Kami berkomitmen menghadirkan layanan teknologi informasi yang andal untuk mendukung seluruh kegiatan lembaga, dari sistem akademik hingga keamanan data.</p>
+          <h2>{{ $leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik' }}</h2>
+          <p class="desc">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
 
-          <div class="signature">Nama Kepala Unit</div>
-          <div class="sign-role">Kepala Pusat Teknologi Informasi</div>
+          <div class="signature">{{ $leadership->name ?? 'Nama Kepala Unit' }}</div>
+          <div class="sign-role">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
         </div>
       </div>
     </div>
@@ -2211,109 +2266,42 @@
 
       <div class="berita-grid">
 
-        <div class="berita-featured">
-          <span class="badge">SERTIFIKASI</span>
+        <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ asset('storage/'.$featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
+          <span class="badge">{{ $featuredNews->category ?? 'BERITA' }}</span>
 
           <div class="berita-featured-body">
-            <h3>Sertifikasi ISO 27001:2022 resmi diperoleh Pustekinfo</h3>
-            <p>Setelah melalui proses audit menyeluruh selama enam bulan, sistem manajemen keamanan informasi Pustekinfo dinyatakan memenuhi standar internasional ISO 27001:2022.</p>
-
-            <div class="meta">
-              <span>
-                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                09 Juli 2025
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                Humas Pustekinfo
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                4 menit baca
-              </span>
-            </div>
-
-            <a href="#" class="read-more">BACA SELENGKAPNYA</a>
+            <h3>{{ $featuredNews->title ?? 'Belum ada berita utama' }}</h3>
+            @if($featuredNews)
+              <p>{{ $featuredNews->excerpt }}</p>
+              <div class="meta">
+                <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $featuredNews->published_at?->format('d M Y') }}</span>
+                <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {{ $featuredNews->author }}</span>
+                <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $featuredNews->reading_minutes }} menit baca</span>
+              </div>
+              <a href="#" class="read-more">BACA SELENGKAPNYA</a>
+            @endif
           </div>
         </div>
 
         <div class="berita-list">
-
-          <div class="berita-item">
-            <div class="berita-thumb"></div>
-            <div class="berita-item-body">
-              <div class="cat">Pengumuman</div>
-              <div class="title">Sosialisasi penerapan indeks PMD 2026</div>
-              <div class="meta">
-                <span>
-                  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  17 Nov 2025
-                </span>
-                <span>
-                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  3 mnt
-                </span>
+          @forelse($latestNews as $news)
+            <div class="berita-item">
+              <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset('storage/'.$news->image) }}');background-size:cover;background-position:center;" @endif></div>
+              <div class="berita-item-body">
+                <div class="cat">{{ $news->category }}</div>
+                <div class="title">{{ $news->title }}</div>
+                <div class="meta">
+                  <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $news->published_at?->format('d M Y') }}</span>
+                  <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $news->reading_minutes }} mnt</span>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="berita-item">
-            <div class="berita-thumb"></div>
-            <div class="berita-item-body">
-              <div class="cat">Sistem</div>
-              <div class="title">Pembaruan sistem informasi terintegrasi</div>
-              <div class="meta">
-                <span>
-                  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  30 Okt 2025
-                </span>
-                <span>
-                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  2 mnt
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="berita-item">
-            <div class="berita-thumb"></div>
-            <div class="berita-item-body">
-              <div class="cat">Pelatihan</div>
-              <div class="title">Pelatihan literasi digital bagi staf</div>
-              <div class="meta">
-                <span>
-                  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  12 Okt 2025
-                </span>
-                <span>
-                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  5 mnt
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="berita-item">
-            <div class="berita-thumb"></div>
-            <div class="berita-item-body">
-              <div class="cat">Layanan</div>
-              <div class="title">Peluncuran portal layanan mandiri</div>
-              <div class="meta">
-                <span>
-                  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  28 Sep 2025
-                </span>
-                <span>
-                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  3 mnt
-                </span>
-              </div>
-            </div>
-          </div>
-
+          @empty
+            <p style="color:#8a97a0;font-size:13.5px;">Belum ada berita lain.</p>
+          @endforelse
+        </div>
         </div>
       </div>
-    </div>
   </section>
 
   {{-- ================= AGENDA KEGIATAN ================= --}}
@@ -2328,7 +2316,7 @@
         {{-- Kalender --}}
         <div class="agenda-cal">
           <div class="agenda-cal-head">
-            <div class="month">Juli 2026</div>
+            <div class="month">{{ $monthLabel }}</div>
             <div class="agenda-cal-nav">
               <button aria-label="Bulan sebelumnya">‹</button>
               <button aria-label="Bulan berikutnya">›</button>
@@ -2341,47 +2329,15 @@
           </div>
 
           <div class="agenda-cal-days">
-            <div class="agenda-day muted">29</div>
-            <div class="agenda-day muted">30</div>
-            <div class="agenda-day">1</div>
-            <div class="agenda-day">2</div>
-            <div class="agenda-day">3</div>
-            <div class="agenda-day">4</div>
-            <div class="agenda-day">5</div>
-
-            <div class="agenda-day">6</div>
-            <div class="agenda-day">7</div>
-            <div class="agenda-day">8</div>
-            <div class="agenda-day">9</div>
-            <div class="agenda-day today">10<span class="dot c3"></span></div>
-            <div class="agenda-day">11</div>
-            <div class="agenda-day">12</div>
-
-            <div class="agenda-day">13</div>
-            <div class="agenda-day">14<span class="dot c1"></span></div>
-            <div class="agenda-day">15</div>
-            <div class="agenda-day">16</div>
-            <div class="agenda-day">17</div>
-            <div class="agenda-day">18</div>
-            <div class="agenda-day">19</div>
-
-            <div class="agenda-day">20</div>
-            <div class="agenda-day">21</div>
-            <div class="agenda-day">22<span class="dot c2"></span></div>
-            <div class="agenda-day">23</div>
-            <div class="agenda-day">24</div>
-            <div class="agenda-day">25</div>
-            <div class="agenda-day">26</div>
-
-            <div class="agenda-day">27</div>
-            <div class="agenda-day">28<span class="dot c3"></span></div>
-            <div class="agenda-day">29</div>
-            <div class="agenda-day">30</div>
-            <div class="agenda-day">31</div>
-            <div class="agenda-day muted">1</div>
-            <div class="agenda-day muted">2</div>
+            @foreach($calendarDays as $day)
+              <div class="agenda-day {{ $day['muted'] ? 'muted' : '' }} {{ $day['today'] ? 'today' : '' }}">
+                {{ $day['day'] }}
+                @foreach($day['events'] as $ev)
+                  <span class="dot {{ $ev->color_tag }}"></span>
+                @endforeach
+              </div>
+            @endforeach
           </div>
-
           <div class="agenda-legend">
             <span><i class="c1"></i>Tujuan Agenda 1</span>
             <span><i class="c2"></i>Tujuan Agenda 2</span>
@@ -2392,29 +2348,28 @@
         {{-- Panel Hari Ini --}}
         <div class="agenda-today">
           <div class="agenda-today-head">
-            <div class="label">Hari Ini</div>
-            <div class="date">10 Jul 2026</div>
-          </div>
-
-          <div class="agenda-event">
-            <div class="agenda-event-top">
-              <span class="bullet"></span>
-              <div class="title">Rapat Koordinasi Tim TI</div>
+              <div class="label">Hari Ini</div>
+              <div class="date">{{ now()->format('d M Y') }}</div>
             </div>
-            <div class="agenda-event-meta">
-              <span>
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                10.00 WIB
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Ruang rapat lantai 5
-              </span>
-            </div>
-          </div>
 
-          {{-- Kalau tidak ada agenda, tampilkan ini dan hapus .agenda-event di atas --}}
-          {{-- <div class="agenda-today-empty">Tidak ada agenda hari ini</div> --}}
+            @forelse($todayEvents as $event)
+              <div class="agenda-event">
+                <div class="agenda-event-top">
+                  <span class="bullet"></span>
+                  <div class="title">{{ $event->title }}</div>
+                </div>
+                <div class="agenda-event-meta">
+                  @if($event->event_time)
+                    <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ \Carbon\Carbon::parse($event->event_time)->format('H.i') }} WIB</span>
+                  @endif
+                  @if($event->location)
+                    <span><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> {{ $event->location }}</span>
+                  @endif
+                </div>
+              </div>
+            @empty
+              <div class="agenda-today-empty">Tidak ada agenda hari ini</div>
+            @endforelse
         </div>
 
       </div>
@@ -2442,47 +2397,13 @@
     </div>
 
     <div class="galeri-grid" id="galeriGrid">
-
-      <div class="galeri-card big" data-category="seremoni">
-        {{-- <img src="{{ asset('images/galeri-1.jpg') }}" alt="Penghargaan SPBE"> --}}
-        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
-      </div>
-
-      <div class="galeri-card med" data-category="kegiatan">
-        {{-- <img src="{{ asset('images/galeri-2.jpg') }}" alt="Rapat Koordinasi"> --}}
-        <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-      </div>
-
-      <div class="galeri-card med" data-category="kerjasama">
-        {{-- <img src="{{ asset('images/galeri-3.jpg') }}" alt="Kunjungan Kerja"> --}}
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-      </div>
-
-      <div class="galeri-card wide" data-category="kerjasama">
-        {{-- <img src="{{ asset('images/galeri-4.jpg') }}" alt="Penandatanganan MoU"> --}}
-        <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-      </div>
-
-      <div class="galeri-card small" data-category="kegiatan">
-        {{-- <img src="{{ asset('images/galeri-5.jpg') }}" alt="Sosialisasi Indeks SPBE"> --}}
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></div>
-      </div>
-
-      <div class="galeri-card small" data-category="pelatihan">
-        {{-- <img src="{{ asset('images/galeri-6.jpg') }}" alt="Pelatihan Keamanan Siber"> --}}
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></div>
-      </div>
-
-      <div class="galeri-card small" data-category="kegiatan">
-        {{-- <img src="{{ asset('images/galeri-7.jpg') }}" alt="Peluncuran Portal"> --}}
-        <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div>
-      </div>
-
-      <div class="galeri-card small" data-category="seremoni">
-        {{-- <img src="{{ asset('images/galeri-8.jpg') }}" alt="Audit ISO 27001"> --}}
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="15" y1="9" x2="15" y2="9.01"/><line x1="15" y1="13" x2="15" y2="13.01"/></svg></div>
-      </div>
-
+      @forelse($galleries as $item)
+        <div class="galeri-card {{ $item->size }}" data-category="{{ $item->category }}">
+          <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
+        </div>
+      @empty
+        <p style="color:#8a97a0;">Belum ada foto galeri.</p>
+      @endforelse
     </div>
   </div>
 </section>
@@ -2584,24 +2505,27 @@
         </div>
       </div>
     </div>
-
   </div>
-</section>
+  </section>
+  </div>
+  {{-- /.konten-batik --}}
 
 {{-- ================= CTA BANTUAN TEKNIS ================= --}}
 <section class="cta-bantuan">
-  <div>
-    <div class="eyebrow">BUTUH BANTUAN TEKNIS?</div>
-    <h2>Tim kami siap membantu <br> kendala teknis Anda, <span class="accent">kapan saja.</span></h2>
+  <div class="cta-bantuan-top">
+    <div>
+      <div class="eyebrow">BUTUH BANTUAN TEKNIS?</div>
+      <h2>Tim kami siap membantu <br> kendala teknis Anda, <span class="accent">kapan saja.</span></h2>
+    </div>
+
+    <button class="cta-btn">
+      <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+      LIHAT STATUS LAYANAN
+    </button>
   </div>
 
-  <button class="cta-btn">
-    <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
-    LIHAT STATUS LAYANAN
-  </button>
+  <img src="{{ asset('images/dpr-footer.png') }}" alt="Gedung DPR RI" class="cta-footer-img">
 </section>
-
-<div class="footer-divider"></div>
 
 {{-- ================= FOOTER ================= --}}
 <footer class="footer">
@@ -2619,9 +2543,9 @@
       <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
 
       <div class="footer-social">
-        <a href="https://www.instagram.com/pustekinfo.dprri?igsh=MTY1cDdvY21seThxMQ==" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
-        <a href="https://youtube.com/@pustekinfodprri?si=eZ7oP2mQUjhabPSB" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
-        <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
+        <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+        <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
+        <a href="{{ $setting->x_url ?? '#' }}" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
       </div>
     </div>
 
@@ -2653,15 +2577,15 @@
       <div class="footer-contact">
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Gedung Setjen DPR RI Lantai 4, Jalan Jenderal Gatot Subroto, Senayan, Jakarta Pusat
+          {{ $setting->address ?? 'Alamat belum diatur' }}
         </div>
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          (021) 555-0172
+          {{ $setting->phone ?? '-' }}
         </div>
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
-          pustekinfo@lembaga.go.id
+          {{ $setting->email ?? '-' }}
         </div>
       </div>
     </div>
@@ -2724,22 +2648,18 @@ navLinks.querySelectorAll("a").forEach(link => {
 
 function animateCounter(counter) {
     const target = parseFloat(counter.dataset.target);
+    const suffix = counter.dataset.suffix || '';
+    const decimals = parseInt(counter.dataset.decimals || '0');
     const duration = 1500;
     const startTime = performance.now();
 
     function update(currentTime) {
         const progress = Math.min((currentTime - startTime) / duration, 1);
         const value = target * progress;
-
-        if (target === 135) {
-            counter.innerText = Math.floor(value).toLocaleString("id-ID");
-        } else if (target === 3.57) {
-            counter.innerText = value.toFixed(2).replace(".", ",");
-        } else if (target === 1250) {
-            counter.innerText = Math.floor(value).toLocaleString("id-ID") + "+";
-        } else if (target === 12400) {
-            counter.innerText = (value / 1000).toFixed(1) + "K";
-        }
+        counter.innerText = value.toLocaleString("id-ID", {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals
+        }) + suffix;
 
         if (progress < 1) {
             requestAnimationFrame(update);

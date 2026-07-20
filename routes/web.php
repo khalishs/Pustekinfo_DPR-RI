@@ -3,12 +3,23 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\KontakController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\StatisticController;
+use App\Http\Controllers\Admin\NewsItemController;
+use App\Http\Controllers\Admin\AgendaEventController;
+use App\Http\Controllers\Admin\GalleryItemController;
+use App\Http\Controllers\Admin\LeadershipController;
+use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\HomeController;
+
 
 Route::view('/profil', 'profil')->name('profil');
+Route::view('/galeri', 'galeri')->name('galeri');
+Route::view('/kontak', 'kontak')->name('kontak');
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', function () {
     return view('login');
@@ -26,6 +37,10 @@ Route::post('/login', function (Request $request) {
     ], $request->boolean('remember'))) {
         $request->session()->regenerate();
 
+        if (Auth::user()->is_admin) {
+            return redirect('/admin')->with('status', 'Login berhasil.');
+        }
+
         return redirect()->intended('/')->with('status', 'Login berhasil.');
     }
 
@@ -41,3 +56,21 @@ Route::post('/logout', function (Request $request) {
 
     return redirect()->route('home');
 })->name('logout');
+
+Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
+    ->name('kontak.kirim');
+
+
+    Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
+    Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
+    Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('statistics', StatisticController::class)->except('show');
+    Route::resource('news', NewsItemController::class)->except('show');
+    Route::resource('agenda', AgendaEventController::class)->except('show')->parameters(['agenda' => 'agendum']);
+    Route::resource('gallery', GalleryItemController::class)->except('show');
+    Route::get('sambutan', [LeadershipController::class, 'edit'])->name('leadership.edit');
+    Route::put('sambutan', [LeadershipController::class, 'update'])->name('leadership.update');
+    Route::get('pengaturan', [SiteSettingController::class, 'edit'])->name('settings.edit');
+    Route::put('pengaturan', [SiteSettingController::class, 'update'])->name('settings.update');
+});
