@@ -7,6 +7,7 @@
 <title>Profil - Pustekinfo | Pusat Teknologi Informasi DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 <style>
   :root{
     --navy:#12242E;
@@ -61,7 +62,7 @@
   .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
   .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
   .nav-links{display:flex;align-items:center;gap:34px;}
-  .nav-links li a{font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
+  .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
   .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
   .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);}
@@ -104,8 +105,8 @@
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
     .brand-text{min-width:0;}
-    .brand-text .name{font-size:15px;white-space:nowrap;}
-    .brand-text .sub{font-size:6.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
+    .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color: #0F6B7F;;font-weight:600;}
     .nav-actions{gap:6px;flex-shrink:0;}
     .icon-btn{width:30px;height:30px;font-size:12px;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
@@ -189,7 +190,8 @@
   /* ================= GENERIC SECTION ================= */
   .eyebrow{
     display:flex;align-items:center;gap:8px;
-    color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.12em;
+    font-family: 'Work Sans', system-ui, sans-serif;
+    color:var(--teal);font-size:12px;font-weight:700;letter-spacing:.12em;
   }
   .eyebrow svg{
     width:16px;height:16px;flex-shrink:0;
@@ -217,8 +219,11 @@
 
   @media (max-width:900px){
     section.page-section{padding:60px 20px;}
+    .tabs-nav-sticky.show{
+        top:56px; /* sesuaikan dengan tinggi navbar mobile */
+    }
 
-    .tabs-scroll{
+    .tabs-scroll{    
     display:flex;
     justify-content:space-between;
     gap:0;
@@ -425,8 +430,8 @@
   .footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}
   .footer-brand-logo{width:50px;height:50px;object-fit:contain;}
-  .footer-brand-text .name{font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
-  .footer-brand-text .sub{font-size:10px;letter-spacing:.08em;color:var(--white);font-weight:600;}
+  .footer-brand-text .name{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
+  .footer-brand-text .sub{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:10px;letter-spacing:.08em;color:var(--white);font-weight:600;}
   .footer-desc{margin-top:18px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.75;max-width:260px;}
   .footer-social{margin-top:22px;display:flex;gap:10px;}
   .footer-social a{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:.2s ease;}
@@ -485,9 +490,9 @@
           </a>
         </div>
       </li>
-      <li><a href="{{ url('/') }}#layanan">Layanan <span class="caret">▾</span></a></li>
-      <li><a href="#">Informasi <span class="caret">▾</span></a></li>
-      <li><a href="#">Galeri</a></li>
+      <li><a href="{{ url('/') }}#layanan">Layanan</a></li>
+      <li><a href="#">Informasi </a></li>
+      <li><a href="{{ route('galeri') }}">Galeri</a></li>
       <li><a href="#">Kontak</a></li>
     </ul>
 
