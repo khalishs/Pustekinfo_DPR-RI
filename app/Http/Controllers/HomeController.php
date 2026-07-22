@@ -44,7 +44,7 @@ class HomeController extends Controller
             'featuredNews'  => NewsItem::where('is_featured', true)->latest('published_at')->first(),
             'latestNews'    => NewsItem::where('is_featured', false)->latest('published_at')->take(4)->get(),
             'todayEvents'   => AgendaEvent::whereDate('event_date', $today)->get(),
-            'galleries'     => GalleryItem::orderBy('sort_order')->get(),
+            'galleries' => GalleryItem::with('category')->orderBy('sort_order')->take(8)->get(),
             'setting'       => SiteSetting::first(),
             'calendarDays'  => $calendarDays,
             'monthLabel'    => $bulanIndo[$monthStart->month - 1] . ' ' . $monthStart->year,

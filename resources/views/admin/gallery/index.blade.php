@@ -13,7 +13,7 @@
       <tr>
         <td><img src="{{ asset('storage/'.$item->image) }}" style="width:70px;height:52px;object-fit:cover;border-radius:6px;"></td>
         <td>{{ $item->title ?? '-' }}</td>
-        <td style="text-transform:capitalize;">{{ $item->category }}</td>
+        <td>{{ $item->category->name ?? '-' }}</td>
         <td style="text-transform:capitalize;">{{ $item->size }}</td>
         <td>{{ $item->sort_order }}</td>
         <td class="row-actions">

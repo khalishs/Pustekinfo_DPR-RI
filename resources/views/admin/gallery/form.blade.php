@@ -7,8 +7,15 @@
     @if($item->exists) @method('PUT') @endif
 
     <div class="form-group">
-      <label>Judul / Keterangan (opsional)</label>
-      <input type="text" name="title" value="{{ old('title', $item->title) }}">
+      <label>Judul Kegiatan</label>
+      <input type="text" name="title" value="{{ old('title', $item->title) }}" required>
+      @error('title')<small class="error">{{ $message }}</small>@enderror
+      <small>Foto dengan judul kegiatan yang sama akan dihitung sebagai 1 kegiatan terdokumentasi.</small>
+    </div>
+
+    <div class="form-group">
+      <label>Deskripsi (opsional, tampil kalau dijadikan sorotan)</label>
+      <textarea name="description">{{ old('description', $item->description) }}</textarea>
     </div>
 
     <div class="form-group">
@@ -23,11 +30,14 @@
 
     <div class="form-group">
       <label>Kategori</label>
-      <select name="category" required>
-        @foreach(['pelatihan'=>'Pelatihan','kegiatan'=>'Kegiatan','kerjasama'=>'Kerjasama','seremoni'=>'Seremoni'] as $val => $label)
-          <option value="{{ $val }}" {{ old('category', $item->category) == $val ? 'selected' : '' }}>{{ $label }}</option>
+      <select name="category_id" required>
+        <option value="">— Pilih kategori —</option>
+        @foreach($categories as $cat)
+          <option value="{{ $cat->id }}" {{ old('category_id', $item->category_id) == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
         @endforeach
       </select>
+      @error('category_id')<small class="error">{{ $message }}</small>@enderror
+      <small>Kategori baru bisa ditambah di menu "Kategori Galeri".</small>
     </div>
 
     <div class="form-group">
@@ -38,12 +48,15 @@
         <option value="med" {{ old('size', $item->size) == 'med' ? 'selected' : '' }}>Sedang</option>
         <option value="small" {{ old('size', $item->size ?? 'small') == 'small' ? 'selected' : '' }}>Kecil</option>
       </select>
-      <small>Idealnya cuma 1 foto "Besar" per halaman.</small>
     </div>
 
     <div class="form-group">
       <label>Urutan tampil</label>
       <input type="number" name="sort_order" value="{{ old('sort_order', $item->sort_order ?? 0) }}" required>
+    </div>
+
+    <div class="form-group">
+      <label><input type="checkbox" name="is_featured" value="1" style="width:auto;display:inline-block;" {{ old('is_featured', $item->is_featured) ? 'checked' : '' }}> Jadikan sorotan di halaman galeri</label>
     </div>
 
     <button class="btn btn-primary">Simpan</button>

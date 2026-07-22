@@ -347,7 +347,6 @@
 
   @media (max-width:900px){
     .navbar{padding:10px 16px;gap:8px;}
-    .nav-links{display:none;}
 
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
@@ -355,9 +354,8 @@
     .brand-text .name{font-size:15px;white-space:nowrap;}
     .brand-text .sub{font-size:6.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-
     .burger{
-    display:none;
+    display:flex;
     flex-direction:column;
     justify-content:center;
     gap:5px;
@@ -386,7 +384,6 @@
     .profile-name{font-size:11.5px;max-width:80px;}
     .logout-btn{padding:6px 12px;font-size:11px;white-space:nowrap;}
 
-    .burger{display:flex;}
     .nav-links{
       display:none;
       position:fixed;
@@ -633,6 +630,7 @@
     content:"";
     position:absolute;
     inset:0;
+    border-radius:15px;
     background:radial-gradient(circle at top right, rgba(255,255,255,.14), transparent 45%);
     pointer-events:none;
 }
@@ -642,6 +640,7 @@
     border:2px solid rgba(255,255,255,.12);
     border-radius:15px;
     padding:30px 28px;
+    overflow: hidden;
     transition:background .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease;
     will-change:transform;
   }
@@ -1664,7 +1663,7 @@
   display:flex;
   flex-direction:column;
   align-items:center;
-  border-bottom:3px solid var(--teal);
+  border-bottom:5px solid #207E91;
 }
 
 .cta-bantuan-top{
@@ -1706,11 +1705,11 @@
 
 .cta-footer-img{
   display:block;
-  width:280px;
-  max-width:60%;
+  width:480px;
+  max-width:80%;
   height:auto;
   margin:0 auto;
-  margin-bottom: -140px;
+  margin-bottom: -215px;
   pointer-events:none;
   user-select:none;
 }
@@ -2020,115 +2019,115 @@
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="brand">
-        <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-      <div class="brand-text">
-        <div class="name">PUSTEKINFO</div>
-        <div class="sub">Sekretariat Jendral DPR RI</div>
-      </div>
-    </div>
-
-    <ul class="nav-links">
-      <li class="active"><a href="#">Beranda</a></li>
-      <li class="nav-item-dropdown" id="profilDropdown">
-        <a href="{{ route('profil') }}">Profil <span class="caret">▾</span></a>
-        <div class="nav-dropdown">
-          <a href="{{ route('profil') }}#tentang">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-            Tentang
-          </a>
-          <a href="{{ route('profil') }}#pimpinan">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-            Pimpinan
-          </a>
-          <a href="{{ route('profil') }}#struktur">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg></span>
-            Struktur Organisasi
-          </a>
-          <a href="{{ route('profil') }}#visi-misi">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
-            Visi dan Misi
-          </a>
+    <nav class="navbar">
+      <div class="brand">
+          <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
+        <div class="brand-text">
+          <div class="name">PUSTEKINFO</div>
+          <div class="sub">Sekretariat Jendral DPR RI</div>
         </div>
-      </li>
-      <li><a href="#layanan">Layanan <span class="caret"></span></a></li>
-      <li><a href="#Informasi">Informasi <span class="caret"></span></a></li>
-      <li><a href="{{ route('galeri') }}">Galeri</a></li>
-      <li><a href="{{ route('kontak') }}">Kontak</a></li>
-    </ul>
-
-    <div class="nav-actions">
-      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
-      <button class="lang-btn">EN</button>
-        <a href="{{ route('login') }}" class="btn-login">Masuk</a>
-      <button class="burger" id="burgerBtn" aria-label="Buka menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <div class="konten-batik">
-
-  <header class="hero">
-    <div class="hero-slider">
-      <div class="hero-slide active" style="background-image:url('{{ asset('images/Hero-Pict1.jpeg') }}')"></div>
-      <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict2.jpg') }}')"></div>
-      <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict3.jpg') }}')"></div>
-    </div>
-    <div class="hero-content">
-      <h1>Mendukung Kinerja DPR RI melalui Layanan <br> Teknologi Informasi yang <br> Terintegrasi.</h1>
-      <p>Pustekinfo menyediakan layanan teknologi informasi, pengelolaan infrastruktur, aplikasi, jaringan, dan keamanan informasi untuk mendukung operasional seluruh unit kerja secara efektif, aman, dan berkelanjutan.</p>
-      <div class="hero-actions">
-        <button class="btn btn-primary">Ajukan Layanan IT</button>
-        <button class="btn btn-ghost">Lihat Status Layanan</button>
       </div>
-    </div>
-  </header>
 
-  <section class="stats-bar">
-      @php $icons = [
-        'apps' => '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
-        'karyawan' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg>',
-        'pengguna' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-        'spbe' => '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>',
-      ]; @endphp
-      @forelse($stats as $stat)
-        <div class="stat">
-          <div class="stat-icon">{!! $icons[$stat->key] ?? $icons['apps'] !!}</div>
-          <div>
-            <div class="stat-num" data-target="{{ $stat->value }}" data-suffix="{{ $stat->suffix }}" data-decimals="{{ $stat->decimals }}">0</div>
-            <div class="stat-label">{{ $stat->label }}</div>
+      <ul class="nav-links">
+        <li class="active"><a href="#">Beranda</a></li>
+        <li class="nav-item-dropdown" id="profilDropdown">
+          <a href="{{ route('profil') }}">Profil <span class="caret">▾</span></a>
+          <div class="nav-dropdown">
+            <a href="{{ route('profil') }}#tentang">
+              <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+              Tentang
+            </a>
+            <a href="{{ route('profil') }}#pimpinan">
+              <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+              Pimpinan
+            </a>
+            <a href="{{ route('profil') }}#struktur">
+              <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg></span>
+              Struktur Organisasi
+            </a>
+            <a href="{{ route('profil') }}#visi-misi">
+              <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
+              Visi dan Misi
+            </a>
           </div>
+        </li>
+        <li><a href="#layanan">Layanan</a></li>
+        <li><a href="#Informasi">Informasi</a></li>
+        <li><a href="{{ route('galeri') }}">Galeri</a></li>
+        <li><a href="{{ route('kontak') }}">Kontak</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
+        <button class="lang-btn">EN</button>
+          <a href="{{ route('login') }}" class="btn-login">Masuk</a>
+        <button class="burger" id="burgerBtn" aria-label="Buka menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="konten-batik">
+
+    <header class="hero">
+      <div class="hero-slider">
+        <div class="hero-slide active" style="background-image:url('{{ asset('images/Hero-Pict1.jpeg') }}')"></div>
+        <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict2.jpg') }}')"></div>
+        <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict3.jpg') }}')"></div>
+      </div>
+      <div class="hero-content">
+        <h1>Mendukung Kinerja DPR RI melalui Layanan <br> Teknologi Informasi yang <br> Terintegrasi.</h1>
+        <p>Pustekinfo menyediakan layanan teknologi informasi, pengelolaan infrastruktur, aplikasi, jaringan, dan keamanan informasi untuk mendukung operasional seluruh unit kerja secara efektif, aman, dan berkelanjutan.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary">Ajukan Layanan IT</button>
+          <button class="btn btn-ghost">Lihat Status Layanan</button>
         </div>
-      @empty
-        <div class="stat"><div><div class="stat-label">Belum ada data statistik</div></div></div>
-      @endforelse
-    </section>
-      <div class="spacer"></div>
+      </div>
+    </header>
 
-      {{-- Pembungkus: satu pola batik menyatu untuk seluruh section di bawah ini (Profil s/d Akses & Dokumen) --}}
-
-      {{-- ================= PROFIL SINGKAT ================= --}}
-      <section id="profil" class="profil">
-        <div class="profil-grid">
-
-          <div class="profil-media">
-            <div class="profil-media-frame">
-              <span class="profil-badge">TENTANG KAMI</span>
+    <section class="stats-bar">
+        @php $icons = [
+          'apps' => '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
+          'karyawan' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg>',
+          'pengguna' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+          'spbe' => '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>',
+        ]; @endphp
+        @forelse($stats as $stat)
+          <div class="stat">
+            <div class="stat-icon">{!! $icons[$stat->key] ?? $icons['apps'] !!}</div>
+            <div>
+              <div class="stat-num" data-target="{{ $stat->value }}" data-suffix="{{ $stat->suffix }}" data-decimals="{{ $stat->decimals }}">0</div>
+              <div class="stat-label">{{ $stat->label }}</div>
             </div>
           </div>
+        @empty
+          <div class="stat"><div><div class="stat-label">Belum ada data statistik</div></div></div>
+        @endforelse
+      </section>
+        <div class="spacer"></div>
 
-          <div class="profil-copy">
-            <div class="eyebrow">PROFIL SINGKAT</div>
-            <h2>Unit pendukung teknologi informasi lembaga</h2>
-            <p>Bertanggung jawab atas pengelolaan jaringan, sistem informasi, data, dan keamanan siber di lingkungan lembaga, agar seluruh proses kerja berjalan efisien dan akuntabel.</p>
+        {{-- Pembungkus: satu pola batik menyatu untuk seluruh section di bawah ini (Profil s/d Akses & Dokumen) --}}
 
-            <div class="profil-features">
-              <div class="feature-row">
-                <div class="feature">
-                  <div class="icon">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        {{-- ================= PROFIL SINGKAT ================= --}}
+        <section id="profil" class="profil">
+          <div class="profil-grid">
+
+            <div class="profil-media">
+              <div class="profil-media-frame">
+                <span class="profil-badge">TENTANG KAMI</span>
+              </div>
+            </div>
+
+            <div class="profil-copy">
+              <div class="eyebrow">PROFIL SINGKAT</div>
+              <h2>Unit pendukung teknologi informasi lembaga</h2>
+              <p>Bertanggung jawab atas pengelolaan jaringan, sistem informasi, data, dan keamanan siber di lingkungan lembaga, agar seluruh proses kerja berjalan efisien dan akuntabel.</p>
+
+              <div class="profil-features">
+                <div class="feature-row">
+                  <div class="feature">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                           stroke-linecap="round" stroke-linejoin="round">
                           <polyline points="4 6 5.5 7.5 8 5"></polyline>
                           <line x1="10" y1="6" x2="20" y2="6"></line><polyline points="4 12 5.5 13.5 8 11"></polyline><line x1="10" y1="12" x2="20" y2="12"></line>
@@ -2179,7 +2178,7 @@
             <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
           </div>
           <div class="title">Jaringan &amp; internet</div>
-          <div class="desc">Pengelolaan konektivitas dan infrastruktur jaringan di seluruh area kerja.</div>
+          <div class="desc">Pengelolaan konektivitas dan infrastruktur jaringan.</div>
         </div>
 
         <div class="layanan-card">
@@ -2398,7 +2397,7 @@
 
     <div class="galeri-grid" id="galeriGrid">
       @forelse($galleries as $item)
-        <div class="galeri-card {{ $item->size }}" data-category="{{ $item->category }}">
+        <div class="galeri-card {{ $item->size }}" data-category="{{ $item->category->slug ?? '' }}">
           <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
         </div>
       @empty

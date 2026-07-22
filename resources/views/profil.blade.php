@@ -123,7 +123,7 @@
   .hero-profil{
     margin-top:70px;
     position:relative;
-    background:linear-gradient(150deg,var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
+    background:#073D5F;
     padding:90px 24px 0;
     overflow:hidden;
   }
@@ -412,15 +412,23 @@
     background:var(--white);border-radius:14px;padding:24px 22px;
     box-shadow:0 16px 32px -22px rgba(11,34,51,.2);
     transition:transform .25s ease, box-shadow .25s ease;
+    text-align: center;
   }
   .value-card:hover{transform:translateY(-6px);box-shadow:0 22px 38px -18px rgba(11,34,51,.3);}
   .value-icon{
     width:40px;height:40px;border-radius:10px;background:rgba(201,163,78,.14);color:var(--teal);
     display:flex;align-items:center;justify-content:center;
+    margin: 0 auto;
   }
   .value-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
   .value-card h4{margin-top:14px;font-size:14.5px;font-weight:700;color:var(--navy);}
-  .value-card p{margin-top:6px;font-size:12.5px;color:#8a97a0;line-height:1.6;}
+  .value-card p{padding:10px 10px 30px;margin-top:6px;font-size:12.5px;color:#8a97a0;line-height:1.6;}
+  .values-section{
+    background:var(--ink) !important;
+  }
+  .values-section .eyebrow{
+    color:#fff;
+  }
   @media (max-width:900px){.values-grid{grid-template-columns:1fr 1fr;}}
   @media (max-width:560px){.values-grid{grid-template-columns:1fr;}}
 
@@ -493,13 +501,13 @@
       <li><a href="{{ url('/') }}#layanan">Layanan</a></li>
       <li><a href="#">Informasi </a></li>
       <li><a href="{{ route('galeri') }}">Galeri</a></li>
-      <li><a href="#">Kontak</a></li>
+      <li><a href="{{ route('kontak') }}">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
       <button class="icon-btn" aria-label="Ganti tema">◐</button>
       <button class="lang-btn">EN</button>
-      <button class="btn-login">Masuk</button>
+      <button class="btn-login"><a href="{{ route('login') }}">Masuk</a></button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
@@ -550,37 +558,17 @@
       </p>
 
       <div class="timeline">
-
-        <div class="timeline-item">
-          <span class="timeline-dot"></span>
-          <span class="timeline-year">1985</span>
-          <h4>Pembentukan unit pengolahan data</h4>
-          <p>Cikal bakal Pustekinfo dibentuk untuk menangani pengolahan data secara elektronik.</p>
-        </div>
-
-        <div class="timeline-item">
-          <span class="timeline-dot"></span>
-          <span class="timeline-year">2005</span>
-          <h4>Modernisasi infrastruktur jaringan</h4>
-          <p>Pembangunan jaringan terpadu dan pusat data untuk mendukung operasional lembaga.</p>
-        </div>
-
-        <div class="timeline-item">
-          <span class="timeline-dot"></span>
-          <span class="timeline-year">2015</span>
-          <h4>Transformasi digital layanan</h4>
-          <p>Pengembangan berbagai aplikasi dan sistem informasi berbasis web dan mobile.</p>
-        </div>
-
-        <div class="timeline-item">
-          <span class="timeline-dot"></span>
-          <span class="timeline-year">2025</span>
-          <h4>Sertifikasi ISO 27001:2022</h4>
-          <p>Pencapaian standar keamanan informasi internasional sebagai komitmen mutu layanan.</p>
-        </div>
-
+        @forelse($timeline as $t)
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <span class="timeline-year">{{ $t->year }}</span>
+            <h4>{{ $t->title }}</h4>
+            <p>{{ $t->description }}</p>
+          </div>
+        @empty
+          <p style="color:#8a97a0;">Belum ada data sejarah instansi.</p>
+        @endforelse
       </div>
-    </div>
   </section>
 
   {{-- ================= PROFIL PIMPINAN ================= --}}
@@ -593,45 +581,37 @@
       <h2>Kata sambutan Kepala Pustekinfo</h2>
 
       <div class="sambutan-card">
-        <div class="sambutan-photo">
-          {{-- <img src="{{ asset('images/kepala-unit.jpg') }}" alt="Kepala Pustekinfo"> --}}
-          <div class="who">
-            <div class="name">Nama Kepala Pusat</div>
-            <div class="role">KEPALA PUSTEKINFO</div>
-          </div>
-        </div>
-        <div class="sambutan-content">
-          <div class="eyebrow">
-            <svg viewBox="0 0 24 24"><path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 21c0-4-3-7-3-7s-3 3-3 7"/></svg>
-            SELAMAT DATANG
-          </div>
-          <p class="desc">Kami berkomitmen menghadirkan layanan teknologi informasi yang andal dan aman untuk mendukung seluruh kegiatan lembaga. Melalui inovasi berkelanjutan, kami berupaya menjadi mitra teknologi yang terpercaya bagi setiap unit kerja.</p>
-          <div class="signature">Nama Kepala Pusat</div>
-          <div class="sign-role">Kepala Pusat Teknologi Informasi</div>
+        <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
+        <div class="who">
+          <div class="name">{{ $leadership->name ?? 'Nama Kepala Pusat' }}</div>
+          <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
         </div>
       </div>
-
+      <div class="sambutan-content">
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24"><path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 21c0-4-3-7-3-7s-3 3-3 7"/></svg>
+          SELAMAT DATANG
+        </div>
+        <p class="desc">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
+        <div class="signature">{{ $leadership->name ?? 'Nama Kepala Pusat' }}</div>
+        <div class="sign-role">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
+      </div>
+    </div>
       <div class="eyebrow" style="margin-top:56px;">
         <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         FOTO PIMPINAN
       </div>
       <div class="photo-grid">
-        <div class="photo-card">
-          <div class="photo-thumb">Foto</div>
-          <div class="photo-info"><strong>Nama Kepala Pusat</strong><span>Kepala Pustekinfo</span></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-thumb">Foto</div>
-          <div class="photo-info"><strong>Nama Kepala Bidang</strong><span>Bidang Infrastruktur</span></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-thumb">Foto</div>
-          <div class="photo-info"><strong>Nama Kepala Bidang</strong><span>Bidang Sistem Informasi</span></div>
-        </div>
-        <div class="photo-card">
-          <div class="photo-thumb">Foto</div>
-          <div class="photo-info"><strong>Nama Kepala Bidang</strong><span>Bidang Data &amp; Keamanan</span></div>
-        </div>
+        @forelse($members as $m)
+          <div class="photo-card">
+            <div class="photo-thumb" @if($m->photo) style="background-image:url('{{ asset('storage/'.$m->photo) }}');background-size:cover;background-position:center;" @endif>
+              @if(!$m->photo) Foto @endif
+            </div>
+            <div class="photo-info"><strong>{{ $m->name }}</strong><span>{{ $m->position }}</span></div>
+          </div>
+        @empty
+          <p style="color:#8a97a0;grid-column:1/-1;">Belum ada data pimpinan/struktur.</p>
+        @endforelse
       </div>
     </div>
   </section>
@@ -647,12 +627,12 @@
       </div>
 
       <div class="bio-dark-grid">
-        <div class="bio-dark-item"><label>Nama</label><span>Nama Kepala Pusat, S.Kom., M.T.</span></div>
-        <div class="bio-dark-item"><label>Jabatan</label><span>Kepala Pustekinfo</span></div>
-        <div class="bio-dark-item"><label>Pendidikan</label><span>S2 Teknik Informatika</span></div>
-        <div class="bio-dark-item"><label>Masa jabatan</label><span>2023 — sekarang</span></div>
-        <div class="bio-dark-item"><label>Bidang keahlian</label><span>Tata kelola TI &amp; keamanan informasi</span></div>
-        <div class="bio-dark-item"><label>Email</label><span>kepala@pustekinfo.go.id</span></div>
+        <div class="bio-dark-item"><label>Nama</label><span>{{ $leadership->name ?? '-' }}</span></div>
+        <div class="bio-dark-item"><label>Jabatan</label><span>{{ $leadership->position ?? '-' }}</span></div>
+        <div class="bio-dark-item"><label>Pendidikan</label><span>{{ $leadership->education ?? '-' }}</span></div>
+        <div class="bio-dark-item"><label>Masa jabatan</label><span>{{ $leadership->term ?? '-' }}</span></div>
+        <div class="bio-dark-item"><label>Bidang keahlian</label><span>{{ $leadership->expertise ?? '-' }}</span></div>
+        <div class="bio-dark-item"><label>Email</label><span>{{ $leadership->email ?? '-' }}</span></div>
       </div>
     </div>
   </section>
@@ -667,14 +647,29 @@
       <h2>Struktur organisasi Pustekinfo</h2>
 
       <div class="org-chart">
-        <div class="org-node top"><strong>Kepala Pustekinfo</strong><span>Pimpinan Unit</span></div>
-        <div class="org-connector"></div>
-        <div class="org-node"><strong>Sekretariat</strong><span>Tata usaha &amp; administrasi</span></div>
+        <div class="org-node top">
+          <strong>{{ $kepala->name ?? 'Kepala Pustekinfo' }}</strong>
+          <span>{{ $kepala->position ?? 'Pimpinan Unit' }}</span>
+        </div>
+
+        @if($sekretariat)
+          <div class="org-connector"></div>
+          <div class="org-node">
+            <strong>{{ $sekretariat->name }}</strong>
+            <span>{{ $sekretariat->position }}</span>
+          </div>
+        @endif
+
         <div class="org-connector"></div>
         <div class="org-row">
-          <div class="org-node"><strong>Bidang Infrastruktur</strong><span>Jaringan &amp; data center</span></div>
-          <div class="org-node"><strong>Bidang Sistem Informasi</strong><span>Aplikasi &amp; integrasi</span></div>
-          <div class="org-node"><strong>Bidang Data &amp; Keamanan</strong><span>Keamanan &amp; pangkalan data</span></div>
+          @forelse($bidangList as $b)
+            <div class="org-node">
+              <strong>{{ $b->name }}</strong>
+              <span>{{ $b->position }}</span>
+            </div>
+          @empty
+            <p style="color:#8a97a0;">Belum ada data bidang.</p>
+          @endforelse
         </div>
       </div>
     </div>
@@ -715,7 +710,7 @@
     </div>
   </section>
 
-  {{-- ================= VISI & MISI ================= --}}
+ {{-- ================= VISI & MISI ================= --}}
   <section id="visi-misi" class="page-section">
     <div class="section-inner">
       <div class="eyebrow">
@@ -730,59 +725,54 @@
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
             VISI
           </div>
-          <h3>Menjadi pusat teknologi informasi yang terpercaya</h3>
-          <p>Menjadi pusat teknologi informasi yang andal, aman, dan inovatif dalam mendukung tata kelola lembaga yang modern dan transparan.</p>
+          <h3>Visi Pustekinfo</h3>
+          <p>{{ $visionMission->vision_text ?? 'Visi belum diisi lewat panel admin.' }}</p>
         </div>
         <div class="vm-card">
           <div class="eyebrow">
             <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             MISI
           </div>
-          <h3>Empat langkah strategis kami</h3>
+          <h3>Langkah strategis kami</h3>
           <ol>
-            <li>Mengembangkan sistem informasi yang terintegrasi dan tepat guna.</li>
-            <li>Menyediakan infrastruktur jaringan yang andal dan aman.</li>
-            <li>Menerapkan standar keamanan informasi secara konsisten.</li>
-            <li>Meningkatkan kompetensi SDM di bidang teknologi informasi.</li>
+            @forelse($visionMission?->missionList() ?? [] as $poin)
+              <li>{{ $poin }}</li>
+            @empty
+              <li>Misi belum diisi lewat panel admin.</li>
+            @endforelse
           </ol>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="eyebrow" style="margin-top:56px;">
+  {{-- ================= NILAI-NILAI ORGANISASI (CORE VALUES) ================= --}}
+  <section id="nilai-organisasi" class="page-section values-section">
+    <div class="section-inner">
+      <div class="eyebrow">
         <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
         NILAI-NILAI ORGANISASI (CORE VALUES)
       </div>
+      @php
+        $valueIcons = [
+          'integrity'     => '<path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/>',
+          'innovative'    => '<path d="M9 18h6M10 22h4M12 2a6 6 0 00-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0012 2z"/>',
+          'professional'  => '<path d="M12 15a4 4 0 100-8 4 4 0 000 8z"/><path d="M8.5 13.5L6 21l6-3 6 3-2.5-7.5"/>',
+          'collaborative' => '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2 21v-1a6 6 0 016-6M13 14a6 6 0 016 6v1"/>',
+          'service'       => '<path d="M4 21v-1a4 4 0 014-4h8a4 4 0 014 4v1"/><circle cx="12" cy="7" r="4"/>',
+          'accountable'   => '<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/>',
+        ];
+      @endphp
       <div class="values-grid">
-        <div class="value-card">
-          <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
-          <h4>Integritas</h4>
-          <p>Bekerja jujur, transparan, dan bertanggung jawab dalam setiap layanan.</p>
-        </div>
-        <div class="value-card">
-          <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a6 6 0 00-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0012 2z"/></svg></div>
-          <h4>Inovatif</h4>
-          <p>Terus berinovasi menghadirkan solusi teknologi yang tepat guna.</p>
-        </div>
-        <div class="value-card">
-          <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 15a4 4 0 100-8 4 4 0 000 8z"/><path d="M8.5 13.5L6 21l6-3 6 3-2.5-7.5"/></svg></div>
-          <h4>Profesional</h4>
-          <p>Memberikan layanan terbaik dengan kompetensi dan kesungguhan.</p>
-        </div>
-        <div class="value-card">
-          <div class="value-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2 21v-1a6 6 0 016-6M13 14a6 6 0 016 6v1"/></svg></div>
-          <h4>Kolaboratif</h4>
-          <p>Membangun kerja sama yang sinergis antar unit dan mitra.</p>
-        </div>
-        <div class="value-card">
-          <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M4 21v-1a4 4 0 014-4h8a4 4 0 014 4v1"/><circle cx="12" cy="7" r="4"/></svg></div>
-          <h4>Melayani</h4>
-          <p>Mengutamakan kepuasan dan kebutuhan pengguna layanan.</p>
-        </div>
-        <div class="value-card">
-          <div class="value-icon"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
-          <h4>Akuntabel</h4>
-          <p>Setiap keputusan dan layanan dapat dipertanggungjawabkan.</p>
-        </div>
+        @forelse($coreValues as $v)
+          <div class="value-card">
+            <div class="value-icon"><svg viewBox="0 0 24 24">{!! $valueIcons[$v->icon] ?? $valueIcons['integrity'] !!}</svg></div>
+            <h4>{{ $v->title }}</h4>
+            <p>{{ $v->description }}</p>
+          </div>
+        @empty
+          <p style="color:white;grid-column:1/-1;">Belum ada data nilai organisasi.</p>
+        @endforelse
       </div>
     </div>
   </section>
@@ -802,9 +792,9 @@
         </div>
         <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
         <div class="footer-social">
-          <a href="https://www.instagram.com/pustekinfo.dprri?igsh=MTY1cDdvY21seThxMQ==" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
-          <a href="https://youtube.com/@pustekinfodprri?si=eZ7oP2mQUjhabPSB" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
-          <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
+          <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+          <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
+          <a href="{{ $setting->x_url ?? '#' }}" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
         </div>
       </div>
 
@@ -833,15 +823,15 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Gedung Setjen DPR RI Lantai 4, Jalan Jenderal Gatot Subroto, Senayan, Jakarta Pusat
+            {{ $setting->address ?? 'Alamat belum diatur' }}
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            (021) 555-0172
+            {{ $setting->phone ?? '-' }}
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
-            pustekinfo@lembaga.go.id
+            {{ $setting->email ?? '-' }}
           </div>
         </div>
       </div>
