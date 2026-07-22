@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Leadership extends Model
 {
     protected $fillable = [
-        'name', 'position', 'photo', 'welcome_title', 'description', 'signature_role',
-    ];
+    'name', 'position', 'photo', 'welcome_title', 'description', 'signature_role',
+    'education', 'term', 'expertise', 'email',
+];
 }

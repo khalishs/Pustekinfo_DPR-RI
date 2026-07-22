@@ -15,12 +15,11 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Work Sans',system-ui,sans-serif;color:var(--ink);background:var(--white);}
+  body{font-family:'Work Sans',system-ui,sans-serif;color:var(--ink);background:var(--mist);}
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
-  h1,h2,.brand-text .name,.footer-brand-text .name,.galeri-item-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
+  h1,h2,.brand-text .name,.footer-brand-text .name,.stat-num,.sorotan-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
 
-  /* ---------- Navbar (sama seperti home) ---------- */
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
@@ -66,50 +65,111 @@
     .brand-text .sub{font-size:6.5px;}
   }
 
-  /* ---------- Page header ---------- */
   .page-header{
     margin-top:70px;
-    background:linear-gradient(160deg,var(--navy) 0%,var(--navy) 45%,var(--teal) 100%);
-    padding:70px 100px 60px;
-    text-align:center;
+    background:#073D5F;
+    padding:60px 100px 90px;
   }
   .page-header .crumb{color:rgba(255,255,255,.6);font-size:13px;font-weight:600;}
   .page-header .crumb a{color:#5FC0D1;}
-  .page-header h1{color:#fff;font-size:34px;font-weight:800;margin-top:12px;}
-  .page-header p{color:rgba(255,255,255,.7);margin-top:12px;font-size:14.5px;max-width:560px;margin-left:auto;margin-right:auto;}
+  .page-header h1{color:#fff;font-size:32px;font-weight:800;margin-top:12px;}
+  .page-header h1 .accent{color:#5FC0D1;}
+  .page-header p{color:rgba(255,255,255,.7);margin-top:12px;font-size:14.5px;max-width:600px;}
 
-  /* ---------- Content ---------- */
-  .galeri-page{padding:60px 100px 100px;max-width:1240px;margin:0 auto;}
+  .stats-bar{
+    position:relative;
+    z-index:3;
+    max-width:1160px;
+    margin:60px auto 0;
+    padding:0 10px;
+  }
+  .stats-bar-inner{
+    display: flex;
+    align-items: center;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius:14px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    box-shadow:0 20px 40px -12px rgba(11,34,51,.35);
+  }
+  .stat-card{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap:14px;
+    padding:22px 24px;
+    border-right:1px solid #c3cdd2;
+  }
+  .stat-card:last-child{border-right:none;}
+  .stat-num{align-items:center;font-size:24px;font-weight:800;color:var(--ink);line-height:1;}
+  .stat-label{align-items:center;margin-top:5px;font-size:11.5px;font-weight:;color:var(--ink);}
 
-  .galeri-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;}
-  .galeri-filter{padding:10px 20px;border-radius:20px;border:1px solid #dfe4e7;background:var(--white);font-size:13px;font-weight:700;color:#5b6b73;cursor:pointer;transition:.2s ease;}
+  @media (max-width:900px){
+    .stats-bar{padding:0 20px;margin-top:-40px;}
+    .stats-bar-inner{grid-template-columns:repeat(2,1fr);border-radius:12px;}
+    .stat-card{border-right:none;border-bottom:1px solid var(--line);padding:16px 18px;}
+    .stat-card:nth-last-child(-n+2){border-bottom:none;}
+    .page-header{padding:90px 20px 70px;}
+    .page-header h1{font-size:24px;}
+  }
+  .stat-num{font-size:26px;font-weight:800;color:var(--navy);}
+  .stat-label{margin-top:6px;font-size:12px;font-weight:600;color:#7a8a92;}
+
+  @media (max-width:900px){
+    .stats-bar{grid-template-columns:repeat(2,1fr);padding:0 20px;margin-top:-40px;}
+    .page-header{padding:90px 20px 70px;}
+    .page-header h1{font-size:24px;}
+  }
+
+  .galeri-page{padding:50px 100px 100px;max-width:1240px;margin:0 auto;}
+
+  .sorotan-card{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    padding:36px 40px;
+    min-height:180px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    background:linear-gradient(150deg,#073D5F 30%,#057888 100%);
+    margin-bottom:40px;
+  }
+  .sorotan-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.28;}
+  .sorotan-card .inner{position:relative;z-index:1;max-width:640px;}
+  .sorotan-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);color:#5FC0D1;font-size:11px;font-weight:800;letter-spacing:.1em;padding:6px 14px;border-radius:20px;}
+  .sorotan-title{margin-top:14px;font-size:22px;font-weight:800;color:#fff;line-height:1.35;}
+  .sorotan-desc{margin-top:10px;font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.7;}
+
+  .galeri-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
+  .galeri-filter{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:20px;border:1px solid #dfe4e7;background:var(--white);font-size:13px;font-weight:700;color:#5b6b73;cursor:pointer;transition:.2s ease;}
   .galeri-filter:hover{border-color:var(--teal);color:var(--teal);}
   .galeri-filter.active{background:var(--navy);border-color:var(--navy);color:var(--white);}
+  .galeri-filter .count{opacity:.6;font-weight:600;}
 
   .galeri-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
   .galeri-card{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(160deg,var(--navy) 0%,var(--teal) 100%);transition:transform .3s ease, box-shadow .3s ease;}
   .galeri-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   .galeri-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -18px rgba(11,34,51,.4);}
-  .galeri-card .overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,34,51,.75) 0%,transparent 55%);display:flex;align-items:flex-end;padding:14px;opacity:0;transition:.2s ease;}
-  .galeri-card:hover .overlay{opacity:1;}
-  .galeri-card .overlay span{color:#fff;font-size:12.5px;font-weight:700;}
+  .galeri-card .cat-badge{position:absolute;top:10px;left:10px;background:rgba(11,34,51,.65);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:6px;z-index:1;}
+  .galeri-card .overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,34,51,.85) 0%,transparent 60%);display:flex;align-items:flex-end;padding:14px;}
+  .galeri-card .overlay span{color:#fff;font-size:12.5px;font-weight:700;line-height:1.4;}
   .galeri-empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:#8a97a0;font-size:14px;}
 
-  .pagination{display:flex;gap:8px;justify-content:center;margin-top:44px;flex-wrap:wrap;}
-  .page-btn{width:38px;height:38px;border-radius:10px;border:1px solid #dfe4e7;background:#fff;color:#5b6b73;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:.2s ease;}
-  .page-btn:hover{border-color:var(--teal);color:var(--teal);}
-  .page-btn.active{background:var(--teal);border-color:var(--teal);color:#fff;}
-  .page-btn.disabled{opacity:.4;pointer-events:none;}
+  .load-more{display:flex;justify-content:center;margin-top:44px;}
+  .load-more a{padding:13px 30px;border-radius:22px;border:1px solid #dfe4e7;background:var(--white);color:var(--navy);font-size:13px;font-weight:700;transition:.2s ease;}
+  .load-more a:hover{border-color:var(--teal);color:var(--teal);}
 
   @media (max-width:900px){
-    .page-header{padding:90px 20px 50px;}
-    .page-header h1{font-size:24px;}
     .galeri-page{padding:40px 20px 60px;}
     .galeri-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+    .sorotan-card{padding:26px 24px;}
+    .sorotan-title{font-size:18px;}
   }
 
-  /* ---------- Footer (sama seperti home) ---------- */
-  .footer{background:var(--navy);padding:64px 100px 0;margin-top:40px;}
+  .footer{background:var(--navy);padding:64px 100px 0;margin-top:20px;}
   .footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}
   .footer-brand-logo{width:50px;object-fit:contain;}
@@ -138,13 +198,14 @@
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
 
-  /* ---------- Dark mode ---------- */
   [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
   [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
-  [data-theme="dark"] .icon-btn,[data-theme="dark"] .lang-btn,[data-theme="dark"] .galeri-filter,[data-theme="dark"] .page-btn{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .icon-btn,[data-theme="dark"] .lang-btn,[data-theme="dark"] .galeri-filter,[data-theme="dark"] .load-more a{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .stat-card{background:#122530;}
+  [data-theme="dark"] .stat-num{color:#eaf3f5;}
   [data-theme="dark"] .galeri-empty{color:#6d8189;}
 </style>
 </head>
@@ -186,24 +247,70 @@
 
   <header class="page-header">
     <div class="crumb"><a href="{{ route('home') }}">Beranda</a> / Galeri</div>
-    <h1>Galeri Kegiatan</h1>
-    <p>Dokumentasi kegiatan, pelatihan, dan seremoni yang dilaksanakan oleh Pustekinfo Sekretariat Jenderal DPR RI.</p>
+    <h1>Dokumentasi <span class="accent">Kegiatan Kami</span></h1>
+    <p>Kumpulan momen kegiatan, pelatihan, dan kerja sama Pustekinfo dalam mendukung layanan teknologi informasi lembaga.</p>
   </header>
+
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="stat-card">
+        <div>
+          <div class="stat-num">{{ $totalFoto }}+</div>
+          <div class="stat-label">Total Foto</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="stat-num">{{ $kegiatanTerdokumentasi }}</div>
+          <div class="stat-label">Kegiatan Terdokumentasi</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="stat-num">{{ $totalKategori }}</div>
+          <div class="stat-label">Kategori</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="stat-num">{{ $rentangWaktu }}</div>
+          <div class="stat-label">Rentang Waktu</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <main class="galeri-page">
 
+    @if($featured)
+      <div class="sorotan-card">
+        <img src="{{ asset('storage/'.$featured->image) }}" alt="{{ $featured->title }}">
+        <div class="inner">
+          <span class="sorotan-badge">SOROTAN</span>
+          <div class="sorotan-title">{{ $featured->title }}</div>
+          @if($featured->description)
+            <p class="sorotan-desc">{{ $featured->description }}</p>
+          @endif
+        </div>
+      </div>
+    @endif
+
     <div class="galeri-filters">
-      <a href="{{ route('galeri') }}" class="galeri-filter {{ !$activeCategory ? 'active' : '' }}">Semua</a>
-      <a href="{{ route('galeri', ['kategori' => 'pelatihan']) }}" class="galeri-filter {{ $activeCategory == 'pelatihan' ? 'active' : '' }}">Pelatihan</a>
-      <a href="{{ route('galeri', ['kategori' => 'kegiatan']) }}" class="galeri-filter {{ $activeCategory == 'kegiatan' ? 'active' : '' }}">Kegiatan</a>
-      <a href="{{ route('galeri', ['kategori' => 'kerjasama']) }}" class="galeri-filter {{ $activeCategory == 'kerjasama' ? 'active' : '' }}">Kerjasama</a>
-      <a href="{{ route('galeri', ['kategori' => 'seremoni']) }}" class="galeri-filter {{ $activeCategory == 'seremoni' ? 'active' : '' }}">Seremoni</a>
+      <a href="{{ route('galeri') }}" class="galeri-filter {{ !$activeCategory ? 'active' : '' }}">Semua <span class="count">{{ $totalFoto }}</span></a>
+      @foreach($categories as $cat)
+        <a href="{{ route('galeri', ['kategori' => $cat->slug]) }}" class="galeri-filter {{ $activeCategory == $cat->slug ? 'active' : '' }}">
+          {{ $cat->name }} <span class="count">{{ $cat->items_count }}</span>
+        </a>
+      @endforeach
     </div>
 
     <div class="galeri-grid">
       @forelse($items as $item)
         <div class="galeri-card">
           <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
+          @if($item->category)
+            <span class="cat-badge">{{ $item->category->name }}</span>
+          @endif
           @if($item->title)
             <div class="overlay"><span>{{ $item->title }}</span></div>
           @endif
@@ -213,23 +320,9 @@
       @endforelse
     </div>
 
-    @if($items->lastPage() > 1)
-      <div class="pagination">
-        @if($items->onFirstPage())
-          <span class="page-btn disabled">‹</span>
-        @else
-          <a href="{{ $items->previousPageUrl() }}" class="page-btn">‹</a>
-        @endif
-
-        @for($p = 1; $p <= $items->lastPage(); $p++)
-          <a href="{{ $items->url($p) }}" class="page-btn {{ $p == $items->currentPage() ? 'active' : '' }}">{{ $p }}</a>
-        @endfor
-
-        @if($items->hasMorePages())
-          <a href="{{ $items->nextPageUrl() }}" class="page-btn">›</a>
-        @else
-          <span class="page-btn disabled">›</span>
-        @endif
+    @if($items->hasMorePages())
+      <div class="load-more">
+        <a href="{{ $items->nextPageUrl() }}">Muat lebih banyak</a>
       </div>
     @endif
 

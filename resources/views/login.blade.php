@@ -8,11 +8,43 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (sama dengan halaman lain) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Work Sans', system-ui, sans-serif;
+            max-height: 100vh;
+        }
+        h1, h2, h3 {
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        }
         .bg-gradient-dpr {
             background: linear-gradient(135deg, #005f73 0%, #0a2f5c 100%);
         }
-        @media (max-width: 768px) {
+
+        .relative{
+            max-height: 100vh;
+        }
+
+        .space-y-5{
+            margin-top: -40px;
+        }
+
+        .text-center{
+            margin-bottom:45px;
+        }
+
+        .footer{
+            margin-top:7px;
+        }
+        
+        .back{
+            margin-top: -10px;
+        }
+        
+
+            @media (max-width: 768px) {
             body {
                 display: block;
             }
@@ -39,9 +71,61 @@
                 padding-bottom: 0.9rem;
             }
         }
+        .login-batik-bg{
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-size: 5000px auto;
+
+            filter: brightness(0) invert(1);
+            opacity: .40;
+        }
+        [data-theme="dark"] .login-batik-bg{
+            background-image: url('{{ asset('images/batik.png') }}') !important;
+        }
+        .icon-btn{
+            width:36px;height:36px;border-radius:50%;
+            border:1px solid #dfe4e7;background:#fff;color:#5b6b73;
+            display:flex;align-items:center;justify-content:center;
+            font-size:14px;cursor:pointer;flex-shrink:0;
+        }
+
+        /* ---------- Dark mode ---------- */
+        [data-theme="dark"] .bg-gray-50{background-color:#060d12 !important;}
+        [data-theme="dark"] .bg-\[\#f4f7f6\]{background-color:#060d12 !important;}
+        [data-theme="dark"] .bg-white{background-color:#0c1920 !important;}
+        [data-theme="dark"] .border-gray-100{border-color:rgba(255,255,255,.1) !important;}
+        [data-theme="dark"] .text-\[\#0a2f5c\]{color:#eaf3f5 !important;}
+        [data-theme="dark"] .text-gray-500,
+        [data-theme="dark"] .text-gray-600,
+        [data-theme="dark"] .text-gray-400{color:#8ea0a8 !important;}
+        [data-theme="dark"] input[type="text"],
+        [data-theme="dark"] input[type="password"]{
+            background-color:#0a141a !important;color:#eaf3f5 !important;
+            border-color:rgba(255,255,255,.14) !important;
+        }
+        [data-theme="dark"] input[type="text"]::placeholder,
+        [data-theme="dark"] input[type="password"]::placeholder{color:#5b6b73 !important;}
+        [data-theme="dark"] .border-gray-200{border-color:rgba(255,255,255,.14) !important;}
+        [data-theme="dark"] .border-gray-300{border-color:rgba(255,255,255,.2) !important;}
+        [data-theme="dark"] .bg-teal-50{background-color:rgba(20,131,156,.14) !important;}
+        [data-theme="dark"] .border-teal-200{border-color:rgba(20,131,156,.35) !important;}
+        [data-theme="dark"] .text-teal-700{color:#5FC0D1 !important;}
+        [data-theme="dark"] .bg-red-50{background-color:rgba(176,65,62,.14) !important;}
+        [data-theme="dark"] .border-red-200{border-color:rgba(176,65,62,.35) !important;}
+        [data-theme="dark"] .icon-btn{background:#0c1920;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
     </style>
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
 </head>
-<body class="bg-gray-50 font-sans antialiased min-h-screen flex flex-col md:flex-row">
+<body class="bg-gray-50 font-sans antialiased min-height:100vh flex flex-col md:flex-row">
 
     <!-- Sisi Kiri: Branding (Hidden di HP, muncul di MD ke atas) -->
     <div class="hidden md:flex md:w-5/12 text-white p-12 flex-col justify-between relative overflow-hidden shadow-2xl"
@@ -51,12 +135,14 @@
         <!-- Konten Tengah -->
         <div class="my-auto flex flex-col items-center text-center z-10">
             <!-- Ganti src dengan logo asli Anda -->
-            <img src="{{ asset('images/Logo.png') }}" alt="Logo PusTekInfo" class="h-28 mb-4 object-contain fallback-logo">
-            <!-- Fallback jika gambar tidak ada (CSS Hacking untuk demo) -->
-            <div class="w-24 h-24 mb-4 flex items-center justify-center font-bold text-5xl text-teal-400 unique-logo-placeholder hidden">//</div>
+            <div class="logo-frame mb-4 flex items-center justify-center p-6 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+                <img src="{{ asset('images/Logo.png') }}" alt="Logo PusTekInfo" class="h-20 object-contain fallback-logo">
+                <!-- Fallback jika gambar tidak ada (CSS Hacking untuk demo) -->
+                <div class="w-24 h-24 flex items-center justify-center font-bold text-5xl text-teal-400 unique-logo-placeholder hidden">//</div>
+            </div>
 
-            <h1 class="text-4xl font-extrabold tracking-wider uppercase">Pustekinfo</h1>
-            <p class="text-teal-300 text-sm tracking-wide font-medium">Sekretariat Jenderal DPR RI</p>
+            <h1 class="pustek text-4xl font-semibold tracking-wide uppercase">Pustekinfo</h1>
+            <p class="text-teal-300 text-1xl tracking-wide font-medium">Sekretariat Jenderal DPR RI</p>
             
             <div class="w-16 h-0.5 bg-teal-400 my-8 opacity-50"></div>
 
@@ -74,24 +160,25 @@
     <div class="w-full md:w-7/12 flex flex-col justify-between p-4 sm:p-8 md:p-12 relative bg-[#f4f7f6] mobile-safe overflow-hidden">
 
         <!-- Background Batik (transparan di tengah, makin terlihat ke samping) -->
-        <div class="absolute inset-0 z-0 pointer-events-none"
-             style="background-image: url('{{ asset('images/batik.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.18; -webkit-mask-image: radial-gradient(ellipse at center, transparent 0%, black 70%); mask-image: radial-gradient(ellipse at center, transparent 0%, black 70%);"></div>
+        <div class="login-batik-bg absolute inset-0 z-1 pointer-events-none"
+             style="background-image: url('{{ asset('images/Batik-terang.jpeg') }}');"></div>
 
         <!-- Container Form (Card Putih) -->
         <div class="relative z-10 w-full max-w-md mx-auto my-auto bg-white rounded-3xl p-5 sm:p-8 md:p-10 shadow-xl shadow-gray-200/50 border border-gray-100 mobile-card">
             
-            <div class="mb-4">
+            <div class="back mb-4 flex items-center justify-between">
                 <a href="{{ route('home') }}" class="inline-flex items-center text-sm font-semibold text-teal-600 hover:text-teal-700">
                     <i class="fa-solid fa-arrow-left mr-2"></i>
                     Kembali
                 </a>
+                <button type="button" class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
             </div>
 
             <!-- Logo & Greeting -->
             <div class="text-center mb-8">
                 <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="h-14 sm:h-16 mx-auto mb-4 object-contain mobile-logo">
                 <h3 class="text-2xl font-bold text-[#0a2f5c]">Selamat Datang</h3>
-                <p class="text-xs text-gray-500 mt-1 px-2 sm:px-4 leading-relaxed mobile-text">Silakan masuk untuk melanjutkan ke sistem PusTekInfo DPR RI</p>
+                <p class="text-xs text-gray-500 mt-1 px-2 sm:px-4 leading-relaxed mobile-text">Silakan masuk untuk melanjutkan</p>
             </div>
 
             @if (session('status'))
@@ -158,7 +245,7 @@
         </div>
 
         <!-- Footer Hak Cipta -->
-        <div class="text-center text-xs text-gray-400 mt-8 md:mt-0">
+        <div class="footer text-center text-xs text-gray-400 mt-8 md:mt-4">
             &copy; {{ date('Y') }} PusTekInfo DPR RI. All rights reserved.
         </div>
     </div>
@@ -178,6 +265,19 @@
                 icon.classList.add('fa-eye');
             }
         }
+
+        const themeToggle = document.getElementById('themeToggle');
+        function applyTheme(isDark) {
+            document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            themeToggle.setAttribute('aria-pressed', String(isDark));
+            themeToggle.textContent = isDark ? '◑' : '◐';
+        }
+        applyTheme(localStorage.getItem('theme') === 'dark');
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') !== 'dark';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            applyTheme(isDark);
+        });
     </script>
 </body>
 </html>

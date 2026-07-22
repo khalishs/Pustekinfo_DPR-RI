@@ -276,7 +276,7 @@
   .page-banner{
     margin-top:70px;
     position:relative;
-    background:linear-gradient(150deg,#073D5F 30%,#057888 100%);
+    background:#073D5F;
     padding:64px 100px 68px;
     overflow:hidden;
   }
@@ -777,9 +777,9 @@
     <div class="nav-actions">
       <button class="icon-btn" aria-label="Ganti tema">◐</button>
       <button class="lang-btn">EN</button>       
-        <a href="{{ route('login') }}" class="btn-login">Masuk</a>
+      <button class="btn-login"><a href="{{ route('login') }}">Masuk</a></button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
-         <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>

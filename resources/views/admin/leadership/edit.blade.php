@@ -43,6 +43,26 @@
       <input type="text" name="signature_role" value="{{ old('signature_role', $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi') }}" required>
     </div>
 
+    <div class="form-group">
+      <label>Pendidikan</label>
+      <input type="text" name="education" value="{{ old('education', $leadership->education) }}" placeholder="S2 Teknik Informatika">
+    </div>
+
+    <div class="form-group">
+      <label>Masa Jabatan</label>
+      <input type="text" name="term" value="{{ old('term', $leadership->term) }}" placeholder="2023 — sekarang">
+    </div>
+
+    <div class="form-group">
+      <label>Bidang Keahlian</label>
+      <input type="text" name="expertise" value="{{ old('expertise', $leadership->expertise) }}" placeholder="Tata kelola TI & keamanan informasi">
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" name="email" value="{{ old('email', $leadership->email) }}" placeholder="kepala@pustekinfo.go.id">
+    </div>
+    
     <button class="btn btn-primary">Simpan</button>
   </form>
 </div>
