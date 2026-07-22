@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\GalleryItemController;
 use App\Http\Controllers\Admin\LeadershipController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LayananController;
+use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\Admin\TimelineItemController;
 use App\Http\Controllers\Admin\OrganizationMemberController;
 use App\Http\Controllers\Admin\VisionMissionController;
@@ -26,6 +28,8 @@ Route::view('/kontak', 'kontak')->name('kontak');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
+Route::get('/layanan', [LayananController::class, 'index'])->name('layanan');
+Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi');
 Route::get('/login', function () {
     return view('login');
 })->name('login');

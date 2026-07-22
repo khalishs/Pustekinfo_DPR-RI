@@ -7,6 +7,7 @@
   <a href="{{ route('admin.core-values.create') }}" class="btn btn-primary">+ Tambah Nilai</a>
 </div>
 <div class="card">
+  <div class="table-responsive">
   <table>
     <thead><tr><th>Judul</th><th>Ikon</th><th>Urutan</th><th></th></tr></thead>
     <tbody>
@@ -28,5 +29,6 @@
     @endforelse
     </tbody>
   </table>
+  </div>
 </div>
 @endsection

@@ -28,6 +28,7 @@
     color:var(--ink);
     display:flex;
     min-height:100vh;
+    overflow-x:hidden;
   }
   h1,h2,.brand-text .name,.sidebar nav a,.btn,.card h3,.page-head h2{
     font-family:'Plus Jakarta Sans',system-ui,sans-serif;
@@ -45,6 +46,7 @@
     position:fixed;
     top:0;bottom:0;left:0;
     z-index:10;
+    transition:transform .28s ease;
   }
   .sidebar .brand{
     position:relative;
@@ -150,8 +152,26 @@
   .sidebar .bottom form button svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   .sidebar .bottom form button:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
 
+  /* ---------- Off-canvas controls (tablet/mobile) ---------- */
+  .menu-toggle{
+    display:none;
+    align-items:center;justify-content:center;
+    width:38px;height:38px;flex-shrink:0;
+    border-radius:10px;border:1px solid var(--line);
+    background:#fff;cursor:pointer;
+  }
+  .menu-toggle svg{width:18px;height:18px;stroke:var(--navy);fill:none;stroke-width:2;stroke-linecap:round;}
+  .menu-toggle:hover{border-color:var(--teal);}
+
+  .sidebar-backdrop{
+    position:fixed;inset:0;background:rgba(11,34,51,.5);
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+    z-index:9;
+  }
+  .sidebar.open ~ .sidebar-backdrop{opacity:1;pointer-events:auto;}
+
   /* ---------- Main ---------- */
-  .main{flex:1;margin-left:264px;display:flex;flex-direction:column;min-height:100vh;}
+  .main{flex:1;margin-left:264px;display:flex;flex-direction:column;min-height:100vh;min-width:0;}
   .topbar{
     background:rgba(255,255,255,.9);
     backdrop-filter:blur(10px);
@@ -161,6 +181,7 @@
     display:flex;align-items:center;justify-content:space-between;
     gap:20px;
   }
+  .topbar-left{display:flex;align-items:center;gap:14px;min-width:0;}
   .topbar-titles h1{font-size:21px;font-weight:800;color:var(--navy);letter-spacing:-.01em;}
   .topbar-titles p{margin-top:3px;font-size:12.5px;color:#8a97a0;font-weight:500;}
   .topbar-chip{
@@ -174,7 +195,7 @@
   }
   .topbar-chip .pulse{width:6px;height:6px;border-radius:50%;background:var(--success);flex-shrink:0;box-shadow:0 0 0 3px rgba(31,157,124,.18);}
 
-  .content{padding:30px 36px 64px;max-width:1180px;width:100%;}
+  .content{padding:30px 36px 64px;width:100%;}
 
   .flash{
     display:flex;align-items:center;gap:10px;
@@ -195,6 +216,8 @@
   .page-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
   .page-head h2{font-size:18px;font-weight:800;color:var(--navy);}
 
+  .table-responsive{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .table-responsive table{min-width:620px;}
   table{width:100%;border-collapse:collapse;}
   th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle;}
   th{color:#8a97a0;font-weight:800;text-transform:uppercase;font-size:10.5px;letter-spacing:.06em;}
@@ -233,12 +256,34 @@
   .row-actions{display:flex;gap:8px;}
   .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(20,128,140,.1);color:var(--teal);border:1px solid rgba(20,128,140,.14);}
 
-  @media (max-width:900px){
-    .sidebar{position:static;width:100%;}
+  /* ---------- Tablet ---------- */
+  @media (max-width:1024px){
+    .sidebar{
+      transform:translateX(-100%);
+      width:280px;
+      box-shadow:0 0 40px rgba(0,0,0,.25);
+    }
+    .sidebar.open{transform:translateX(0);}
     .main{margin-left:0;}
-    .topbar{padding:16px 20px;flex-wrap:wrap;}
-    .content{padding:22px 20px 50px;}
+    .menu-toggle{display:flex;}
+    .topbar{padding:16px 20px;}
     .topbar-chip{display:none;}
+    .content{padding:24px 20px 50px;}
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width:640px){
+    .topbar{padding:14px 16px;gap:12px;}
+    .topbar-titles h1{font-size:16.5px;}
+    .topbar-titles p{display:none;}
+    .content{padding:18px 14px 40px;}
+    .card{padding:18px;border-radius:14px;}
+    .page-head{margin-bottom:16px;}
+    .page-head h2{font-size:16px;}
+    .page-head .btn{width:100%;justify-content:center;}
+    th,td{padding:11px 10px;font-size:12.5px;}
+    .form-group{max-width:100%;}
+    .row-actions{flex-wrap:wrap;}
   }
 </style>
 </head>
@@ -334,11 +379,18 @@
     </div>
   </aside>
 
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
   <div class="main">
     <div class="topbar">
-      <div class="topbar-titles">
-        <h1>@yield('title', 'Dashboard')</h1>
-        <p>Kelola konten yang tampil di website Pustekinfo</p>
+      <div class="topbar-left">
+        <button type="button" class="menu-toggle" id="sidebarToggle" aria-label="Buka menu">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="topbar-titles">
+          <h1>@yield('title', 'Dashboard')</h1>
+          <p>Kelola konten yang tampil di website Pustekinfo</p>
+        </div>
       </div>
       <div class="topbar-chip">
         <span class="pulse"></span>
@@ -352,5 +404,36 @@
       @yield('content')
     </div>
   </div>
+
+  <script>
+    (function(){
+      var sidebar = document.querySelector('.sidebar');
+      var toggle = document.getElementById('sidebarToggle');
+      var backdrop = document.getElementById('sidebarBackdrop');
+
+      function closeSidebar(){
+        sidebar.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      function openSidebar(){
+        sidebar.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      toggle && toggle.addEventListener('click', function(){
+        sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+      });
+      backdrop && backdrop.addEventListener('click', closeSidebar);
+      sidebar.querySelectorAll('nav a').forEach(function(link){
+        link.addEventListener('click', closeSidebar);
+      });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') closeSidebar();
+      });
+      window.addEventListener('resize', function(){
+        if (window.innerWidth > 1024) closeSidebar();
+      });
+    })();
+  </script>
 </body>
 </html>

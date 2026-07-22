@@ -231,8 +231,8 @@
           <a href="{{ route('profil') }}#visi-misi"><span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>Visi dan Misi</a>
         </div>
       </li>
-      <li><a href="{{ route('home') }}#layanan">Layanan</a></li>
-      <li><a href="{{ route('home') }}#Informasi">Informasi</a></li>
+      <li><a href="{{ route('layanan') }}">Layanan</a></li>
+      <li><a href="{{ route('informasi') }}">Informasi</a></li>
       <li class="active"><a href="{{ route('galeri') }}">Galeri</a></li>
       <li><a href="{{ route('kontak') }}">Kontak</a></li>
     </ul>

@@ -6,6 +6,7 @@
   <a href="{{ route('admin.agenda.create') }}" class="btn btn-primary">+ Tambah Agenda</a>
 </div>
 <div class="card">
+  <div class="table-responsive">
   <table>
     <thead><tr><th>Judul</th><th>Tanggal</th><th>Jam</th><th>Lokasi</th><th>Warna</th><th></th></tr></thead>
     <tbody>
@@ -31,5 +32,6 @@
     @endforelse
     </tbody>
   </table>
+  </div>
 </div>
 @endsection

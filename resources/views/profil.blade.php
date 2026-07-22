@@ -498,8 +498,8 @@
           </a>
         </div>
       </li>
-      <li><a href="{{ url('/') }}#layanan">Layanan</a></li>
-      <li><a href="#">Informasi </a></li>
+      <li><a href="{{ route('layanan') }}">Layanan</a></li>
+      <li><a href="{{ route('informasi') }}">Informasi</a></li>
       <li><a href="{{ route('galeri') }}">Galeri</a></li>
       <li><a href="{{ route('kontak') }}">Kontak</a></li>
     </ul>
