@@ -6,6 +6,7 @@
   <a href="{{ route('admin.statistics.create') }}" class="btn btn-primary">+ Tambah</a>
 </div>
 <div class="card">
+  <div class="table-responsive">
   <table>
     <thead><tr><th>Label</th><th>Nilai</th><th>Urutan</th><th></th></tr></thead>
     <tbody>
@@ -27,5 +28,6 @@
     @endforelse
     </tbody>
   </table>
+  </div>
 </div>
 @endsection

@@ -768,8 +768,8 @@
           </a>
         </div>
       </li>
-      <li><a href="{{ route('home') }}#layanan">Layanan <span class="caret"></span></a></li>
-      <li><a href="{{ route('home') }}#berita">Informasi <span class="caret"></span></a></li>
+      <li><a href="{{ route('layanan') }}">Layanan</a></li>
+      <li><a href="{{ route('informasi') }}">Informasi</a></li>
       <li><a href="{{ route('galeri') }}">Galeri</a></li>
       <li class="active"><a href="{{ route('kontak') }}">Kontak</a></li>
     </ul>

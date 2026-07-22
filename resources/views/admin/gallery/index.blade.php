@@ -6,6 +6,7 @@
   <a href="{{ route('admin.gallery.create') }}" class="btn btn-primary">+ Tambah Foto</a>
 </div>
 <div class="card">
+  <div class="table-responsive">
   <table>
     <thead><tr><th>Foto</th><th>Judul</th><th>Kategori</th><th>Ukuran</th><th>Urutan</th><th></th></tr></thead>
     <tbody>
@@ -29,5 +30,6 @@
     @endforelse
     </tbody>
   </table>
+  </div>
 </div>
 @endsection
