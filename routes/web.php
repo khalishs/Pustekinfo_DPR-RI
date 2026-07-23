@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AgendaEventController;
 use App\Http\Controllers\Admin\GalleryItemController;
 use App\Http\Controllers\Admin\LeadershipController;
 use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\InformasiController;
@@ -74,6 +75,8 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
     Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('akun', [AccountController::class, 'edit'])->name('account.edit');
+    Route::put('akun', [AccountController::class, 'update'])->name('account.update');
     Route::resource('statistics', StatisticController::class)->except('show');
     Route::resource('news', NewsItemController::class)->except('show');
     Route::resource('agenda', AgendaEventController::class)->except('show')->parameters(['agenda' => 'agendum']);
