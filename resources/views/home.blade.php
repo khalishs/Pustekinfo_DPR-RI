@@ -843,6 +843,12 @@
 
   /* ---------- Berita & Kegiatan ---------- */
   .berita{
+    position:relative;
+    background-color:var(--white);
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
     padding:90px 100px 120px;
     opacity:0;
     transform:translateY(60px);
@@ -1316,6 +1322,12 @@
   }
   /* ---------- Galeri Kegiatan ---------- */
 .galeri{
+  position:relative;
+  background-color:var(--white);
+  background-image:url('{{ asset('images/pola-batik.png') }}');
+  background-repeat:no-repeat;
+  background-position:center top;
+  background-size:5000px auto;
   padding:90px 100px 120px;
   opacity:0;
   transform:translateY(60px);
@@ -1651,6 +1663,7 @@
 @media (max-width:900px){
   .konten-batik{background-size:3000px auto;}
   .layanan::before{background-size:3000px auto;}
+  .berita, .galeri{background-size:3000px auto;}
 }
 
 /* ---------- CTA Bantuan Teknis ---------- */
