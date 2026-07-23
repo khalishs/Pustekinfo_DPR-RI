@@ -6,6 +6,7 @@
   <a href="{{ route('admin.news.create') }}" class="btn btn-primary">+ Tambah Berita</a>
 </div>
 <div class="card">
+  <div class="table-responsive">
   <table>
     <thead><tr><th>Gambar</th><th>Judul</th><th>Kategori</th><th>Utama</th><th>Tanggal</th><th></th></tr></thead>
     <tbody>
@@ -35,5 +36,6 @@
     @endforelse
     </tbody>
   </table>
+  </div>
 </div>
 @endsection

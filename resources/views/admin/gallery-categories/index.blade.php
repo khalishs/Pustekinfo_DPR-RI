@@ -10,6 +10,7 @@
   <div class="flash" style="background:#fdecea;color:#b0413e;">{{ session('error') }}</div>
 @endif
 <div class="card">
+  <div class="table-responsive">
   <table>
     <thead><tr><th>Nama</th><th>Slug</th><th>Jumlah Foto</th><th>Urutan</th><th></th></tr></thead>
     <tbody>
@@ -32,5 +33,6 @@
     @endforelse
     </tbody>
   </table>
+  </div>
 </div>
 @endsection

@@ -7,6 +7,7 @@
   <a href="{{ route('admin.timeline.create') }}" class="btn btn-primary">+ Tambah Poin</a>
 </div>
 <div class="card">
+  <div class="table-responsive">
   <table>
     <thead><tr><th>Tahun</th><th>Judul</th><th>Urutan</th><th></th></tr></thead>
     <tbody>
@@ -28,5 +29,6 @@
     @endforelse
     </tbody>
   </table>
+  </div>
 </div>
 @endsection

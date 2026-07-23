@@ -7,6 +7,7 @@
   <a href="{{ route('admin.organization-members.create') }}" class="btn btn-primary">+ Tambah Anggota</a>
 </div>
 <div class="card">
+  <div class="table-responsive">
   <table>
     <thead><tr><th>Foto</th><th>Nama</th><th>Jabatan</th><th>Level</th><th>Urutan</th><th></th></tr></thead>
     <tbody>
@@ -36,5 +37,6 @@
     @endforelse
     </tbody>
   </table>
+  </div>
 </div>
 @endsection
