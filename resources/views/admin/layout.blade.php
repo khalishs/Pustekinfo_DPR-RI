@@ -5,6 +5,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>@yield('title', 'Dashboard') - Admin Pustekinfo</title>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -261,6 +266,45 @@
   .cap{text-transform:capitalize;}
   th.text-center,td.text-center{text-align:center;}
 
+  /* ---------- Theme toggle ---------- */
+  .theme-toggle{
+    width:38px;height:38px;flex-shrink:0;border-radius:50%;
+    border:1px solid var(--line);background:#fff;color:#5b6b73;
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;cursor:pointer;transition:.2s ease;
+  }
+  .theme-toggle:hover{border-color:var(--teal);color:var(--teal);}
+
+  /* ---------- Dark mode ---------- */
+  [data-theme="dark"]{
+    --mist:#1b1e22;
+    --ink:#dde1e4;
+    --line:rgba(255,255,255,.07);
+    --navy:#e4e7ea;
+  }
+  [data-theme="dark"] .menu-toggle,
+  [data-theme="dark"] .theme-toggle{background:#25292e;border-color:rgba(255,255,255,.1);color:#b8bfc4;}
+  [data-theme="dark"] .theme-toggle:hover{border-color:var(--teal-light);color:var(--teal-light);}
+  [data-theme="dark"] .topbar{background:rgba(27,30,34,.85);border-color:rgba(255,255,255,.06);}
+  [data-theme="dark"] .topbar-titles p{color:#8b929a;}
+  [data-theme="dark"] .topbar-chip{background:rgba(20,128,140,.15);border-color:rgba(20,128,140,.28);}
+  [data-theme="dark"] .flash{background:rgba(31,157,124,.13);color:#6fd6b3;border-color:rgba(31,157,124,.26);}
+  [data-theme="dark"] .card{background:#24282d;border-color:rgba(255,255,255,.06);box-shadow:0 8px 28px -16px rgba(0,0,0,.4);}
+  [data-theme="dark"] th{color:#8b929a;}
+  [data-theme="dark"] tbody tr:hover{background:rgba(255,255,255,.025);}
+  [data-theme="dark"] .btn-danger{background:transparent;border-color:rgba(176,65,62,.38);}
+  [data-theme="dark"] .btn-outline{background:transparent;border-color:rgba(255,255,255,.12);color:#b8bfc4;}
+  [data-theme="dark"] .btn-outline:hover{border-color:var(--teal-light);color:var(--teal-light);}
+  [data-theme="dark"] input,
+  [data-theme="dark"] textarea,
+  [data-theme="dark"] select{background:#202429;border-color:rgba(255,255,255,.1);color:var(--ink);}
+  [data-theme="dark"] input:focus,
+  [data-theme="dark"] textarea:focus,
+  [data-theme="dark"] select:focus{box-shadow:0 0 0 3px rgba(20,128,140,.22);}
+  [data-theme="dark"] small{color:#8b929a;}
+  [data-theme="dark"] .badge-count,
+  [data-theme="dark"] .badge-muted{border-color:rgba(255,255,255,.08);}
+
   /* ---------- Tablet ---------- */
   @media (max-width:1024px){
     .sidebar{
@@ -401,9 +445,12 @@
           <p>Kelola konten yang tampil di website Pustekinfo</p>
         </div>
       </div>
-      <div class="topbar-chip">
-        <span class="pulse"></span>
-        Situs aktif
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="topbar-chip">
+          <span class="pulse"></span>
+          Situs aktif
+        </div>
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       </div>
     </div>
     <div class="content">
@@ -441,6 +488,19 @@
       });
       window.addEventListener('resize', function(){
         if (window.innerWidth > 1024) closeSidebar();
+      });
+
+      var themeToggle = document.getElementById('themeToggle');
+      function applyTheme(isDark){
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        themeToggle.setAttribute('aria-pressed', String(isDark));
+        themeToggle.textContent = isDark ? '◑' : '◐';
+      }
+      applyTheme(localStorage.getItem('theme') === 'dark');
+      themeToggle.addEventListener('click', function(){
+        var isDark = document.documentElement.getAttribute('data-theme') !== 'dark';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        applyTheme(isDark);
       });
     })();
   </script>
