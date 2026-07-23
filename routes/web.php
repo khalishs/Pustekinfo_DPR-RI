@@ -77,7 +77,7 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('akun', [AccountController::class, 'edit'])->name('account.edit');
     Route::put('akun', [AccountController::class, 'update'])->name('account.update');
-    Route::resource('statistics', StatisticController::class)->except('show');
+    Route::resource('statistics', StatisticController::class)->only(['index', 'edit', 'update']);
     Route::resource('news', NewsItemController::class)->except('show');
     Route::resource('agenda', AgendaEventController::class)->except('show')->parameters(['agenda' => 'agendum']);
     Route::resource('gallery', GalleryItemController::class)->except('show');

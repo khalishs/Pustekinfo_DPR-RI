@@ -9,13 +9,13 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Judul</th><th>Ikon</th><th>Urutan</th><th></th></tr></thead>
+    <thead><tr><th>Judul</th><th>Ikon</th><th class="text-center">Urutan</th><th></th></tr></thead>
     <tbody>
     @forelse($values as $v)
       <tr>
         <td>{{ $v->title }}</td>
         <td><span class="badge">{{ $v->icon }}</span></td>
-        <td>{{ $v->sort_order }}</td>
+        <td class="text-center"><span class="badge-count">{{ $v->sort_order }}</span></td>
         <td class="row-actions">
           <a href="{{ route('admin.core-values.edit', $v) }}" class="btn btn-outline">Edit</a>
           <form action="{{ route('admin.core-values.destroy', $v) }}" method="POST" onsubmit="return confirm('Hapus nilai ini?')">

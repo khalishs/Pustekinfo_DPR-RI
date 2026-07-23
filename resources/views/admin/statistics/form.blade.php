@@ -1,10 +1,10 @@
 @extends('admin.layout')
-@section('title', $statistic->exists ? 'Edit Statistik' : 'Tambah Statistik')
+@section('title', 'Edit Statistik')
 @section('content')
 <div class="card">
-  <form action="{{ $statistic->exists ? route('admin.statistics.update', $statistic) : route('admin.statistics.store') }}" method="POST">
+  <form action="{{ route('admin.statistics.update', $statistic) }}" method="POST">
     @csrf
-    @if($statistic->exists) @method('PUT') @endif
+    @method('PUT')
     <div class="form-group">
       <label>Kategori</label>
       <select name="key" required>

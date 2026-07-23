@@ -255,6 +255,11 @@
 
   .row-actions{display:flex;gap:8px;}
   .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(20,128,140,.1);color:var(--teal);border:1px solid rgba(20,128,140,.14);}
+  .badge-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 8px;border-radius:20px;background:var(--mist);color:#5b6b73;font-size:12px;font-weight:800;border:1px solid var(--line);}
+  .badge-success{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(31,157,124,.1);color:var(--success);border:1px solid rgba(31,157,124,.18);}
+  .badge-muted{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:var(--mist);color:#8a97a0;border:1px solid var(--line);}
+  .cap{text-transform:capitalize;}
+  th.text-center,td.text-center{text-align:center;}
 
   /* ---------- Tablet ---------- */
   @media (max-width:1024px){

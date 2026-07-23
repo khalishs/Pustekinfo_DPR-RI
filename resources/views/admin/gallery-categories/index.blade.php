@@ -12,14 +12,14 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Nama</th><th>Slug</th><th>Jumlah Foto</th><th>Urutan</th><th></th></tr></thead>
+    <thead><tr><th>Nama</th><th>Slug</th><th class="text-center">Jumlah Foto</th><th class="text-center">Urutan</th><th></th></tr></thead>
     <tbody>
     @forelse($categories as $cat)
       <tr>
         <td>{{ $cat->name }}</td>
         <td><span class="badge">{{ $cat->slug }}</span></td>
-        <td>{{ $cat->items_count }}</td>
-        <td>{{ $cat->sort_order }}</td>
+        <td class="text-center"><span class="badge-count">{{ $cat->items_count }}</span></td>
+        <td class="text-center"><span class="badge-count">{{ $cat->sort_order }}</span></td>
         <td class="row-actions">
           <a href="{{ route('admin.gallery-categories.edit', $cat) }}" class="btn btn-outline">Edit</a>
           <form action="{{ route('admin.gallery-categories.destroy', $cat) }}" method="POST" onsubmit="return confirm('Hapus kategori ini?')">

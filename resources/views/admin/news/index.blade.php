@@ -20,8 +20,8 @@
           @endif
         </td>
         <td>{{ $news->title }}</td>
-        <td>{{ $news->category }}</td>
-        <td>{{ $news->is_featured ? 'Ya' : '-' }}</td>
+        <td><span class="badge cap">{{ $news->category }}</span></td>
+        <td>{!! $news->is_featured ? '<span class="badge-success">Ya</span>' : '<span class="badge-muted">-</span>' !!}</td>
         <td>{{ $news->published_at?->format('d M Y') }}</td>
         <td class="row-actions">
           <a href="{{ route('admin.news.edit', $news) }}" class="btn btn-outline">Edit</a>
