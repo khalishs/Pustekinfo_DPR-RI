@@ -1709,7 +1709,7 @@
   max-width:80%;
   height:auto;
   margin:0 auto;
-  margin-bottom: -215px;
+  margin-bottom: -217px;
   pointer-events:none;
   user-select:none;
 }
