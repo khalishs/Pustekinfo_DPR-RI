@@ -266,6 +266,36 @@
   .cap{text-transform:capitalize;}
   th.text-center,td.text-center{text-align:center;}
 
+  /* ---------- Dashboard stats ---------- */
+  .stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-bottom:20px;}
+  .stat-card{
+    background:#fff;border-radius:16px;padding:20px;
+    box-shadow:0 8px 28px -16px rgba(11,34,51,.18);
+    border:1px solid var(--line);
+  }
+  .stat-icon{
+    display:flex;align-items:center;justify-content:center;
+    width:38px;height:38px;border-radius:10px;margin-bottom:14px;
+    background:rgba(20,128,140,.1);color:var(--teal);
+  }
+  .stat-icon svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+  .stat-value{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:26px;font-weight:800;color:var(--navy);line-height:1;}
+  .stat-label{margin-top:6px;font-size:12.5px;color:#8a97a0;font-weight:600;}
+  .stat-card-alert .stat-icon{background:rgba(176,65,62,.1);color:var(--danger);}
+  .stat-card-alert .stat-value{color:var(--danger);}
+
+  .quick-links{display:flex;flex-wrap:wrap;gap:10px;}
+  .quick-link{
+    padding:10px 18px;border-radius:20px;
+    background:var(--mist);border:1px solid var(--line);color:var(--navy);
+    font-size:13px;font-weight:700;text-decoration:none;
+    transition:.15s ease;
+  }
+  .quick-link:hover{border-color:var(--teal);color:var(--teal);background:rgba(20,128,140,.06);}
+
+  @media (max-width:1200px){.stat-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:640px){.stat-grid{grid-template-columns:repeat(2,1fr);gap:12px;}}
+
   /* ---------- Theme toggle ---------- */
   .theme-toggle{
     width:38px;height:38px;flex-shrink:0;border-radius:50%;
@@ -304,6 +334,9 @@
   [data-theme="dark"] small{color:#8b929a;}
   [data-theme="dark"] .badge-count,
   [data-theme="dark"] .badge-muted{border-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .stat-card{background:#24282d;border-color:rgba(255,255,255,.06);box-shadow:0 8px 28px -16px rgba(0,0,0,.4);}
+  [data-theme="dark"] .stat-label{color:#8b929a;}
+  [data-theme="dark"] .quick-link:hover{background:rgba(20,128,140,.14);}
 
   /* ---------- Tablet ---------- */
   @media (max-width:1024px){
@@ -366,6 +399,18 @@
           <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
           Agenda
         </a>
+        <a href="{{ route('admin.hero-slides.index') }}" class="{{ request()->routeIs('admin.hero-slides.*') ? 'active' : '' }}">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/></svg></span>
+          Hero Slider
+        </a>
+      </details>
+
+      <details class="nav-group" open>
+        <summary>Layanan</summary>
+        <a href="{{ route('admin.services.index') }}" class="{{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+          Kartu Layanan
+        </a>
       </details>
 
       <details class="nav-group" open>
@@ -409,6 +454,13 @@
         <a href="{{ route('admin.settings.edit') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
           Pengaturan Kontak
+        </a>
+        <a href="{{ route('admin.messages.index') }}" class="{{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span>
+          Pesan Masuk
+          @if(($unreadMessagesCount ?? 0) > 0)
+            <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);">{{ $unreadMessagesCount }}</span>
+          @endif
         </a>
       </details>
     </nav>

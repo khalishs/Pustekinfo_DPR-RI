@@ -21,6 +21,9 @@ use App\Http\Controllers\Admin\TimelineItemController;
 use App\Http\Controllers\Admin\OrganizationMemberController;
 use App\Http\Controllers\Admin\VisionMissionController;
 use App\Http\Controllers\Admin\CoreValueController;
+use App\Http\Controllers\Admin\HeroSlideController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\ProfilController;
 
 
@@ -31,6 +34,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
 Route::get('/layanan', [LayananController::class, 'index'])->name('layanan');
 Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi');
+Route::get('/berita/{news}', [InformasiController::class, 'show'])->name('berita.show');
 Route::get('/login', function () {
     return view('login');
 })->name('login');
@@ -99,5 +103,13 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::resource('core-values', CoreValueController::class)
         ->except('show')
         ->parameters(['core-values' => 'coreValue']);
-    
+
+    Route::resource('hero-slides', HeroSlideController::class)
+        ->except('show')
+        ->parameters(['hero-slides' => 'heroSlide']);
+
+    Route::resource('services', ServiceController::class)->except('show');
+
+    Route::resource('messages', ContactMessageController::class)
+        ->only(['index', 'show', 'destroy']);
 });
