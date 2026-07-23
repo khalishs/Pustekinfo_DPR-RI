@@ -131,14 +131,14 @@
         <!-- Konten Tengah -->
         <div class="my-auto flex flex-col items-center text-center z-10">
             <!-- Ganti src dengan logo asli Anda -->
-            <div class="logo-frame mb-4 flex items-center justify-center p-6 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-                <img src="{{ asset('images/Logo.png') }}" alt="Logo PusTekInfo" class="h-20 object-contain fallback-logo">
+            <div class="logo-frame mb-4 flex items-center justify-center p-6 lg:p-8 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+                <img src="{{ asset('images/Logo.png') }}" alt="Logo PusTekInfo" class="h-20 lg:h-24 object-contain fallback-logo">
                 <!-- Fallback jika gambar tidak ada (CSS Hacking untuk demo) -->
                 <div class="w-24 h-24 flex items-center justify-center font-bold text-5xl text-teal-400 unique-logo-placeholder hidden">//</div>
             </div>
 
-            <h1 class="pustek text-4xl font-semibold tracking-wide uppercase">Pustekinfo</h1>
-            <p class="text-teal-300 text-1xl tracking-wide font-medium">Sekretariat Jenderal DPR RI</p>
+            <h1 class="pustek text-4xl lg:text-5xl font-semibold tracking-wide uppercase">Pustekinfo</h1>
+            <p class="text-teal-300 text-1xl lg:text-2xl tracking-wide font-medium">Sekretariat Jenderal DPR RI</p>
             
             <div class="w-16 h-0.5 bg-teal-400 my-8 opacity-50"></div>
 
@@ -160,7 +160,7 @@
              style="background-image: url('{{ asset('images/Batik-terang.jpeg') }}');"></div>
 
         <!-- Container Form (Card Putih) -->
-        <div class="relative z-10 w-full max-w-md mx-auto my-auto bg-white rounded-3xl p-5 sm:p-8 md:p-10 shadow-xl shadow-gray-200/50 border border-gray-100 mobile-card">
+        <div class="relative z-10 w-full max-w-md lg:max-w-lg xl:max-w-xl mx-auto my-auto bg-white rounded-3xl p-5 sm:p-8 md:p-10 lg:p-12 shadow-xl shadow-gray-200/50 border border-gray-100 mobile-card">
             
             <div class="back mb-4 flex items-center justify-between">
                 <a href="{{ route('home') }}" class="inline-flex items-center text-sm font-semibold text-teal-600 hover:text-teal-700">
@@ -172,9 +172,9 @@
 
             <!-- Logo & Greeting -->
             <div class="text-center mb-8">
-                <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="h-14 sm:h-16 mx-auto mb-4 object-contain mobile-logo">
-                <h3 class="text-2xl font-bold text-[#0a2f5c]">Selamat Datang</h3>
-                <p class="text-xs text-gray-500 mt-1 px-2 sm:px-4 leading-relaxed mobile-text">Silakan masuk untuk melanjutkan</p>
+                <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="h-14 sm:h-16 lg:h-20 mx-auto mb-4 object-contain mobile-logo">
+                <h3 class="text-2xl lg:text-3xl font-bold text-[#0a2f5c]">Selamat Datang</h3>
+                <p class="text-xs lg:text-sm text-gray-500 mt-1 px-2 sm:px-4 leading-relaxed mobile-text">Silakan masuk untuk melanjutkan</p>
             </div>
 
             @if (session('status'))
