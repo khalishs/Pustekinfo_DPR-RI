@@ -8,6 +8,7 @@ use App\Models\NewsItem;
 use App\Models\AgendaEvent;
 use App\Models\GalleryItem;
 use App\Models\SiteSetting;
+use App\Models\HeroSlide;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -39,6 +40,7 @@ class HomeController extends Controller
         }
 
         return view('home', [
+            'heroSlides'    => HeroSlide::where('is_active', true)->orderBy('sort_order')->get(),
             'stats'         => Statistic::orderBy('sort_order')->get(),
             'leadership'    => Leadership::first(),
             'featuredNews'  => NewsItem::where('is_featured', true)->latest('published_at')->first(),
