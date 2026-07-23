@@ -129,7 +129,7 @@
         
 
         <!-- Konten Tengah -->
-        <div class="my-auto flex flex-col items-center text-center z-10">
+        <div class="mt-16 md:mt-20 mb-auto mx-auto flex flex-col items-center text-center z-10">
             <!-- Ganti src dengan logo asli Anda -->
             <div class="logo-frame mb-4 flex items-center justify-center p-6 lg:p-8 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
                 <img src="{{ asset('images/Logo.png') }}" alt="Logo PusTekInfo" class="h-20 lg:h-24 object-contain fallback-logo">
