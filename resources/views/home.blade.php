@@ -223,7 +223,7 @@
     justify-content:center;
     text-align:center;
     overflow:hidden;
-    padding:10px 24px 70px;
+    padding:10px 24px 130px;
   }
   .hero-slider{
     position:absolute;
