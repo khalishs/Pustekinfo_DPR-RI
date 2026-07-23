@@ -1722,6 +1722,7 @@
   max-width:80%;
   height:auto;
   margin:0 auto;
+  margin-top: -165px;
   margin-bottom: -215px;
   pointer-events:none;
   user-select:none;
@@ -1773,7 +1774,7 @@
   }
   .cta-bantuan h2{font-size:20px;}
   .cta-btn{width:100%;justify-content:center;}
-  .cta-footer-img{width:220px;max-width:70%;}
+  .cta-footer-img{width:220px;max-width:70%;margin-top:-75px;margin-bottom:-100px;}
 }
 
 /* ---------- Footer ---------- */

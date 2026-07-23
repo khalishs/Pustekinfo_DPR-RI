@@ -12,19 +12,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
+        html, body {
             font-family: 'Work Sans', system-ui, sans-serif;
-            max-height: 100vh;
+            min-height: 100vh;
         }
         h1, h2, h3 {
             font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
         }
         .bg-gradient-dpr {
             background: linear-gradient(135deg, #005f73 0%, #0a2f5c 100%);
-        }
-
-        .relative{
-            max-height: 100vh;
         }
 
         .space-y-5{
@@ -125,7 +121,7 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 font-sans antialiased min-height:100vh flex flex-col md:flex-row">
+<body class="bg-gray-50 font-sans antialiased min-h-screen flex flex-col md:flex-row">
 
     <!-- Sisi Kiri: Branding (Hidden di HP, muncul di MD ke atas) -->
     <div class="hidden md:flex md:w-5/12 text-white p-12 flex-col justify-between relative overflow-hidden shadow-2xl"
