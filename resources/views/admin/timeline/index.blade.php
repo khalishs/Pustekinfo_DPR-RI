@@ -9,13 +9,13 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Tahun</th><th>Judul</th><th>Urutan</th><th></th></tr></thead>
+    <thead><tr><th>Tahun</th><th>Judul</th><th class="text-center">Urutan</th><th></th></tr></thead>
     <tbody>
     @forelse($items as $item)
       <tr>
         <td>{{ $item->year }}</td>
         <td>{{ $item->title }}</td>
-        <td>{{ $item->sort_order }}</td>
+        <td class="text-center"><span class="badge-count">{{ $item->sort_order }}</span></td>
         <td class="row-actions">
           <a href="{{ route('admin.timeline.edit', $item) }}" class="btn btn-outline">Edit</a>
           <form action="{{ route('admin.timeline.destroy', $item) }}" method="POST" onsubmit="return confirm('Hapus poin ini?')">

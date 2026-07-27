@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AgendaEventController;
 use App\Http\Controllers\Admin\GalleryItemController;
 use App\Http\Controllers\Admin\LeadershipController;
 use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\InformasiController;
@@ -20,6 +21,9 @@ use App\Http\Controllers\Admin\TimelineItemController;
 use App\Http\Controllers\Admin\OrganizationMemberController;
 use App\Http\Controllers\Admin\VisionMissionController;
 use App\Http\Controllers\Admin\CoreValueController;
+use App\Http\Controllers\Admin\HeroSlideController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\ProfilController;
 
 
@@ -30,6 +34,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
 Route::get('/layanan', [LayananController::class, 'index'])->name('layanan');
 Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi');
+Route::get('/berita/{news}', [InformasiController::class, 'show'])->name('berita.show');
 Route::get('/login', function () {
     return view('login');
 })->name('login');
@@ -74,7 +79,9 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
     Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('statistics', StatisticController::class)->except('show');
+    Route::get('akun', [AccountController::class, 'edit'])->name('account.edit');
+    Route::put('akun', [AccountController::class, 'update'])->name('account.update');
+    Route::resource('statistics', StatisticController::class)->only(['index', 'edit', 'update']);
     Route::resource('news', NewsItemController::class)->except('show');
     Route::resource('agenda', AgendaEventController::class)->except('show')->parameters(['agenda' => 'agendum']);
     Route::resource('gallery', GalleryItemController::class)->except('show');
@@ -96,5 +103,13 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::resource('core-values', CoreValueController::class)
         ->except('show')
         ->parameters(['core-values' => 'coreValue']);
-    
+
+    Route::resource('hero-slides', HeroSlideController::class)
+        ->except('show')
+        ->parameters(['hero-slides' => 'heroSlide']);
+
+    Route::resource('services', ServiceController::class)->except('show');
+
+    Route::resource('messages', ContactMessageController::class)
+        ->only(['index', 'show', 'destroy']);
 });

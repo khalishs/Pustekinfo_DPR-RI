@@ -223,7 +223,7 @@
     justify-content:center;
     text-align:center;
     overflow:hidden;
-    padding:10px 24px 70px;
+    padding:10px 24px 130px;
   }
   .hero-slider{
     position:absolute;
@@ -843,6 +843,8 @@
 
   /* ---------- Berita & Kegiatan ---------- */
   .berita{
+    position:relative;
+    background-color:var(--white);
     padding:90px 100px 120px;
     opacity:0;
     transform:translateY(60px);
@@ -1316,6 +1318,8 @@
   }
   /* ---------- Galeri Kegiatan ---------- */
 .galeri{
+  position:relative;
+  background-color:var(--white);
   padding:90px 100px 120px;
   opacity:0;
   transform:translateY(60px);
@@ -1710,6 +1714,8 @@
   height:auto;
   margin:0 auto;
   margin-bottom: -217px;
+  margin-top: -165px;
+  margin-bottom: -215px;
   pointer-events:none;
   user-select:none;
 }
@@ -1760,7 +1766,7 @@
   }
   .cta-bantuan h2{font-size:20px;}
   .cta-btn{width:100%;justify-content:center;}
-  .cta-footer-img{width:220px;max-width:70%;}
+  .cta-footer-img{width:220px;max-width:70%;margin-top:-75px;margin-bottom:-100px;}
 }
 
 /* ---------- Footer ---------- */
@@ -2071,9 +2077,13 @@
 
     <header class="hero">
       <div class="hero-slider">
-        <div class="hero-slide active" style="background-image:url('{{ asset('images/Hero-Pict1.jpeg') }}')"></div>
-        <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict2.jpg') }}')"></div>
-        <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict3.jpg') }}')"></div>
+        @forelse($heroSlides as $slide)
+          <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$slide->image) }}')"></div>
+        @empty
+          <div class="hero-slide active" style="background-image:url('{{ asset('images/Hero-Pict1.jpeg') }}')"></div>
+          <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict2.jpg') }}')"></div>
+          <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict3.jpg') }}')"></div>
+        @endforelse
       </div>
       <div class="hero-content">
         <h1>Mendukung Kinerja DPR RI melalui Layanan <br> Teknologi Informasi yang <br> Terintegrasi.</h1>
@@ -2260,7 +2270,7 @@
           <div class="eyebrow">KABAR TERBARU</div>
           <h2>Berita &amp; kegiatan</h2>
         </div>
-        <a href="#" class="berita-link">SEMUA BERITA <span>→</span></a>
+        <a href="{{ route('informasi') }}" class="berita-link">SEMUA BERITA <span>→</span></a>
       </div>
 
       <div class="berita-grid">
@@ -2277,14 +2287,14 @@
                 <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {{ $featuredNews->author }}</span>
                 <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $featuredNews->reading_minutes }} menit baca</span>
               </div>
-              <a href="#" class="read-more">BACA SELENGKAPNYA</a>
+              <a href="{{ route('berita.show', $featuredNews) }}" class="read-more">BACA SELENGKAPNYA</a>
             @endif
           </div>
         </div>
 
         <div class="berita-list">
           @forelse($latestNews as $news)
-            <div class="berita-item">
+            <a href="{{ route('berita.show', $news) }}" class="berita-item">
               <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset('storage/'.$news->image) }}');background-size:cover;background-position:center;" @endif></div>
               <div class="berita-item-body">
                 <div class="cat">{{ $news->category }}</div>
@@ -2294,7 +2304,7 @@
                   <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $news->reading_minutes }} mnt</span>
                 </div>
               </div>
-            </div>
+            </a>
           @empty
             <p style="color:#8a97a0;font-size:13.5px;">Belum ada berita lain.</p>
           @endforelse

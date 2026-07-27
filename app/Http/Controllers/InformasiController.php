@@ -57,4 +57,12 @@ class InformasiController extends Controller
             'setting'       => SiteSetting::first(),
         ]);
     }
+
+    public function show(NewsItem $news)
+    {
+        return view('berita-detail', [
+            'news'    => $news,
+            'setting' => SiteSetting::first(),
+        ]);
+    }
 }

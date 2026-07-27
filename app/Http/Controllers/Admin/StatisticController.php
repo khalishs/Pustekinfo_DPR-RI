@@ -15,18 +15,6 @@ class StatisticController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return view('admin.statistics.form', ['statistic' => new Statistic()]);
-    }
-
-    public function store(Request $request)
-    {
-        Statistic::create($this->validated($request));
-
-        return redirect()->route('admin.statistics.index')->with('success', 'Statistik ditambahkan.');
-    }
-
     public function edit(Statistic $statistic)
     {
         return view('admin.statistics.form', compact('statistic'));
@@ -39,12 +27,6 @@ class StatisticController extends Controller
         return redirect()->route('admin.statistics.index')->with('success', 'Statistik diperbarui.');
     }
 
-    public function destroy(Statistic $statistic)
-    {
-        $statistic->delete();
-
-        return redirect()->route('admin.statistics.index')->with('success', 'Statistik dihapus.');
-    }
 private function validated(Request $request): array
 {
     return $request->validate([

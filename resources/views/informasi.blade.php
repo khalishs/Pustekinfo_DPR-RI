@@ -513,7 +513,7 @@
 
       <div class="info-news-grid">
         @forelse($news as $item)
-          <div class="info-news-card">
+          <a href="{{ route('berita.show', $item) }}" class="info-news-card">
             <div class="info-news-thumb">
               <span class="info-news-badge">{{ $item->category }}</span>
               <svg viewBox="0 0 24 24">{!! $newsIcons[strtolower($item->category)] ?? $defaultNewsIcon !!}</svg>
@@ -526,7 +526,7 @@
               <div class="info-news-title">{{ $item->title }}</div>
               <div class="info-news-desc">{{ $item->excerpt }}</div>
             </div>
-          </div>
+          </a>
         @empty
           <p class="info-news-empty">Belum ada berita untuk kategori ini.</p>
         @endforelse
