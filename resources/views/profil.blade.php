@@ -461,7 +461,94 @@
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
+
+  /* ---------- Dark mode ---------- */
+  [data-theme="dark"] html{background:#0b1720;}
+  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+
+  [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
+  [data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
+  [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active::after{background:#5FC0D1;}
+  [data-theme="dark"] .nav-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
+  [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
+  [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
+
+  [data-theme="dark"] .icon-btn,
+  [data-theme="dark"] .lang-btn,
+  [data-theme="dark"] .profile-box,
+  [data-theme="dark"] .logout-btn,
+  [data-theme="dark"] .dl-btn,
+  [data-theme="dark"] .galeri-filter,
+  [data-theme="dark"] .agenda-cal-nav button{
+    background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
+  }
+  [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
+  [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
+  [data-theme="dark"] .profile-name{color:#eaf3f5;}
+  [data-theme="dark"] .logout-btn{color:#ff8f8a;border-color:rgba(255,143,138,.35);}
+  [data-theme="dark"] .logout-btn:hover{background:#b0413e;color:#fff;border-color:#b0413e;}
+
+  @media (max-width:900px){
+    [data-theme="dark"] .nav-links{background:#0f1e28;border-bottom-color:rgba(255,255,255,.08);}
+    [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
+  }
+
+  /* ---------- Dark mode: halaman Profil ---------- */
+
+  /* Section umum (Tentang Kami, Profil Pimpinan, Struktur Organisasi, Visi & Misi) */
+  [data-theme="dark"] section.page-section:nth-child(even){background:#122530;}
+  [data-theme="dark"] .section-inner > h2{color:#eaf3f5;}
+  [data-theme="dark"] .section-inner > .desc{color:#8ea0a8;}
+
+  [data-theme="dark"] #tentang-kami > .section-inner > .eyebrow,
+  [data-theme="dark"] #profil-pimpinan > .section-inner > .eyebrow,
+  [data-theme="dark"] #struktur-organisasi > .section-inner > .eyebrow,
+  [data-theme="dark"] #visi-misi > .section-inner > .eyebrow,
+  [data-theme="dark"] .sambutan-content .eyebrow,
+  [data-theme="dark"] .vm-card:not(.dark) .eyebrow{
+    color:#5FC0D1;
+  }
+
+  /* Timeline (Sejarah) */
+  [data-theme="dark"] .timeline-year{color:#5FC0D1;}
+  [data-theme="dark"] .timeline-item h4{color:#eaf3f5;}
+  [data-theme="dark"] .timeline-item p{color:#8ea0a8;}
+  [data-theme="dark"] .timeline-dot{background:#122530;}
+
+  /* Sambutan Pimpinan (kartu putih) */
+  [data-theme="dark"] .sambutan-card{background:#122530;box-shadow:0 40px 70px -30px rgba(0,0,0,.6);}
+  [data-theme="dark"] .sambutan-content .desc{color:#8ea0a8;}
+  [data-theme="dark"] .sambutan-content .signature{color:#eaf3f5;}
+  [data-theme="dark"] .sambutan-content .sign-role{color:#8ea0a8;}
+
+  /* Foto pimpinan */
+  [data-theme="dark"] .photo-card{background:#122530;box-shadow:0 20px 40px -24px rgba(0,0,0,.5);}
+  [data-theme="dark"] .photo-info strong{color:#eaf3f5;}
+  [data-theme="dark"] .photo-info span{color:#8ea0a8;}
+
+  /* Bagan organisasi */
+  [data-theme="dark"] .org-node{background:#122530;box-shadow:0 16px 32px -20px rgba(0,0,0,.5);}
+  [data-theme="dark"] .org-node strong{color:#eaf3f5;}
+  [data-theme="dark"] .org-node span{color:#8ea0a8;}
+  [data-theme="dark"] .org-connector{background:rgba(255,255,255,.14);}
+
+  /* Visi & Misi (kartu MISI, versi terang) */
+  [data-theme="dark"] .vm-card:not(.dark){background:#122530;box-shadow:0 20px 40px -24px rgba(0,0,0,.5);}
+  [data-theme="dark"] .vm-card:not(.dark) h3{color:#eaf3f5;}
+  [data-theme="dark"] .vm-card ol{color:#c3cdd2;}
 </style>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+</script>
 </head>
 <body>
 
@@ -505,7 +592,7 @@
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" aria-label="Ganti tema">◐</button>
+      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       <button class="lang-btn">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
@@ -843,7 +930,25 @@
   </footer>
 
 <script>
- 
+
+  // ---- Theme toggle (dark mode) ----
+  const themeToggle = document.getElementById("themeToggle");
+
+  function applyTheme(isDark) {
+      document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+      themeToggle.classList.toggle("active", isDark);
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.textContent = isDark ? "◑" : "◐";
+  }
+
+  applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
+
+  themeToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      applyTheme(isDark);
+  });
+
   // ---- Dropdown Profil di mobile ----
   const profilDropdown = document.getElementById("profilDropdown");
   if (window.innerWidth <= 900) {

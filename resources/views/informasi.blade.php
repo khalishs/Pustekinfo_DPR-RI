@@ -376,7 +376,113 @@
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
+
+  /* ---------- Dark mode ---------- */
+  [data-theme="dark"] html{background:#0b1720;}
+  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+
+  [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
+  [data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
+  [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active::after{background:#5FC0D1;}
+  [data-theme="dark"] .nav-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
+  [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
+  [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
+
+  [data-theme="dark"] .icon-btn,
+  [data-theme="dark"] .lang-btn,
+  [data-theme="dark"] .profile-box,
+  [data-theme="dark"] .logout-btn,
+  [data-theme="dark"] .dl-btn,
+  [data-theme="dark"] .galeri-filter,
+  [data-theme="dark"] .agenda-cal-nav button{
+    background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
+  }
+  [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
+  [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
+  [data-theme="dark"] .profile-name{color:#eaf3f5;}
+  [data-theme="dark"] .logout-btn{color:#ff8f8a;border-color:rgba(255,143,138,.35);}
+  [data-theme="dark"] .logout-btn:hover{background:#b0413e;color:#fff;border-color:#b0413e;}
+
+  @media (max-width:900px){
+    [data-theme="dark"] .nav-links{background:#0f1e28;border-bottom-color:rgba(255,255,255,.08);}
+    [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
+  }
+
+  /* ---- Informasi page: burger button ---- */
+  [data-theme="dark"] .burger{background:#122530;border-color:rgba(255,255,255,.14);}
+  [data-theme="dark"] .burger span{background:#c3cdd2;}
+
+  /* ---- Sections & headings ---- */
+  [data-theme="dark"] section.page-section{background:#0b1720;}
+  [data-theme="dark"] section.page-section:nth-child(even){background:#122530;}
+  [data-theme="dark"] .section-inner > h2{color:#eaf3f5;}
+  [data-theme="dark"] .eyebrow{color:#5FC0D1;}
+  [data-theme="dark"] .eyebrow.eyebrow-dash::before{background:#5FC0D1;}
+
+  /* ---- Sticky tabs ---- */
+  [data-theme="dark"] .tabs-nav-sticky{background:#0b1720;border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .tabs-nav .tabs-scroll{border-bottom-color:rgba(255,255,255,.14);}
+
+  /* ---- Filter pills ---- */
+  [data-theme="dark"] .info-filter{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .info-filter:hover{border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .info-filter.active{background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .info-filter.active:hover{color:#0b1720;}
+
+  /* ---- Berita cards ---- */
+  [data-theme="dark"] .info-news-card{background:#122530;box-shadow:0 20px 40px -26px rgba(0,0,0,.5);}
+  [data-theme="dark"] .info-news-card:hover{box-shadow:0 26px 46px -22px rgba(0,0,0,.6);}
+  [data-theme="dark"] .info-news-date{color:#8ea0a8;}
+  [data-theme="dark"] .info-news-title{color:#eaf3f5;}
+  [data-theme="dark"] .info-news-desc{color:#c3cdd2;}
+  [data-theme="dark"] .info-news-empty{color:#8ea0a8;}
+
+  [data-theme="dark"] .info-loadmore{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .info-loadmore:hover{border-color:#5FC0D1;color:#5FC0D1;}
+
+  /* ---- Agenda ---- */
+  [data-theme="dark"] .agenda-cal{background:#122530;box-shadow:0 30px 60px -30px rgba(0,0,0,.55);}
+  [data-theme="dark"] .agenda-cal-head .month{color:#eaf3f5;}
+  [data-theme="dark"] .agenda-cal-nav a{background:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .agenda-cal-nav a:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .agenda-cal-nav .today-btn{color:#5FC0D1;border-color:rgba(255,255,255,.14);}
+  [data-theme="dark"] .agenda-cal-daynames span{color:#8ea0a8;}
+  [data-theme="dark"] .agenda-day{color:#c3cdd2;}
+  [data-theme="dark"] .agenda-day.muted{color:#4d5d64;}
+  [data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.12);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .agenda-legend span{color:#8ea0a8;}
+  [data-theme="dark"] .agenda-today{box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
+
+  /* ---- Publikasi & unduhan ---- */
+  [data-theme="dark"] .info-doc-item{background:#122530;border-color:rgba(255,255,255,.1);}
+  [data-theme="dark"] .info-doc-item:hover{border-color:#5FC0D1;box-shadow:0 16px 32px -24px rgba(0,0,0,.5);}
+  [data-theme="dark"] .info-doc-icon{background:rgba(95,192,209,.12);color:#5FC0D1;}
+  [data-theme="dark"] .info-doc-cat{background:rgba(95,192,209,.12);color:#5FC0D1;}
+  [data-theme="dark"] .info-doc-title{color:#eaf3f5;}
+  [data-theme="dark"] .info-doc-meta{color:#8ea0a8;}
+  [data-theme="dark"] .info-doc-download{background:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .info-doc-download:hover{background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;}
+
+  /* ---- FAQ ---- */
+  [data-theme="dark"] .info-faq-item{background:#122530;border-color:rgba(255,255,255,.1);}
+  [data-theme="dark"] .info-faq-item summary{color:#eaf3f5;}
+  [data-theme="dark"] .info-faq-item summary .chev{color:#8ea0a8;}
+  [data-theme="dark"] .info-faq-item[open] summary{border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .info-faq-item .answer{color:#c3cdd2;}
 </style>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+</script>
 </head>
 <body>
 
@@ -458,7 +564,7 @@
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" aria-label="Ganti tema">◐</button>
+      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       <button class="lang-btn">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
@@ -727,6 +833,24 @@
   </footer>
 
 <script>
+  // ---- Dark mode toggle ----
+  const themeToggle = document.getElementById("themeToggle");
+
+  function applyTheme(isDark) {
+      document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+      themeToggle.classList.toggle("active", isDark);
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.textContent = isDark ? "◑" : "◐";
+  }
+
+  applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
+
+  themeToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      applyTheme(isDark);
+  });
+
   // ---- Dropdown Profil di mobile ----
   const profilDropdown = document.getElementById("profilDropdown");
   if (window.innerWidth <= 900) {

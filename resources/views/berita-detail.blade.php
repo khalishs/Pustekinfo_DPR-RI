@@ -151,7 +151,80 @@
     .article-image{height:220px;}
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
+
+  /* ---------- Dark mode ---------- */
+  [data-theme="dark"] html{background:#0b1720;}
+  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+
+  [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
+  [data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
+  [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active::after{background:#5FC0D1;}
+  [data-theme="dark"] .nav-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
+  [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
+  [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
+
+  [data-theme="dark"] .icon-btn,
+  [data-theme="dark"] .lang-btn,
+  [data-theme="dark"] .profile-box,
+  [data-theme="dark"] .logout-btn,
+  [data-theme="dark"] .dl-btn,
+  [data-theme="dark"] .galeri-filter,
+  [data-theme="dark"] .agenda-cal-nav button{
+    background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
+  }
+  [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
+  [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
+  [data-theme="dark"] .profile-name{color:#eaf3f5;}
+  [data-theme="dark"] .logout-btn{color:#ff8f8a;border-color:rgba(255,143,138,.35);}
+  [data-theme="dark"] .logout-btn:hover{background:#b0413e;color:#fff;border-color:#b0413e;}
+
+  @media (max-width:900px){
+    [data-theme="dark"] .nav-links{background:#0f1e28;border-bottom-color:rgba(255,255,255,.08);}
+    [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
+  }
+
+  /* ---------- Dark mode: page-specific ---------- */
+  [data-theme="dark"] .hero-profil{background:#08131b;}
+  [data-theme="dark"] .hero-profil::before{background:radial-gradient(60% 60% at 85% 0%, rgba(95,192,209,.18), transparent 60%);}
+  [data-theme="dark"] .breadcrumb{color:rgba(255,255,255,.45);}
+  [data-theme="dark"] .breadcrumb a{color:#8ea0a8;}
+  [data-theme="dark"] .breadcrumb span{color:#5FC0D1;}
+  [data-theme="dark"] .hero-profil h1{color:#eaf3f5;}
+  [data-theme="dark"] .article-badge{background:rgba(255,255,255,.08);color:#eaf3f5;}
+  [data-theme="dark"] .article-meta{color:#8ea0a8;}
+
+  [data-theme="dark"] .article-back{color:#5FC0D1;}
+  [data-theme="dark"] .article-image{box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
+  [data-theme="dark"] .article-body{color:#c3cdd2;}
+
+  [data-theme="dark"] .footer-divider{background:linear-gradient(10deg, #057888 0%, #0b1720 55%, #0b1720 100%);}
+  [data-theme="dark"] .footer{background:#0b1720;}
+  [data-theme="dark"] .footer-brand-text .name{color:#eaf3f5;}
+  [data-theme="dark"] .footer-brand-text .sub{color:#5FC0D1;}
+  [data-theme="dark"] .footer-desc{color:rgba(255,255,255,.5);}
+  [data-theme="dark"] .footer-social a{border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.65);}
+  [data-theme="dark"] .footer-social a:hover{background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .footer-col .head{color:rgba(255,255,255,.8);border-bottom-color:#5FC0D1;}
+  [data-theme="dark"] .footer-links a{color:rgba(255,255,255,.55);}
+  [data-theme="dark"] .footer-links a .chev{color:#5FC0D1;}
+  [data-theme="dark"] .footer-links a:hover{color:#eaf3f5;}
+  [data-theme="dark"] .footer-contact .item{color:rgba(255,255,255,.6);}
+  [data-theme="dark"] .footer-contact .item svg{stroke:#5FC0D1;}
+  [data-theme="dark"] .footer-bottom{border-top-color:rgba(255,255,255,.1);}
+  [data-theme="dark"] .footer-bottom p{color:rgba(255,255,255,.4);}
 </style>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+</script>
 </head>
 <body>
 
@@ -175,6 +248,7 @@
     </ul>
 
     <div class="nav-actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
@@ -288,6 +362,23 @@
       burgerBtn.classList.remove("open");
       navLinks.classList.remove("open");
     });
+  });
+
+  const themeToggle = document.getElementById("themeToggle");
+
+  function applyTheme(isDark) {
+      document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+      themeToggle.classList.toggle("active", isDark);
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.textContent = isDark ? "◑" : "◐";
+  }
+
+  applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
+
+  themeToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      applyTheme(isDark);
   });
 </script>
 </body>
