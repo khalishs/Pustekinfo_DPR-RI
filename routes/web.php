@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\OrganizationMemberController;
 use App\Http\Controllers\Admin\VisionMissionController;
 use App\Http\Controllers\Admin\CoreValueController;
 use App\Http\Controllers\Admin\HeroSlideController;
+use App\Http\Controllers\Admin\ProfilPhotoController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\ProfilController;
@@ -107,6 +108,10 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::resource('hero-slides', HeroSlideController::class)
         ->except('show')
         ->parameters(['hero-slides' => 'heroSlide']);
+
+    Route::resource('profil-photos', ProfilPhotoController::class)
+        ->except('show')
+        ->parameters(['profil-photos' => 'profilPhoto']);
 
     Route::resource('services', ServiceController::class)->except('show');
 

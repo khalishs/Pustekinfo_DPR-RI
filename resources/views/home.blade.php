@@ -477,9 +477,21 @@
       radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
   }
+  .profil-slide{
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transition:opacity 2s ease-in-out;
+  }
+  .profil-slide.active{
+    opacity:1;
+  }
   .profil-badge{
     position:absolute;
     top:0px;left:0px;
+    z-index:2;
     background:var(--teal);
     color:var(--white);
     font-size:11px;
@@ -2161,6 +2173,9 @@
 
             <div class="profil-media">
               <div class="profil-media-frame">
+                @foreach($profilPhotos as $photo)
+                  <div class="profil-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$photo->image) }}')"></div>
+                @endforeach
                 <span class="profil-badge">TENTANG KAMI</span>
               </div>
             </div>
@@ -2887,6 +2902,24 @@ setInterval(() => {
     slides[currentSlide].classList.add("active");
 
 }, 4000);
+
+const profilSlides = document.querySelectorAll(".profil-slide");
+
+if (profilSlides.length > 1) {
+
+    let currentProfilSlide = 0;
+
+    setInterval(() => {
+
+        profilSlides[currentProfilSlide].classList.remove("active");
+
+        currentProfilSlide = (currentProfilSlide + 1) % profilSlides.length;
+
+        profilSlides[currentProfilSlide].classList.add("active");
+
+    }, 3000);
+
+}
 
 const galeriFilters = document.querySelectorAll(".galeri-filter");
 const galeriCards = document.querySelectorAll(".galeri-card");

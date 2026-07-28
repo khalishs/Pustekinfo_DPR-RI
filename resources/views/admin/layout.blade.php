@@ -422,6 +422,10 @@
           <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/></svg></span>
           Hero Slider
         </a>
+        <a href="{{ route('admin.profil-photos.index') }}" class="{{ request()->routeIs('admin.profil-photos.*') ? 'active' : '' }}">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+          Foto Profil Singkat
+        </a>
       </details>
 
       <details class="nav-group" open>
