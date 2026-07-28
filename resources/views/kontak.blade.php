@@ -731,7 +731,137 @@
   @media (max-width:560px){
     .footer-inner{grid-template-columns:1fr;}
   }
+
+  /* ---------- Dark mode ---------- */
+  [data-theme="dark"] html{background:#0b1720;}
+  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+
+  [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
+  [data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
+  [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active::after{background:#5FC0D1;}
+  [data-theme="dark"] .nav-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
+  [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
+  [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
+
+  [data-theme="dark"] .icon-btn,
+  [data-theme="dark"] .lang-btn,
+  [data-theme="dark"] .profile-box,
+  [data-theme="dark"] .logout-btn,
+  [data-theme="dark"] .dl-btn,
+  [data-theme="dark"] .galeri-filter,
+  [data-theme="dark"] .agenda-cal-nav button{
+    background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
+  }
+  [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
+  [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
+  [data-theme="dark"] .profile-name{color:#eaf3f5;}
+  [data-theme="dark"] .logout-btn{color:#ff8f8a;border-color:rgba(255,143,138,.35);}
+  [data-theme="dark"] .logout-btn:hover{background:#b0413e;color:#fff;border-color:#b0413e;}
+
+  @media (max-width:900px){
+    [data-theme="dark"] .nav-links{background:#0f1e28;border-bottom-color:rgba(255,255,255,.08);}
+    [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
+  }
+
+  /* ---------- Dark mode: Kontak page-specific ---------- */
+  [data-theme="dark"] .page-banner{background:#071119;}
+  [data-theme="dark"] .breadcrumb{color:rgba(255,255,255,.5);}
+  [data-theme="dark"] .breadcrumb a:hover{color:#eaf3f5;}
+  [data-theme="dark"] .breadcrumb .current{color:#5FC0D1;}
+  [data-theme="dark"] .page-banner h1{color:#eaf3f5;}
+  [data-theme="dark"] .page-banner p{color:rgba(255,255,255,.65);}
+
+  [data-theme="dark"] .eyebrow{color:#5FC0D1;}
+  [data-theme="dark"] .eyebrow::before{background:#5FC0D1;}
+
+  [data-theme="dark"] .kontak-page{background:#0b1720;}
+  [data-theme="dark"] .kontak-info h2,
+  [data-theme="dark"] .lokasi-inner h2{color:#eaf3f5;}
+  [data-theme="dark"] .kontak-info-item{border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .kontak-info-icon{color:#5FC0D1;}
+  [data-theme="dark"] .kontak-info-body .title{color:#eaf3f5;}
+  [data-theme="dark"] .kontak-info-body .desc{color:#8ea0a8;}
+
+  [data-theme="dark"] .kontak-social a{
+    background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
+  }
+  [data-theme="dark"] .kontak-social a:hover{
+    background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;
+  }
+
+  [data-theme="dark"] .kontak-form-card{
+    background:#122530;
+    border-color:rgba(255,255,255,.1);
+    box-shadow:0 30px 60px -28px rgba(0,0,0,.6);
+  }
+  [data-theme="dark"] .kontak-form-card h3{color:#eaf3f5;}
+  [data-theme="dark"] .kontak-form-card > p{color:#8ea0a8;}
+
+  [data-theme="dark"] .form-field label{color:#eaf3f5;}
+  [data-theme="dark"] .form-field input,
+  [data-theme="dark"] .form-field select,
+  [data-theme="dark"] .form-field textarea{
+    background:#0b1720;
+    border-color:rgba(255,255,255,.14);
+    color:#c3cdd2;
+  }
+  [data-theme="dark"] .form-field input::placeholder,
+  [data-theme="dark"] .form-field textarea::placeholder{color:#8ea0a8;}
+  [data-theme="dark"] .form-field input:focus,
+  [data-theme="dark"] .form-field select:focus,
+  [data-theme="dark"] .form-field textarea:focus{
+    border-color:#5FC0D1;
+    box-shadow:0 0 0 3px rgba(95,192,209,.18);
+  }
+  [data-theme="dark"] .form-field select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235FC0D1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  }
+
+  [data-theme="dark"] .btn-kirim{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .btn-kirim:hover{background:#7fd3e0;}
+  [data-theme="dark"] .kontak-form-footer .note{color:#8ea0a8;}
+
+  [data-theme="dark"] .lokasi{background:#0b1720;}
+  [data-theme="dark"] .lokasi-map{
+    box-shadow:0 30px 60px -28px rgba(0,0,0,.6);
+  }
+
+  [data-theme="dark"] .footer-divider{
+    background:linear-gradient(10deg, #057888 0%, #071119 55%, #071119 100%);
+  }
+  [data-theme="dark"] .footer{background:#071119;}
+  [data-theme="dark"] .footer-brand-text .name,
+  [data-theme="dark"] .footer-brand-text .sub{color:#eaf3f5;}
+  [data-theme="dark"] .footer-desc{color:rgba(255,255,255,.5);}
+  [data-theme="dark"] .footer-social a{
+    border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.65);
+  }
+  [data-theme="dark"] .footer-social a:hover{
+    background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;
+  }
+  [data-theme="dark"] .footer-col .head{
+    color:rgba(255,255,255,.8);border-bottom-color:#5FC0D1;
+  }
+  [data-theme="dark"] .footer-links a{color:rgba(255,255,255,.55);}
+  [data-theme="dark"] .footer-links a .chev{color:#5FC0D1;}
+  [data-theme="dark"] .footer-links a:hover{color:#eaf3f5;}
+  [data-theme="dark"] .footer-contact .item{color:rgba(255,255,255,.6);}
+  [data-theme="dark"] .footer-contact .item svg{stroke:#5FC0D1;}
+  [data-theme="dark"] .footer-bottom{border-top-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .footer-bottom p{color:rgba(255,255,255,.4);}
 </style>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+</script>
 </head>
 <body>
 
@@ -775,9 +905,8 @@
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" aria-label="Ganti tema">◐</button>
-      <button class="lang-btn">EN</button>       
-      <button class="btn-login"><a href="{{ route('login') }}">Masuk</a></button>
+      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
+      <button class="lang-btn">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
@@ -993,6 +1122,24 @@
   </footer>
 
   <script>
+
+    // Theme toggle
+    const themeToggle = document.getElementById("themeToggle");
+
+    function applyTheme(isDark) {
+        document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+        themeToggle.classList.toggle("active", isDark);
+        themeToggle.setAttribute("aria-pressed", String(isDark));
+        themeToggle.textContent = isDark ? "◑" : "◐";
+    }
+
+    applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
+
+    themeToggle.addEventListener("click", () => {
+        const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        applyTheme(isDark);
+    });
 
     // Dropdown Profil (mobile)
     const profilDropdown = document.getElementById("profilDropdown");
