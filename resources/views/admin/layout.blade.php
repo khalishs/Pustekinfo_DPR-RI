@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
+    --sidebar-w:264px;
     --navy:#12242E;
     --navy-deep:#0b2233;
     --teal:#14839C;
@@ -37,7 +38,7 @@
 
   /* ---------- Sidebar ---------- */
   .sidebar{
-    width:264px;
+    width:var(--sidebar-w);
     background:linear-gradient(190deg,#073D5F 0%,var(--navy-deep) 65%);
     color:#fff;
     flex-shrink:0;
@@ -170,8 +171,69 @@
   }
   .sidebar.open ~ .sidebar-backdrop{opacity:1;pointer-events:auto;}
 
+  /* ---------- Desktop edge toggle (buka/tutup sidebar) ---------- */
+  .sidebar-edge-toggle{
+    display:none;
+    align-items:center;justify-content:center;
+    position:absolute;
+    top:50%;right:-14px;
+    transform:translateY(-50%);
+    width:28px;height:56px;
+    background:#073D5F;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:2px 0 12px -2px rgba(11,34,51,.35);
+    z-index:11;
+    transition:background .18s ease;
+  }
+  .sidebar-edge-toggle:hover{background:#0f6b7f;}
+  .sidebar-edge-toggle svg{
+    width:14px;height:14px;stroke:currentColor;fill:none;
+    stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
+    transition:transform .25s ease;
+  }
+  .sidebar.sidebar-closed .sidebar-edge-toggle svg{transform:rotate(180deg);}
+  .sidebar.sidebar-closed{transform:translateX(calc(var(--sidebar-w) * -1));box-shadow:none;}
+  .sidebar.sidebar-closed ~ .main{margin-left:0;}
+
+  @media (min-width:1025px){
+    .sidebar-edge-toggle{display:flex;}
+  }
+
+  /* ---------- Resize handle (hover di ujung sidebar untuk atur lebar) ---------- */
+  .sidebar-resize-handle{
+    display:none;
+    position:absolute;
+    top:0;bottom:0;right:0;
+    width:6px;
+    cursor:ew-resize;
+    z-index:12;
+    background:transparent;
+    touch-action:none;
+  }
+  .sidebar-resize-handle::after{
+    content:"";
+    position:absolute;top:0;bottom:0;right:1px;
+    width:2px;border-radius:2px;
+    background:var(--teal-light);
+    opacity:0;
+    transition:opacity .15s ease;
+  }
+  .sidebar-resize-handle:hover::after,
+  .sidebar-resize-handle.resizing::after{opacity:.9;}
+  .sidebar.sidebar-closed .sidebar-resize-handle{pointer-events:none;}
+  @media (min-width:1025px){
+    .sidebar-resize-handle{display:block;}
+  }
+
+  body.sidebar-resizing{cursor:ew-resize;user-select:none;}
+  body.sidebar-resizing .sidebar,
+  body.sidebar-resizing .main{transition:none;}
+
   /* ---------- Main ---------- */
-  .main{flex:1;margin-left:264px;display:flex;flex-direction:column;min-height:100vh;min-width:0;}
+  .main{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-height:100vh;min-width:0;transition:margin-left .28s ease;}
   .topbar{
     background:rgba(255,255,255,.9);
     backdrop-filter:blur(10px);
@@ -324,6 +386,10 @@
 </head>
 <body>
   <aside class="sidebar">
+    <button type="button" class="sidebar-edge-toggle" id="sidebarEdgeToggle" aria-label="Buka/tutup sidebar" title="Buka/tutup sidebar">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="sidebar-resize-handle" id="sidebarResizeHandle" title="Tarik untuk mengubah lebar sidebar"></div>
     <div class="brand">
       <div class="brand-logo"><img src="{{ asset('images/Logo.png') }}" alt="Logo"></div>
       <div>
@@ -468,6 +534,8 @@
       var sidebar = document.querySelector('.sidebar');
       var toggle = document.getElementById('sidebarToggle');
       var backdrop = document.getElementById('sidebarBackdrop');
+      var edgeToggle = document.getElementById('sidebarEdgeToggle');
+      var STORAGE_KEY = 'pustekinfo_sidebar_closed';
 
       function closeSidebar(){
         sidebar.classList.remove('open');
@@ -491,6 +559,72 @@
       window.addEventListener('resize', function(){
         if (window.innerWidth > 1024) closeSidebar();
       });
+
+      // Desktop edge toggle: buka/tutup sidebar, state disimpan di localStorage
+      function applySidebarClosedState(closed){
+        sidebar.classList.toggle('sidebar-closed', closed);
+        try { localStorage.setItem(STORAGE_KEY, closed ? '1' : '0'); } catch(e){}
+      }
+
+      if (edgeToggle){
+        try {
+          if (localStorage.getItem(STORAGE_KEY) === '1') {
+            applySidebarClosedState(true);
+          }
+        } catch(e){}
+
+        edgeToggle.addEventListener('click', function(){
+          applySidebarClosedState(!sidebar.classList.contains('sidebar-closed'));
+        });
+      }
+
+      // Resize handle: tarik di ujung sidebar untuk menyesuaikan lebarnya
+      var resizeHandle = document.getElementById('sidebarResizeHandle');
+      var rootEl = document.documentElement;
+      var WIDTH_KEY = 'pustekinfo_sidebar_width';
+      var MIN_W = 200, MAX_W = 380;
+
+      function setSidebarWidth(px){
+        px = Math.min(MAX_W, Math.max(MIN_W, Math.round(px)));
+        rootEl.style.setProperty('--sidebar-w', px + 'px');
+        try { localStorage.setItem(WIDTH_KEY, String(px)); } catch(e){}
+      }
+
+      try {
+        var savedW = parseInt(localStorage.getItem(WIDTH_KEY), 10);
+        if (!isNaN(savedW)) setSidebarWidth(savedW);
+      } catch(e){}
+
+      if (resizeHandle){
+        var dragging = false, startX = 0, startW = 0;
+
+        resizeHandle.addEventListener('pointerdown', function(e){
+          if (window.innerWidth <= 1024 || sidebar.classList.contains('sidebar-closed')) return;
+          dragging = true;
+          startX = e.clientX;
+          startW = sidebar.getBoundingClientRect().width;
+          resizeHandle.classList.add('resizing');
+          document.body.classList.add('sidebar-resizing');
+          try { resizeHandle.setPointerCapture(e.pointerId); } catch(err){}
+        });
+
+        resizeHandle.addEventListener('pointermove', function(e){
+          if (!dragging) return;
+          setSidebarWidth(startW + (e.clientX - startX));
+        });
+
+        function stopResize(){
+          if (!dragging) return;
+          dragging = false;
+          resizeHandle.classList.remove('resizing');
+          document.body.classList.remove('sidebar-resizing');
+        }
+        resizeHandle.addEventListener('pointerup', stopResize);
+        resizeHandle.addEventListener('pointercancel', stopResize);
+        resizeHandle.addEventListener('dblclick', function(){
+          setSidebarWidth(264);
+        });
+      }
     })();
   </script>
 </body>

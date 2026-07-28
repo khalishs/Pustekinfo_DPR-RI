@@ -304,9 +304,43 @@
     .sambutan-content{padding:36px 26px;}
   }
 
-  /* ================= SECTION NAVY (dark) ================= */
+  /* ================= POLA BATIK (sama seperti beranda) ================= */
+  .konten-batik{
+    position:relative;
+    background-color:#14839C1A;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:repeat-y;
+    background-position:center top;
+    background-size:5000px auto;
+  }
+  /* section putih/mist bergantian dimatikan di dalam area batik, supaya
+     polanya tetap terlihat sampai bawah — sama seperti di beranda */
+  .konten-batik section.page-section:nth-child(even){background:transparent;}
+  @media (max-width:900px){
+    .konten-batik{background-size:3000px auto;}
+  }
+
+  /* ================= SECTION NAVY (dark) — sama seperti section navy di beranda ================= */
   section.page-section.dark{
-    background:var(--navy) !important;
+    position:relative;
+    background:linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%) !important;
+    overflow:hidden;
+  }
+  section.page-section.dark::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:2600px auto;
+    filter:brightness(0) invert(1);
+    opacity:.14;
+    pointer-events:none;
+    z-index:0;
+  }
+  section.page-section.dark .section-inner{position:relative;z-index:1;}
+  @media (max-width:900px){
+    section.page-section.dark::before{background-size:1600px auto;}
   }
   .dark-head{
     display:flex;align-items:center;gap:14px;margin-bottom:8px;
@@ -543,6 +577,8 @@
     </div>
   </div>
 
+  <div class="konten-batik">
+
   {{-- ================= TENTANG KAMI ================= --}}
   <section id="tentang-kami" class="page-section">
     <div class="section-inner">
@@ -776,6 +812,9 @@
       </div>
     </div>
   </section>
+
+  </div>
+  {{-- /.konten-batik --}}
 
   <div class="footer-divider"></div>
 

@@ -323,9 +323,22 @@
     .page-banner h1{font-size:24px;}
   }
 
+  /* ---------- POLA BATIK (sama seperti halaman lain) ---------- */
+  .konten-batik{
+    position:relative;
+    background-color:#14839C1A;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:repeat-y;
+    background-position:center top;
+    background-size:5000px auto;
+  }
+  @media (max-width:900px){
+    .konten-batik{background-size:3000px auto;}
+  }
+
   /* ---------- Kontak: Informasi & Form ---------- */
   .kontak-page{
-    background:var(--white);
+    background:rgba(255, 255, 255, 0.2);
     padding:70px 100px 40px;
     opacity:0;
     transform:translateY(60px);
@@ -343,6 +356,14 @@
   }
 
   /* --- Kolom info --- */
+
+  .kontak-info{
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding:30px;
+    max-width: 500px;
+    height: 370px;
+  }
   .kontak-info h2{
     margin-top:14px;
     font-size:26px;
@@ -421,7 +442,7 @@
 
   /* --- Kolom form --- */
   .kontak-form-card{
-    background:var(--white);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius:1px 20px 1px 20px;
     padding:40px 44px;
     box-shadow:0 30px 60px -28px rgba(11,34,51,.22);
@@ -543,7 +564,7 @@
 
   /* ---------- Lokasi ---------- */
   .lokasi{
-    background:var(--white);
+    background-color: rgba(255, 255, 255, 0.7);
     padding:30px 100px 110px;
     opacity:0;
     transform:translateY(60px);
@@ -797,6 +818,8 @@
     </div>
   </header>
 
+  <div class="konten-batik">
+
   {{-- ================= INFORMASI KONTAK & FORM ================= --}}
   <section class="kontak-page">
     <div class="kontak-grid">
@@ -922,6 +945,9 @@
       </div>
     </div>
   </section>
+
+  </div>
+  {{-- /.konten-batik --}}
 
   <div class="footer-divider"></div>
 

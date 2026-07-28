@@ -217,7 +217,7 @@
     margin-top: 70px;
     position:relative;
     background: var(--white);
-    min-height:523px;
+    height:580px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -445,7 +445,7 @@
 
   .profil.show{opacity:1;transform:translateY(0);}
   .profil-grid{
-    background-color: var(--white);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     padding: 30px;
     display:grid;
@@ -1222,13 +1222,28 @@
 
   /* --- Panel Hari Ini --- */
   .agenda-today{
-    background:linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
+    background: rgba(18, 36, 46, 0.9);
     border-radius:16px;
     padding:26px 26px 30px;
     display:flex;
     flex-direction:column;
     box-shadow:0 30px 60px -30px rgba(11,34,51,.35);
   }
+
+  .agenda-today::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:4000px auto;
+    filter:brightness(0) invert(1);
+    opacity:.40;
+    pointer-events:none;
+    z-index:0;
+  }
+
   .agenda-today-head{
     display:flex;
     align-items:center;
@@ -1771,10 +1786,33 @@
 
 /* ---------- Footer ---------- */
 .footer{
+  position:relative;
   background:var(--navy);
   padding:64px 100px 0;
+  overflow:hidden;
 }
+
+/* Motif batik dekoratif di ujung kiri footer — diinvert ke putih supaya kontras dengan navy, sama seperti trik di section Layanan */
+.footer::before{
+  content:"";
+  position:absolute;
+  left:-120px;
+  top:0;
+  bottom:-80px;
+  width:700px;
+  background-image:url('{{ asset('images/motif-batik.png') }}');
+  background-repeat:no-repeat;
+  background-position:left center;
+  background-size:550px auto;
+  filter:brightness(0) invert(1);
+  opacity:.35;
+  pointer-events:none;
+  z-index:0;
+}
+
 .footer-inner{
+  position:relative;
+  z-index:1;
   max-width:1240px;
   margin:0 auto;
   display:grid;
@@ -1905,6 +1943,7 @@
 
 @media (max-width:900px){
   .footer{padding:50px 20px 0;}
+  .footer::before{width:150px;background-size:150px auto;opacity:.25;}
   .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
   .footer-brand-text .sub{white-space:normal;}
   .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
@@ -2080,8 +2119,6 @@
         @forelse($heroSlides as $slide)
           <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$slide->image) }}')"></div>
         @empty
-          <div class="hero-slide active" style="background-image:url('{{ asset('images/Hero-Pict1.jpeg') }}')"></div>
-          <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict2.jpg') }}')"></div>
           <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict3.jpg') }}')"></div>
         @endforelse
       </div>
@@ -2173,6 +2210,7 @@
               </div>
           </div>
 
+        </div>
         </div>
       </section>
 
@@ -2394,16 +2432,9 @@
         <div class="eyebrow">DOKUMENTASI</div>
         <h2>Galeri kegiatan</h2>
       </div>
-      <a href="#" class="galeri-link">LIHAT SEMUA GALERI <span>→</span></a>
+      <a href="{{ route('galeri') }}" class="galeri-link">LIHAT SEMUA GALERI <span>→</span></a>
     </div>
 
-    <div class="galeri-filters">
-      <button class="galeri-filter active" data-filter="semua">Semua</button>
-      <button class="galeri-filter" data-filter="pelatihan">Pelatihan</button>
-      <button class="galeri-filter" data-filter="kegiatan">Kegiatan</button>
-      <button class="galeri-filter" data-filter="kerjasama">Kerjasama</button>
-      <button class="galeri-filter" data-filter="seremoni">Seremoni</button>
-    </div>
 
     <div class="galeri-grid" id="galeriGrid">
       @forelse($galleries as $item)

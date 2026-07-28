@@ -191,6 +191,22 @@
     .tabs-nav-sticky.show{top:56px;}
   }
 
+  /* ================= POLA BATIK (sama seperti beranda) ================= */
+  .konten-batik{
+    position:relative;
+    background-color:#14839C1A;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:repeat-y;
+    background-position:center top;
+    background-size:5000px auto;
+  }
+  /* section putih/mist bergantian dimatikan di dalam area batik, supaya
+     polanya tetap terlihat sampai bawah — sama seperti di beranda */
+  .konten-batik section.page-section:nth-child(even){background:transparent;}
+  @media (max-width:900px){
+    .konten-batik{background-size:3000px auto;}
+  }
+
   /* ================= FILTER PILLS (dipakai Berita & Publikasi) ================= */
   .info-filters{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;}
   .info-filter{
@@ -498,6 +514,8 @@
     </div>
   </div>
 
+  <div class="konten-batik">
+
   {{-- ================= BERITA & KEGIATAN ================= --}}
   <section id="berita" class="page-section">
     <div class="section-inner">
@@ -660,6 +678,9 @@
       </div>
     </div>
   </section>
+
+  </div>
+  {{-- /.konten-batik --}}
 
   <div class="footer-divider"></div>
 
