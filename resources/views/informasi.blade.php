@@ -460,7 +460,6 @@
     <div class="nav-actions">
       <button class="icon-btn" aria-label="Ganti tema">◐</button>
       <button class="lang-btn">EN</button>
-      <button class="btn-login"><a href="{{ route('login') }}">Masuk</a></button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>

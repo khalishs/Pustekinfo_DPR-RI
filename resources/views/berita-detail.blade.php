@@ -175,7 +175,6 @@
     </ul>
 
     <div class="nav-actions">
-      <button class="btn-login"><a href="{{ route('login') }}">Masuk</a></button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>

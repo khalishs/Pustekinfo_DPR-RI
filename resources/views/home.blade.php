@@ -1644,12 +1644,36 @@
 /* ---------- Pola Batik (satu gambar besar saja, tidak diulang/ditile, ikut discroll bersama halaman) ---------- */
 .konten-batik{
   position:relative;
+  z-index:0;
   background-color:#14839C1A;
   background-image:url('{{ asset('images/pola-batik.png') }}');
   background-repeat:no-repeat;
   background-position:center top;
   background-size:5000px auto;
   /* sengaja TIDAK pakai background-attachment:fixed, supaya gambar ikut scroll natural bersama halaman */
+}
+
+/* Overlay pola batik terpisah khusus dark mode: pola aslinya alpha-nya sangat tipis (maks ~10%)
+   sehingga langsung menghilang di background gelap; overlay ini menaikkan alpha lewat SVG filter
+   supaya polanya tetap kelihatan tapi tidak berlebihan/menyilaukan. */
+[data-theme="dark"] .konten-batik{
+  background-color:#0e1b23;
+  background-image:none;
+}
+[data-theme="dark"] .konten-batik::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background-image:url('{{ asset('images/pola-batik.png') }}');
+  background-repeat:no-repeat;
+  background-position:center top;
+  background-size:5000px auto;
+  filter:url(#batikAlphaBoost);
+}
+@media (max-width:900px){
+  [data-theme="dark"] .konten-batik::before{background-size:3000px auto;}
 }
 
 @media (max-width:900px){
@@ -1953,11 +1977,6 @@
   [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
 }
 
-[data-theme="dark"] .konten-batik{
-  background-color:#0b1720;
-  background-image:none;
-}
-
 [data-theme="dark"] .profil .eyebrow,
 [data-theme="dark"] .sambutan .eyebrow,
 [data-theme="dark"] .berita .eyebrow,
@@ -2024,6 +2043,14 @@
 </head>
 <body>
 
+    <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+      <filter id="batikAlphaBoost">
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="4.5" intercept="0"/>
+        </feComponentTransfer>
+      </filter>
+    </svg>
+
     <nav class="navbar">
       <div class="brand">
           <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
@@ -2065,7 +2092,6 @@
       <div class="nav-actions">
         <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
         <button class="lang-btn">EN</button>
-          <a href="{{ route('login') }}" class="btn-login">Masuk</a>
         <button class="burger" id="burgerBtn" aria-label="Buka menu">
           <span></span><span></span><span></span>
         </button>
