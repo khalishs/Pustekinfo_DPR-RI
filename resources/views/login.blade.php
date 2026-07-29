@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk - PusTekInfo DPR RI</title>
+    <title>Masuk - Pustekinfo DPR RI</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font Awesome untuk Ikon -->
@@ -73,15 +73,13 @@
             z-index: 1;
             pointer-events: none;
 
+            background-image: url('{{ asset('images/pola-batik.png') }}');
             background-repeat: no-repeat;
-            background-position: center top;
-            background-size: 5000px auto;
-
-            filter: brightness(0) invert(1);
-            opacity: .40;
+            background-position: center center;
+            background-size: 2400px auto;
         }
         [data-theme="dark"] .login-batik-bg{
-            background-image: url('{{ asset('images/batik.png') }}') !important;
+            filter: url(#batikAlphaBoost);
         }
         .icon-btn{
             width:36px;height:36px;border-radius:50%;
@@ -123,6 +121,14 @@
 </head>
 <body class="bg-gray-50 font-sans antialiased min-h-screen flex flex-col md:flex-row">
 
+    <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+      <filter id="batikAlphaBoost">
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="4.5" intercept="0"/>
+        </feComponentTransfer>
+      </filter>
+    </svg>
+
     <!-- Sisi Kiri: Branding (Hidden di HP, muncul di MD ke atas) -->
     <div class="hidden md:flex md:w-5/12 text-white p-12 flex-col justify-between relative overflow-hidden shadow-2xl"
          style="background-image: url('{{ asset('images/latar2.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
@@ -132,7 +138,7 @@
         <div class="mt-16 md:mt-20 mb-auto mx-auto flex flex-col items-center text-center z-10">
             <!-- Ganti src dengan logo asli Anda -->
             <div class="logo-frame mb-4 flex items-center justify-center p-6 lg:p-8 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-                <img src="{{ asset('images/Logo.png') }}" alt="Logo PusTekInfo" class="h-20 lg:h-24 object-contain fallback-logo">
+                <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="h-20 lg:h-24 object-contain fallback-logo">
                 <!-- Fallback jika gambar tidak ada (CSS Hacking untuk demo) -->
                 <div class="w-24 h-24 flex items-center justify-center font-bold text-5xl text-teal-400 unique-logo-placeholder hidden">//</div>
             </div>
@@ -155,9 +161,8 @@
     <!-- Sisi Kanan: Form Login -->
     <div class="w-full md:w-7/12 flex flex-col justify-between p-4 sm:p-8 md:p-12 relative bg-[#f4f7f6] mobile-safe overflow-hidden">
 
-        <!-- Background Batik (transparan di tengah, makin terlihat ke samping) -->
-        <div class="login-batik-bg absolute inset-0 z-1 pointer-events-none"
-             style="background-image: url('{{ asset('images/Batik-terang.jpeg') }}');"></div>
+        <!-- Background Batik (sama seperti pola-batik.png di beranda) -->
+        <div class="login-batik-bg absolute inset-0 z-1 pointer-events-none"></div>
 
         <!-- Container Form (Card Putih) -->
         <div class="relative z-10 w-full max-w-md lg:max-w-lg xl:max-w-xl mx-auto my-auto bg-white rounded-3xl p-5 sm:p-8 md:p-10 lg:p-12 shadow-xl shadow-gray-200/50 border border-gray-100 mobile-card">
@@ -236,13 +241,13 @@
             <!-- Helpdesk/Bantuan -->
             <div class="flex items-center justify-center space-x-2 text-xs text-gray-600 mt-4">
                 <i class="fa-solid fa-headset text-teal-600 text-base"></i>
-                <span>Butuh bantuan? Hubungi <a href="#" class="text-teal-600 font-semibold hover:underline">Helpdesk PusTekInfo</a></span>
+                <span>Butuh bantuan? Hubungi <a href="#" class="text-teal-600 font-semibold hover:underline">Helpdesk Pustekinfo</a></span>
             </div>
         </div>
 
         <!-- Footer Hak Cipta -->
         <div class="footer text-center text-xs text-gray-400 mt-8 md:mt-4">
-            &copy; {{ date('Y') }} PusTekInfo DPR RI. All rights reserved.
+            &copy; {{ date('Y') }} Pustekinfo DPR RI. All rights reserved.
         </div>
     </div>
 

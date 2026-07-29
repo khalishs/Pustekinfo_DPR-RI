@@ -23,7 +23,7 @@
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
+  .brand-text .name{font-weight:800;font-size:24px;color:#073D5F;line-height:1.1;}
   .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;transition:color .2s ease;}
@@ -89,6 +89,7 @@
     background: var(--white);
     border: 1px solid var(--line);
     border-radius:14px;
+    overflow: hidden;
     display:grid;
     grid-template-columns:repeat(4,1fr);
     box-shadow:0 20px 40px -12px rgba(11,34,51,.35);
@@ -204,7 +205,8 @@
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .icon-btn,[data-theme="dark"] .lang-btn,[data-theme="dark"] .galeri-filter,[data-theme="dark"] .load-more a{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
-  [data-theme="dark"] .stat-card{background:#122530;}
+  [data-theme="dark"] .stat-card{background:#122530; border-right-color:black;}
+  [data-theme="dark"] .stats-bar-inner{background-color:var(--navy);border: 1px solid var(--navy);}
   [data-theme="dark"] .stat-num{color:#eaf3f5;}
   [data-theme="dark"] .galeri-empty{color:#6d8189;}
 </style>
@@ -216,21 +218,13 @@
       <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
       <div class="brand-text">
         <div class="name">PUSTEKINFO</div>
-        <div class="sub">Sekretariat Jendral DPR RI</div>
+        <div class="sub">Sekretariat Jenderal DPR RI</div>
       </div>
     </div>
 
     <ul class="nav-links">
       <li><a href="{{ route('home') }}">Beranda</a></li>
-      <li class="nav-item-dropdown" id="profilDropdown">
-        <a href="{{ route('profil') }}">Profil <span class="caret">▾</span></a>
-        <div class="nav-dropdown">
-          <a href="{{ route('profil') }}#tentang"><span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>Tentang</a>
-          <a href="{{ route('profil') }}#pimpinan"><span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Pimpinan</a>
-          <a href="{{ route('profil') }}#struktur"><span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg></span>Struktur Organisasi</a>
-          <a href="{{ route('profil') }}#visi-misi"><span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>Visi dan Misi</a>
-        </div>
-      </li>
+      <li><a href="{{ route('profil') }}">Profil </a></li>
       <li><a href="{{ route('layanan') }}">Layanan</a></li>
       <li><a href="{{ route('informasi') }}">Informasi</a></li>
       <li class="active"><a href="{{ route('galeri') }}">Galeri</a></li>
@@ -240,7 +234,6 @@
     <div class="nav-actions">
       <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       <button class="lang-btn">EN</button>
-      <a href="{{ route('login') }}" class="btn-login">Masuk</a>
       <button class="burger" id="burgerBtn" aria-label="Buka menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -335,7 +328,7 @@
           <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
           <div class="footer-brand-text">
             <div class="name">PUSTEKINFO</div>
-            <div class="sub">Sekretariat Jendral DPR RI</div>
+            <div class="sub">Sekretariat Jenderal DPR RI</div>
           </div>
         </div>
         <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>

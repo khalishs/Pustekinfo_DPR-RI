@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pustekinfo - Pusat Teknologi Informasi DPR RI</title>
+<title>Pustekinfo DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
@@ -70,7 +70,7 @@
     height:50px;
     object-fit:contain;
 }
-  .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
+  .brand-text .name{font-weight:800;font-size:24px;color:#073D5F;line-height:1.1;}
   .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color: #0F6B7F;;font-weight:600;}
 
   .nav-links{display:flex;align-items:center;gap:34px;}
@@ -217,7 +217,7 @@
     margin-top: 70px;
     position:relative;
     background: var(--white);
-    height:580px;
+    height:650px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -250,7 +250,7 @@
     background:linear-gradient(180deg, rgba(11,49,74,.55) 0%, rgba(11,60,86,.72) 55%, rgba(9,46,58,.88) 100%);
     pointer-events:none;
   }
-  .hero-content{position:relative;z-index:2;max-width:900px;}
+  .hero-content{margin-top:130px;position:relative;z-index:2;max-width:900px;}
   .hero-content h1{
     color:var(--white);
     font-size:38px;
@@ -856,7 +856,7 @@
   /* ---------- Berita & Kegiatan ---------- */
   .berita{
     position:relative;
-    background-color:var(--white);
+    background-color: rgba(255, 255, 255, 0.7);
     padding:90px 100px 120px;
     opacity:0;
     transform:translateY(60px);
@@ -1234,7 +1234,7 @@
 
   /* --- Panel Hari Ini --- */
   .agenda-today{
-    background: rgba(18, 36, 46, 0.9);
+    background: #073D5F;
     border-radius:16px;
     padding:26px 26px 30px;
     display:flex;
@@ -1346,7 +1346,7 @@
   /* ---------- Galeri Kegiatan ---------- */
 .galeri{
   position:relative;
-  background-color:var(--white);
+  background-color: rgba(255, 255, 255, 0.7);
   padding:90px 100px 120px;
   opacity:0;
   transform:translateY(60px);
@@ -1671,12 +1671,36 @@
 /* ---------- Pola Batik (satu gambar besar saja, tidak diulang/ditile, ikut discroll bersama halaman) ---------- */
 .konten-batik{
   position:relative;
+  z-index:0;
   background-color:#14839C1A;
   background-image:url('{{ asset('images/pola-batik.png') }}');
   background-repeat:no-repeat;
   background-position:center top;
   background-size:5000px auto;
   /* sengaja TIDAK pakai background-attachment:fixed, supaya gambar ikut scroll natural bersama halaman */
+}
+
+/* Overlay pola batik terpisah khusus dark mode: pola aslinya alpha-nya sangat tipis (maks ~10%)
+   sehingga langsung menghilang di background gelap; overlay ini menaikkan alpha lewat SVG filter
+   supaya polanya tetap kelihatan tapi tidak berlebihan/menyilaukan. */
+[data-theme="dark"] .konten-batik{
+  background-color:#0e1b23;
+  background-image:none;
+}
+[data-theme="dark"] .konten-batik::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background-image:url('{{ asset('images/pola-batik.png') }}');
+  background-repeat:no-repeat;
+  background-position:center top;
+  background-size:5000px auto;
+  filter:url(#batikAlphaBoost);
+}
+@media (max-width:900px){
+  [data-theme="dark"] .konten-batik::before{background-size:3000px auto;}
 }
 
 @media (max-width:900px){
@@ -1992,6 +2016,7 @@
 [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
 [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
 [data-theme="dark"] .agenda-cal-nav button:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+[data-theme="dark"] .profil-grid{background-color: rgba(0, 0, 0, 0.8);}
 [data-theme="dark"] .agenda-cal-nav .today-btn{color:#5FC0D1;border-color:rgba(95,192,209,.35);}
 [data-theme="dark"] .galeri-filter:hover{border-color:#5FC0D1;color:#5FC0D1;}
 [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
@@ -2005,11 +2030,6 @@
   [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
 }
 
-[data-theme="dark"] .konten-batik{
-  background-color:#0b1720;
-  background-image:none;
-}
-
 [data-theme="dark"] .profil .eyebrow,
 [data-theme="dark"] .sambutan .eyebrow,
 [data-theme="dark"] .berita .eyebrow,
@@ -2018,6 +2038,7 @@
 [data-theme="dark"] .akses-dokumen .eyebrow{
   color:#5FC0D1;
 }
+
 [data-theme="dark"] .profil .eyebrow::before,
 [data-theme="dark"] .sambutan .eyebrow::before,
 [data-theme="dark"] .berita .eyebrow::before,
@@ -2045,6 +2066,7 @@
 [data-theme="dark"] .sambutan-content .signature{color:#eaf3f5;}
 [data-theme="dark"] .sambutan-content .sign-role{color:#8ea0a8;}
 
+[data-theme="dark"] .berita{background-color: rgba(0, 0, 0, 0.8);}
 [data-theme="dark"] .berita-item{border-bottom-color:rgba(255,255,255,.08);}
 [data-theme="dark"] .berita-item-body .title{color:#eaf3f5;}
 [data-theme="dark"] .berita-item:hover .berita-item-body .title{color:#5FC0D1;}
@@ -2060,6 +2082,7 @@
 [data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
 [data-theme="dark"] .agenda-legend span{color:#8ea0a8;}
 
+[data-theme="dark"] .galeri{background-color: rgba(0, 0, 0, 0.8);}
 [data-theme="dark"] .galeri-link{color:#5FC0D1;border-bottom-color:#5FC0D1;}
 
 [data-theme="dark"] .akses-item{background:#122530;box-shadow:0 6px 20px -10px rgba(0,0,0,.5);}
@@ -2076,38 +2099,26 @@
 </head>
 <body>
 
+    <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+      <filter id="batikAlphaBoost">
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="4.5" intercept="0"/>
+        </feComponentTransfer>
+      </filter>
+    </svg>
+
     <nav class="navbar">
       <div class="brand">
           <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
         <div class="brand-text">
           <div class="name">PUSTEKINFO</div>
-          <div class="sub">Sekretariat Jendral DPR RI</div>
+          <div class="sub">Sekretariat Jenderal DPR RI</div>
         </div>
       </div>
 
       <ul class="nav-links">
         <li class="active"><a href="#">Beranda</a></li>
-        <li class="nav-item-dropdown" id="profilDropdown">
-          <a href="{{ route('profil') }}">Profil <span class="caret">▾</span></a>
-          <div class="nav-dropdown">
-            <a href="{{ route('profil') }}#tentang">
-              <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-              Tentang
-            </a>
-            <a href="{{ route('profil') }}#pimpinan">
-              <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-              Pimpinan
-            </a>
-            <a href="{{ route('profil') }}#struktur">
-              <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg></span>
-              Struktur Organisasi
-            </a>
-            <a href="{{ route('profil') }}#visi-misi">
-              <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
-              Visi dan Misi
-            </a>
-          </div>
-        </li>
+        <li><a href="{{ route('profil') }}">Profil </a></li>
         <li><a href="{{ route('layanan') }}">Layanan</a></li>
         <li><a href="{{ route('informasi') }}">Informasi</a></li>
         <li><a href="{{ route('galeri') }}">Galeri</a></li>
@@ -2117,7 +2128,6 @@
       <div class="nav-actions">
         <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
         <button class="lang-btn">EN</button>
-          <a href="{{ route('login') }}" class="btn-login">Masuk</a>
         <button class="burger" id="burgerBtn" aria-label="Buka menu">
           <span></span><span></span><span></span>
         </button>
@@ -2592,7 +2602,7 @@
           <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
         <div class="footer-brand-text">
           <div class="name">PUSTEKINFO</div>
-          <div class="sub">Sekretariat Jendral DPR RI</div>
+          <div class="sub">Sekretariat Jenderal DPR RI</div>
         </div>
       </div>
       <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>

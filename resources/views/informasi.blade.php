@@ -49,7 +49,7 @@
   }
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
+  .brand-text .name{font-weight:800;font-size:24px;color:#073D5F;line-height:1.1;}
   .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
@@ -392,7 +392,113 @@
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
+
+  /* ---------- Dark mode ---------- */
+  [data-theme="dark"] html{background:#0b1720;}
+  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+
+  [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
+  [data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
+  [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
+  [data-theme="dark"] .nav-links li.active::after{background:#5FC0D1;}
+  [data-theme="dark"] .nav-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
+  [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
+  [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
+
+  [data-theme="dark"] .icon-btn,
+  [data-theme="dark"] .lang-btn,
+  [data-theme="dark"] .profile-box,
+  [data-theme="dark"] .logout-btn,
+  [data-theme="dark"] .dl-btn,
+  [data-theme="dark"] .galeri-filter,
+  [data-theme="dark"] .agenda-cal-nav button{
+    background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
+  }
+  [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
+  [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
+  [data-theme="dark"] .profile-name{color:#eaf3f5;}
+  [data-theme="dark"] .logout-btn{color:#ff8f8a;border-color:rgba(255,143,138,.35);}
+  [data-theme="dark"] .logout-btn:hover{background:#b0413e;color:#fff;border-color:#b0413e;}
+
+  @media (max-width:900px){
+    [data-theme="dark"] .nav-links{background:#0f1e28;border-bottom-color:rgba(255,255,255,.08);}
+    [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
+  }
+
+  /* ---- Informasi page: burger button ---- */
+  [data-theme="dark"] .burger{background:#122530;border-color:rgba(255,255,255,.14);}
+  [data-theme="dark"] .burger span{background:#c3cdd2;}
+
+  /* ---- Sections & headings ---- */
+  [data-theme="dark"] section.page-section{background:#0b1720;}
+  [data-theme="dark"] section.page-section:nth-child(even){background:#122530;}
+  [data-theme="dark"] .section-inner > h2{color:#eaf3f5;}
+  [data-theme="dark"] .eyebrow{color:#5FC0D1;}
+  [data-theme="dark"] .eyebrow.eyebrow-dash::before{background:#5FC0D1;}
+
+  /* ---- Sticky tabs ---- */
+  [data-theme="dark"] .tabs-nav-sticky{background:#0b1720;border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .tabs-nav .tabs-scroll{border-bottom-color:rgba(255,255,255,.14);}
+
+  /* ---- Filter pills ---- */
+  [data-theme="dark"] .info-filter{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .info-filter:hover{border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .info-filter.active{background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .info-filter.active:hover{color:#0b1720;}
+
+  /* ---- Berita cards ---- */
+  [data-theme="dark"] .info-news-card{background:#122530;box-shadow:0 20px 40px -26px rgba(0,0,0,.5);}
+  [data-theme="dark"] .info-news-card:hover{box-shadow:0 26px 46px -22px rgba(0,0,0,.6);}
+  [data-theme="dark"] .info-news-date{color:#8ea0a8;}
+  [data-theme="dark"] .info-news-title{color:#eaf3f5;}
+  [data-theme="dark"] .info-news-desc{color:#c3cdd2;}
+  [data-theme="dark"] .info-news-empty{color:#8ea0a8;}
+
+  [data-theme="dark"] .info-loadmore{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .info-loadmore:hover{border-color:#5FC0D1;color:#5FC0D1;}
+
+  /* ---- Agenda ---- */
+  [data-theme="dark"] .agenda-cal{background:#122530;box-shadow:0 30px 60px -30px rgba(0,0,0,.55);}
+  [data-theme="dark"] .agenda-cal-head .month{color:#eaf3f5;}
+  [data-theme="dark"] .agenda-cal-nav a{background:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .agenda-cal-nav a:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .agenda-cal-nav .today-btn{color:#5FC0D1;border-color:rgba(255,255,255,.14);}
+  [data-theme="dark"] .agenda-cal-daynames span{color:#8ea0a8;}
+  [data-theme="dark"] .agenda-day{color:#c3cdd2;}
+  [data-theme="dark"] .agenda-day.muted{color:#4d5d64;}
+  [data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.12);border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .agenda-legend span{color:#8ea0a8;}
+  [data-theme="dark"] .agenda-today{box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
+
+  /* ---- Publikasi & unduhan ---- */
+  [data-theme="dark"] .info-doc-item{background:#122530;border-color:rgba(255,255,255,.1);}
+  [data-theme="dark"] .info-doc-item:hover{border-color:#5FC0D1;box-shadow:0 16px 32px -24px rgba(0,0,0,.5);}
+  [data-theme="dark"] .info-doc-icon{background:rgba(95,192,209,.12);color:#5FC0D1;}
+  [data-theme="dark"] .info-doc-cat{background:rgba(95,192,209,.12);color:#5FC0D1;}
+  [data-theme="dark"] .info-doc-title{color:#eaf3f5;}
+  [data-theme="dark"] .info-doc-meta{color:#8ea0a8;}
+  [data-theme="dark"] .info-doc-download{background:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .info-doc-download:hover{background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;}
+
+  /* ---- FAQ ---- */
+  [data-theme="dark"] .info-faq-item{background:#122530;border-color:rgba(255,255,255,.1);}
+  [data-theme="dark"] .info-faq-item summary{color:#eaf3f5;}
+  [data-theme="dark"] .info-faq-item summary .chev{color:#8ea0a8;}
+  [data-theme="dark"] .info-faq-item[open] summary{border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .info-faq-item .answer{color:#c3cdd2;}
 </style>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+</script>
 </head>
 <body>
 
@@ -440,33 +546,13 @@
       <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
       <div class="brand-text">
         <div class="name">PUSTEKINFO</div>
-        <div class="sub">Sekretariat Jendral DPR RI</div>
+        <div class="sub">Sekretariat Jenderal DPR RI</div>
       </div>
     </div>
 
     <ul class="nav-links">
       <li><a href="{{ route('home') }}">Beranda</a></li>
-      <li class="nav-item-dropdown" id="profilDropdown">
-        <a href="{{ route('profil') }}">Profil <span class="caret">▾</span></a>
-        <div class="nav-dropdown">
-          <a href="{{ route('profil') }}#tentang-kami">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-            Tentang Kami
-          </a>
-          <a href="{{ route('profil') }}#profil-pimpinan">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-            Profil Pimpinan
-          </a>
-          <a href="{{ route('profil') }}#struktur-organisasi">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg></span>
-            Struktur Organisasi
-          </a>
-          <a href="{{ route('profil') }}#visi-misi">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
-            Visi dan Misi
-          </a>
-        </div>
-      </li>
+      <li><a href="{{ route('profil') }}">Profil </a></li>
       <li><a href="{{ route('layanan') }}">Layanan</a></li>
       <li class="active"><a href="{{ route('informasi') }}">Informasi</a></li>
       <li><a href="{{ route('galeri') }}">Galeri</a></li>
@@ -474,9 +560,8 @@
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" aria-label="Ganti tema">◐</button>
+      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       <button class="lang-btn">EN</button>
-      <button class="btn-login"><a href="{{ route('login') }}">Masuk</a></button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
@@ -692,7 +777,7 @@
           <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
           <div class="footer-brand-text">
             <div class="name">PUSTEKINFO</div>
-            <div class="sub">Sekretariat Jendral DPR RI</div>
+            <div class="sub">Sekretariat Jenderal DPR RI</div>
           </div>
         </div>
         <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
@@ -749,6 +834,24 @@
   </footer>
 
 <script>
+  // ---- Dark mode toggle ----
+  const themeToggle = document.getElementById("themeToggle");
+
+  function applyTheme(isDark) {
+      document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+      themeToggle.classList.toggle("active", isDark);
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.textContent = isDark ? "◑" : "◐";
+  }
+
+  applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
+
+  themeToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      applyTheme(isDark);
+  });
+
   // ---- Dropdown Profil di mobile ----
   const profilDropdown = document.getElementById("profilDropdown");
   if (window.innerWidth <= 900) {
