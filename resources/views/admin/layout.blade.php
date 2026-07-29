@@ -508,6 +508,16 @@
       </details>
 
       <details class="nav-group" open>
+        <summary>Banner</summary>
+        @foreach(\App\Models\PageBanner::PAGES as $bannerPage => $bannerLabel)
+          <a href="{{ route('admin.page-banners.edit', $bannerPage) }}" class="{{ request()->routeIs('admin.page-banners.*') && request()->route('page') === $bannerPage ? 'active' : '' }}">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/></svg></span>
+            Banner {{ $bannerLabel }}
+          </a>
+        @endforeach
+      </details>
+
+      <details class="nav-group" open>
         <summary>Galeri</summary>
         <a href="{{ route('admin.gallery.index') }}" class="{{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>

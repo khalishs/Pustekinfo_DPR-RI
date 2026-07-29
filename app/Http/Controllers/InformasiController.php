@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AgendaEvent;
 use App\Models\NewsItem;
 use App\Models\SiteSetting;
+use App\Models\PageBanner;
 use Carbon\Carbon;
 
 class InformasiController extends Controller
@@ -55,6 +56,7 @@ class InformasiController extends Controller
             'prevMonth'     => $monthStart->copy()->subMonth()->format('Y-m'),
             'nextMonth'     => $monthStart->copy()->addMonth()->format('Y-m'),
             'setting'       => SiteSetting::first(),
+            'pageBanner'    => PageBanner::where('page', 'informasi')->first(),
         ]);
     }
 

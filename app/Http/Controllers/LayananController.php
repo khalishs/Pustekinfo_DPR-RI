@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use App\Models\SiteSetting;
+use App\Models\PageBanner;
 use Illuminate\Support\Str;
 
 class LayananController extends Controller
@@ -20,8 +21,9 @@ class LayananController extends Controller
         ])->all();
 
         return view('layanan', [
-            'services' => $services,
-            'setting'  => SiteSetting::first(),
+            'services'   => $services,
+            'setting'    => SiteSetting::first(),
+            'pageBanner' => PageBanner::where('page', 'layanan')->first(),
         ]);
     }
 }

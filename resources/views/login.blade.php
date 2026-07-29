@@ -38,6 +38,10 @@
         .back{
             margin-top: -10px;
         }
+
+        .text-greeting{
+            margin-bottom: 70px;
+        }
         
 
             @media (max-width: 768px) {
@@ -176,7 +180,7 @@
             </div>
 
             <!-- Logo & Greeting -->
-            <div class="text-center mb-8">
+            <div class="text-greeting text-center mb-8">
                 <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="h-14 sm:h-16 lg:h-20 mx-auto mb-4 object-contain mobile-logo">
                 <h3 class="text-2xl lg:text-3xl font-bold text-[#0a2f5c]">Selamat Datang</h3>
                 <p class="text-xs lg:text-sm text-gray-500 mt-1 px-2 sm:px-4 leading-relaxed mobile-text">Silakan masuk untuk melanjutkan</p>

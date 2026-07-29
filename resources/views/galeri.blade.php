@@ -15,22 +15,48 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Work Sans',system-ui,sans-serif;color:var(--ink);background:var(--mist);}
+  body{
+    font-family:'Work Sans',system-ui,sans-serif;
+    color:var(--ink);
+    position:relative;
+    background-color:#14839C1A;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+  }
+  [data-theme="dark"] body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+    filter:url(#batikAlphaBoost);
+  }
+  @media (max-width:900px){
+    body{background-size:3000px auto;}
+    [data-theme="dark"] body::before{background-size:3000px auto;}
+  }
+  @view-transition{navigation:auto;}
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
-  h1,h2,.brand-text .name,.footer-brand-text .name,.stat-num,.sorotan-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
+  h1,h2,.footer-brand-text .name,.stat-num,.sorotan-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
 
+  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
+    transform-origin:left center;}
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .brand-text .name{font-weight:800;font-size:24px;color:#073D5F;line-height:1.1;}
-  .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;transition:color .2s ease;}
   .nav-links li a:hover{color:var(--teal);}
   .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
-  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);}
+  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);view-transition-name:nav-underline;}
   .nav-item-dropdown{position:relative;}
   .nav-dropdown{position:absolute;top:calc(100% + 22px);left:50%;transform:translateX(-50%) translateY(8px);min-width:220px;background:var(--white);border:1px solid #e7dcc6;border-radius:12px;padding:10px;box-shadow:0 24px 50px -20px rgba(11,34,51,.25);opacity:0;visibility:hidden;transition:.2s ease;z-index:20;}
   .nav-item-dropdown:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
@@ -54,27 +80,40 @@
 
   @media (max-width:900px){
     .navbar{padding:10px 16px;gap:8px;}
-    .nav-links{display:none;position:fixed;top:62px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid #eaeaea;box-shadow:0 20px 30px -20px rgba(11,34,51,.25);padding:8px 20px 16px;z-index:9998;}
-    .nav-links.open{display:flex;}
+    .nav-links{display:flex;position:fixed;top:62px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid #eaeaea;box-shadow:0 20px 30px -20px rgba(11,34,51,.25);padding:8px 20px 16px;z-index:9998;opacity:0;visibility:hidden;transform:translateY(-10px);pointer-events:none;transition:opacity .25s ease, transform .25s ease, visibility .25s ease;}
+    .nav-links.open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;}
     .nav-links li{width:100%;}
     .nav-links li a{padding:14px 4px;width:100%;justify-content:space-between;border-bottom:1px solid #f1f4f5;}
     .nav-links li.active::after{display:none;}
     .burger{display:flex;}
     .brand-logo{width:36px;height:36px;}
-    .brand-text .name{font-size:15px;}
-    .brand-text .sub{font-size:6.5px;}
+    .navbar-logo{height:32px;width:auto;}
   }
 
-  .page-header{
+  /* ---------- Hero / Page Banner (sama seperti Profil, Layanan, Informasi) ---------- */
+  .hero-profil{
     margin-top:70px;
+    position:relative;
     background:#073D5F;
-    padding:60px 100px 90px;
+    padding:90px 24px 60px;
+    overflow:hidden;
   }
-  .page-header .crumb{color:rgba(255,255,255,.6);font-size:13px;font-weight:600;}
-  .page-header .crumb a{color:#5FC0D1;}
-  .page-header h1{color:#fff;font-size:32px;font-weight:800;margin-top:12px;}
-  .page-header h1 .accent{color:#5FC0D1;}
-  .page-header p{color:rgba(255,255,255,.7);margin-top:12px;font-size:14.5px;max-width:600px;}
+  .hero-profil::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 60% at 85% 0%, rgba(79,179,172,.25), transparent 60%);
+    pointer-events:none;
+  }
+  .hero-profil-inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;text-align:center;}
+  .breadcrumb{color:rgba(255,255,255,.55);font-size:13px;font-weight:600;margin-bottom:18px;}
+  .breadcrumb span{color:var(--teal);}
+  .hero-profil h1{
+    color:var(--white);font-size:34px;font-weight:800;line-height:1.28;letter-spacing:-.01em;
+    max-width:680px;margin:0 auto;
+  }
+  .hero-profil h1 .accent{color:#5FC0D1;}
+  .hero-profil p{
+    margin:20px auto 0;max-width:600px;color:rgba(255,255,255,.7);font-size:15px;line-height:1.75;font-weight:500;
+  }
 
   .stats-bar{
     position:relative;
@@ -112,17 +151,11 @@
     .stats-bar-inner{grid-template-columns:repeat(2,1fr);border-radius:12px;}
     .stat-card{border-right:none;border-bottom:1px solid var(--line);padding:16px 18px;}
     .stat-card:nth-last-child(-n+2){border-bottom:none;}
-    .page-header{padding:90px 20px 70px;}
-    .page-header h1{font-size:24px;}
+    .hero-profil{margin-top:62px;padding:70px 20px 44px;}
+    .hero-profil h1{font-size:24px;}
   }
   .stat-num{font-size:26px;font-weight:800;color:var(--navy);}
   .stat-label{margin-top:6px;font-size:12px;font-weight:600;color:#7a8a92;}
-
-  @media (max-width:900px){
-    .stats-bar{grid-template-columns:repeat(2,1fr);padding:0 20px;margin-top:-40px;}
-    .page-header{padding:90px 20px 70px;}
-    .page-header h1{font-size:24px;}
-  }
 
   .galeri-page{padding:50px 100px 100px;max-width:1240px;margin:0 auto;}
 
@@ -199,9 +232,8 @@
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
 
-  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+  [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
-  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .icon-btn,[data-theme="dark"] .lang-btn,[data-theme="dark"] .galeri-filter,[data-theme="dark"] .load-more a{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
@@ -213,13 +245,17 @@
 </head>
 <body>
 
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <filter id="batikAlphaBoost">
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="4.5" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
+
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-      <div class="brand-text">
-        <div class="name">PUSTEKINFO</div>
-        <div class="sub">Sekretariat Jenderal DPR RI</div>
-      </div>
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
     </div>
 
     <ul class="nav-links">
@@ -238,10 +274,12 @@
     </div>
   </nav>
 
-  <header class="page-header">
-    <div class="crumb"><a href="{{ route('home') }}">Beranda</a> / Galeri</div>
-    <h1>Dokumentasi <span class="accent">Kegiatan Kami</span></h1>
-    <p>Kumpulan momen kegiatan, pelatihan, dan kerja sama Pustekinfo dalam mendukung layanan teknologi informasi lembaga.</p>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+    <div class="hero-profil-inner">
+      <p class="breadcrumb">Beranda / <span>Galeri</span></p>
+      <h1>Dokumentasi <span class="accent">Kegiatan Kami</span></h1>
+      <p>Kumpulan momen kegiatan, pelatihan, dan kerja sama Pustekinfo dalam mendukung layanan teknologi informasi lembaga.</p>
+    </div>
   </header>
 
   <div class="stats-bar">
@@ -376,6 +414,7 @@
   </footer>
 
 <script>
+
   if (localStorage.getItem('theme') === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
   }

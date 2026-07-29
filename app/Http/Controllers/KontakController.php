@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
 use App\Models\SiteSetting;
+use App\Models\PageBanner;
 use Illuminate\Http\Request;
 
 class KontakController extends Controller
@@ -11,7 +12,8 @@ class KontakController extends Controller
     public function index()
     {
         return view('kontak', [
-            'setting' => SiteSetting::first(),
+            'setting'    => SiteSetting::first(),
+            'pageBanner' => PageBanner::where('page', 'kontak')->first(),
         ]);
     }
 

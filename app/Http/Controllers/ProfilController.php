@@ -8,6 +8,7 @@ use App\Models\OrganizationMember;
 use App\Models\VisionMission;
 use App\Models\CoreValue;
 use App\Models\SiteSetting;
+use App\Models\PageBanner;
 
 class ProfilController extends Controller
 {
@@ -25,6 +26,7 @@ class ProfilController extends Controller
             'visionMission' => VisionMission::first(),
             'coreValues'    => CoreValue::orderBy('sort_order')->get(),
             'setting'       => SiteSetting::first(),
+            'pageBanner'    => PageBanner::where('page', 'profil')->first(),
         ]);
     }
 }

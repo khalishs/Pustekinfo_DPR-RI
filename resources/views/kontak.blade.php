@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kontak - Pustekinfo DPR RI</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
@@ -26,15 +27,36 @@
   body{
     font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
-    background: var(--white);
+    position:relative;
+    background-color:#14839C1A;
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+  }
+  [data-theme="dark"] body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+    filter:url(#batikAlphaBoost);
+  }
+  @media (max-width:900px){
+    body{background-size:3000px auto;}
+    [data-theme="dark"] body::before{background-size:3000px auto;}
+  }
+  @view-transition{
+    navigation:auto;
   }
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
 
   h1, h2, h3,
-  .brand-text .name,
   .footer-brand-text .name,
-  .page-banner h1,
   .kontak-info h2,
   .lokasi h2,
   .kontak-form-card h3,
@@ -81,8 +103,8 @@
     height:50px;
     object-fit:contain;
   }
-  .brand-text .name{font-weight:800;font-size:24px;color:#073D5F;line-height:1.1;}
-  .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color: #0F6B7F;;font-weight:600;}
+  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
+    transform-origin:left center;}
   .nav-links{display:flex;align-items:center;gap:34px;}
 
   .nav-links li a{
@@ -95,6 +117,7 @@
   .nav-links li.active::after{
     content:"";position:absolute;left:0;right:0;bottom:-18px;
     height:2px;background:var(--teal);
+    view-transition-name:nav-underline;
   }
 
   /* ---------- Dropdown Profil ---------- */
@@ -177,6 +200,8 @@
     background:var(--navy);color:var(--white);
     font-size:14px;font-weight:700;cursor:pointer;
   }
+    .burger{display: none;}
+
 
   .profile-box{
     display:flex;align-items:center;gap:10px;
@@ -206,9 +231,7 @@
 
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .brand-text{min-width:0;}
-    .brand-text .name{font-size:15px;white-space:nowrap;}
-    .brand-text .sub{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
 
     .burger{
       display:none;
@@ -242,7 +265,7 @@
 
     .burger{display:flex;}
     .nav-links{
-      display:none;
+      display:flex;
       position:fixed;
       top:62px;
       left:0;
@@ -254,8 +277,18 @@
       box-shadow:0 20px 30px -20px rgba(11,34,51,.25);
       padding:8px 20px 16px;
       z-index:9998;
+      opacity:0;
+      visibility:hidden;
+      transform:translateY(-10px);
+      pointer-events:none;
+      transition:opacity .25s ease, transform .25s ease, visibility .25s ease;
     }
-    .nav-links.open{display:flex;}
+    .nav-links.open{
+      opacity:1;
+      visibility:visible;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
     .nav-links li{width:100%;}
     .nav-links li a{
       padding:14px 4px;
@@ -272,55 +305,34 @@
     .profile-box{padding:4px;}
   }
 
-  /* ---------- Page Banner ---------- */
-  .page-banner{
+  /* ---------- Hero / Page Banner (sama seperti Profil, Layanan, Informasi) ---------- */
+  .hero-profil{
     margin-top:70px;
     position:relative;
     background:#073D5F;
-    padding:64px 100px 68px;
+    padding:90px 24px 60px;
     overflow:hidden;
   }
-  .page-banner::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:radial-gradient(60% 90% at 85% 0%, rgba(255,255,255,.08) 0%, transparent 60%);
+  .hero-profil::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 60% at 85% 0%, rgba(79,179,172,.25), transparent 60%);
     pointer-events:none;
   }
-  .page-banner-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;}
-  .breadcrumb{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:13px;
-    font-weight:600;
-    color:rgba(255,255,255,.55);
+  .hero-profil-inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;text-align:center;}
+  .breadcrumb{color:rgba(255,255,255,.55);font-size:13px;font-weight:600;margin-bottom:18px;}
+  .breadcrumb span{color:var(--teal);}
+  .hero-profil h1{
+    color:var(--white);font-size:34px;font-weight:800;line-height:1.28;letter-spacing:-.01em;
+    max-width:680px;margin:0 auto;
   }
-  .breadcrumb a:hover{color:var(--white);}
-  .breadcrumb .sep{color:rgba(255,255,255,.35);}
-  .breadcrumb .current{color:#5FC0D1;}
-
-  .page-banner h1{
-    margin-top:18px;
-    font-size:34px;
-    font-weight:800;
-    line-height:1.3;
-    letter-spacing:-.01em;
-    color:var(--white);
-  }
-  .page-banner h1 .accent{color:#5FC0D1;}
-  .page-banner p{
-    margin-top:16px;
-    max-width:600px;
-    color:rgba(255,255,255,.75);
-    font-size:14.5px;
-    line-height:1.75;
-    font-weight:500;
+  .hero-profil h1 .accent{color:#5FC0D1;}
+  .hero-profil p{
+    margin:20px auto 0;max-width:600px;color:rgba(255,255,255,.7);font-size:15px;line-height:1.75;font-weight:500;
   }
 
   @media (max-width:900px){
-    .page-banner{margin-top:62px;padding:44px 20px 48px;}
-    .page-banner h1{font-size:24px;}
+    .hero-profil{margin-top:62px;padding:70px 20px 44px;}
+    .hero-profil h1{font-size:24px;}
   }
 
   /* ---------- POLA BATIK (sama seperti halaman lain) ---------- */
@@ -755,11 +767,9 @@
 
   /* ---------- Dark mode ---------- */
   [data-theme="dark"] html{background:#0b1720;}
-  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+  [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
 
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
-  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
-  [data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -792,17 +802,11 @@
   }
 
   /* ---------- Dark mode: Kontak page-specific ---------- */
-  [data-theme="dark"] .page-banner{background:#071119;}
-  [data-theme="dark"] .breadcrumb{color:rgba(255,255,255,.5);}
-  [data-theme="dark"] .breadcrumb a:hover{color:#eaf3f5;}
-  [data-theme="dark"] .breadcrumb .current{color:#5FC0D1;}
-  [data-theme="dark"] .page-banner h1{color:#eaf3f5;}
-  [data-theme="dark"] .page-banner p{color:rgba(255,255,255,.65);}
-
   [data-theme="dark"] .eyebrow{color:#5FC0D1;}
   [data-theme="dark"] .eyebrow::before{background:#5FC0D1;}
-
-  [data-theme="dark"] .kontak-page{background:#0b1720;}
+  [data-theme="dark"] .kontak-batik{display: none;}
+  [data-theme="dark"] .kontak-page{background:rgba(0, 0, 0, 0.2);}
+  [data-theme="dark"] .kontak-info{background-color:rgba(0, 0, 0, 0.8);}
   [data-theme="dark"] .kontak-info h2,
   [data-theme="dark"] .lokasi-inner h2{color:#eaf3f5;}
   [data-theme="dark"] .kontak-info-item{border-bottom-color:rgba(255,255,255,.08);}
@@ -818,8 +822,8 @@
   }
 
   [data-theme="dark"] .kontak-form-card{
-    background:#122530;
-    border-color:rgba(255,255,255,.1);
+    background:rgba(0, 0, 0, 0.8);
+    border-color: rgba(0, 0, 0, 0.8);
     box-shadow:0 30px 60px -28px rgba(0,0,0,.6);
   }
   [data-theme="dark"] .kontak-form-card h3{color:#eaf3f5;}
@@ -849,7 +853,7 @@
   [data-theme="dark"] .btn-kirim:hover{background:#7fd3e0;}
   [data-theme="dark"] .kontak-form-footer .note{color:#8ea0a8;}
 
-  [data-theme="dark"] .lokasi{background:#0b1720;}
+  [data-theme="dark"] .lokasi{background-color: rgba(18, 36, 46, 0.8);}
   [data-theme="dark"] .lokasi-map{
     box-shadow:0 30px 60px -28px rgba(0,0,0,.6);
   }
@@ -886,14 +890,18 @@
 </head>
 <body>
 
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <filter id="batikAlphaBoost">
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="4.5" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
+
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-        <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-      <div class="brand-text">
-        <div class="name">PUSTEKINFO</div>
-        <div class="sub">Sekretariat Jenderal DPR RI</div>
-      </div>
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
     </div>
 
     <ul class="nav-links">
@@ -914,14 +922,10 @@
     </div>
   </nav>
 
-  {{-- ================= PAGE BANNER ================= --}}
-  <header class="page-banner">
-    <div class="page-banner-inner">
-      <div class="breadcrumb">
-        <a href="{{ route('home') }}">Beranda</a>
-        <span class="sep">/</span>
-        <span class="current">Kontak</span>
-      </div>
+  {{-- ================= HERO ================= --}}
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+    <div class="hero-profil-inner">
+      <p class="breadcrumb">Beranda / <span>Kontak</span></p>
       <h1>Kami siap <span class="accent">membantu Anda</span></h1>
       <p>Hubungi kami untuk pertanyaan seputar layanan, kerja sama, atau bantuan teknis.</p>
     </div>

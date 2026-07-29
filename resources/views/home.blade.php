@@ -32,7 +32,6 @@
   ul{list-style:none;}
 
   h1, h2, h3,
-  .brand-text .name,
   .footer-brand-text .name,
   .stat-num,
   .num,
@@ -65,13 +64,11 @@
     z-index:9999;
   }
   .brand{display:flex;align-items:center;gap:12px;}
-  .brand-logo{
-    width:50px;
-    height:50px;
-    object-fit:contain;
-}
-  .brand-text .name{font-weight:800;font-size:24px;color:#073D5F;line-height:1.1;}
-  .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color: #0F6B7F;;font-weight:600;}
+  .brand-logo{width:50px;height:50px;object-fit:contain;}
+
+  
+  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
+    transform-origin:left center;}
 
   .nav-links{display:flex;align-items:center;gap:34px;}
 
@@ -210,6 +207,7 @@
     cursor:pointer;transition:.2s ease;
   }
   .logout-btn:hover{background:#b0413e;color:var(--white);border-color:#b0413e;}
+  .burger{display: none;}
 
 
   /* ---------- Hero ---------- */
@@ -350,9 +348,7 @@
 
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .brand-text{min-width:0;}
-    .brand-text .name{font-size:15px;white-space:nowrap;}
-    .brand-text .sub{font-size:6.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
 
     .burger{
     display:flex;
@@ -856,7 +852,7 @@
   /* ---------- Berita & Kegiatan ---------- */
   .berita{
     position:relative;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.4);
     padding:90px 100px 120px;
     opacity:0;
     transform:translateY(60px);
@@ -1346,7 +1342,7 @@
   /* ---------- Galeri Kegiatan ---------- */
 .galeri{
   position:relative;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.4);
   padding:90px 100px 120px;
   opacity:0;
   transform:translateY(60px);
@@ -1993,8 +1989,6 @@
 [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
 
 [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
-[data-theme="dark"] .brand-text .name{color:#eaf3f5;}
-[data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
 [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
 [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
 [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -2109,11 +2103,7 @@
 
     <nav class="navbar">
       <div class="brand">
-          <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-        <div class="brand-text">
-          <div class="name">PUSTEKINFO</div>
-          <div class="sub">Sekretariat Jenderal DPR RI</div>
-        </div>
+        <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
       </div>
 
       <ul class="nav-links">

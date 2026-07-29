@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\VisionMissionController;
 use App\Http\Controllers\Admin\CoreValueController;
 use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\ProfilPhotoController;
+use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\ProfilController;
@@ -114,6 +115,10 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
         ->parameters(['profil-photos' => 'profilPhoto']);
 
     Route::resource('services', ServiceController::class)->except('show');
+
+    Route::get('banner/{page}', [PageBannerController::class, 'edit'])->name('page-banners.edit');
+    Route::put('banner/{page}', [PageBannerController::class, 'update'])->name('page-banners.update');
+    Route::delete('banner/{page}', [PageBannerController::class, 'destroy'])->name('page-banners.destroy');
 
     Route::resource('messages', ContactMessageController::class)
         ->only(['index', 'show', 'destroy']);
