@@ -217,13 +217,13 @@
     margin-top: 70px;
     position:relative;
     background: var(--white);
-    min-height:523px;
+    min-height:clamp(480px, calc(100vh - 200px), 640px);
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
     overflow:hidden;
-    padding:10px 24px 130px;
+    padding:24px;
   }
   .hero-slider{
     position:absolute;
@@ -250,7 +250,7 @@
     background:linear-gradient(180deg, rgba(11,49,74,.55) 0%, rgba(11,60,86,.72) 55%, rgba(9,46,58,.88) 100%);
     pointer-events:none;
   }
-  .hero-content{position:relative;z-index:2;max-width:900px;}
+  .hero-content{position:relative;z-index:2;width:100%;max-width:900px;margin:0 auto;text-align:center;}
   .hero-content h1{
     color:var(--white);
     font-size:38px;
@@ -258,6 +258,7 @@
     line-height:1.22;
     letter-spacing:-.01em;
     text-shadow:0 2px 18px rgba(0,0,0,.2);
+    text-align:center;
   }
   .hero-content p{
     margin:26px auto 0;
@@ -266,9 +267,11 @@
     font-size:16px;
     line-height:1.7;
     font-weight:500;
+    text-align:center;
   }
   .hero-actions{
     margin-top:36px;
+    width:100%;
     display:flex;
     gap:16px;
     justify-content:center;
@@ -292,10 +295,17 @@
 
 
   /* ---------- Stats bar ---------- */
-  .stats-bar{
+  .stats-bar-wrap{
     position:relative;
+    height:0;
     z-index:3;
-    margin:-60px 100px 0;
+  }
+  .stats-bar{
+    position:absolute;
+    top:0;
+    left:100px;
+    right:100px;
+    transform:translateY(-50%);
     background: linear-gradient(150deg,#073D5F 40%,#057888 100%);
     border-radius:14px;
     display:grid;
@@ -407,12 +417,13 @@
       border-bottom:1px solid #f1f4f5;
     }
     .nav-links li.active::after{display:none;}
-    .hero{margin-top:62px;padding:90px 20px 200px;}
+    .hero{margin-top:62px;min-height:clamp(440px, calc(100vh - 220px), 600px);padding:60px 20px;}
     .hero-content h1{font-size:26px;}
 
     .stats-bar{
       grid-template-columns:repeat(2,1fr);
-      margin:-90px 16px 0;
+      left:16px;
+      right:16px;
       border-radius:12px;
     }
     .stat{
@@ -2120,6 +2131,7 @@
       </div>
     </header>
 
+    <div class="stats-bar-wrap">
     <section class="stats-bar">
         @php $icons = [
           'apps' => '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
@@ -2139,6 +2151,7 @@
           <div class="stat"><div><div class="stat-label">Belum ada data statistik</div></div></div>
         @endforelse
       </section>
+    </div>
         <div class="spacer"></div>
 
         {{-- Pembungkus: satu pola batik menyatu untuk seluruh section di bawah ini (Profil s/d Akses & Dokumen) --}}
