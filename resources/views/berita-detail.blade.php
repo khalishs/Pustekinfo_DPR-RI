@@ -22,7 +22,31 @@
   body{
     font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
-    background:var(--white);
+    position:relative;
+    background-color:#14839C1A;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+  }
+  [data-theme="dark"] body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+    filter:url(#batikAlphaBoost);
+  }
+  @media (max-width:900px){
+    body{background-size:3000px auto;}
+    [data-theme="dark"] body::before{background-size:3000px auto;}
+  }
+  @view-transition{
+    navigation:auto;
   }
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
@@ -51,7 +75,7 @@
   .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
   .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
-  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);}
+  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);view-transition-name:nav-underline;}
   .nav-actions{display:flex;align-items:center;gap:12px;}
   .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;display:flex;align-items:center;justify-content:center;font-size:14px;color:#5b6b73;background:var(--white);cursor:pointer;}
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;}
@@ -72,8 +96,8 @@
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
     .burger{display:flex;}
-    .nav-links{display:none;position:fixed;top:62px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid #eaeaea;box-shadow:0 20px 30px -20px rgba(11,34,51,.25);padding:8px 20px 16px;z-index:9998;}
-    .nav-links.open{display:flex;}
+    .nav-links{display:flex;position:fixed;top:62px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid #eaeaea;box-shadow:0 20px 30px -20px rgba(11,34,51,.25);padding:8px 20px 16px;z-index:9998;opacity:0;visibility:hidden;transform:translateY(-10px);pointer-events:none;transition:opacity .25s ease, transform .25s ease, visibility .25s ease;}
+    .nav-links.open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;}
     .nav-links li{width:100%;}
     .nav-links li a{padding:14px 4px;width:100%;justify-content:space-between;border-bottom:1px solid #f1f4f5;}
     .nav-links li.active::after{display:none;}
@@ -154,7 +178,7 @@
 
   /* ---------- Dark mode ---------- */
   [data-theme="dark"] html{background:#0b1720;}
-  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+  [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
 
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
   [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
@@ -227,6 +251,14 @@
 </script>
 </head>
 <body>
+
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <filter id="batikAlphaBoost">
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="4.5" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">

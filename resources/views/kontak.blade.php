@@ -26,7 +26,31 @@
   body{
     font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
-    background: var(--white);
+    position:relative;
+    background-color:#14839C1A;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+  }
+  [data-theme="dark"] body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+    filter:url(#batikAlphaBoost);
+  }
+  @media (max-width:900px){
+    body{background-size:3000px auto;}
+    [data-theme="dark"] body::before{background-size:3000px auto;}
+  }
+  @view-transition{
+    navigation:auto;
   }
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
@@ -95,6 +119,7 @@
   .nav-links li.active::after{
     content:"";position:absolute;left:0;right:0;bottom:-18px;
     height:2px;background:var(--teal);
+    view-transition-name:nav-underline;
   }
 
   /* ---------- Dropdown Profil ---------- */
@@ -242,7 +267,7 @@
 
     .burger{display:flex;}
     .nav-links{
-      display:none;
+      display:flex;
       position:fixed;
       top:62px;
       left:0;
@@ -254,8 +279,18 @@
       box-shadow:0 20px 30px -20px rgba(11,34,51,.25);
       padding:8px 20px 16px;
       z-index:9998;
+      opacity:0;
+      visibility:hidden;
+      transform:translateY(-10px);
+      pointer-events:none;
+      transition:opacity .25s ease, transform .25s ease, visibility .25s ease;
     }
-    .nav-links.open{display:flex;}
+    .nav-links.open{
+      opacity:1;
+      visibility:visible;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
     .nav-links li{width:100%;}
     .nav-links li a{
       padding:14px 4px;
@@ -734,7 +769,7 @@
 
   /* ---------- Dark mode ---------- */
   [data-theme="dark"] html{background:#0b1720;}
-  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+  [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
 
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
   [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
@@ -864,6 +899,14 @@
 </script>
 </head>
 <body>
+
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <filter id="batikAlphaBoost">
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="4.5" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
