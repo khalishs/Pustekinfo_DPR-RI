@@ -15,7 +15,33 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Work Sans',system-ui,sans-serif;color:var(--ink);background:var(--mist);}
+  body{
+    font-family:'Work Sans',system-ui,sans-serif;
+    color:var(--ink);
+    position:relative;
+    background-color:#14839C1A;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+  }
+  [data-theme="dark"] body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+    filter:url(#batikAlphaBoost);
+  }
+  @media (max-width:900px){
+    body{background-size:3000px auto;}
+    [data-theme="dark"] body::before{background-size:3000px auto;}
+  }
+  @view-transition{navigation:auto;}
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
   h1,h2,.brand-text .name,.footer-brand-text .name,.stat-num,.sorotan-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
@@ -30,7 +56,7 @@
   .nav-links li a:hover{color:var(--teal);}
   .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
-  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);}
+  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);view-transition-name:nav-underline;}
   .nav-item-dropdown{position:relative;}
   .nav-dropdown{position:absolute;top:calc(100% + 22px);left:50%;transform:translateX(-50%) translateY(8px);min-width:220px;background:var(--white);border:1px solid #e7dcc6;border-radius:12px;padding:10px;box-shadow:0 24px 50px -20px rgba(11,34,51,.25);opacity:0;visibility:hidden;transition:.2s ease;z-index:20;}
   .nav-item-dropdown:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
@@ -54,8 +80,8 @@
 
   @media (max-width:900px){
     .navbar{padding:10px 16px;gap:8px;}
-    .nav-links{display:none;position:fixed;top:62px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid #eaeaea;box-shadow:0 20px 30px -20px rgba(11,34,51,.25);padding:8px 20px 16px;z-index:9998;}
-    .nav-links.open{display:flex;}
+    .nav-links{display:flex;position:fixed;top:62px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid #eaeaea;box-shadow:0 20px 30px -20px rgba(11,34,51,.25);padding:8px 20px 16px;z-index:9998;opacity:0;visibility:hidden;transform:translateY(-10px);pointer-events:none;transition:opacity .25s ease, transform .25s ease, visibility .25s ease;}
+    .nav-links.open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;}
     .nav-links li{width:100%;}
     .nav-links li a{padding:14px 4px;width:100%;justify-content:space-between;border-bottom:1px solid #f1f4f5;}
     .nav-links li.active::after{display:none;}
@@ -198,7 +224,7 @@
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
 
-  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+  [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
   [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
@@ -210,6 +236,14 @@
 </style>
 </head>
 <body>
+
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <filter id="batikAlphaBoost">
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="4.5" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
 
   <nav class="navbar">
     <div class="brand">
@@ -382,6 +416,7 @@
   </footer>
 
 <script>
+
   if (localStorage.getItem('theme') === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
   }

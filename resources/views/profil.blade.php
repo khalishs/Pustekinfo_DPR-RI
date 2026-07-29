@@ -22,7 +22,31 @@
   body{
     font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
-    background:var(--white);
+    position:relative;
+    background-color:#14839C1A;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+  }
+  [data-theme="dark"] body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+    filter:url(#batikAlphaBoost);
+  }
+  @media (max-width:900px){
+    body{background-size:3000px auto;}
+    [data-theme="dark"] body::before{background-size:3000px auto;}
+  }
+  @view-transition{
+    navigation:auto;
   }
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
@@ -65,7 +89,7 @@
   .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
   .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
-  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);}
+  .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);view-transition-name:nav-underline;}
 
   .nav-item-dropdown{position:relative;}
   .nav-dropdown{
@@ -112,8 +136,8 @@
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
     .burger{display:flex;}
-    .nav-links{display:none;position:fixed;top:62px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid #eaeaea;box-shadow:0 20px 30px -20px rgba(11,34,51,.25);padding:8px 20px 16px;z-index:9998;}
-    .nav-links.open{display:flex;}
+    .nav-links{display:flex;position:fixed;top:62px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid #eaeaea;box-shadow:0 20px 30px -20px rgba(11,34,51,.25);padding:8px 20px 16px;z-index:9998;opacity:0;visibility:hidden;transform:translateY(-10px);pointer-events:none;transition:opacity .25s ease, transform .25s ease, visibility .25s ease;}
+    .nav-links.open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;}
     .nav-links li{width:100%;}
     .nav-links li a{padding:14px 4px;width:100%;justify-content:space-between;border-bottom:1px solid #f1f4f5;}
     .nav-links li.active::after{display:none;}
@@ -175,7 +199,7 @@
     width:100%;
     z-index:9998;
 
-    background:var(--navy);
+    background:#073D5F;
     border-bottom:1px solid rgba(255,255,255,.1);
     box-shadow:0 12px 24px -18px rgba(11,34,51,.5);
 
@@ -304,41 +328,46 @@
     .sambutan-content{padding:36px 26px;}
   }
 
-  /* ================= SECTION NAVY (dark) ================= */
-  section.page-section.dark{
-    background:var(--navy) !important;
-  }
+  /* ================= SECTION "dark" (dipakai utk header ber-badge; background ikut pola batik biasa) ================= */
   .dark-head{
     display:flex;align-items:center;gap:14px;margin-bottom:8px;
   }
   .dark-head .badge{
     width:38px;height:38px;border-radius:10px;flex-shrink:0;
-    background:rgba(255,255,255,.12);
+    background:rgba(20,128,140,.1);
     display:flex;align-items:center;justify-content:center;
   }
   .dark-head .badge svg{
-    width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;
+    width:18px;height:18px;stroke:var(--teal);fill:none;stroke-width:2;
     stroke-linecap:round;stroke-linejoin:round;
   }
   .dark-head h2{
-    margin:0;font-size:22px;font-weight:800;color:#fff;letter-spacing:-.01em;
+    margin:0;font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.01em;
   }
 
   /* ================= BIODATA (versi navy, tanpa kartu putih) ================= */
+  .bio-card{
+    margin-top:36px;
+    background:var(--white);
+    border-radius:16px;
+    padding:8px 32px;
+    box-shadow:0 16px 32px -22px rgba(11,34,51,.2);
+  }
   .bio-dark-grid{
     display:grid;grid-template-columns:1fr 1fr;
-    column-gap:56px;margin-top:36px;
+    column-gap:56px;
   }
   .bio-dark-item{
     display:flex;align-items:center;justify-content:space-between;gap:24px;
-    padding:18px 0;border-bottom:1px solid rgba(255,255,255,.14);
+    padding:18px 0;border-bottom:1px solid #e7ecee;
   }
   .bio-dark-item:nth-child(n+5){border-bottom:none;}
-  .bio-dark-item label{font-size:13px;color:rgba(255,255,255,.55);font-weight:600;}
-  .bio-dark-item span{font-size:14px;font-weight:700;color:#fff;text-align:right;}
+  .bio-dark-item label{font-size:13px;color:#8a97a0;font-weight:600;}
+  .bio-dark-item span{font-size:14px;font-weight:700;color:var(--navy);text-align:right;}
   @media (max-width:700px){
+    .bio-card{padding:6px 20px;}
     .bio-dark-grid{grid-template-columns:1fr;column-gap:0;}
-    .bio-dark-item:nth-child(n+5){border-bottom:1px solid rgba(255,255,255,.14);}
+    .bio-dark-item:nth-child(n+5){border-bottom:1px solid #e7ecee;}
     .bio-dark-item:last-child{border-bottom:none;}
   }
 
@@ -464,7 +493,7 @@
 
   /* ---------- Dark mode ---------- */
   [data-theme="dark"] html{background:#0b1720;}
-  [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
+  [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
 
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
   [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
@@ -506,6 +535,13 @@
   [data-theme="dark"] section.page-section:nth-child(even){background:#122530;}
   [data-theme="dark"] .section-inner > h2{color:#eaf3f5;}
   [data-theme="dark"] .section-inner > .desc{color:#8ea0a8;}
+
+  /* Header ber-badge (dark-head) & biodata singkat */
+  [data-theme="dark"] .dark-head h2{color:#eaf3f5;}
+  [data-theme="dark"] .bio-card{background:#122530;box-shadow:0 16px 32px -20px rgba(0,0,0,.5);}
+  [data-theme="dark"] .bio-dark-item{border-bottom-color:rgba(255,255,255,.1);}
+  [data-theme="dark"] .bio-dark-item label{color:#8ea0a8;}
+  [data-theme="dark"] .bio-dark-item span{color:#eaf3f5;}
 
   [data-theme="dark"] #tentang-kami > .section-inner > .eyebrow,
   [data-theme="dark"] #profil-pimpinan > .section-inner > .eyebrow,
@@ -551,6 +587,14 @@
 </script>
 </head>
 <body>
+
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <filter id="batikAlphaBoost">
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="4.5" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
@@ -703,7 +747,7 @@
   </section>
 
   {{-- ================= BIODATA SINGKAT (section navy tersendiri) ================= --}}
-  <section id="biodata-singkat" class="page-section dark">
+  <section id="biodata-singkat" class="page-section">
     <div class="section-inner">
       <div class="dark-head">
         <span class="badge">
@@ -712,13 +756,15 @@
         <h2>Biodata singkat</h2>
       </div>
 
-      <div class="bio-dark-grid">
-        <div class="bio-dark-item"><label>Nama</label><span>{{ $leadership->name ?? '-' }}</span></div>
-        <div class="bio-dark-item"><label>Jabatan</label><span>{{ $leadership->position ?? '-' }}</span></div>
-        <div class="bio-dark-item"><label>Pendidikan</label><span>{{ $leadership->education ?? '-' }}</span></div>
-        <div class="bio-dark-item"><label>Masa jabatan</label><span>{{ $leadership->term ?? '-' }}</span></div>
-        <div class="bio-dark-item"><label>Bidang keahlian</label><span>{{ $leadership->expertise ?? '-' }}</span></div>
-        <div class="bio-dark-item"><label>Email</label><span>{{ $leadership->email ?? '-' }}</span></div>
+      <div class="bio-card">
+        <div class="bio-dark-grid">
+          <div class="bio-dark-item"><label>Nama</label><span>{{ $leadership->name ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label>Jabatan</label><span>{{ $leadership->position ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label>Pendidikan</label><span>{{ $leadership->education ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label>Masa jabatan</label><span>{{ $leadership->term ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label>Bidang keahlian</label><span>{{ $leadership->expertise ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label>Email</label><span>{{ $leadership->email ?? '-' }}</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -762,7 +808,7 @@
   </section>
 
   {{-- ================= URAIAN UNIT KERJA (section navy tersendiri) ================= --}}
-  <section id="uraian-unit-kerja" class="page-section dark">
+  <section id="uraian-unit-kerja" class="page-section">
     <div class="section-inner">
       <div class="dark-head">
         <span class="badge">

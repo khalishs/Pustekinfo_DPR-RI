@@ -28,6 +28,11 @@
     color:var(--ink);
     background: var(--white);
   }
+  /* Transisi halaman native: browser yang mendukung akan otomatis crossfade + geser elemen
+     ber-view-transition-name yang sama (mis. garis aktif navbar) saat pindah halaman. */
+  @view-transition{
+    navigation:auto;
+  }
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
 
@@ -87,6 +92,7 @@
   .nav-links li.active::after{
     content:"";position:absolute;left:0;right:0;bottom:-18px;
     height:2px;background:var(--teal);
+    view-transition-name:nav-underline;
   }
 
   /* ---------- Dropdown Profil ---------- */
@@ -395,7 +401,7 @@
     .logout-btn{padding:6px 12px;font-size:11px;white-space:nowrap;}
 
     .nav-links{
-      display:none;
+      display:flex;
       position:fixed;
       top:62px;
       left:0;
@@ -407,8 +413,18 @@
       box-shadow:0 20px 30px -20px rgba(11,34,51,.25);
       padding:8px 20px 16px;
       z-index:9998;
+      opacity:0;
+      visibility:hidden;
+      transform:translateY(-10px);
+      pointer-events:none;
+      transition:opacity .25s ease, transform .25s ease, visibility .25s ease;
     }
-    .nav-links.open{display:flex;}
+    .nav-links.open{
+      opacity:1;
+      visibility:visible;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
     .nav-links li{width:100%;}
     .nav-links li a{
       padding:14px 4px;
@@ -1636,6 +1652,14 @@
   cursor:pointer;
   transition:.2s ease;
 }
+.dl-btn svg{
+  width:16px;height:16px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
 .dl-btn:hover{
   border-color:var(--teal);
   color:var(--teal);
@@ -2646,8 +2670,6 @@
 </footer>
 
 <script>
-
-
 
 const profilDropdown = document.getElementById("profilDropdown");
 if (window.innerWidth <= 900) {
