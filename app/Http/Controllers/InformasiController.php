@@ -50,7 +50,12 @@ class InformasiController extends Controller
             'news'          => $news,
             'kategoriList'  => NewsItem::select('category')->distinct()->pluck('category'),
             'kategoriAktif' => $kategori,
-            'todayEvents'   => AgendaEvent::whereDate('event_date', Carbon::today())->get(),
+            'todayEvents'   => AgendaEvent::whereDate('event_date', Carbon::today())->orderBy('event_time')->get(),
+            'upcomingEvents' => AgendaEvent::whereDate('event_date', '>', Carbon::today())
+                ->orderBy('event_date')
+                ->orderBy('event_time')
+                ->take(4)
+                ->get(),
             'calendarDays'  => $calendarDays,
             'monthLabel'    => $bulanIndo[$monthStart->month - 1].' '.$monthStart->year,
             'prevMonth'     => $monthStart->copy()->subMonth()->format('Y-m'),

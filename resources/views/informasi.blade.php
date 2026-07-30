@@ -7,7 +7,7 @@
 <title>Informasi - Pustekinfo | Pusat Teknologi Informasi DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
 <style>
   :root{
     --navy:#12242E;
@@ -33,7 +33,6 @@
   img{max-width:100%;display:block;}
 
   h1, h2, h3, h4,
-  .footer-brand-text .name,
   .section-inner > h2,
   .info-news-title,
   .info-doc-title,
@@ -81,7 +80,36 @@
   }
   .caret{font-size:10px;opacity:.6;}
   .nav-actions{display:flex;align-items:center;gap:12px;}
-  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;display:flex;align-items:center;justify-content:center;font-size:14px;color:#5b6b73;background:var(--white);cursor:pointer;}
+
+  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  .theme-fab{
+    position:fixed;left:24px;bottom:24px;z-index:9999;
+    width:52px;height:52px;border-radius:50%;
+    border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
+    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
+  }
+  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
+  .theme-fab:active{transform:scale(.92);}
+  @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
+  .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
+  .theme-fab-icon{
+    position:absolute;width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .theme-fab-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .theme-fab .icon-moon{opacity:1;transform:rotate(0) scale(1);}
+  .theme-fab .icon-sun{opacity:0;transform:rotate(90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .theme-fab:hover{border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
+  @media (max-width:900px){
+    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
+    .theme-fab-icon{width:19px;height:19px;}
+  }
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;}
   .btn-login{padding:10px 22px;border-radius:20px;border:none;background:var(--navy);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;}
   .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;background:var(--white);cursor:pointer;align-items:center;}
@@ -96,7 +124,6 @@
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
     .navbar-logo{height:32px;width:auto;flex-shrink:0;}
     .nav-actions{gap:6px;flex-shrink:0;}
-    .icon-btn{width:30px;height:30px;font-size:12px;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
     .burger{display:flex;}
@@ -197,17 +224,28 @@
   /* ================= POLA BATIK (sama seperti beranda) ================= */
   .konten-batik{
     position:relative;
+    z-index:0;
     background-color:#14839C1A;
+  }
+  .konten-batik::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
     background-image:url('{{ asset('images/pola-batik.png') }}');
-    background-repeat:repeat-y;
+    background-repeat:no-repeat;
     background-position:center top;
     background-size:5000px auto;
+    filter:url(#batikBoostLight);
   }
+  [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikAlphaBoost);}
   /* section putih/mist bergantian dimatikan di dalam area batik, supaya
      polanya tetap terlihat sampai bawah — sama seperti di beranda */
   .konten-batik section.page-section:nth-child(even){background:transparent;}
   @media (max-width:900px){
-    .konten-batik{background-size:3000px auto;}
+    .konten-batik::before{background-size:3000px auto;}
   }
 
   /* ================= FILTER PILLS (dipakai Berita & Publikasi) ================= */
@@ -300,10 +338,24 @@
   .agenda-legend i.c3{background:#1f9d7c;}
 
   .agenda-today{
-    background:linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
+    background:#073D5F;
     border-radius:16px;padding:26px 26px 30px;display:flex;flex-direction:column;
     box-shadow:0 30px 60px -30px rgba(11,34,51,.35);
   }
+  .agenda-today::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:4000px auto;
+    filter:brightness(0) invert(1);
+    opacity:.40;
+    pointer-events:none;
+    z-index:0;
+  }
+  
   .agenda-today-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.14);}
   .agenda-today-head .label{display:flex;align-items:center;gap:8px;color:var(--white);font-size:13px;font-weight:800;}
   .agenda-today-head .label::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);}
@@ -317,7 +369,16 @@
   .agenda-event-meta span{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.65);font-size:12.5px;font-weight:600;}
   .agenda-event-meta svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0;}
 
-  .agenda-today-empty{margin-top:auto;padding-top:40px;text-align:center;color:rgba(255,255,255,.4);font-size:12.5px;font-weight:600;}
+  .agenda-today-empty{padding-top:24px;text-align:center;color:rgba(255,255,255,.4);font-size:12.5px;font-weight:600;}
+
+  .agenda-upcoming-head{
+    margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);
+    display:flex;align-items:center;gap:8px;
+    color:rgba(255,255,255,.55);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  }
+  .agenda-event.upcoming{margin-top:16px;}
+  .agenda-event.upcoming .agenda-event-top .title{color:rgba(255,255,255,.85);}
+  .agenda-event.upcoming .agenda-event-top .bullet{background:rgba(255,255,255,.35);}
 
   @media (max-width:900px){
     .agenda-grid{grid-template-columns:1fr;gap:24px;}
@@ -368,12 +429,17 @@
 
   /* ================= FOOTER (sama seperti halaman lain) ================= */
   .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #0b2233 55%, #0b2233 100%);}
-  .footer{background:var(--navy);padding:64px 100px 0;}
-  .footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
+  .footer{position:relative;background:var(--navy);padding:64px 100px 0;overflow:hidden;}
+  /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
+  .footer::before{
+    content:"";position:absolute;left:-120px;top:0;bottom:-80px;width:700px;
+    background-image:url('{{ asset('images/motif-batik.png') }}');
+    background-repeat:no-repeat;background-position:left center;background-size:550px auto;
+    filter:brightness(0) invert(1);opacity:.35;pointer-events:none;z-index:0;
+  }
+  .footer-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}
-  .footer-brand-logo{width:50px;height:50px;object-fit:contain;}
-  .footer-brand-text .name{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
-  .footer-brand-text .sub{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:10px;letter-spacing:.08em;color:var(--white);font-weight:600;}
+  .footer-brand-logo{width:190px;height:auto;object-fit:contain;}
   .footer-desc{margin-top:18px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.75;max-width:260px;}
   .footer-social{margin-top:22px;display:flex;gap:10px;}
   .footer-social a{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:.2s ease;}
@@ -391,7 +457,9 @@
   .footer-bottom p{color:rgba(255,255,255,.45);font-size:12.5px;font-weight:500;}
   @media (max-width:900px){
     .footer{padding:50px 20px 0;}
+    .footer::before{width:150px;background-size:150px auto;opacity:.25;}
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
+    .footer-brand-logo{width:150px;}
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
@@ -409,7 +477,6 @@
   [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
   [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
 
-  [data-theme="dark"] .icon-btn,
   [data-theme="dark"] .lang-btn,
   [data-theme="dark"] .profile-box,
   [data-theme="dark"] .logout-btn,
@@ -418,8 +485,6 @@
   [data-theme="dark"] .agenda-cal-nav button{
     background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
   }
-  [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
-  [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
   [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
@@ -508,14 +573,30 @@
         <feFuncA type="linear" slope="4.5" intercept="0"/>
       </feComponentTransfer>
     </filter>
+    <filter id="batikBoostLight">
+      <feColorMatrix type="saturate" values="2.2"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="2.6" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
   </svg>
+
+  {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
+  <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+    <span class="theme-fab-icon icon-moon">
+      <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </span>
+    <span class="theme-fab-icon icon-sun">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </span>
+  </button>
 
   @php
     $tabs = [
-      ['id' => 'berita',    'label' => 'Berita',    'icon' => '<path d="M4 4h13a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H4z"/><path d="M4 4v16a2 2 0 0 0 2 2h13"/><line x1="8" y1="9" x2="15" y2="9"/><line x1="8" y1="13" x2="15" y2="13"/>'],
-      ['id' => 'agenda',    'label' => 'Agenda',    'icon' => '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'],
-      ['id' => 'publikasi', 'label' => 'Publikasi', 'icon' => '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>'],
-      ['id' => 'faq',       'label' => 'FAQ',        'icon' => '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 2-3 4"/><line x1="12" y1="17" x2="12.01" y2="17"/>'],
+      ['id' => 'berita',    'label' => 'Berita',    'label_en' => 'News',        'icon' => '<path d="M4 4h13a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H4z"/><path d="M4 4v16a2 2 0 0 0 2 2h13"/><line x1="8" y1="9" x2="15" y2="9"/><line x1="8" y1="13" x2="15" y2="13"/>'],
+      ['id' => 'agenda',    'label' => 'Agenda',    'label_en' => 'Agenda',      'icon' => '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'],
+      ['id' => 'publikasi', 'label' => 'Publikasi', 'label_en' => 'Publications','icon' => '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>'],
+      ['id' => 'faq',       'label' => 'FAQ',        'label_en' => 'FAQ',        'icon' => '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 2-3 4"/><line x1="12" y1="17" x2="12.01" y2="17"/>'],
     ];
 
     $newsIcons = [
@@ -529,22 +610,22 @@
     $defaultNewsIcon = '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>';
 
     $documents = [
-      ['cat' => 'LAPORAN',  'title' => 'Laporan Kinerja Tahun 2025',              'date' => '12 Jan 2026', 'size' => '2.4 MB'],
-      ['cat' => 'KEBIJAKAN','title' => 'Kebijakan Keamanan Informasi',            'date' => '03 Nov 2025', 'size' => '1.1 MB'],
-      ['cat' => 'LAPORAN',  'title' => 'Rencana Strategis TI 2025–2029',          'date' => '20 Agu 2025', 'size' => '3.8 MB'],
-      ['cat' => 'PANDUAN',  'title' => 'Panduan Layanan Mandiri',                  'date' => '15 Jul 2025', 'size' => '0.9 MB'],
-      ['cat' => 'KEBIJAKAN','title' => 'Standar Operasional Prosedur Helpdesk',   'date' => '02 Jul 2025', 'size' => '1.5 MB'],
-      ['cat' => 'LAPORAN',  'title' => 'Laporan Audit Keamanan Informasi 2025',   'date' => '28 Jun 2025', 'size' => '2.1 MB'],
-      ['cat' => 'PANDUAN',  'title' => 'Panduan Penggunaan Sistem Persuratan',    'date' => '10 Jun 2025', 'size' => '1.3 MB'],
-      ['cat' => 'FORMULIR', 'title' => 'Formulir Permintaan Akses Sistem',        'date' => '01 Jun 2025', 'size' => '0.4 MB'],
+      ['cat' => 'LAPORAN',  'cat_en' => 'REPORT',   'title' => 'Laporan Kinerja Tahun 2025',              'title_en' => '2025 Performance Report',            'date' => '12 Jan 2026', 'date_en' => '12 Jan 2026', 'size' => '2.4 MB'],
+      ['cat' => 'KEBIJAKAN','cat_en' => 'POLICY',   'title' => 'Kebijakan Keamanan Informasi',            'title_en' => 'Information Security Policy',        'date' => '03 Nov 2025', 'date_en' => '03 Nov 2025', 'size' => '1.1 MB'],
+      ['cat' => 'LAPORAN',  'cat_en' => 'REPORT',   'title' => 'Rencana Strategis TI 2025–2029',          'title_en' => '2025–2029 IT Strategic Plan',         'date' => '20 Agu 2025', 'date_en' => '20 Aug 2025', 'size' => '3.8 MB'],
+      ['cat' => 'PANDUAN',  'cat_en' => 'GUIDE',    'title' => 'Panduan Layanan Mandiri',                  'title_en' => 'Self-Service Guide',                  'date' => '15 Jul 2025', 'date_en' => '15 Jul 2025', 'size' => '0.9 MB'],
+      ['cat' => 'KEBIJAKAN','cat_en' => 'POLICY',   'title' => 'Standar Operasional Prosedur Helpdesk',   'title_en' => 'Helpdesk Standard Operating Procedure','date' => '02 Jul 2025', 'date_en' => '02 Jul 2025', 'size' => '1.5 MB'],
+      ['cat' => 'LAPORAN',  'cat_en' => 'REPORT',   'title' => 'Laporan Audit Keamanan Informasi 2025',   'title_en' => '2025 Information Security Audit Report','date' => '28 Jun 2025', 'date_en' => '28 Jun 2025', 'size' => '2.1 MB'],
+      ['cat' => 'PANDUAN',  'cat_en' => 'GUIDE',    'title' => 'Panduan Penggunaan Sistem Persuratan',    'title_en' => 'Correspondence System User Guide',    'date' => '10 Jun 2025', 'date_en' => '10 Jun 2025', 'size' => '1.3 MB'],
+      ['cat' => 'FORMULIR', 'cat_en' => 'FORM',     'title' => 'Formulir Permintaan Akses Sistem',        'title_en' => 'System Access Request Form',          'date' => '01 Jun 2025', 'date_en' => '01 Jun 2025', 'size' => '0.4 MB'],
     ];
 
     $faqs = [
-      ['q' => 'Berapa lama waktu respons pesan saya?', 'a' => 'Tim kami akan merespons dalam waktu 1x24 jam kerja melalui email yang Anda cantumkan.'],
-      ['q' => 'Bagaimana cara melaporkan kendala teknis?', 'a' => 'Laporkan kendala teknis melalui menu Helpdesk pada portal stela.dpr.go.id, atau hubungi kontak resmi yang tertera pada halaman ini.'],
-      ['q' => 'Apakah bisa berkunjung langsung ke kantor?', 'a' => 'Bisa. Kunjungan dapat dilakukan pada jam kerja (08.00–16.00 WIB) dengan konfirmasi terlebih dahulu melalui kontak resmi.'],
-      ['q' => 'Bagaimana cara mengunduh dokumen publikasi?', 'a' => 'Dokumen publikasi dapat diunduh langsung melalui bagian Publikasi & Unduhan pada halaman ini.'],
-      ['q' => 'Apakah agenda kegiatan diperbarui secara berkala?', 'a' => 'Ya, agenda kegiatan diperbarui secara berkala oleh tim Pustekinfo mengikuti jadwal kerja internal.'],
+      ['q' => 'Berapa lama waktu respons pesan saya?', 'q_en' => 'How long does it take to respond to my message?', 'a' => 'Tim kami akan merespons dalam waktu 1x24 jam kerja melalui email yang Anda cantumkan.', 'a_en' => 'Our team will respond within 1x24 working hours via the email you provided.'],
+      ['q' => 'Bagaimana cara melaporkan kendala teknis?', 'q_en' => 'How do I report a technical issue?', 'a' => 'Laporkan kendala teknis melalui menu Helpdesk pada portal stela.dpr.go.id, atau hubungi kontak resmi yang tertera pada halaman ini.', 'a_en' => 'Report technical issues through the Helpdesk menu on the stela.dpr.go.id portal, or contact the official channels listed on this page.'],
+      ['q' => 'Apakah bisa berkunjung langsung ke kantor?', 'q_en' => 'Can I visit the office in person?', 'a' => 'Bisa. Kunjungan dapat dilakukan pada jam kerja (08.00–16.00 WIB) dengan konfirmasi terlebih dahulu melalui kontak resmi.', 'a_en' => 'Yes. Visits can be made during working hours (08.00–16.00 WIB) with prior confirmation through official contact channels.'],
+      ['q' => 'Bagaimana cara mengunduh dokumen publikasi?', 'q_en' => 'How do I download publication documents?', 'a' => 'Dokumen publikasi dapat diunduh langsung melalui bagian Publikasi & Unduhan pada halaman ini.', 'a_en' => 'Publication documents can be downloaded directly through the Publications & Downloads section on this page.'],
+      ['q' => 'Apakah agenda kegiatan diperbarui secara berkala?', 'q_en' => 'Is the activity agenda updated regularly?', 'a' => 'Ya, agenda kegiatan diperbarui secara berkala oleh tim Pustekinfo mengikuti jadwal kerja internal.', 'a_en' => 'Yes, the activity agenda is updated regularly by the Pustekinfo team following the internal work schedule.'],
     ];
   @endphp
 
@@ -555,17 +636,16 @@
     </div>
 
     <ul class="nav-links">
-      <li><a href="{{ route('home') }}">Beranda</a></li>
-      <li><a href="{{ route('profil') }}">Profil </a></li>
-      <li><a href="{{ route('layanan') }}">Layanan</a></li>
-      <li class="active"><a href="{{ route('informasi') }}">Informasi</a></li>
-      <li><a href="{{ route('galeri') }}">Galeri</a></li>
-      <li><a href="{{ route('kontak') }}">Kontak</a></li>
+      <li><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
+      <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
+      <li><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
+      <li class="active"><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
+      <li><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
+      <li><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
-      <button class="lang-btn">EN</button>
+      <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
@@ -575,9 +655,9 @@
   {{-- ================= HERO ================= --}}
   <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
-      <p class="breadcrumb">Beranda / <span>Informasi</span></p>
-      <h1>Pusat <span class="accent">Informasi &amp; Publikasi</span></h1>
-      <p>Berita terbaru, agenda kegiatan, dan dokumen publikasi resmi Pustekinfo.</p>
+      <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Information&lt;/span&gt;">Beranda / <span>Informasi</span></p>
+      <h1 data-en-html="Center for <span class=&quot;accent&quot;>Information &amp; Publications</span>">Pusat <span class="accent">Informasi &amp; Publikasi</span></h1>
+      <p data-en="Latest news, activity agenda, and Pustekinfo's official publication documents.">Berita terbaru, agenda kegiatan, dan dokumen publikasi resmi Pustekinfo.</p>
     </div>
 
     <div class="tabs-nav">
@@ -585,7 +665,7 @@
         @foreach($tabs as $i => $t)
           <a href="#{{ $t['id'] }}" class="tab-link {{ $i === 0 ? 'active' : '' }}" data-target="{{ $t['id'] }}">
             <span class="tab-icon"><svg viewBox="0 0 24 24">{!! $t['icon'] !!}</svg></span>
-            {{ $t['label'] }}
+            <span data-en="{{ $t['label_en'] }}">{{ $t['label'] }}</span>
           </a>
         @endforeach
       </div>
@@ -597,7 +677,7 @@
       @foreach($tabs as $i => $t)
         <a href="#{{ $t['id'] }}" class="tab-link {{ $i === 0 ? 'active' : '' }}" data-target="{{ $t['id'] }}">
           <span class="tab-icon"><svg viewBox="0 0 24 24">{!! $t['icon'] !!}</svg></span>
-          {{ $t['label'] }}
+          <span data-en="{{ $t['label_en'] }}">{{ $t['label'] }}</span>
         </a>
       @endforeach
     </div>
@@ -608,11 +688,11 @@
   {{-- ================= BERITA & KEGIATAN ================= --}}
   <section id="berita" class="page-section">
     <div class="section-inner">
-      <div class="eyebrow eyebrow-dash">KABAR TERBARU</div>
-      <h2>Berita &amp; kegiatan</h2>
+      <div class="eyebrow eyebrow-dash" data-en="LATEST NEWS">KABAR TERBARU</div>
+      <h2 data-en="News &amp; activities">Berita &amp; kegiatan</h2>
 
       <div class="info-filters">
-        <a href="{{ route('informasi') }}#berita" class="info-filter {{ ! $kategoriAktif ? 'active' : '' }}">Semua</a>
+        <a href="{{ route('informasi') }}#berita" class="info-filter {{ ! $kategoriAktif ? 'active' : '' }}" data-en="All">Semua</a>
         @foreach($kategoriList as $kat)
           <a href="{{ route('informasi', ['kategori' => $kat]) }}#berita" class="info-filter {{ $kategoriAktif === $kat ? 'active' : '' }}">{{ $kat }}</a>
         @endforeach
@@ -635,13 +715,13 @@
             </div>
           </a>
         @empty
-          <p class="info-news-empty">Belum ada berita untuk kategori ini.</p>
+          <p class="info-news-empty" data-en="No news for this category yet.">Belum ada berita untuk kategori ini.</p>
         @endforelse
       </div>
 
       @if($news->hasMorePages())
         <div class="info-loadmore-wrap">
-          <a href="{{ $news->nextPageUrl() }}#berita" class="info-loadmore">Muat lebih banyak</a>
+          <a href="{{ $news->nextPageUrl() }}#berita" class="info-loadmore" data-en="Load more">Muat lebih banyak</a>
         </div>
       @endif
     </div>
@@ -650,8 +730,8 @@
   {{-- ================= AGENDA KEGIATAN ================= --}}
   <section id="agenda" class="page-section">
     <div class="section-inner">
-      <div class="eyebrow eyebrow-dash">JADWAL</div>
-      <h2>Agenda kegiatan</h2>
+      <div class="eyebrow eyebrow-dash" data-en="SCHEDULE">JADWAL</div>
+      <h2 data-en="Activity agenda">Agenda kegiatan</h2>
 
       <div class="agenda-grid">
         <div class="agenda-cal">
@@ -660,12 +740,12 @@
             <div class="agenda-cal-nav">
               <a href="{{ route('informasi', ['bulan' => $prevMonth]) }}#agenda" aria-label="Bulan sebelumnya">‹</a>
               <a href="{{ route('informasi', ['bulan' => $nextMonth]) }}#agenda" aria-label="Bulan berikutnya">›</a>
-              <a href="{{ route('informasi') }}#agenda" class="today-btn">Hari Ini</a>
+              <a href="{{ route('informasi') }}#agenda" class="today-btn" data-en="Today">Hari Ini</a>
             </div>
           </div>
 
           <div class="agenda-cal-daynames">
-            <span>Senin</span><span>Selasa</span><span>Rabu</span><span>Kamis</span><span>Jumat</span><span>Sabtu</span><span>Minggu</span>
+            <span data-en="Mon">Senin</span><span data-en="Tue">Selasa</span><span data-en="Wed">Rabu</span><span data-en="Thu">Kamis</span><span data-en="Fri">Jumat</span><span data-en="Sat">Sabtu</span><span data-en="Sun">Minggu</span>
           </div>
 
           <div class="agenda-cal-days">
@@ -679,15 +759,15 @@
             @endforeach
           </div>
           <div class="agenda-legend">
-            <span><i class="c1"></i>Tujuan Agenda 1</span>
-            <span><i class="c2"></i>Tujuan Agenda 2</span>
-            <span><i class="c3"></i>Tujuan Agenda 3</span>
+            <span><i class="c1"></i><span data-en="Agenda Purpose 1">Tujuan Agenda 1</span></span>
+            <span><i class="c2"></i><span data-en="Agenda Purpose 2">Tujuan Agenda 2</span></span>
+            <span><i class="c3"></i><span data-en="Agenda Purpose 3">Tujuan Agenda 3</span></span>
           </div>
         </div>
 
         <div class="agenda-today">
           <div class="agenda-today-head">
-            <div class="label">Hari Ini</div>
+            <div class="label" data-en="Today">Hari Ini</div>
             <div class="date">{{ now()->format('d M Y') }}</div>
           </div>
 
@@ -707,8 +787,29 @@
               </div>
             </div>
           @empty
-            <div class="agenda-today-empty">Tidak ada agenda hari ini</div>
+            <div class="agenda-today-empty" data-en="No agenda today">Tidak ada agenda hari ini</div>
           @endforelse
+
+          @if($upcomingEvents->isNotEmpty())
+            <div class="agenda-upcoming-head" data-en="Upcoming Agenda">Agenda Berikutnya</div>
+            @foreach($upcomingEvents as $event)
+              <div class="agenda-event upcoming">
+                <div class="agenda-event-top">
+                  <span class="bullet"></span>
+                  <div class="title">{{ $event->title }}</div>
+                </div>
+                <div class="agenda-event-meta">
+                  <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $event->event_date->format('d M Y') }}</span>
+                  @if($event->event_time)
+                    <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ \Carbon\Carbon::parse($event->event_time)->format('H.i') }} WIB</span>
+                  @endif
+                  @if($event->location)
+                    <span><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> {{ $event->location }}</span>
+                  @endif
+                </div>
+              </div>
+            @endforeach
+          @endif
         </div>
       </div>
     </div>
@@ -717,15 +818,15 @@
   {{-- ================= PUBLIKASI & UNDUHAN ================= --}}
   <section id="publikasi" class="page-section">
     <div class="section-inner">
-      <div class="eyebrow eyebrow-dash">DOKUMEN</div>
-      <h2>Publikasi &amp; unduhan</h2>
+      <div class="eyebrow eyebrow-dash" data-en="DOCUMENTS">DOKUMEN</div>
+      <h2 data-en="Publications &amp; downloads">Publikasi &amp; unduhan</h2>
 
       <div class="info-filters" id="docFilters">
-        <button class="info-filter active" data-filter="semua">Semua</button>
-        <button class="info-filter" data-filter="laporan">Laporan</button>
-        <button class="info-filter" data-filter="kebijakan">Kebijakan</button>
-        <button class="info-filter" data-filter="panduan">Panduan</button>
-        <button class="info-filter" data-filter="formulir">Formulir</button>
+        <button class="info-filter active" data-filter="semua" data-en="All">Semua</button>
+        <button class="info-filter" data-filter="laporan" data-en="Reports">Laporan</button>
+        <button class="info-filter" data-filter="kebijakan" data-en="Policies">Kebijakan</button>
+        <button class="info-filter" data-filter="panduan" data-en="Guides">Panduan</button>
+        <button class="info-filter" data-filter="formulir" data-en="Forms">Formulir</button>
       </div>
 
       <div class="info-doc-list" id="docList">
@@ -734,10 +835,10 @@
             <span class="info-doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
             <div class="info-doc-body">
               <div class="info-doc-title-row">
-                <span class="info-doc-cat">{{ $doc['cat'] }}</span>
-                <span class="info-doc-title">{{ $doc['title'] }}</span>
+                <span class="info-doc-cat" data-en="{{ $doc['cat_en'] }}">{{ $doc['cat'] }}</span>
+                <span class="info-doc-title" data-en="{{ $doc['title_en'] }}">{{ $doc['title'] }}</span>
               </div>
-              <div class="info-doc-meta">{{ $doc['date'] }} · {{ $doc['size'] }}</div>
+              <div class="info-doc-meta"><span data-en="{{ $doc['date_en'] }}">{{ $doc['date'] }}</span> · {{ $doc['size'] }}</div>
             </div>
             <a href="#" class="info-doc-download" aria-label="Unduh {{ $doc['title'] }}">
               <svg viewBox="0 0 24 24"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg>
@@ -751,17 +852,17 @@
   {{-- ================= FAQ ================= --}}
   <section id="faq" class="page-section">
     <div class="section-inner">
-      <div class="eyebrow eyebrow-dash">BANTUAN</div>
-      <h2>Pertanyaan umum</h2>
+      <div class="eyebrow eyebrow-dash" data-en="HELP">BANTUAN</div>
+      <h2 data-en="Frequently asked questions">Pertanyaan umum</h2>
 
       <div class="info-faq-list">
         @foreach($faqs as $item)
           <details class="info-faq-item">
             <summary>
-              {{ $item['q'] }}
+              <span data-en="{{ $item['q_en'] }}">{{ $item['q'] }}</span>
               <span class="chev"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
             </summary>
-            <div class="answer">{{ $item['a'] }}</div>
+            <div class="answer" data-en="{{ $item['a_en'] }}">{{ $item['a'] }}</div>
           </details>
         @endforeach
       </div>
@@ -778,13 +879,9 @@
     <div class="footer-inner">
       <div class="footer-col">
         <div class="footer-brand">
-          <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-          <div class="footer-brand-text">
-            <div class="name">PUSTEKINFO</div>
-            <div class="sub">Sekretariat Jenderal DPR RI</div>
-          </div>
+          <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
         </div>
-        <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
+        <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
         <div class="footer-social">
           <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
           <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
@@ -793,27 +890,27 @@
       </div>
 
       <div class="footer-col">
-        <span class="head">TAUTAN</span>
+        <span class="head" data-en="LINKS">TAUTAN</span>
         <div class="footer-links">
-          <a href="#"><span class="chev">›</span> Sistem Akademik</a>
-          <a href="#"><span class="chev">›</span> Sistem Kepegawaian</a>
-          <a href="#"><span class="chev">›</span> Sistem Keuangan</a>
+          <a href="#"><span class="chev">›</span> <span data-en="Academic System">Sistem Akademik</span></a>
+          <a href="#"><span class="chev">›</span> <span data-en="HR System">Sistem Kepegawaian</span></a>
+          <a href="#"><span class="chev">›</span> <span data-en="Finance System">Sistem Keuangan</span></a>
           <a href="#"><span class="chev">›</span> PPID</a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">BANTUAN</span>
+        <span class="head" data-en="HELP">BANTUAN</span>
         <div class="footer-links">
           <a href="#"><span class="chev">›</span> Helpdesk</a>
-          <a href="#"><span class="chev">›</span> Pengaduan</a>
+          <a href="#"><span class="chev">›</span> <span data-en="Complaints">Pengaduan</span></a>
           <a href="#faq"><span class="chev">›</span> FAQ</a>
           <a href="#"><span class="chev">›</span> Whistleblowing</a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">KONTAK</span>
+        <span class="head" data-en="CONTACT">KONTAK</span>
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -832,8 +929,8 @@
     </div>
 
     <div class="footer-inner footer-bottom">
-      <p>© {{ date('Y') }} Pustekinfo. Seluruh hak dilindungi.</p>
-      <p>Referensi mockup — bukan situs resmi</p>
+      <p data-en="© {{ date('Y') }} Pustekinfo. All rights reserved.">© {{ date('Y') }} Pustekinfo. Seluruh hak dilindungi.</p>
+      <p data-en="Mockup reference — not an official site">Referensi mockup — bukan situs resmi</p>
     </div>
   </footer>
 
@@ -844,9 +941,7 @@
 
   function applyTheme(isDark) {
       document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-      themeToggle.classList.toggle("active", isDark);
       themeToggle.setAttribute("aria-pressed", String(isDark));
-      themeToggle.textContent = isDark ? "◑" : "◐";
   }
 
   applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
@@ -855,7 +950,42 @@
       const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
       localStorage.setItem("theme", isDark ? "dark" : "light");
       applyTheme(isDark);
+      themeToggle.classList.add("pulse");
+      setTimeout(() => themeToggle.classList.remove("pulse"), 450);
   });
+
+  // ---- Ganti bahasa (ID/EN) ----
+  const langToggle = document.getElementById("langToggle");
+
+  function applyLang(lang) {
+      document.documentElement.setAttribute("lang", lang);
+      document.querySelectorAll("[data-en]").forEach((el) => {
+          if (el.dataset.idText === undefined) el.dataset.idText = el.textContent;
+          el.textContent = lang === "en" ? el.dataset.en : el.dataset.idText;
+      });
+      document.querySelectorAll("[data-en-html]").forEach((el) => {
+          if (el.dataset.idHtml === undefined) el.dataset.idHtml = el.innerHTML;
+          el.innerHTML = lang === "en" ? el.dataset.enHtml : el.dataset.idHtml;
+      });
+      document.querySelectorAll("[data-en-placeholder]").forEach((el) => {
+          if (el.dataset.idPlaceholder === undefined) el.dataset.idPlaceholder = el.placeholder;
+          el.placeholder = lang === "en" ? el.dataset.enPlaceholder : el.dataset.idPlaceholder;
+      });
+      if (langToggle) {
+          langToggle.textContent = lang === "en" ? "ID" : "EN";
+          langToggle.setAttribute("aria-pressed", String(lang === "en"));
+      }
+  }
+
+  applyLang(localStorage.getItem("lang") || "id");
+
+  if (langToggle) {
+      langToggle.addEventListener("click", () => {
+          const next = document.documentElement.getAttribute("lang") === "en" ? "id" : "en";
+          localStorage.setItem("lang", next);
+          applyLang(next);
+      });
+  }
 
   // ---- Dropdown Profil di mobile ----
   const profilDropdown = document.getElementById("profilDropdown");

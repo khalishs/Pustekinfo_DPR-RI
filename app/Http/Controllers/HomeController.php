@@ -47,7 +47,12 @@ class HomeController extends Controller
             'leadership'    => Leadership::first(),
             'featuredNews'  => NewsItem::where('is_featured', true)->latest('published_at')->first(),
             'latestNews'    => NewsItem::where('is_featured', false)->latest('published_at')->take(4)->get(),
-            'todayEvents'   => AgendaEvent::whereDate('event_date', $today)->get(),
+            'todayEvents'   => AgendaEvent::whereDate('event_date', $today)->orderBy('event_time')->get(),
+            'upcomingEvents' => AgendaEvent::whereDate('event_date', '>', $today)
+                ->orderBy('event_date')
+                ->orderBy('event_time')
+                ->take(4)
+                ->get(),
             'galleries' => GalleryItem::with('category')->orderBy('sort_order')->take(8)->get(),
             'setting'       => SiteSetting::first(),
             'calendarDays'  => $calendarDays,

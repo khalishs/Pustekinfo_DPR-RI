@@ -7,7 +7,7 @@
 <title>Pustekinfo DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
 <style>
   :root{
     --navy:#12242E;
@@ -32,7 +32,6 @@
   ul{list-style:none;}
 
   h1, h2, h3,
-  .footer-brand-text .name,
   .stat-num,
   .num,
   .layanan-card .title,
@@ -149,20 +148,37 @@
   .caret{font-size:10px;opacity:.6;}
 
   .nav-actions{display:flex;align-items:center;gap:12px;}
-  .icon-btn{
-    width:36px;height:36px;border-radius:50%;
-    border:1px solid #dfe4e7;
+
+  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  .theme-fab{
+    position:fixed;left:24px;bottom:24px;z-index:9999;
+    width:52px;height:52px;border-radius:50%;
+    border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
     display:flex;align-items:center;justify-content:center;
-    font-size:14px;color:#5b6b73;background:var(--white);
-    cursor:pointer;
-    transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
+    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
   }
-  .icon-btn:hover{
-    background:var(--mist);
-    border-color:var(--teal);
-    color:var(--teal);
-    transform:translateY(-2px);
+  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
+  .theme-fab:active{transform:scale(.92);}
+  @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
+  .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
+  .theme-fab-icon{
+    position:absolute;width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
   }
+  .theme-fab-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .theme-fab .icon-moon{opacity:1;transform:rotate(0) scale(1);}
+  .theme-fab .icon-sun{opacity:0;transform:rotate(90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .theme-fab:hover{border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
+  @media (max-width:900px){
+    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
+    .theme-fab-icon{width:19px;height:19px;}
+  }
+
   .lang-btn{
     padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;
     font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);
@@ -372,7 +388,6 @@
   .burger.open span:nth-child(2){opacity:0;}
   .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
     .nav-actions{gap:6px;flex-shrink:0;}
-    .icon-btn{width:30px;height:30px;font-size:12px;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
     .profile-box{padding:4px 10px 4px 4px;gap:6px;}
@@ -820,7 +835,9 @@
     max-width:420px;
   }
   .sambutan-content .desc{
+    border-left: 2px solid #057888 ;
     margin-top:18px;
+    padding-left: 10px;
     font-style:italic;
     color:#6b7b83;
     font-size:14.5px;
@@ -852,7 +869,7 @@
   /* ---------- Berita & Kegiatan ---------- */
   .berita{
     position:relative;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.5);
     padding:90px 100px 120px;
     opacity:0;
     transform:translateY(60px);
@@ -945,7 +962,7 @@
     padding:8px 14px;
     border-radius:1px 10px 1px 10px;
   }
-  .berita-featured-body{margin-top:auto;}
+  .berita-featured-body{margin-top:auto; background-color: rgb(0, 0, 0, 0.5); height:220px;width: 700px;padding-left: 20px; padding-bottom:20px; margin-left: -33px;margin-bottom: -33px;}
   .berita-featured-body h3{
     color:var(--white);
     font-size:23px;
@@ -954,11 +971,11 @@
     max-width:420px;
   }
   .berita-featured-body p{
-    margin-top:14px;
+    margin-top:22px;
     color:rgba(255,255,255,.72);
-    font-size:14px;
-    line-height:1.75;
-    max-width:420px;
+    font-size:10px;
+    line-height:1.10;
+    max-width:560px;
   }
   .berita-featured .meta{
     margin-top:22px;
@@ -1325,13 +1342,29 @@
   }
 
   .agenda-today-empty{
-    margin-top:auto;
-    padding-top:40px;
+    padding-top:24px;
     text-align:center;
     color:rgba(255,255,255,.4);
     font-size:12.5px;
     font-weight:600;
   }
+
+  .agenda-upcoming-head{
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.14);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:rgba(255,255,255,.55);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .agenda-event.upcoming{margin-top:16px;}
+  .agenda-event.upcoming .agenda-event-top .title{color:rgba(255,255,255,.85);}
+  .agenda-event.upcoming .agenda-event-top .bullet{background:rgba(255,255,255,.35);}
 
   @media (max-width:900px){
     .agenda{padding:60px 20px 80px;}
@@ -1342,7 +1375,7 @@
   /* ---------- Galeri Kegiatan ---------- */
 .galeri{
   position:relative;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.5);
   padding:90px 100px 120px;
   opacity:0;
   transform:translateY(60px);
@@ -1648,6 +1681,7 @@
   cursor:pointer;
   transition:.2s ease;
 }
+.dl-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .dl-btn:hover{
   border-color:var(--teal);
   color:var(--teal);
@@ -1669,21 +1703,12 @@
   position:relative;
   z-index:0;
   background-color:#14839C1A;
-  background-image:url('{{ asset('images/pola-batik.png') }}');
-  background-repeat:no-repeat;
-  background-position:center top;
-  background-size:5000px auto;
-  /* sengaja TIDAK pakai background-attachment:fixed, supaya gambar ikut scroll natural bersama halaman */
+  /* background-image dipindah ke ::before supaya bisa diberi filter tanpa
+     ikut mempengaruhi warna konten/section di dalamnya */
 }
 
-/* Overlay pola batik terpisah khusus dark mode: pola aslinya alpha-nya sangat tipis (maks ~10%)
-   sehingga langsung menghilang di background gelap; overlay ini menaikkan alpha lewat SVG filter
-   supaya polanya tetap kelihatan tapi tidak berlebihan/menyilaukan. */
-[data-theme="dark"] .konten-batik{
-  background-color:#0e1b23;
-  background-image:none;
-}
-[data-theme="dark"] .konten-batik::before{
+/* Layer pola batik untuk LIGHT mode */
+.konten-batik::before{
   content:"";
   position:absolute;
   inset:0;
@@ -1693,14 +1718,21 @@
   background-repeat:no-repeat;
   background-position:center top;
   background-size:5000px auto;
-  filter:url(#batikAlphaBoost);
+  filter:url(#batikBoostLight);
 }
-@media (max-width:900px){
-  [data-theme="dark"] .konten-batik::before{background-size:3000px auto;}
+
+/* Overlay pola batik khusus DARK mode: pola aslinya alpha-nya sangat tipis (maks ~10%)
+   sehingga langsung menghilang di background gelap; overlay ini menaikkan alpha lewat SVG filter
+   supaya polanya tetap kelihatan tapi tidak berlebihan/menyilaukan. */
+[data-theme="dark"] .konten-batik{
+  background-color:#0e1b23;
+}
+[data-theme="dark"] .konten-batik::before{
+  filter:url(#batikAlphaBoost);
 }
 
 @media (max-width:900px){
-  .konten-batik{background-size:3000px auto;}
+  .konten-batik::before{background-size:3000px auto;}
   .layanan::before{background-size:3000px auto;}
 }
 
@@ -1856,13 +1888,10 @@
 /* --- Kolom brand --- */
 .footer-brand{display:flex;align-items:center;gap:12px;}
 .footer-brand-logo{
-  width:50px;
+  width:190px;
+  height:auto;
   object-fit:contain;
 }
-
-.footer-brand-text .name{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
-
-.footer-brand-text .sub{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:10px;letter-spacing:.08em;color: var(--white);;font-weight:600;}
 
 .footer-desc{
   margin-top:18px;
@@ -1977,7 +2006,7 @@
   .footer{padding:50px 20px 0;}
   .footer::before{width:150px;background-size:150px auto;opacity:.25;}
   .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
-  .footer-brand-text .sub{white-space:normal;}
+  .footer-brand-logo{width:150px;}
   .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
 }
 @media (max-width:560px){
@@ -1997,7 +2026,6 @@
 [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
 [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
 
-[data-theme="dark"] .icon-btn,
 [data-theme="dark"] .lang-btn,
 [data-theme="dark"] .profile-box,
 [data-theme="dark"] .logout-btn,
@@ -2006,8 +2034,6 @@
 [data-theme="dark"] .agenda-cal-nav button{
   background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
 }
-[data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
-[data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
 [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
 [data-theme="dark"] .agenda-cal-nav button:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
 [data-theme="dark"] .profil-grid{background-color: rgba(0, 0, 0, 0.8);}
@@ -2099,7 +2125,23 @@
           <feFuncA type="linear" slope="4.5" intercept="0"/>
         </feComponentTransfer>
       </filter>
+      <filter id="batikBoostLight">
+        <feColorMatrix type="saturate" values="2.2"/>
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="2.6" intercept="0"/>
+        </feComponentTransfer>
+      </filter>
     </svg>
+
+    {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
+    <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+      <span class="theme-fab-icon icon-moon">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </span>
+      <span class="theme-fab-icon icon-sun">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </span>
+    </button>
 
     <nav class="navbar">
       <div class="brand">
@@ -2107,17 +2149,16 @@
       </div>
 
       <ul class="nav-links">
-        <li class="active"><a href="#">Beranda</a></li>
-        <li><a href="{{ route('profil') }}">Profil </a></li>
-        <li><a href="{{ route('layanan') }}">Layanan</a></li>
-        <li><a href="{{ route('informasi') }}">Informasi</a></li>
-        <li><a href="{{ route('galeri') }}">Galeri</a></li>
-        <li><a href="{{ route('kontak') }}">Kontak</a></li>
+        <li class="active"><a href="#" data-en="Home">Beranda</a></li>
+        <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
+        <li><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
+        <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
+        <li><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
+        <li><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
       </ul>
 
       <div class="nav-actions">
-        <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
-        <button class="lang-btn">EN</button>
+        <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
         <button class="burger" id="burgerBtn" aria-label="Buka menu">
           <span></span><span></span><span></span>
         </button>
@@ -2135,11 +2176,11 @@
         @endforelse
       </div>
       <div class="hero-content">
-        <h1>Mendukung Kinerja DPR RI melalui Layanan <br> Teknologi Informasi yang <br> Terintegrasi.</h1>
-        <p>Pustekinfo menyediakan layanan teknologi informasi, pengelolaan infrastruktur, aplikasi, jaringan, dan keamanan informasi untuk mendukung operasional seluruh unit kerja secara efektif, aman, dan berkelanjutan.</p>
+        <h1 data-en-html="Supporting DPR RI's Performance through Integrated <br> Information Technology <br> Services.">Mendukung Kinerja DPR RI melalui Layanan <br> Teknologi Informasi yang <br> Terintegrasi.</h1>
+        <p data-en="Pustekinfo provides information technology services, infrastructure management, applications, networks, and information security to support the operations of all work units effectively, securely, and sustainably.">Pustekinfo menyediakan layanan teknologi informasi, pengelolaan infrastruktur, aplikasi, jaringan, dan keamanan informasi untuk mendukung operasional seluruh unit kerja secara efektif, aman, dan berkelanjutan.</p>
         <div class="hero-actions">
-          <button class="btn btn-primary">Ajukan Layanan IT</button>
-          <button class="btn btn-ghost">Lihat Status Layanan</button>
+          <button class="btn btn-primary" data-en="Request IT Service">Ajukan Layanan IT</button>
+          <button class="btn btn-ghost" data-en="View Service Status">Lihat Status Layanan</button>
         </div>
       </div>
     </header>
@@ -2160,7 +2201,7 @@
             </div>
           </div>
         @empty
-          <div class="stat"><div><div class="stat-label">Belum ada data statistik</div></div></div>
+          <div class="stat"><div><div class="stat-label" data-en="No statistics data yet">Belum ada data statistik</div></div></div>
         @endforelse
       </section>
         <div class="spacer"></div>
@@ -2176,14 +2217,14 @@
                 @foreach($profilPhotos as $photo)
                   <div class="profil-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$photo->image) }}')"></div>
                 @endforeach
-                <span class="profil-badge">TENTANG KAMI</span>
+                <span class="profil-badge" data-en="ABOUT US">TENTANG KAMI</span>
               </div>
             </div>
 
             <div class="profil-copy">
-              <div class="eyebrow">PROFIL SINGKAT</div>
-              <h2>Unit pendukung teknologi informasi lembaga</h2>
-              <p>Bertanggung jawab atas pengelolaan jaringan, sistem informasi, data, dan keamanan siber di lingkungan lembaga, agar seluruh proses kerja berjalan efisien dan akuntabel.</p>
+              <div class="eyebrow" data-en="SHORT PROFILE">PROFIL SINGKAT</div>
+              <h2 data-en="The institution's information technology support unit">Unit pendukung teknologi informasi lembaga</h2>
+              <p data-en="Responsible for managing the network, information systems, data, and cyber security within the institution, so that all work processes run efficiently and accountably.">Bertanggung jawab atas pengelolaan jaringan, sistem informasi, data, dan keamanan siber di lingkungan lembaga, agar seluruh proses kerja berjalan efisien dan akuntabel.</p>
 
               <div class="profil-features">
                 <div class="feature-row">
@@ -2196,15 +2237,15 @@
                           <polyline points="4 18 5.5 19.5 8 17"></polyline><line x1="10" y1="18" x2="20" y2="18"></line>
                       </svg>
                   </div>
-                  <div class="title">Tugas pokok</div>
-                  <div class="desc">Mengelola infrastruktur TI, jaringan, dan pusat data.</div>
+                  <div class="title" data-en="Main duties">Tugas pokok</div>
+                  <div class="desc" data-en="Managing IT infrastructure, networks, and data centers.">Mengelola infrastruktur TI, jaringan, dan pusat data.</div>
                 </div>
                 <div class="feature">
                   <div class="icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7"></rect><rect x="14" y="13" width="7" height="7"></rect><line x1="10" y1="7.5" x2="14" y2="7.5"></line><line x1="14" y1="7.5" x2="14" y2="16.5"></line></svg>
                   </div>
-                  <div class="title">Fungsi utama</div>
-                  <div class="desc">Mengembangkan dan memelihara sistem lintas unit kerja.</div>
+                  <div class="title" data-en="Main functions">Fungsi utama</div>
+                  <div class="desc" data-en="Developing and maintaining cross-unit systems.">Mengembangkan dan memelihara sistem lintas unit kerja.</div>
                 </div>
               </div>
               <div class="feature-row">
@@ -2212,15 +2253,15 @@
                   <div class="icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L5 5v6c0 5 3.5 9.5 7 11 3.5-1.5 7-6 7-11V5l-7-3z"></path><polyline points="9.5 11.5 11.5 13.5 15 10"></polyline></svg>
                   </div>
-                  <div class="title">Keamanan</div>
-                  <div class="desc">Menjaga data sesuai standar ISO 27001.</div>
+                  <div class="title" data-en="Security">Keamanan</div>
+                  <div class="desc" data-en="Keeping data secure to ISO 27001 standards.">Menjaga data sesuai standar ISO 27001.</div>
                 </div>
                 <div class="feature">
                   <div class="icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="8" r="3"></circle><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"></path><path d="M13 19c0-2.5 2-4.5 5-4.5"></path></svg>
                   </div>
-                  <div class="title">Pelayanan</div>
-                  <div class="desc">Dukungan teknis responsif untuk seluruh pengguna.</div>
+                  <div class="title" data-en="Service">Pelayanan</div>
+                  <div class="desc" data-en="Responsive technical support for all users.">Dukungan teknis responsif untuk seluruh pengguna.</div>
                 </div>
               </div>
           </div>
@@ -2232,56 +2273,56 @@
   {{-- ================= APA YANG KAMI KERJAKAN (LAYANAN) ================= --}}
   <section id="layanan" class="layanan">
     <div class="layanan-inner">
-      <div class="eyebrow">APA YANG KAMI KERJAKAN</div>
-      <h2>Layanan teknologi informasi</h2>
+      <div class="eyebrow" data-en="WHAT WE DO">APA YANG KAMI KERJAKAN</div>
+      <h2 data-en="Information technology services">Layanan teknologi informasi</h2>
 
       <div class="layanan-grid">
         <div class="layanan-card">
           <div class="icon">
             <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
           </div>
-          <div class="title">Jaringan &amp; internet</div>
-          <div class="desc">Pengelolaan konektivitas dan infrastruktur jaringan.</div>
+          <div class="title" data-en="Network &amp; internet">Jaringan &amp; internet</div>
+          <div class="desc" data-en="Management of connectivity and network infrastructure.">Pengelolaan konektivitas dan infrastruktur jaringan.</div>
         </div>
 
         <div class="layanan-card">
           <div class="icon">
             <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </div>
-          <div class="title">Sistem informasi</div>
-          <div class="desc">Pengembangan dan integrasi aplikasi layanan internal maupun publik.</div>
+          <div class="title" data-en="Information systems">Sistem informasi</div>
+          <div class="desc" data-en="Development and integration of internal and public service applications.">Pengembangan dan integrasi aplikasi layanan internal maupun publik.</div>
         </div>
 
         <div class="layanan-card">
           <div class="icon">
             <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
           </div>
-          <div class="title">Helpdesk &amp; aduan</div>
-          <div class="desc">Layanan pengaduan dan bantuan teknis untuk kendala perangkat maupun sistem.</div>
+          <div class="title" data-en="Helpdesk &amp; complaints">Helpdesk &amp; aduan</div>
+          <div class="desc" data-en="Complaint and technical support services for device or system issues.">Layanan pengaduan dan bantuan teknis untuk kendala perangkat maupun sistem.</div>
         </div>
 
         <div class="layanan-card">
           <div class="icon">
             <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.2 3.4 9.9 8 11 4.6-1.1 8-5.8 8-11V5l-8-3z"/></svg>
           </div>
-          <div class="title">Keamanan informasi</div>
-          <div class="desc">Perlindungan data dan sistem dari ancaman siber sesuai standar keamanan.</div>
+          <div class="title" data-en="Information security">Keamanan informasi</div>
+          <div class="desc" data-en="Protection of data and systems from cyber threats according to security standards.">Perlindungan data dan sistem dari ancaman siber sesuai standar keamanan.</div>
         </div>
 
         <div class="layanan-card">
           <div class="icon">
             <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
           </div>
-          <div class="title">Data center &amp; cloud</div>
-          <div class="desc">Penyediaan infrastruktur penyimpanan data yang aman dan andal.</div>
+          <div class="title" data-en="Data center &amp; cloud">Data center &amp; cloud</div>
+          <div class="desc" data-en="Providing secure and reliable data storage infrastructure.">Penyediaan infrastruktur penyimpanan data yang aman dan andal.</div>
         </div>
 
         <div class="layanan-card">
           <div class="icon">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </div>
-          <div class="title">Pengelolaan website</div>
-          <div class="desc">Pemeliharaan dan pembaruan portal resmi serta subdomain unit kerja.</div>
+          <div class="title" data-en="Website management">Pengelolaan website</div>
+          <div class="desc" data-en="Maintenance and updates of the official portal and work unit subdomains.">Pemeliharaan dan pembaruan portal resmi serta subdomain unit kerja.</div>
         </div>
       </div>
     </div>
@@ -2290,7 +2331,7 @@
   {{-- ================= SAMBUTAN PIMPINAN ================= --}}
   <section id="sambutan" class="sambutan">
     <div class="sambutan-inner">
-      <div class="eyebrow">SAMBUTAN PIMPINAN</div>
+      <div class="eyebrow" data-en="LEADERSHIP MESSAGE">SAMBUTAN PIMPINAN</div>
 
       <div class="sambutan-card">
                 <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
@@ -2303,7 +2344,7 @@
         <div class="sambutan-content">
           <div class="quote-mark"><span></span><span></span></div>
 
-          <div class="eyebrow">SELAMAT DATANG</div>
+          <div class="eyebrow" data-en="WELCOME">SELAMAT DATANG</div>
           <h2>{{ $leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik' }}</h2>
           <p class="desc">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
 
@@ -2320,10 +2361,10 @@
 
       <div class="berita-head">
         <div>
-          <div class="eyebrow">KABAR TERBARU</div>
-          <h2>Berita &amp; kegiatan</h2>
+          <div class="eyebrow" data-en="LATEST NEWS">KABAR TERBARU</div>
+          <h2 data-en="News &amp; activities">Berita &amp; kegiatan</h2>
         </div>
-        <a href="{{ route('informasi') }}" class="berita-link">SEMUA BERITA <span>→</span></a>
+        <a href="{{ route('informasi') }}" class="berita-link"><span data-en="ALL NEWS">SEMUA BERITA</span> <span>→</span></a>
       </div>
 
       <div class="berita-grid">
@@ -2338,9 +2379,9 @@
               <div class="meta">
                 <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $featuredNews->published_at?->format('d M Y') }}</span>
                 <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {{ $featuredNews->author }}</span>
-                <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $featuredNews->reading_minutes }} menit baca</span>
+                <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $featuredNews->reading_minutes }} <span data-en="min read">menit baca</span></span>
               </div>
-              <a href="{{ route('berita.show', $featuredNews) }}" class="read-more">BACA SELENGKAPNYA</a>
+              <a href="{{ route('berita.show', $featuredNews) }}" class="read-more" data-en="READ MORE">BACA SELENGKAPNYA</a>
             @endif
           </div>
         </div>
@@ -2359,7 +2400,7 @@
               </div>
             </a>
           @empty
-            <p style="color:#8a97a0;font-size:13.5px;">Belum ada berita lain.</p>
+            <p style="color:#8a97a0;font-size:13.5px;" data-en="No other news yet.">Belum ada berita lain.</p>
           @endforelse
         </div>
         </div>
@@ -2370,8 +2411,8 @@
   <section id="agenda" class="agenda">
     <div class="agenda-inner">
 
-      <div class="eyebrow">JADWAL</div>
-      <h2>Agenda kegiatan</h2>
+      <div class="eyebrow" data-en="SCHEDULE">JADWAL</div>
+      <h2 data-en="Activity agenda">Agenda kegiatan</h2>
 
       <div class="agenda-grid">
 
@@ -2382,12 +2423,12 @@
             <div class="agenda-cal-nav">
               <button aria-label="Bulan sebelumnya">‹</button>
               <button aria-label="Bulan berikutnya">›</button>
-              <button class="today-btn">Hari Ini</button>
+              <button class="today-btn" data-en="Today">Hari Ini</button>
             </div>
           </div>
 
           <div class="agenda-cal-daynames">
-            <span>Senin</span><span>Selasa</span><span>Rabu</span><span>Kamis</span><span>Jumat</span><span>Sabtu</span><span>Minggu</span>
+            <span data-en="Mon">Senin</span><span data-en="Tue">Selasa</span><span data-en="Wed">Rabu</span><span data-en="Thu">Kamis</span><span data-en="Fri">Jumat</span><span data-en="Sat">Sabtu</span><span data-en="Sun">Minggu</span>
           </div>
 
           <div class="agenda-cal-days">
@@ -2401,16 +2442,16 @@
             @endforeach
           </div>
           <div class="agenda-legend">
-            <span><i class="c1"></i>Tujuan Agenda 1</span>
-            <span><i class="c2"></i>Tujuan Agenda 2</span>
-            <span><i class="c3"></i>Tujuan Agenda 3</span>
+            <span><i class="c1"></i><span data-en="Agenda Purpose 1">Tujuan Agenda 1</span></span>
+            <span><i class="c2"></i><span data-en="Agenda Purpose 2">Tujuan Agenda 2</span></span>
+            <span><i class="c3"></i><span data-en="Agenda Purpose 3">Tujuan Agenda 3</span></span>
           </div>
         </div>
 
         {{-- Panel Hari Ini --}}
         <div class="agenda-today">
           <div class="agenda-today-head">
-              <div class="label">Hari Ini</div>
+              <div class="label" data-en="Today">Hari Ini</div>
               <div class="date">{{ now()->format('d M Y') }}</div>
             </div>
 
@@ -2430,8 +2471,29 @@
                 </div>
               </div>
             @empty
-              <div class="agenda-today-empty">Tidak ada agenda hari ini</div>
+              <div class="agenda-today-empty" data-en="No agenda today">Tidak ada agenda hari ini</div>
             @endforelse
+
+            @if($upcomingEvents->isNotEmpty())
+              <div class="agenda-upcoming-head" data-en="Upcoming Agenda">Agenda Berikutnya</div>
+              @foreach($upcomingEvents as $event)
+                <div class="agenda-event upcoming">
+                  <div class="agenda-event-top">
+                    <span class="bullet"></span>
+                    <div class="title">{{ $event->title }}</div>
+                  </div>
+                  <div class="agenda-event-meta">
+                    <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $event->event_date->format('d M Y') }}</span>
+                    @if($event->event_time)
+                      <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ \Carbon\Carbon::parse($event->event_time)->format('H.i') }} WIB</span>
+                    @endif
+                    @if($event->location)
+                      <span><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> {{ $event->location }}</span>
+                    @endif
+                  </div>
+                </div>
+              @endforeach
+            @endif
         </div>
 
       </div>
@@ -2444,10 +2506,10 @@
 
     <div class="galeri-head">
       <div>
-        <div class="eyebrow">DOKUMENTASI</div>
-        <h2>Galeri kegiatan</h2>
+        <div class="eyebrow" data-en="DOCUMENTATION">DOKUMENTASI</div>
+        <h2 data-en="Activity gallery">Galeri kegiatan</h2>
       </div>
-      <a href="{{ route('galeri') }}" class="galeri-link">LIHAT SEMUA GALERI <span>→</span></a>
+      <a href="{{ route('galeri') }}" class="galeri-link"><span data-en="VIEW ALL GALLERY">LIHAT SEMUA GALERI</span> <span>→</span></a>
     </div>
 
 
@@ -2457,7 +2519,7 @@
           <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
         </div>
       @empty
-        <p style="color:#8a97a0;">Belum ada foto galeri.</p>
+        <p style="color:#8a97a0;" data-en="No gallery photos yet.">Belum ada foto galeri.</p>
       @endforelse
     </div>
   </div>
@@ -2469,18 +2531,18 @@
 
     {{-- Kolom kiri: Layanan populer --}}
     <div class="akses-col">
-      <div class="eyebrow">AKSES CEPAT</div>
+      <div class="eyebrow" data-en="QUICK ACCESS">AKSES CEPAT</div>
       <h2>
         <span class="head-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
-        Layanan populer
+        <span data-en="Popular services">Layanan populer</span>
       </h2>
 
       <div class="akses-list">
         <div class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg></div>
           <div class="akses-item-body">
-            <div class="title">Ajukan tiket bantuan</div>
-            <div class="desc">Laporkan kendala teknis Anda</div>
+            <div class="title" data-en="Submit a help ticket">Ajukan tiket bantuan</div>
+            <div class="desc" data-en="Report your technical issue">Laporkan kendala teknis Anda</div>
           </div>
           <div class="akses-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
         </div>
@@ -2488,8 +2550,8 @@
         <div class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.5 12.5 19 4"/><path d="M17 6l2 2"/><path d="M14 9l2 2"/></svg></div>
           <div class="akses-item-body">
-            <div class="title">Reset kata sandi</div>
-            <div class="desc">Pulihkan akses akun Anda</div>
+            <div class="title" data-en="Reset password">Reset kata sandi</div>
+            <div class="desc" data-en="Recover access to your account">Pulihkan akses akun Anda</div>
           </div>
           <div class="akses-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
         </div>
@@ -2497,8 +2559,8 @@
         <div class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></div>
           <div class="akses-item-body">
-            <div class="title">Permintaan email lembaga</div>
-            <div class="desc">Buat akun email resmi</div>
+            <div class="title" data-en="Institutional email request">Permintaan email lembaga</div>
+            <div class="desc" data-en="Create an official email account">Buat akun email resmi</div>
           </div>
           <div class="akses-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
         </div>
@@ -2506,8 +2568,8 @@
         <div class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div>
           <div class="akses-item-body">
-            <div class="title">Akses jaringan &amp; WiFi</div>
-            <div class="desc">Daftarkan perangkat ke jaringan</div>
+            <div class="title" data-en="Network &amp; WiFi access">Akses jaringan &amp; WiFi</div>
+            <div class="desc" data-en="Register a device on the network">Daftarkan perangkat ke jaringan</div>
           </div>
           <div class="akses-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
         </div>
@@ -2569,13 +2631,13 @@
 <section class="cta-bantuan">
   <div class="cta-bantuan-top">
     <div>
-      <div class="eyebrow">BUTUH BANTUAN TEKNIS?</div>
-      <h2>Tim kami siap membantu <br> kendala teknis Anda, <span class="accent">kapan saja.</span></h2>
+      <div class="eyebrow" data-en="NEED TECHNICAL HELP?">BUTUH BANTUAN TEKNIS?</div>
+      <h2 data-en-html="Our team is ready to help <br> with your technical issues, <span class=&quot;accent&quot;>anytime.</span>">Tim kami siap membantu <br> kendala teknis Anda, <span class="accent">kapan saja.</span></h2>
     </div>
 
     <button class="cta-btn">
       <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
-      LIHAT STATUS LAYANAN
+      <span data-en="VIEW SERVICE STATUS">LIHAT STATUS LAYANAN</span>
     </button>
   </div>
 
@@ -2589,13 +2651,9 @@
     {{-- Kolom brand --}}
     <div class="footer-col">
       <div class="footer-brand">
-          <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-        <div class="footer-brand-text">
-          <div class="name">PUSTEKINFO</div>
-          <div class="sub">Sekretariat Jenderal DPR RI</div>
-        </div>
+        <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
       </div>
-      <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
+      <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
 
       <div class="footer-social">
         <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
@@ -2606,21 +2664,21 @@
 
     {{-- Kolom tautan --}}
     <div class="footer-col">
-      <span class="head">TAUTAN</span>
+      <span class="head" data-en="LINKS">TAUTAN</span>
       <div class="footer-links">
-        <a href=""><span class="chev">›</span> Sistem Akademik</a>
-        <a href="#"><span class="chev">›</span> Sistem Kepegawaian</a>
-        <a href="#"><span class="chev">›</span> Sistem Keuangan</a>
+        <a href=""><span class="chev">›</span> <span data-en="Academic System">Sistem Akademik</span></a>
+        <a href="#"><span class="chev">›</span> <span data-en="HR System">Sistem Kepegawaian</span></a>
+        <a href="#"><span class="chev">›</span> <span data-en="Finance System">Sistem Keuangan</span></a>
         <a href="#"><span class="chev">›</span> PPID</a>
       </div>
     </div>
 
     {{-- Kolom bantuan --}}
     <div class="footer-col">
-      <span class="head">BANTUAN</span>
+      <span class="head" data-en="HELP">BANTUAN</span>
       <div class="footer-links">
         <a href="#"><span class="chev">›</span> Helpdesk</a>
-        <a href="#"><span class="chev">›</span> Pengaduan</a>
+        <a href="#"><span class="chev">›</span> <span data-en="Complaints">Pengaduan</span></a>
         <a href="#"><span class="chev">›</span> FAQ</a>
         <a href="#"><span class="chev">›</span> Whistleblowing</a>
       </div>
@@ -2628,7 +2686,7 @@
 
     {{-- Kolom kontak --}}
     <div class="footer-col">
-      <span class="head">KONTAK</span>
+      <span class="head" data-en="CONTACT">KONTAK</span>
       <div class="footer-contact">
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -2648,8 +2706,8 @@
   </div>
 
   <div class="footer-inner footer-bottom">
-    <p>© 2026 Pustekinfo. Seluruh hak dilindungi.</p>
-    <p>Referensi mockup — bukan situs resmi</p>
+    <p data-en="© 2026 Pustekinfo. All rights reserved.">© 2026 Pustekinfo. Seluruh hak dilindungi.</p>
+    <p data-en="Mockup reference — not an official site">Referensi mockup — bukan situs resmi</p>
   </div>
 </footer>
 
@@ -2678,9 +2736,7 @@ const themeToggle = document.getElementById("themeToggle");
 
 function applyTheme(isDark) {
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-    themeToggle.classList.toggle("active", isDark);
     themeToggle.setAttribute("aria-pressed", String(isDark));
-    themeToggle.textContent = isDark ? "◑" : "◐";
 }
 
 applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
@@ -2689,7 +2745,42 @@ themeToggle.addEventListener("click", () => {
     const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
     localStorage.setItem("theme", isDark ? "dark" : "light");
     applyTheme(isDark);
+    themeToggle.classList.add("pulse");
+    setTimeout(() => themeToggle.classList.remove("pulse"), 450);
 });
+
+// ---- Ganti bahasa (ID/EN) ----
+const langToggle = document.getElementById("langToggle");
+
+function applyLang(lang) {
+    document.documentElement.setAttribute("lang", lang);
+    document.querySelectorAll("[data-en]").forEach((el) => {
+        if (el.dataset.idText === undefined) el.dataset.idText = el.textContent;
+        el.textContent = lang === "en" ? el.dataset.en : el.dataset.idText;
+    });
+    document.querySelectorAll("[data-en-html]").forEach((el) => {
+        if (el.dataset.idHtml === undefined) el.dataset.idHtml = el.innerHTML;
+        el.innerHTML = lang === "en" ? el.dataset.enHtml : el.dataset.idHtml;
+    });
+    document.querySelectorAll("[data-en-placeholder]").forEach((el) => {
+        if (el.dataset.idPlaceholder === undefined) el.dataset.idPlaceholder = el.placeholder;
+        el.placeholder = lang === "en" ? el.dataset.enPlaceholder : el.dataset.idPlaceholder;
+    });
+    if (langToggle) {
+        langToggle.textContent = lang === "en" ? "ID" : "EN";
+        langToggle.setAttribute("aria-pressed", String(lang === "en"));
+    }
+}
+
+applyLang(localStorage.getItem("lang") || "id");
+
+if (langToggle) {
+    langToggle.addEventListener("click", () => {
+        const next = document.documentElement.getAttribute("lang") === "en" ? "id" : "en";
+        localStorage.setItem("lang", next);
+        applyLang(next);
+    });
+}
 
 // Tutup menu kalau salah satu link diklik
 navLinks.querySelectorAll("a").forEach(link => {

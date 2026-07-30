@@ -2,7 +2,6 @@
 @extends('admin.layout')
 @section('title', 'Dashboard')
 @section('content')
-
 <div class="stat-grid">
   <div class="stat-card">
     <span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 4h13a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H4z"/><path d="M4 4v16a2 2 0 0 0 2 2h13"/><line x1="8" y1="9" x2="15" y2="9"/><line x1="8" y1="13" x2="15" y2="13"/></svg></span>

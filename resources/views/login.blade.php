@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masuk - Pustekinfo DPR RI</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}?v=2">
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font Awesome untuk Ikon -->

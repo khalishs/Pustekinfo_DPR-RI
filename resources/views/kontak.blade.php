@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
 <style>
   :root{
     --navy:#12242E;
@@ -56,7 +56,6 @@
   ul{list-style:none;}
 
   h1, h2, h3,
-  .footer-brand-text .name,
   .kontak-info h2,
   .lokasi h2,
   .kontak-form-card h3,
@@ -183,13 +182,37 @@
   .caret{font-size:10px;opacity:.6;}
 
   .nav-actions{display:flex;align-items:center;gap:12px;}
-  .icon-btn{
-    width:36px;height:36px;border-radius:50%;
-    border:1px solid #dfe4e7;
+
+  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  .theme-fab{
+    position:fixed;left:24px;bottom:24px;z-index:9999;
+    width:52px;height:52px;border-radius:50%;
+    border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
     display:flex;align-items:center;justify-content:center;
-    font-size:14px;color:#5b6b73;background:var(--white);
-    cursor:pointer;
+    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
+    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
   }
+  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
+  .theme-fab:active{transform:scale(.92);}
+  @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
+  .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
+  .theme-fab-icon{
+    position:absolute;width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .theme-fab-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .theme-fab .icon-moon{opacity:1;transform:rotate(0) scale(1);}
+  .theme-fab .icon-sun{opacity:0;transform:rotate(90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .theme-fab:hover{border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
+  @media (max-width:900px){
+    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
+    .theme-fab-icon{width:19px;height:19px;}
+  }
+
   .lang-btn{
     padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;
     font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);
@@ -255,7 +278,6 @@
     .burger.open span:nth-child(2){opacity:0;}
     .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
     .nav-actions{gap:6px;flex-shrink:0;}
-    .icon-btn{width:30px;height:30px;font-size:12px;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
     .profile-box{padding:4px 10px 4px 4px;gap:6px;}
@@ -338,14 +360,25 @@
   /* ---------- POLA BATIK (sama seperti halaman lain) ---------- */
   .konten-batik{
     position:relative;
+    z-index:0;
     background-color:#14839C1A;
+  }
+  .konten-batik::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
     background-image:url('{{ asset('images/pola-batik.png') }}');
-    background-repeat:repeat-y;
+    background-repeat:no-repeat;
     background-position:center top;
     background-size:5000px auto;
+    filter:url(#batikBoostLight);
   }
+  [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikAlphaBoost);}
   @media (max-width:900px){
-    .konten-batik{background-size:3000px auto;}
+    .konten-batik::before{background-size:3000px auto;}
   }
 
   /* ---------- Kontak: Informasi & Form ---------- */
@@ -629,10 +662,21 @@
 
   /* ---------- Footer (sama seperti beranda) ---------- */
   .footer{
+    position:relative;
     background:var(--navy);
     padding:64px 100px 0;
+    overflow:hidden;
+  }
+  /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
+  .footer::before{
+    content:"";position:absolute;left:-120px;top:0;bottom:-80px;width:700px;
+    background-image:url('{{ asset('images/motif-batik.png') }}');
+    background-repeat:no-repeat;background-position:left center;background-size:550px auto;
+    filter:brightness(0) invert(1);opacity:.35;pointer-events:none;z-index:0;
   }
   .footer-inner{
+    position:relative;
+    z-index:1;
     max-width:1240px;
     margin:0 auto;
     display:grid;
@@ -643,11 +687,10 @@
 
   .footer-brand{display:flex;align-items:center;gap:12px;}
   .footer-brand-logo{
-    width:50px;
+    width:190px;
+    height:auto;
     object-fit:contain;
   }
-  .footer-brand-text .name{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
-  .footer-brand-text .sub{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:10px;letter-spacing:.08em;color:var(--white);font-weight:600;}
 
   .footer-desc{
     margin-top:18px;
@@ -757,8 +800,9 @@
 
   @media (max-width:900px){
     .footer{padding:50px 20px 0;}
+    .footer::before{width:150px;background-size:150px auto;opacity:.25;}
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
-    .footer-brand-text .sub{white-space:normal;}
+    .footer-brand-logo{width:150px;}
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
   }
   @media (max-width:560px){
@@ -778,7 +822,6 @@
   [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
   [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
 
-  [data-theme="dark"] .icon-btn,
   [data-theme="dark"] .lang-btn,
   [data-theme="dark"] .profile-box,
   [data-theme="dark"] .logout-btn,
@@ -787,8 +830,6 @@
   [data-theme="dark"] .agenda-cal-nav button{
     background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
   }
-  [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
-  [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
   [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
@@ -862,8 +903,6 @@
     background:linear-gradient(10deg, #057888 0%, #071119 55%, #071119 100%);
   }
   [data-theme="dark"] .footer{background:#071119;}
-  [data-theme="dark"] .footer-brand-text .name,
-  [data-theme="dark"] .footer-brand-text .sub{color:#eaf3f5;}
   [data-theme="dark"] .footer-desc{color:rgba(255,255,255,.5);}
   [data-theme="dark"] .footer-social a{
     border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.65);
@@ -896,7 +935,23 @@
         <feFuncA type="linear" slope="4.5" intercept="0"/>
       </feComponentTransfer>
     </filter>
+    <filter id="batikBoostLight">
+      <feColorMatrix type="saturate" values="2.2"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="2.6" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
   </svg>
+
+  {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
+  <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+    <span class="theme-fab-icon icon-moon">
+      <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </span>
+    <span class="theme-fab-icon icon-sun">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </span>
+  </button>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
@@ -905,17 +960,16 @@
     </div>
 
     <ul class="nav-links">
-      <li><a href="{{ route('home') }}">Beranda</a></li>
-      <li><a href="{{ route('profil') }}">Profil </a></li>
-      <li><a href="{{ route('layanan') }}">Layanan</a></li>
-      <li><a href="{{ route('informasi') }}">Informasi</a></li>
-      <li><a href="{{ route('galeri') }}">Galeri</a></li>
-      <li class="active"><a href="{{ route('kontak') }}">Kontak</a></li>
+      <li><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
+      <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
+      <li><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
+      <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
+      <li><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
+      <li class="active"><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
-      <button class="lang-btn">EN</button>
+      <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
@@ -925,9 +979,9 @@
   {{-- ================= HERO ================= --}}
   <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
-      <p class="breadcrumb">Beranda / <span>Kontak</span></p>
-      <h1>Kami siap <span class="accent">membantu Anda</span></h1>
-      <p>Hubungi kami untuk pertanyaan seputar layanan, kerja sama, atau bantuan teknis.</p>
+      <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Contact&lt;/span&gt;">Beranda / <span>Kontak</span></p>
+      <h1 data-en-html="We're ready to <span class=&quot;accent&quot;>help you</span>">Kami siap <span class="accent">membantu Anda</span></h1>
+      <p data-en="Contact us for questions about services, partnerships, or technical support.">Hubungi kami untuk pertanyaan seputar layanan, kerja sama, atau bantuan teknis.</p>
     </div>
   </header>
 
@@ -939,8 +993,8 @@
 
       {{-- Kolom kiri: Informasi kontak --}}
       <div class="kontak-info">
-        <div class="eyebrow">INFORMASI KONTAK</div>
-        <h2>Ada pertanyaan?</h2>
+        <div class="eyebrow" data-en="CONTACT INFORMATION">INFORMASI KONTAK</div>
+        <h2 data-en="Have a question?">Ada pertanyaan?</h2>
 
         <div class="kontak-info-list">
           <div class="kontak-info-item">
@@ -948,7 +1002,7 @@
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
           <div class="kontak-info-body">
-            <div class="title">Alamat</div>
+            <div class="title" data-en="Address">Alamat</div>
             <div class="desc">{{ $setting->address ?? 'Alamat belum diatur' }}</div>
           </div>
         </div>
@@ -958,7 +1012,7 @@
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </div>
           <div class="kontak-info-body">
-            <div class="title">Telepon</div>
+            <div class="title" data-en="Phone">Telepon</div>
             <div class="desc">{{ $setting->phone ?? '-' }}</div>
           </div>
         </div>
@@ -978,8 +1032,8 @@
 
       {{-- Kolom kanan: Form kirim pesan --}}
       <div class="kontak-form-card">
-        <h3>Kirim pesan</h3>
-        <p>Isi formulir berikut, tim kami akan merespons dalam 1&times;24 jam kerja.</p>
+        <h3 data-en="Send a message">Kirim pesan</h3>
+        <p data-en="Fill out the form below, our team will respond within 1&times;24 working hours.">Isi formulir berikut, tim kami akan merespons dalam 1&times;24 jam kerja.</p>
 
         @if(session('status'))
           <div style="margin-bottom:20px;padding:14px 18px;border-radius:10px;background:#e6f7ee;color:#1f9d7c;font-size:13.5px;font-weight:600;">
@@ -991,8 +1045,8 @@
 
           <div class="form-row">
             <div class="form-field">
-              <label for="nama">Nama lengkap</label>
-              <input type="text" id="nama" name="nama" placeholder="Nama Anda" required>
+              <label for="nama" data-en="Full name">Nama lengkap</label>
+              <input type="text" id="nama" name="nama" placeholder="Nama Anda" data-en-placeholder="Your name" required>
             </div>
             <div class="form-field">
               <label for="email">Email</label>
@@ -1002,33 +1056,33 @@
 
           <div class="form-row">
             <div class="form-field">
-              <label for="instansi">Unit kerja / Instansi</label>
-              <input type="text" id="instansi" name="instansi" placeholder="Opsional">
+              <label for="instansi" data-en="Work unit / Institution">Unit kerja / Instansi</label>
+              <input type="text" id="instansi" name="instansi" placeholder="Opsional" data-en-placeholder="Optional">
             </div>
             <div class="form-field">
-              <label for="kategori">Kategori</label>
+              <label for="kategori" data-en="Category">Kategori</label>
               <select id="kategori" name="kategori">
-                <option value="umum">Pertanyaan umum</option>
-                <option value="teknis">Bantuan teknis</option>
-                <option value="kerjasama">Kerja sama</option>
-                <option value="pengaduan">Pengaduan</option>
+                <option value="umum" data-en="General question">Pertanyaan umum</option>
+                <option value="teknis" data-en="Technical support">Bantuan teknis</option>
+                <option value="kerjasama" data-en="Partnership">Kerja sama</option>
+                <option value="pengaduan" data-en="Complaint">Pengaduan</option>
               </select>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-field full">
-              <label for="pesan">Pesan</label>
-              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." required></textarea>
+              <label for="pesan" data-en="Message">Pesan</label>
+              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." required></textarea>
             </div>
           </div>
 
           <div class="kontak-form-footer">
             <button type="submit" class="btn-kirim">
               <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              KIRIM PESAN
+              <span data-en="SEND MESSAGE">KIRIM PESAN</span>
             </button>
-            <span class="note">Data Anda akan kami jaga kerahasiaannya.</span>
+            <span class="note" data-en="Your data will be kept confidential.">Data Anda akan kami jaga kerahasiaannya.</span>
           </div>
         </form>
       </div>
@@ -1039,8 +1093,8 @@
   {{-- ================= LOKASI ================= --}}
   <section class="lokasi">
     <div class="lokasi-inner">
-      <div class="eyebrow">LOKASI</div>
-      <h2>Temukan kami</h2>
+      <div class="eyebrow" data-en="LOCATION">LOKASI</div>
+      <h2 data-en="Find us">Temukan kami</h2>
 
       <div class="lokasi-map">
         {{-- Ganti nilai pb= di bawah dengan link embed dari Google Maps
@@ -1070,13 +1124,9 @@
 
       <div class="footer-col">
         <div class="footer-brand">
-            <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-          <div class="footer-brand-text">
-            <div class="name">PUSTEKINFO</div>
-            <div class="sub">Sekretariat Jenderal DPR RI</div>
-          </div>
+          <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
         </div>
-        <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
+        <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
 
         <div class="footer-social">
           <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
@@ -1086,27 +1136,27 @@
       </div>
 
       <div class="footer-col">
-        <span class="head">TAUTAN</span>
+        <span class="head" data-en="LINKS">TAUTAN</span>
         <div class="footer-links">
-          <a href=""><span class="chev">›</span> Sistem Akademik</a>
-          <a href="#"><span class="chev">›</span> Sistem Kepegawaian</a>
-          <a href="#"><span class="chev">›</span> Sistem Keuangan</a>
+          <a href=""><span class="chev">›</span> <span data-en="Academic System">Sistem Akademik</span></a>
+          <a href="#"><span class="chev">›</span> <span data-en="HR System">Sistem Kepegawaian</span></a>
+          <a href="#"><span class="chev">›</span> <span data-en="Finance System">Sistem Keuangan</span></a>
           <a href="#"><span class="chev">›</span> PPID</a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">BANTUAN</span>
+        <span class="head" data-en="HELP">BANTUAN</span>
         <div class="footer-links">
           <a href="#"><span class="chev">›</span> Helpdesk</a>
-          <a href="#"><span class="chev">›</span> Pengaduan</a>
+          <a href="#"><span class="chev">›</span> <span data-en="Complaints">Pengaduan</span></a>
           <a href="#"><span class="chev">›</span> FAQ</a>
           <a href="#"><span class="chev">›</span> Whistleblowing</a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">KONTAK</span>
+        <span class="head" data-en="CONTACT">KONTAK</span>
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -1126,8 +1176,8 @@
     </div>
 
     <div class="footer-inner footer-bottom">
-      <p>© 2026 Pustekinfo. Seluruh hak dilindungi.</p>
-      <p>Referensi mockup — bukan situs resmi</p>
+      <p data-en="© 2026 Pustekinfo. All rights reserved.">© 2026 Pustekinfo. Seluruh hak dilindungi.</p>
+      <p data-en="Mockup reference — not an official site">Referensi mockup — bukan situs resmi</p>
     </div>
   </footer>
 
@@ -1138,9 +1188,7 @@
 
     function applyTheme(isDark) {
         document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-        themeToggle.classList.toggle("active", isDark);
         themeToggle.setAttribute("aria-pressed", String(isDark));
-        themeToggle.textContent = isDark ? "◑" : "◐";
     }
 
     applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
@@ -1149,7 +1197,42 @@
         const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
         localStorage.setItem("theme", isDark ? "dark" : "light");
         applyTheme(isDark);
+        themeToggle.classList.add("pulse");
+        setTimeout(() => themeToggle.classList.remove("pulse"), 450);
     });
+
+    // ---- Ganti bahasa (ID/EN) ----
+    const langToggle = document.getElementById("langToggle");
+
+    function applyLang(lang) {
+        document.documentElement.setAttribute("lang", lang);
+        document.querySelectorAll("[data-en]").forEach((el) => {
+            if (el.dataset.idText === undefined) el.dataset.idText = el.textContent;
+            el.textContent = lang === "en" ? el.dataset.en : el.dataset.idText;
+        });
+        document.querySelectorAll("[data-en-html]").forEach((el) => {
+            if (el.dataset.idHtml === undefined) el.dataset.idHtml = el.innerHTML;
+            el.innerHTML = lang === "en" ? el.dataset.enHtml : el.dataset.idHtml;
+        });
+        document.querySelectorAll("[data-en-placeholder]").forEach((el) => {
+            if (el.dataset.idPlaceholder === undefined) el.dataset.idPlaceholder = el.placeholder;
+            el.placeholder = lang === "en" ? el.dataset.enPlaceholder : el.dataset.idPlaceholder;
+        });
+        if (langToggle) {
+            langToggle.textContent = lang === "en" ? "ID" : "EN";
+            langToggle.setAttribute("aria-pressed", String(lang === "en"));
+        }
+    }
+
+    applyLang(localStorage.getItem("lang") || "id");
+
+    if (langToggle) {
+        langToggle.addEventListener("click", () => {
+            const next = document.documentElement.getAttribute("lang") === "en" ? "id" : "en";
+            localStorage.setItem("lang", next);
+            applyLang(next);
+        });
+    }
 
     // Dropdown Profil (mobile)
     const profilDropdown = document.getElementById("profilDropdown");
