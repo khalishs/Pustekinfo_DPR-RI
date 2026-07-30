@@ -21,6 +21,32 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+## Instalasi & Setup Database
+
+Setiap kali clone repo ini (atau setelah merge ke `main`), database **tidak ikut ter-commit** (file `database/database.sqlite` maupun kredensial di `.env` sengaja di-ignore Git karena berbeda-beda tiap environment). Yang ikut ter-commit adalah **migration** dan **seeder**, sehingga siapa pun yang clone bisa membangun ulang skema + data dasar (akun pegawai, statistik, layanan) secara otomatis.
+
+Cara tercepat, setelah clone:
+
+```bash
+composer run setup
+```
+
+Command di atas otomatis akan:
+1. `composer install`
+2. Menyalin `.env.example` → `.env` (kalau belum ada)
+3. Generate `APP_KEY` (kalau belum ada)
+4. Membuat file `database/database.sqlite` (kalau pakai SQLite dan file belum ada)
+5. Menjalankan `php artisan migrate`
+6. Menjalankan `php artisan db:seed`
+7. `npm install && npm run build`
+
+Setelah itu jalankan `composer run dev` untuk start server lokal.
+
+**Catatan:**
+- Default `.env.example` memakai `DB_CONNECTION=sqlite`. Kalau mau pakai MySQL, edit `.env` sesuai kredensial lokal (`DB_CONNECTION=mysql`, `DB_HOST`, `DB_DATABASE`, dst) sebelum menjalankan `composer run setup`, atau jalankan ulang `php artisan migrate --seed` setelah mengganti konfigurasi.
+- Seeder (`DatabaseSeeder`, `StatisticSeeder`, `ServiceSeeder`) memakai `updateOrCreate`, jadi aman dijalankan berkali-kali (tidak akan duplikat data).
+- Konten yang diisi manual lewat admin panel (berita, galeri, agenda, kepemimpinan, dll) **tidak** dibawa oleh seeder — itu memang data spesifik tiap environment/database, bukan bagian dari kode.
+
 ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
