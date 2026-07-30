@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk - PusTekInfo DPR RI</title>
+    <title>Masuk - Pustekinfo DPR RI</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}?v=2">
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font Awesome untuk Ikon -->
@@ -37,6 +38,10 @@
         
         .back{
             margin-top: -10px;
+        }
+
+        .text-greeting{
+            margin-bottom: 70px;
         }
         
 
@@ -138,7 +143,7 @@
         <div class="mt-16 md:mt-20 mb-auto mx-auto flex flex-col items-center text-center z-10">
             <!-- Ganti src dengan logo asli Anda -->
             <div class="logo-frame mb-4 flex items-center justify-center p-6 lg:p-8 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-                <img src="{{ asset('images/Logo.png') }}" alt="Logo PusTekInfo" class="h-20 lg:h-24 object-contain fallback-logo">
+                <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="h-20 lg:h-24 object-contain fallback-logo">
                 <!-- Fallback jika gambar tidak ada (CSS Hacking untuk demo) -->
                 <div class="w-24 h-24 flex items-center justify-center font-bold text-5xl text-teal-400 unique-logo-placeholder hidden">//</div>
             </div>
@@ -176,7 +181,7 @@
             </div>
 
             <!-- Logo & Greeting -->
-            <div class="text-center mb-8">
+            <div class="text-greeting text-center mb-8">
                 <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="h-14 sm:h-16 lg:h-20 mx-auto mb-4 object-contain mobile-logo">
                 <h3 class="text-2xl lg:text-3xl font-bold text-[#0a2f5c]">Selamat Datang</h3>
                 <p class="text-xs lg:text-sm text-gray-500 mt-1 px-2 sm:px-4 leading-relaxed mobile-text">Silakan masuk untuk melanjutkan</p>
@@ -241,13 +246,13 @@
             <!-- Helpdesk/Bantuan -->
             <div class="flex items-center justify-center space-x-2 text-xs text-gray-600 mt-4">
                 <i class="fa-solid fa-headset text-teal-600 text-base"></i>
-                <span>Butuh bantuan? Hubungi <a href="#" class="text-teal-600 font-semibold hover:underline">Helpdesk PusTekInfo</a></span>
+                <span>Butuh bantuan? Hubungi <a href="#" class="text-teal-600 font-semibold hover:underline">Helpdesk Pustekinfo</a></span>
             </div>
         </div>
 
         <!-- Footer Hak Cipta -->
         <div class="footer text-center text-xs text-gray-400 mt-8 md:mt-4">
-            &copy; {{ date('Y') }} PusTekInfo DPR RI. All rights reserved.
+            &copy; {{ date('Y') }} Pustekinfo DPR RI. All rights reserved.
         </div>
     </div>
 

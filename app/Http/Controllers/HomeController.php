@@ -9,6 +9,7 @@ use App\Models\AgendaEvent;
 use App\Models\GalleryItem;
 use App\Models\SiteSetting;
 use App\Models\HeroSlide;
+use App\Models\ProfilPhoto;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -41,11 +42,17 @@ class HomeController extends Controller
 
         return view('home', [
             'heroSlides'    => HeroSlide::where('is_active', true)->orderBy('sort_order')->get(),
+            'profilPhotos'  => ProfilPhoto::where('is_active', true)->orderBy('sort_order')->get(),
             'stats'         => Statistic::orderBy('sort_order')->get(),
             'leadership'    => Leadership::first(),
             'featuredNews'  => NewsItem::where('is_featured', true)->latest('published_at')->first(),
             'latestNews'    => NewsItem::where('is_featured', false)->latest('published_at')->take(4)->get(),
-            'todayEvents'   => AgendaEvent::whereDate('event_date', $today)->get(),
+            'todayEvents'   => AgendaEvent::whereDate('event_date', $today)->orderBy('event_time')->get(),
+            'upcomingEvents' => AgendaEvent::whereDate('event_date', '>', $today)
+                ->orderBy('event_date')
+                ->orderBy('event_time')
+                ->take(4)
+                ->get(),
             'galleries' => GalleryItem::with('category')->orderBy('sort_order')->take(8)->get(),
             'setting'       => SiteSetting::first(),
             'calendarDays'  => $calendarDays,

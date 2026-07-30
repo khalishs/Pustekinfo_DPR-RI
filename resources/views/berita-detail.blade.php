@@ -7,7 +7,7 @@
 <title>{{ $news->title }} - Pustekinfo | Pusat Teknologi Informasi DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
 <style>
   :root{
     --navy:#12242E;
@@ -24,12 +24,8 @@
     color:var(--ink);
     position:relative;
     background-color:#14839C1A;
-    background-image:url('{{ asset('images/pola-batik.png') }}');
-    background-repeat:no-repeat;
-    background-position:center top;
-    background-size:5000px auto;
   }
-  [data-theme="dark"] body::before{
+  body::before{
     content:"";
     position:absolute;
     inset:0;
@@ -39,11 +35,13 @@
     background-repeat:no-repeat;
     background-position:center top;
     background-size:5000px auto;
+    filter:url(#batikBoostLight);
+  }
+  [data-theme="dark"] body::before{
     filter:url(#batikAlphaBoost);
   }
   @media (max-width:900px){
-    body{background-size:3000px auto;}
-    [data-theme="dark"] body::before{background-size:3000px auto;}
+    body::before{background-size:3000px auto;}
   }
   @view-transition{
     navigation:auto;
@@ -52,9 +50,7 @@
   ul{list-style:none;}
   img{max-width:100%;display:block;}
 
-  h1, h2, h3, h4,
-  .brand-text .name,
-  .footer-brand-text .name {
+  h1, h2, h3, h4 {
     font-family:'Plus Jakarta Sans', system-ui, sans-serif;
   }
 
@@ -67,17 +63,48 @@
     border-bottom:1px solid #eaeaea;
     position:fixed;top:0;left:0;width:100%;z-index:9999;
   }
+  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
+    transform-origin:left center;}
+  .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
-  .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
   .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
   .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);view-transition-name:nav-underline;}
   .nav-actions{display:flex;align-items:center;gap:12px;}
-  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;display:flex;align-items:center;justify-content:center;font-size:14px;color:#5b6b73;background:var(--white);cursor:pointer;}
+
+  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  .theme-fab{
+    position:fixed;left:24px;bottom:24px;z-index:9999;
+    width:52px;height:52px;border-radius:50%;
+    border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
+    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
+  }
+  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
+  .theme-fab:active{transform:scale(.92);}
+  @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
+  .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
+  .theme-fab-icon{
+    position:absolute;width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .theme-fab-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .theme-fab .icon-moon{opacity:1;transform:rotate(0) scale(1);}
+  .theme-fab .icon-sun{opacity:0;transform:rotate(90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .theme-fab:hover{border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
+  @media (max-width:900px){
+    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
+    .theme-fab-icon{width:19px;height:19px;}
+  }
+
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;}
   .btn-login{padding:10px 22px;border-radius:20px;border:none;background:var(--navy);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;}
   .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;background:var(--white);cursor:pointer;align-items:center;}
@@ -90,9 +117,8 @@
     .nav-links{display:none;}
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .brand-text{min-width:0;}
+    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
     .nav-actions{gap:6px;flex-shrink:0;}
-    .icon-btn{width:30px;height:30px;font-size:12px;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
     .burger{display:flex;}
@@ -136,7 +162,7 @@
   .article-meta svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0;}
 
   /* ================= ARTIKEL ================= */
-  .article-wrap{max-width:760px;margin:0 auto;padding:56px 24px 90px;}
+  .article-wrap{max-width:760px; margin-top:70px; margin-bottom: 70px; margin-left:420px; padding:56px 24px 90px; background-color: rgba(255, 255, 255, 0.7); border-radius: 10px;}
   .article-image{width:100%;height:380px;object-fit:cover;border-radius:16px;margin-bottom:40px;box-shadow:0 30px 60px -30px rgba(11,34,51,.3);}
   .article-body{color:#354049;font-size:16px;line-height:1.9;font-weight:400;white-space:pre-line;}
   .article-body p{margin-bottom:18px;}
@@ -148,11 +174,17 @@
 
   /* ================= FOOTER ================= */
   .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #0b2233 55%, #0b2233 100%);}
-  .footer{background:var(--navy);padding:64px 100px 0;}
-  .footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
+  .footer{position:relative;background:var(--navy);padding:64px 100px 0;overflow:hidden;}
+  /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
+  .footer::before{
+    content:"";position:absolute;left:-120px;top:0;bottom:-80px;width:700px;
+    background-image:url('{{ asset('images/motif-batik.png') }}');
+    background-repeat:no-repeat;background-position:left center;background-size:550px auto;
+    filter:brightness(0) invert(1);opacity:.35;pointer-events:none;z-index:0;
+  }
+  .footer-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}
-  .footer-brand-text .name{font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
-  .footer-brand-text .sub{font-size:10px;letter-spacing:.08em;color:var(--white);font-weight:600;}
+  .footer-brand-logo{width:190px;height:auto;object-fit:contain;}
   .footer-desc{margin-top:18px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.75;max-width:260px;}
   .footer-social{margin-top:22px;display:flex;gap:10px;}
   .footer-social a{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:.2s ease;}
@@ -170,7 +202,9 @@
   .footer-bottom p{color:rgba(255,255,255,.45);font-size:12.5px;font-weight:500;}
   @media (max-width:900px){
     .footer{padding:50px 20px 0;}
+    .footer::before{width:150px;background-size:150px auto;opacity:.25;}
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
+    .footer-brand-logo{width:150px;}
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
     .article-image{height:220px;}
   }
@@ -181,8 +215,6 @@
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
 
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
-  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
-  [data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -191,7 +223,6 @@
   [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
   [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
 
-  [data-theme="dark"] .icon-btn,
   [data-theme="dark"] .lang-btn,
   [data-theme="dark"] .profile-box,
   [data-theme="dark"] .logout-btn,
@@ -200,8 +231,6 @@
   [data-theme="dark"] .agenda-cal-nav button{
     background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
   }
-  [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
-  [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
   [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
@@ -230,8 +259,6 @@
 
   [data-theme="dark"] .footer-divider{background:linear-gradient(10deg, #057888 0%, #0b1720 55%, #0b1720 100%);}
   [data-theme="dark"] .footer{background:#0b1720;}
-  [data-theme="dark"] .footer-brand-text .name{color:#eaf3f5;}
-  [data-theme="dark"] .footer-brand-text .sub{color:#5FC0D1;}
   [data-theme="dark"] .footer-desc{color:rgba(255,255,255,.5);}
   [data-theme="dark"] .footer-social a{border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.65);}
   [data-theme="dark"] .footer-social a:hover{background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;}
@@ -258,29 +285,41 @@
         <feFuncA type="linear" slope="4.5" intercept="0"/>
       </feComponentTransfer>
     </filter>
+    <filter id="batikBoostLight">
+      <feColorMatrix type="saturate" values="2.2"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="2.6" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
   </svg>
+
+  {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
+  <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+    <span class="theme-fab-icon icon-moon">
+      <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </span>
+    <span class="theme-fab-icon icon-sun">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </span>
+  </button>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-      <div class="brand-text">
-        <div class="name">PUSTEKINFO</div>
-        <div class="sub">Sekretariat Jendral DPR RI</div>
-      </div>
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
     </div>
 
     <ul class="nav-links">
-      <li><a href="{{ route('home') }}">Beranda</a></li>
-      <li><a href="{{ route('profil') }}">Profil</a></li>
-      <li><a href="{{ route('layanan') }}">Layanan</a></li>
-      <li class="active"><a href="{{ route('informasi') }}">Informasi</a></li>
-      <li><a href="{{ route('galeri') }}">Galeri</a></li>
-      <li><a href="{{ route('kontak') }}">Kontak</a></li>
+      <li><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
+      <li><a href="{{ route('profil') }}" data-en="Profile">Profil</a></li>
+      <li><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
+      <li class="active"><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
+      <li><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
+      <li><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
+      <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
@@ -290,7 +329,7 @@
   {{-- ================= HERO ================= --}}
   <header class="hero-profil">
     <div class="hero-profil-inner">
-      <p class="breadcrumb"><a href="{{ route('home') }}">Beranda</a> / <a href="{{ route('informasi') }}">Informasi</a> / <span>Berita</span></p>
+      <p class="breadcrumb"><a href="{{ route('home') }}" data-en="Home">Beranda</a> / <a href="{{ route('informasi') }}" data-en="Information">Informasi</a> / <span data-en="News">Berita</span></p>
       <span class="article-badge">{{ $news->category }}</span>
       <h1>{{ $news->title }}</h1>
       <div class="article-meta">
@@ -299,7 +338,7 @@
           <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {{ $news->author }}</span>
         @endif
         @if($news->reading_minutes)
-          <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $news->reading_minutes }} menit baca</span>
+          <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $news->reading_minutes }} <span data-en="min read">menit baca</span></span>
         @endif
       </div>
     </div>
@@ -309,7 +348,7 @@
   <div class="article-wrap">
     <a href="{{ route('informasi') }}" class="article-back">
       <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      Kembali ke Informasi
+      <span data-en="Back to Information">Kembali ke Informasi</span>
     </a>
 
     @if($news->image)
@@ -326,13 +365,9 @@
     <div class="footer-inner">
       <div class="footer-col">
         <div class="footer-brand">
-          <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-          <div class="footer-brand-text">
-            <div class="name">PUSTEKINFO</div>
-            <div class="sub">Sekretariat Jendral DPR RI</div>
-          </div>
+          <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
         </div>
-        <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
+        <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
         <div class="footer-social">
           <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
           <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
@@ -341,24 +376,24 @@
       </div>
 
       <div class="footer-col">
-        <span class="head">TAUTAN</span>
+        <span class="head" data-en="LINKS">TAUTAN</span>
         <div class="footer-links">
-          <a href="{{ route('profil') }}"><span class="chev">›</span> Profil</a>
-          <a href="{{ route('layanan') }}"><span class="chev">›</span> Layanan</a>
-          <a href="{{ route('informasi') }}"><span class="chev">›</span> Informasi</a>
-          <a href="{{ route('galeri') }}"><span class="chev">›</span> Galeri</a>
+          <a href="{{ route('profil') }}"><span class="chev">›</span> <span data-en="Profile">Profil</span></a>
+          <a href="{{ route('layanan') }}"><span class="chev">›</span> <span data-en="Services">Layanan</span></a>
+          <a href="{{ route('informasi') }}"><span class="chev">›</span> <span data-en="Information">Informasi</span></a>
+          <a href="{{ route('galeri') }}"><span class="chev">›</span> <span data-en="Gallery">Galeri</span></a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">BANTUAN</span>
+        <span class="head" data-en="HELP">BANTUAN</span>
         <div class="footer-links">
-          <a href="{{ route('kontak') }}"><span class="chev">›</span> Kontak</a>
+          <a href="{{ route('kontak') }}"><span class="chev">›</span> <span data-en="Contact">Kontak</span></a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">KONTAK</span>
+        <span class="head" data-en="CONTACT">KONTAK</span>
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -377,8 +412,8 @@
     </div>
 
     <div class="footer-inner footer-bottom">
-      <p>© {{ date('Y') }} Pustekinfo. Seluruh hak dilindungi.</p>
-      <p>Referensi mockup — bukan situs resmi</p>
+      <p data-en="© {{ date('Y') }} Pustekinfo. All rights reserved.">© {{ date('Y') }} Pustekinfo. Seluruh hak dilindungi.</p>
+      <p data-en="Mockup reference — not an official site">Referensi mockup — bukan situs resmi</p>
     </div>
   </footer>
 
@@ -400,9 +435,7 @@
 
   function applyTheme(isDark) {
       document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-      themeToggle.classList.toggle("active", isDark);
       themeToggle.setAttribute("aria-pressed", String(isDark));
-      themeToggle.textContent = isDark ? "◑" : "◐";
   }
 
   applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
@@ -411,7 +444,42 @@
       const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
       localStorage.setItem("theme", isDark ? "dark" : "light");
       applyTheme(isDark);
+      themeToggle.classList.add("pulse");
+      setTimeout(() => themeToggle.classList.remove("pulse"), 450);
   });
+
+  // ---- Ganti bahasa (ID/EN) ----
+  const langToggle = document.getElementById("langToggle");
+
+  function applyLang(lang) {
+      document.documentElement.setAttribute("lang", lang);
+      document.querySelectorAll("[data-en]").forEach((el) => {
+          if (el.dataset.idText === undefined) el.dataset.idText = el.textContent;
+          el.textContent = lang === "en" ? el.dataset.en : el.dataset.idText;
+      });
+      document.querySelectorAll("[data-en-html]").forEach((el) => {
+          if (el.dataset.idHtml === undefined) el.dataset.idHtml = el.innerHTML;
+          el.innerHTML = lang === "en" ? el.dataset.enHtml : el.dataset.idHtml;
+      });
+      document.querySelectorAll("[data-en-placeholder]").forEach((el) => {
+          if (el.dataset.idPlaceholder === undefined) el.dataset.idPlaceholder = el.placeholder;
+          el.placeholder = lang === "en" ? el.dataset.enPlaceholder : el.dataset.idPlaceholder;
+      });
+      if (langToggle) {
+          langToggle.textContent = lang === "en" ? "ID" : "EN";
+          langToggle.setAttribute("aria-pressed", String(lang === "en"));
+      }
+  }
+
+  applyLang(localStorage.getItem("lang") || "id");
+
+  if (langToggle) {
+      langToggle.addEventListener("click", () => {
+          const next = document.documentElement.getAttribute("lang") === "en" ? "id" : "en";
+          localStorage.setItem("lang", next);
+          applyLang(next);
+      });
+  }
 </script>
 </body>
 </html>

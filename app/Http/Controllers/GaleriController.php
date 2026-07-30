@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GalleryItem;
 use App\Models\GalleryCategory;
 use App\Models\SiteSetting;
+use App\Models\PageBanner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -47,6 +48,7 @@ class GaleriController extends Controller
             'totalKategori'          => $totalKategori,
             'rentangWaktu'           => $rentangWaktu,
             'featured'               => $featured,
+            'pageBanner'             => PageBanner::where('page', 'galeri')->first(),
         ]);
     }
 }

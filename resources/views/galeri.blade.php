@@ -7,7 +7,7 @@
 <title>Galeri Kegiatan - Pustekinfo DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
 <style>
   :root{
     --navy:#12242E; --teal:#14839C; --ink:#0b2233;
@@ -20,12 +20,8 @@
     color:var(--ink);
     position:relative;
     background-color:#14839C1A;
-    background-image:url('{{ asset('images/pola-batik.png') }}');
-    background-repeat:no-repeat;
-    background-position:center top;
-    background-size:5000px auto;
   }
-  [data-theme="dark"] body::before{
+  body::before{
     content:"";
     position:absolute;
     inset:0;
@@ -35,22 +31,24 @@
     background-repeat:no-repeat;
     background-position:center top;
     background-size:5000px auto;
+    filter:url(#batikBoostLight);
+  }
+  [data-theme="dark"] body::before{
     filter:url(#batikAlphaBoost);
   }
   @media (max-width:900px){
-    body{background-size:3000px auto;}
-    [data-theme="dark"] body::before{background-size:3000px auto;}
+    body::before{background-size:3000px auto;}
   }
   @view-transition{navigation:auto;}
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
-  h1,h2,.brand-text .name,.footer-brand-text .name,.stat-num,.sorotan-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
+  h1,h2,.stat-num,.sorotan-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
 
+  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
+    transform-origin:left center;}
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
-  .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;transition:color .2s ease;}
   .nav-links li a:hover{color:var(--teal);}
@@ -66,8 +64,37 @@
   .nav-dropdown a .dd-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
   .caret{font-size:10px;opacity:.6;}
   .nav-actions{display:flex;align-items:center;gap:12px;}
-  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;display:flex;align-items:center;justify-content:center;font-size:14px;color:#5b6b73;background:var(--white);cursor:pointer;transition:.2s ease;}
-  .icon-btn:hover{background:var(--mist);border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
+
+  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  .theme-fab{
+    position:fixed;left:24px;bottom:24px;z-index:9999;
+    width:52px;height:52px;border-radius:50%;
+    border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
+    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
+  }
+  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
+  .theme-fab:active{transform:scale(.92);}
+  @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
+  .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
+  .theme-fab-icon{
+    position:absolute;width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .theme-fab-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .theme-fab .icon-moon{opacity:1;transform:rotate(0) scale(1);}
+  .theme-fab .icon-sun{opacity:0;transform:rotate(90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .theme-fab:hover{border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
+  @media (max-width:900px){
+    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
+    .theme-fab-icon{width:19px;height:19px;}
+  }
+
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;transition:.2s ease;}
   .lang-btn:hover{background:var(--mist);border-color:var(--teal);color:var(--teal);}
   .btn-login{padding:10px 22px;border-radius:20px;border:none;background:var(--navy);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;transition:.2s ease;}
@@ -87,20 +114,33 @@
     .nav-links li.active::after{display:none;}
     .burger{display:flex;}
     .brand-logo{width:36px;height:36px;}
-    .brand-text .name{font-size:15px;}
-    .brand-text .sub{font-size:6.5px;}
+    .navbar-logo{height:32px;width:auto;}
   }
 
-  .page-header{
+  /* ---------- Hero / Page Banner (sama seperti Profil, Layanan, Informasi) ---------- */
+  .hero-profil{
     margin-top:70px;
+    position:relative;
     background:#073D5F;
-    padding:60px 100px 90px;
+    padding:90px 24px 60px;
+    overflow:hidden;
   }
-  .page-header .crumb{color:rgba(255,255,255,.6);font-size:13px;font-weight:600;}
-  .page-header .crumb a{color:#5FC0D1;}
-  .page-header h1{color:#fff;font-size:32px;font-weight:800;margin-top:12px;}
-  .page-header h1 .accent{color:#5FC0D1;}
-  .page-header p{color:rgba(255,255,255,.7);margin-top:12px;font-size:14.5px;max-width:600px;}
+  .hero-profil::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 60% at 85% 0%, rgba(79,179,172,.25), transparent 60%);
+    pointer-events:none;
+  }
+  .hero-profil-inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;text-align:center;}
+  .breadcrumb{color:rgba(255,255,255,.55);font-size:13px;font-weight:600;margin-bottom:18px;}
+  .breadcrumb span{color:var(--teal);}
+  .hero-profil h1{
+    color:var(--white);font-size:34px;font-weight:800;line-height:1.28;letter-spacing:-.01em;
+    max-width:680px;margin:0 auto;
+  }
+  .hero-profil h1 .accent{color:#5FC0D1;}
+  .hero-profil p{
+    margin:20px auto 0;max-width:600px;color:rgba(255,255,255,.7);font-size:15px;line-height:1.75;font-weight:500;
+  }
 
   .stats-bar{
     position:relative;
@@ -115,6 +155,7 @@
     background: var(--white);
     border: 1px solid var(--line);
     border-radius:14px;
+    overflow: hidden;
     display:grid;
     grid-template-columns:repeat(4,1fr);
     box-shadow:0 20px 40px -12px rgba(11,34,51,.35);
@@ -137,17 +178,11 @@
     .stats-bar-inner{grid-template-columns:repeat(2,1fr);border-radius:12px;}
     .stat-card{border-right:none;border-bottom:1px solid var(--line);padding:16px 18px;}
     .stat-card:nth-last-child(-n+2){border-bottom:none;}
-    .page-header{padding:90px 20px 70px;}
-    .page-header h1{font-size:24px;}
+    .hero-profil{margin-top:62px;padding:70px 20px 44px;}
+    .hero-profil h1{font-size:24px;}
   }
   .stat-num{font-size:26px;font-weight:800;color:var(--navy);}
   .stat-label{margin-top:6px;font-size:12px;font-weight:600;color:#7a8a92;}
-
-  @media (max-width:900px){
-    .stats-bar{grid-template-columns:repeat(2,1fr);padding:0 20px;margin-top:-40px;}
-    .page-header{padding:90px 20px 70px;}
-    .page-header h1{font-size:24px;}
-  }
 
   .galeri-page{padding:50px 100px 100px;max-width:1240px;margin:0 auto;}
 
@@ -175,8 +210,12 @@
   .galeri-filter.active{background:var(--navy);border-color:var(--navy);color:var(--white);}
   .galeri-filter .count{opacity:.6;font-weight:600;}
 
-  .galeri-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-  .galeri-card{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(160deg,var(--navy) 0%,var(--teal) 100%);transition:transform .3s ease, box-shadow .3s ease;}
+  .galeri-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;gap:20px;}
+  .galeri-card{position:relative;border-radius:14px;overflow:hidden;background:linear-gradient(160deg,var(--navy) 0%,var(--teal) 100%);transition:transform .3s ease, box-shadow .3s ease;}
+  /* Susunan bento: kartu pertama besar (2x2), kartu ke-4 & ke-11 melebar (2x1) — pola berulang tiap 12 item (1 halaman) */
+  .galeri-card:nth-child(1){grid-column:span 2;grid-row:span 2;}
+  .galeri-card:nth-child(4){grid-column:span 2;}
+  .galeri-card:nth-child(11){grid-column:span 2;}
   .galeri-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   .galeri-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -18px rgba(11,34,51,.4);}
   .galeri-card .cat-badge{position:absolute;top:10px;left:10px;background:rgba(11,34,51,.65);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:6px;z-index:1;}
@@ -190,17 +229,26 @@
 
   @media (max-width:900px){
     .galeri-page{padding:40px 20px 60px;}
-    .galeri-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+    .galeri-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:auto;gap:14px;}
+    .galeri-card{aspect-ratio:4/3;}
+    .galeri-card:nth-child(1),
+    .galeri-card:nth-child(4),
+    .galeri-card:nth-child(11){grid-column:auto;grid-row:auto;}
     .sorotan-card{padding:26px 24px;}
     .sorotan-title{font-size:18px;}
   }
 
-  .footer{background:var(--navy);padding:64px 100px 0;margin-top:20px;}
-  .footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
+  .footer{position:relative;background:var(--navy);padding:64px 100px 0;margin-top:20px;overflow:hidden;}
+  /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
+  .footer::before{
+    content:"";position:absolute;left:-120px;top:0;bottom:-80px;width:700px;
+    background-image:url('{{ asset('images/motif-batik.png') }}');
+    background-repeat:no-repeat;background-position:left center;background-size:550px auto;
+    filter:brightness(0) invert(1);opacity:.35;pointer-events:none;z-index:0;
+  }
+  .footer-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}
-  .footer-brand-logo{width:50px;object-fit:contain;}
-  .footer-brand-text .name{font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
-  .footer-brand-text .sub{font-size:10px;letter-spacing:.08em;color:var(--white);font-weight:600;}
+  .footer-brand-logo{width:190px;height:auto;object-fit:contain;}
   .footer-desc{margin-top:18px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.75;max-width:260px;}
   .footer-social{margin-top:22px;display:flex;gap:10px;}
   .footer-social a{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:.2s ease;}
@@ -219,18 +267,20 @@
 
   @media (max-width:900px){
     .footer{padding:50px 20px 0;}
+    .footer::before{width:150px;background-size:150px auto;opacity:.25;}
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
+    .footer-brand-logo{width:150px;}
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
 
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
-  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
-  [data-theme="dark"] .icon-btn,[data-theme="dark"] .lang-btn,[data-theme="dark"] .galeri-filter,[data-theme="dark"] .load-more a{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .lang-btn,[data-theme="dark"] .galeri-filter,[data-theme="dark"] .load-more a{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
-  [data-theme="dark"] .stat-card{background:#122530;}
+  [data-theme="dark"] .stat-card{background:#122530; border-right-color:black;}
+  [data-theme="dark"] .stats-bar-inner{background-color:var(--navy);border: 1px solid var(--navy);}
   [data-theme="dark"] .stat-num{color:#eaf3f5;}
   [data-theme="dark"] .galeri-empty{color:#6d8189;}
 </style>
@@ -243,45 +293,50 @@
         <feFuncA type="linear" slope="4.5" intercept="0"/>
       </feComponentTransfer>
     </filter>
+    <filter id="batikBoostLight">
+      <feColorMatrix type="saturate" values="2.2"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="2.6" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
   </svg>
+
+  {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
+  <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+    <span class="theme-fab-icon icon-moon">
+      <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </span>
+    <span class="theme-fab-icon icon-sun">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </span>
+  </button>
 
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-      <div class="brand-text">
-        <div class="name">PUSTEKINFO</div>
-        <div class="sub">Sekretariat Jendral DPR RI</div>
-      </div>
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
     </div>
 
     <ul class="nav-links">
-      <li><a href="{{ route('home') }}">Beranda</a></li>
-      <li class="nav-item-dropdown" id="profilDropdown">
-        <a href="{{ route('profil') }}">Profil <span class="caret">▾</span></a>
-        <div class="nav-dropdown">
-          <a href="{{ route('profil') }}#tentang"><span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>Tentang</a>
-          <a href="{{ route('profil') }}#pimpinan"><span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Pimpinan</a>
-          <a href="{{ route('profil') }}#struktur"><span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg></span>Struktur Organisasi</a>
-          <a href="{{ route('profil') }}#visi-misi"><span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>Visi dan Misi</a>
-        </div>
-      </li>
-      <li><a href="{{ route('layanan') }}">Layanan</a></li>
-      <li><a href="{{ route('informasi') }}">Informasi</a></li>
-      <li class="active"><a href="{{ route('galeri') }}">Galeri</a></li>
-      <li><a href="{{ route('kontak') }}">Kontak</a></li>
+      <li><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
+      <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
+      <li><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
+      <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
+      <li class="active"><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
+      <li><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
-      <button class="lang-btn">EN</button>
+      <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
 
-  <header class="page-header">
-    <div class="crumb"><a href="{{ route('home') }}">Beranda</a> / Galeri</div>
-    <h1>Dokumentasi <span class="accent">Kegiatan Kami</span></h1>
-    <p>Kumpulan momen kegiatan, pelatihan, dan kerja sama Pustekinfo dalam mendukung layanan teknologi informasi lembaga.</p>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+    <div class="hero-profil-inner">
+      <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Gallery&lt;/span&gt;">Beranda / <span>Galeri</span></p>
+      <h1 data-en-html="Documentation of <span class=&quot;accent&quot;>Our Activities</span>">Dokumentasi <span class="accent">Kegiatan Kami</span></h1>
+      <p data-en="A collection of moments from Pustekinfo's activities, training, and partnerships in supporting the institution's information technology services.">Kumpulan momen kegiatan, pelatihan, dan kerja sama Pustekinfo dalam mendukung layanan teknologi informasi lembaga.</p>
+    </div>
   </header>
 
   <div class="stats-bar">
@@ -289,25 +344,25 @@
       <div class="stat-card">
         <div>
           <div class="stat-num">{{ $totalFoto }}+</div>
-          <div class="stat-label">Total Foto</div>
+          <div class="stat-label" data-en="Total Photos">Total Foto</div>
         </div>
       </div>
       <div class="stat-card">
         <div>
           <div class="stat-num">{{ $kegiatanTerdokumentasi }}</div>
-          <div class="stat-label">Kegiatan Terdokumentasi</div>
+          <div class="stat-label" data-en="Documented Activities">Kegiatan Terdokumentasi</div>
         </div>
       </div>
       <div class="stat-card">
         <div>
           <div class="stat-num">{{ $totalKategori }}</div>
-          <div class="stat-label">Kategori</div>
+          <div class="stat-label" data-en="Categories">Kategori</div>
         </div>
       </div>
       <div class="stat-card">
         <div>
           <div class="stat-num">{{ $rentangWaktu }}</div>
-          <div class="stat-label">Rentang Waktu</div>
+          <div class="stat-label" data-en="Time Range">Rentang Waktu</div>
         </div>
       </div>
     </div>
@@ -319,7 +374,7 @@
       <div class="sorotan-card">
         <img src="{{ asset('storage/'.$featured->image) }}" alt="{{ $featured->title }}">
         <div class="inner">
-          <span class="sorotan-badge">SOROTAN</span>
+          <span class="sorotan-badge" data-en="HIGHLIGHT">SOROTAN</span>
           <div class="sorotan-title">{{ $featured->title }}</div>
           @if($featured->description)
             <p class="sorotan-desc">{{ $featured->description }}</p>
@@ -329,7 +384,7 @@
     @endif
 
     <div class="galeri-filters">
-      <a href="{{ route('galeri') }}" class="galeri-filter {{ !$activeCategory ? 'active' : '' }}">Semua <span class="count">{{ $totalFoto }}</span></a>
+      <a href="{{ route('galeri') }}" class="galeri-filter {{ !$activeCategory ? 'active' : '' }}"><span data-en="All">Semua</span> <span class="count">{{ $totalFoto }}</span></a>
       @foreach($categories as $cat)
         <a href="{{ route('galeri', ['kategori' => $cat->slug]) }}" class="galeri-filter {{ $activeCategory == $cat->slug ? 'active' : '' }}">
           {{ $cat->name }} <span class="count">{{ $cat->items_count }}</span>
@@ -349,13 +404,13 @@
           @endif
         </div>
       @empty
-        <div class="galeri-empty">Belum ada foto pada kategori ini.</div>
+        <div class="galeri-empty" data-en="No photos in this category yet.">Belum ada foto pada kategori ini.</div>
       @endforelse
     </div>
 
     @if($items->hasMorePages())
       <div class="load-more">
-        <a href="{{ $items->nextPageUrl() }}">Muat lebih banyak</a>
+        <a href="{{ $items->nextPageUrl() }}" data-en="Load more">Muat lebih banyak</a>
       </div>
     @endif
 
@@ -365,13 +420,9 @@
     <div class="footer-inner">
       <div class="footer-col">
         <div class="footer-brand">
-          <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-          <div class="footer-brand-text">
-            <div class="name">PUSTEKINFO</div>
-            <div class="sub">Sekretariat Jendral DPR RI</div>
-          </div>
+          <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
         </div>
-        <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
+        <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
         <div class="footer-social">
           <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
           <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
@@ -380,27 +431,27 @@
       </div>
 
       <div class="footer-col">
-        <span class="head">TAUTAN</span>
+        <span class="head" data-en="LINKS">TAUTAN</span>
         <div class="footer-links">
-          <a href="#"><span class="chev">›</span> Sistem Akademik</a>
-          <a href="#"><span class="chev">›</span> Sistem Kepegawaian</a>
-          <a href="#"><span class="chev">›</span> Sistem Keuangan</a>
+          <a href="#"><span class="chev">›</span> <span data-en="Academic System">Sistem Akademik</span></a>
+          <a href="#"><span class="chev">›</span> <span data-en="HR System">Sistem Kepegawaian</span></a>
+          <a href="#"><span class="chev">›</span> <span data-en="Finance System">Sistem Keuangan</span></a>
           <a href="#"><span class="chev">›</span> PPID</a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">BANTUAN</span>
+        <span class="head" data-en="HELP">BANTUAN</span>
         <div class="footer-links">
           <a href="#"><span class="chev">›</span> Helpdesk</a>
-          <a href="#"><span class="chev">›</span> Pengaduan</a>
+          <a href="#"><span class="chev">›</span> <span data-en="Complaints">Pengaduan</span></a>
           <a href="#"><span class="chev">›</span> FAQ</a>
           <a href="#"><span class="chev">›</span> Whistleblowing</a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">KONTAK</span>
+        <span class="head" data-en="CONTACT">KONTAK</span>
         <div class="footer-contact">
           <div class="item"><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>{{ $setting->address ?? 'Alamat belum diatur' }}</div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>{{ $setting->phone ?? '-' }}</div>
@@ -410,8 +461,8 @@
     </div>
 
     <div class="footer-inner footer-bottom">
-      <p>© 2026 Pustekinfo. Seluruh hak dilindungi.</p>
-      <p>Referensi mockup — bukan situs resmi</p>
+      <p data-en="© 2026 Pustekinfo. All rights reserved.">© 2026 Pustekinfo. Seluruh hak dilindungi.</p>
+      <p data-en="Mockup reference — not an official site">Referensi mockup — bukan situs resmi</p>
     </div>
   </footer>
 
@@ -431,14 +482,49 @@
   const themeToggle = document.getElementById("themeToggle");
   function applyTheme(isDark) {
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-    themeToggle.textContent = isDark ? "◑" : "◐";
+    themeToggle.setAttribute("aria-pressed", String(isDark));
   }
   applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
   themeToggle.addEventListener("click", () => {
     const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
     localStorage.setItem("theme", isDark ? "dark" : "light");
     applyTheme(isDark);
+    themeToggle.classList.add("pulse");
+    setTimeout(() => themeToggle.classList.remove("pulse"), 450);
   });
+
+  // ---- Ganti bahasa (ID/EN) ----
+  const langToggle = document.getElementById("langToggle");
+
+  function applyLang(lang) {
+    document.documentElement.setAttribute("lang", lang);
+    document.querySelectorAll("[data-en]").forEach((el) => {
+      if (el.dataset.idText === undefined) el.dataset.idText = el.textContent;
+      el.textContent = lang === "en" ? el.dataset.en : el.dataset.idText;
+    });
+    document.querySelectorAll("[data-en-html]").forEach((el) => {
+      if (el.dataset.idHtml === undefined) el.dataset.idHtml = el.innerHTML;
+      el.innerHTML = lang === "en" ? el.dataset.enHtml : el.dataset.idHtml;
+    });
+    document.querySelectorAll("[data-en-placeholder]").forEach((el) => {
+      if (el.dataset.idPlaceholder === undefined) el.dataset.idPlaceholder = el.placeholder;
+      el.placeholder = lang === "en" ? el.dataset.enPlaceholder : el.dataset.idPlaceholder;
+    });
+    if (langToggle) {
+      langToggle.textContent = lang === "en" ? "ID" : "EN";
+      langToggle.setAttribute("aria-pressed", String(lang === "en"));
+    }
+  }
+
+  applyLang(localStorage.getItem("lang") || "id");
+
+  if (langToggle) {
+    langToggle.addEventListener("click", () => {
+      const next = document.documentElement.getAttribute("lang") === "en" ? "id" : "en";
+      localStorage.setItem("lang", next);
+      applyLang(next);
+    });
+  }
 
   const profilDropdown = document.getElementById("profilDropdown");
   if (window.innerWidth <= 900) {

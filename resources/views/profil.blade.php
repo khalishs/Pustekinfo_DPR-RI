@@ -7,7 +7,7 @@
 <title>Profil - Pustekinfo | Pusat Teknologi Informasi DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
 <style>
   :root{
     --navy:#12242E;
@@ -22,12 +22,7 @@
   body{
     font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
-    position:relative;
-    background-color:#14839C1A;
-    background-image:url('{{ asset('images/pola-batik.png') }}');
-    background-repeat:no-repeat;
-    background-position:center top;
-    background-size:5000px auto;
+    background:var(--white);
   }
   [data-theme="dark"] body::before{
     content:"";
@@ -53,8 +48,6 @@
   img{max-width:100%;display:block;}
 
   h1, h2, h3, h4,
-  .brand-text .name,
-  .footer-brand-text .name,
   .section-inner > h2,
   .dark-head h2,
   .timeline-year,
@@ -81,10 +74,9 @@
     transform:translateY(0);
     transition:transform .35s ease;
   }
+  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */transform-origin:left center;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
-  .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color:#0F6B7F;font-weight:600;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
   .nav-links li.active a{color:var(--teal);}
@@ -115,7 +107,37 @@
   }
   .caret{font-size:10px;opacity:.6;}
   .nav-actions{display:flex;align-items:center;gap:12px;}
-  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;display:flex;align-items:center;justify-content:center;font-size:14px;color:#5b6b73;background:var(--white);cursor:pointer;}
+
+  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  .theme-fab{
+    position:fixed;left:24px;bottom:24px;z-index:9999;
+    width:52px;height:52px;border-radius:50%;
+    border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
+    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
+  }
+  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
+  .theme-fab:active{transform:scale(.92);}
+  @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
+  .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
+  .theme-fab-icon{
+    position:absolute;width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .theme-fab-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .theme-fab .icon-moon{opacity:1;transform:rotate(0) scale(1);}
+  .theme-fab .icon-sun{opacity:0;transform:rotate(90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .theme-fab:hover{border-color:#5FC0D1;color:#5FC0D1;}
+  [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
+  [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
+  @media (max-width:900px){
+    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
+    .theme-fab-icon{width:19px;height:19px;}
+  }
+
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;}
   .btn-login{padding:10px 22px;border-radius:20px;border:none;background:var(--navy);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;}
   .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;background:var(--white);cursor:pointer;align-items:center;}
@@ -128,11 +150,8 @@
     .nav-links{display:none;}
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .brand-text{min-width:0;}
-    .brand-text .name{font-weight:800;font-size:23px;color:#073D5F;line-height:1.1;}
-    .brand-text .sub{font-size:9.5px;letter-spacing:.08em;color: #0F6B7F;;font-weight:600;}
+    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
     .nav-actions{gap:6px;flex-shrink:0;}
-    .icon-btn{width:30px;height:30px;font-size:12px;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
     .burger{display:flex;}
@@ -328,7 +347,56 @@
     .sambutan-content{padding:36px 26px;}
   }
 
-  /* ================= SECTION "dark" (dipakai utk header ber-badge; background ikut pola batik biasa) ================= */
+  /* ================= POLA BATIK (sama seperti beranda) ================= */
+  .konten-batik{
+    position:relative;
+    z-index:0;
+    background-color:#14839C1A;
+  }
+  .konten-batik::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:5000px auto;
+    filter:url(#batikBoostLight);
+  }
+  [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikAlphaBoost);}
+
+  /* section putih/mist bergantian dimatikan di dalam area batik, supaya
+     polanya tetap terlihat sampai bawah — sama seperti di beranda */
+  .konten-batik section.page-section:nth-child(even){background:transparent;}
+  @media (max-width:900px){
+    .konten-batik::before{background-size:3000px auto;}
+  }
+
+  /* ================= SECTION NAVY (dark) — sama seperti section navy di beranda ================= */
+  section.page-section.dark{
+    position:relative;
+    background:linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%) !important;
+    overflow:hidden;
+  }
+  section.page-section.dark::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-repeat:no-repeat;
+    background-position:center top;
+    background-size:2600px auto;
+    filter:brightness(0) invert(1);
+    opacity:.14;
+    pointer-events:none;
+    z-index:0;
+  }
+  section.page-section.dark .section-inner{position:relative;z-index:1;}
+  @media (max-width:900px){
+    section.page-section.dark::before{background-size:1600px auto;}
+  }
   .dark-head{
     display:flex;align-items:center;gap:14px;margin-bottom:8px;
   }
@@ -463,12 +531,17 @@
 
   /* ================= FOOTER (sama seperti beranda) ================= */
   .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #0b2233 55%, #0b2233 100%);}
-  .footer{background:var(--navy);padding:64px 100px 0;}
-  .footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
+  .footer{position:relative;background:var(--navy);padding:64px 100px 0;overflow:hidden;}
+  /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
+  .footer::before{
+    content:"";position:absolute;left:-120px;top:0;bottom:-80px;width:700px;
+    background-image:url('{{ asset('images/motif-batik.png') }}');
+    background-repeat:no-repeat;background-position:left center;background-size:550px auto;
+    filter:brightness(0) invert(1);opacity:.35;pointer-events:none;z-index:0;
+  }
+  .footer-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}
-  .footer-brand-logo{width:50px;height:50px;object-fit:contain;}
-  .footer-brand-text .name{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-weight:800;font-size:23px;color:var(--white);line-height:1.1;}
-  .footer-brand-text .sub{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:10px;letter-spacing:.08em;color:var(--white);font-weight:600;}
+  .footer-brand-logo{width:190px;height:auto;object-fit:contain;}
   .footer-desc{margin-top:18px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.75;max-width:260px;}
   .footer-social{margin-top:22px;display:flex;gap:10px;}
   .footer-social a{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:.2s ease;}
@@ -486,7 +559,9 @@
   .footer-bottom p{color:rgba(255,255,255,.45);font-size:12.5px;font-weight:500;}
   @media (max-width:900px){
     .footer{padding:50px 20px 0;}
+    .footer::before{width:150px;background-size:150px auto;opacity:.25;}
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
+    .footer-brand-logo{width:150px;}
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
@@ -496,8 +571,6 @@
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
 
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
-  [data-theme="dark"] .brand-text .name{color:#eaf3f5;}
-  [data-theme="dark"] .brand-text .sub{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -506,7 +579,6 @@
   [data-theme="dark"] .nav-dropdown a{color:#b7c2c7;}
   [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
 
-  [data-theme="dark"] .icon-btn,
   [data-theme="dark"] .lang-btn,
   [data-theme="dark"] .profile-box,
   [data-theme="dark"] .logout-btn,
@@ -515,8 +587,6 @@
   [data-theme="dark"] .agenda-cal-nav button{
     background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;
   }
-  [data-theme="dark"] .icon-btn.active{background:#5FC0D1;color:#0b1720;border-color:#5FC0D1;}
-  [data-theme="dark"] .icon-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
   [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
@@ -594,50 +664,41 @@
         <feFuncA type="linear" slope="4.5" intercept="0"/>
       </feComponentTransfer>
     </filter>
+    <filter id="batikBoostLight">
+      <feColorMatrix type="saturate" values="2.2"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="2.6" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
   </svg>
+
+  {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
+  <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+    <span class="theme-fab-icon icon-moon">
+      <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </span>
+    <span class="theme-fab-icon icon-sun">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </span>
+  </button>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-      <div class="brand-text">
-        <div class="name">PUSTEKINFO</div>
-        <div class="sub">Sekretariat Jendral DPR RI</div>
-      </div>
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
     </div>
 
     <ul class="nav-links">
-      <li><a href="{{ url('/') }}">Beranda</a></li>
-      <li class="active nav-item-dropdown" id="profilDropdown">
-        <a href="{{ route('profil') }}">Profil <span class="caret">▾</span></a>
-        <div class="nav-dropdown">
-          <a href="{{ route('profil') }}#tentang-kami" class="tab-dd-link" data-target="tentang-kami">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-            Tentang Kami
-          </a>
-          <a href="{{ route('profil') }}#profil-pimpinan" class="tab-dd-link" data-target="profil-pimpinan">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-            Profil Pimpinan
-          </a>
-          <a href="{{ route('profil') }}#struktur-organisasi" class="tab-dd-link" data-target="struktur-organisasi">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg></span>
-            Struktur Organisasi
-          </a>
-          <a href="{{ route('profil') }}#visi-misi" class="tab-dd-link" data-target="visi-misi">
-            <span class="dd-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
-            Visi dan Misi
-          </a>
-        </div>
-      </li>
-      <li><a href="{{ route('layanan') }}">Layanan</a></li>
-      <li><a href="{{ route('informasi') }}">Informasi</a></li>
-      <li><a href="{{ route('galeri') }}">Galeri</a></li>
-      <li><a href="{{ route('kontak') }}">Kontak</a></li>
+      <li class="{{ request()->routeIs('home') ? 'active' : '' }}"><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
+      <li class="{{ request()->routeIs('profil') ? 'active' : '' }}"><a href="{{ route('profil') }}" data-en="Profile">Profil</a></li>
+      <li class="{{ request()->routeIs('layanan') ? 'active' : '' }}"><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
+      <li class="{{ request()->routeIs('informasi') ? 'active' : '' }}"><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
+      <li class="{{ request()->routeIs('galeri') ? 'active' : '' }}"><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
+      <li class="{{ request()->routeIs('kontak') ? 'active' : '' }}"><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
-      <button class="lang-btn">EN</button>
+      <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
@@ -645,20 +706,20 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil">
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
-      <p class="breadcrumb">Beranda / <span>Profil</span></p>
-      <h1>Mengenal lebih dekat Pustekinfo</h1>
-      <p>Pusat Teknologi Informasi — unit yang menopang layanan digital, jaringan, data, dan keamanan informasi lembaga.</p>
+      <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Profile&lt;/span&gt;">Beranda / <span>Profil</span></p>
+      <h1 data-en="Getting to know Pustekinfo better">Mengenal lebih dekat Pustekinfo</h1>
+      <p data-en="Center for Information Technology — the unit that supports the institution's digital services, network, data, and information security.">Pusat Teknologi Informasi — unit yang menopang layanan digital, jaringan, data, dan keamanan informasi lembaga.</p>
     </div>
 
     {{-- Tab nav utama (di dalam hero) --}}
     <div class="tabs-nav">
       <div class="tabs-scroll">
-        <a href="#tentang-kami" class="tab-link active" data-target="tentang-kami">Tentang Kami</a>
-        <a href="#profil-pimpinan" class="tab-link" data-target="profil-pimpinan">Profil Pimpinan</a>
-        <a href="#struktur-organisasi" class="tab-link" data-target="struktur-organisasi">Struktur Organisasi</a>
-        <a href="#visi-misi" class="tab-link" data-target="visi-misi">Visi &amp; Misi</a>
+        <a href="#tentang-kami" class="tab-link active" data-target="tentang-kami" data-en="About Us">Tentang Kami</a>
+        <a href="#profil-pimpinan" class="tab-link" data-target="profil-pimpinan" data-en="Leadership Profile">Profil Pimpinan</a>
+        <a href="#struktur-organisasi" class="tab-link" data-target="struktur-organisasi" data-en="Organizational Structure">Struktur Organisasi</a>
+        <a href="#visi-misi" class="tab-link" data-target="visi-misi" data-en="Vision &amp; Mission">Visi &amp; Misi</a>
       </div>
     </div>
   </header>
@@ -666,22 +727,24 @@
   {{-- Tab nav sticky (muncul saat sudah scroll melewati hero) --}}
   <div class="tabs-nav-sticky" id="tabsSticky">
     <div class="tabs-scroll">
-      <a href="#tentang-kami" class="tab-link active" data-target="tentang-kami">Tentang Kami</a>
-      <a href="#profil-pimpinan" class="tab-link" data-target="profil-pimpinan">Profil Pimpinan</a>
-      <a href="#struktur-organisasi" class="tab-link" data-target="struktur-organisasi">Struktur Organisasi</a>
-      <a href="#visi-misi" class="tab-link" data-target="visi-misi">Visi &amp; Misi</a>
+      <a href="#tentang-kami" class="tab-link active" data-target="tentang-kami" data-en="About Us">Tentang Kami</a>
+      <a href="#profil-pimpinan" class="tab-link" data-target="profil-pimpinan" data-en="Leadership Profile">Profil Pimpinan</a>
+      <a href="#struktur-organisasi" class="tab-link" data-target="struktur-organisasi" data-en="Organizational Structure">Struktur Organisasi</a>
+      <a href="#visi-misi" class="tab-link" data-target="visi-misi" data-en="Vision &amp; Mission">Visi &amp; Misi</a>
     </div>
   </div>
+
+  <div class="konten-batik">
 
   {{-- ================= TENTANG KAMI ================= --}}
   <section id="tentang-kami" class="page-section">
     <div class="section-inner">
       <div class="eyebrow">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
-        SEJARAH INSTANSI
+        <span data-en="AGENCY HISTORY">SEJARAH INSTANSI</span>
       </div>
-      <h2>Perjalanan panjang Pustekinfo</h2>
-      <p class="desc">
+      <h2 data-en="Pustekinfo's long journey">Perjalanan panjang Pustekinfo</h2>
+      <p class="desc" data-en="Pustekinfo has gone through a long journey following technological developments, from a simple data processing unit to an information technology center that manages the institution's digital infrastructure.">
         Pustekinfo telah melalui perjalanan panjang mengikuti perkembangan teknologi, dari unit
         pengolahan data sederhana hingga menjadi pusat teknologi informasi yang mengelola
         infrastruktur digital lembaga.
@@ -696,19 +759,18 @@
             <p>{{ $t->description }}</p>
           </div>
         @empty
-          <p style="color:#8a97a0;">Belum ada data sejarah instansi.</p>
+          <p style="color:#8a97a0;" data-en="No agency history data yet.">Belum ada data sejarah instansi.</p>
         @endforelse
       </div>
+  </div>
   </section>
-
-  {{-- ================= PROFIL PIMPINAN ================= --}}
   <section id="profil-pimpinan" class="page-section">
     <div class="section-inner">
       <div class="eyebrow">
         <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        SAMBUTAN PIMPINAN
+        <span data-en="LEADERSHIP MESSAGE">SAMBUTAN PIMPINAN</span>
       </div>
-      <h2>Kata sambutan Kepala Pustekinfo</h2>
+      <h2 data-en="A message from the Head of Pustekinfo">Kata sambutan Kepala Pustekinfo</h2>
 
       <div class="sambutan-card">
         <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
@@ -720,7 +782,7 @@
       <div class="sambutan-content">
         <div class="eyebrow">
           <svg viewBox="0 0 24 24"><path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 21c0-4-3-7-3-7s-3 3-3 7"/></svg>
-          SELAMAT DATANG
+          <span data-en="WELCOME">SELAMAT DATANG</span>
         </div>
         <p class="desc">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
         <div class="signature">{{ $leadership->name ?? 'Nama Kepala Pusat' }}</div>
@@ -729,18 +791,18 @@
     </div>
       <div class="eyebrow" style="margin-top:56px;">
         <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        FOTO PIMPINAN
+        <span data-en="LEADERSHIP PHOTOS">FOTO PIMPINAN</span>
       </div>
       <div class="photo-grid">
         @forelse($members as $m)
           <div class="photo-card">
             <div class="photo-thumb" @if($m->photo) style="background-image:url('{{ asset('storage/'.$m->photo) }}');background-size:cover;background-position:center;" @endif>
-              @if(!$m->photo) Foto @endif
+              @if(!$m->photo) <span data-en="Photo">Foto</span> @endif
             </div>
             <div class="photo-info"><strong>{{ $m->name }}</strong><span>{{ $m->position }}</span></div>
           </div>
         @empty
-          <p style="color:#8a97a0;grid-column:1/-1;">Belum ada data pimpinan/struktur.</p>
+          <p style="color:#8a97a0;grid-column:1/-1;" data-en="No leadership/structure data yet.">Belum ada data pimpinan/struktur.</p>
         @endforelse
       </div>
     </div>
@@ -753,17 +815,17 @@
         <span class="badge">
           <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/></svg>
         </span>
-        <h2>Biodata singkat</h2>
+        <h2 data-en="Short biodata">Biodata singkat</h2>
       </div>
 
       <div class="bio-card">
         <div class="bio-dark-grid">
-          <div class="bio-dark-item"><label>Nama</label><span>{{ $leadership->name ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label>Jabatan</label><span>{{ $leadership->position ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label>Pendidikan</label><span>{{ $leadership->education ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label>Masa jabatan</label><span>{{ $leadership->term ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label>Bidang keahlian</label><span>{{ $leadership->expertise ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label>Email</label><span>{{ $leadership->email ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Name">Nama</label><span>{{ $leadership->name ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Position">Jabatan</label><span>{{ $leadership->position ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Education">Pendidikan</label><span>{{ $leadership->education ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Term of office">Masa jabatan</label><span>{{ $leadership->term ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Area of expertise">Bidang keahlian</label><span>{{ $leadership->expertise ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Email">Email</label><span>{{ $leadership->email ?? '-' }}</span></div>
         </div>
       </div>
     </div>
@@ -774,9 +836,9 @@
     <div class="section-inner">
       <div class="eyebrow">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg>
-        BAGAN ORGANISASI
+        <span data-en="ORGANIZATIONAL CHART">BAGAN ORGANISASI</span>
       </div>
-      <h2>Struktur organisasi Pustekinfo</h2>
+      <h2 data-en="Pustekinfo's organizational structure">Struktur organisasi Pustekinfo</h2>
 
       <div class="org-chart">
         <div class="org-node top">
@@ -800,7 +862,7 @@
               <span>{{ $b->position }}</span>
             </div>
           @empty
-            <p style="color:#8a97a0;">Belum ada data bidang.</p>
+            <p style="color:#8a97a0;" data-en="No division data yet.">Belum ada data bidang.</p>
           @endforelse
         </div>
       </div>
@@ -814,29 +876,29 @@
         <span class="badge">
           <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         </span>
-        <h2>Uraian unit kerja</h2>
+        <h2 data-en="Work unit description">Uraian unit kerja</h2>
       </div>
 
       <div class="unit-grid">
         <div class="unit-card">
           <div class="unit-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></div>
-          <h4>Sekretariat</h4>
-          <p>Menangani administrasi, tata usaha, kepegawaian, dan dukungan operasional harian unit.</p>
+          <h4 data-en="Secretariat">Sekretariat</h4>
+          <p data-en="Handles administration, general affairs, personnel, and daily operational support for the unit.">Menangani administrasi, tata usaha, kepegawaian, dan dukungan operasional harian unit.</p>
         </div>
         <div class="unit-card">
           <div class="unit-icon"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div>
-          <h4>Bidang Infrastruktur</h4>
-          <p>Mengelola jaringan, pusat data, perangkat keras, dan konektivitas di seluruh lingkungan lembaga.</p>
+          <h4 data-en="Infrastructure Division">Bidang Infrastruktur</h4>
+          <p data-en="Manages networks, data centers, hardware, and connectivity across the institution.">Mengelola jaringan, pusat data, perangkat keras, dan konektivitas di seluruh lingkungan lembaga.</p>
         </div>
         <div class="unit-card">
           <div class="unit-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-          <h4>Bidang Sistem Informasi</h4>
-          <p>Mengembangkan, mengintegrasikan, dan memelihara aplikasi serta sistem informasi lembaga.</p>
+          <h4 data-en="Information Systems Division">Bidang Sistem Informasi</h4>
+          <p data-en="Develops, integrates, and maintains the institution's applications and information systems.">Mengembangkan, mengintegrasikan, dan memelihara aplikasi serta sistem informasi lembaga.</p>
         </div>
         <div class="unit-card">
           <div class="unit-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.2 3.4 9.9 8 11 4.6-1.1 8-5.8 8-11V5l-8-3z"/></svg></div>
-          <h4>Bidang Data &amp; Keamanan</h4>
-          <p>Menjaga keamanan informasi, mengelola pangkalan data, dan memastikan perlindungan data lembaga.</p>
+          <h4 data-en="Data &amp; Security Division">Bidang Data &amp; Keamanan</h4>
+          <p data-en="Maintains information security, manages databases, and ensures the institution's data protection.">Menjaga keamanan informasi, mengelola pangkalan data, dan memastikan perlindungan data lembaga.</p>
         </div>
       </div>
     </div>
@@ -847,30 +909,30 @@
     <div class="section-inner">
       <div class="eyebrow">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
-        VISI &amp; MISI
+        <span data-en="VISION &amp; MISSION">VISI &amp; MISI</span>
       </div>
-      <h2>Arah dan komitmen kami</h2>
+      <h2 data-en="Our direction and commitment">Arah dan komitmen kami</h2>
 
       <div class="vm-grid">
         <div class="vm-card dark">
           <div class="eyebrow">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
-            VISI
+            <span data-en="VISION">VISI</span>
           </div>
-          <h3>Visi Pustekinfo</h3>
+          <h3 data-en="Pustekinfo's Vision">Visi Pustekinfo</h3>
           <p>{{ $visionMission->vision_text ?? 'Visi belum diisi lewat panel admin.' }}</p>
         </div>
         <div class="vm-card">
           <div class="eyebrow">
             <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-            MISI
+            <span data-en="MISSION">MISI</span>
           </div>
-          <h3>Langkah strategis kami</h3>
+          <h3 data-en="Our strategic steps">Langkah strategis kami</h3>
           <ol>
             @forelse($visionMission?->missionList() ?? [] as $poin)
               <li>{{ $poin }}</li>
             @empty
-              <li>Misi belum diisi lewat panel admin.</li>
+              <li data-en="Mission has not been filled in via the admin panel.">Misi belum diisi lewat panel admin.</li>
             @endforelse
           </ol>
         </div>
@@ -883,7 +945,7 @@
     <div class="section-inner">
       <div class="eyebrow">
         <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
-        NILAI-NILAI ORGANISASI (CORE VALUES)
+        <span data-en="ORGANIZATIONAL VALUES (CORE VALUES)">NILAI-NILAI ORGANISASI (CORE VALUES)</span>
       </div>
       @php
         $valueIcons = [
@@ -903,11 +965,14 @@
             <p>{{ $v->description }}</p>
           </div>
         @empty
-          <p style="color:white;grid-column:1/-1;">Belum ada data nilai organisasi.</p>
+          <p style="color:white;grid-column:1/-1;" data-en="No organizational values data yet.">Belum ada data nilai organisasi.</p>
         @endforelse
       </div>
     </div>
   </section>
+
+  </div>
+  {{-- /.konten-batik --}}
 
   <div class="footer-divider"></div>
 
@@ -916,13 +981,9 @@
     <div class="footer-inner">
       <div class="footer-col">
         <div class="footer-brand">
-          <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="brand-logo">
-          <div class="footer-brand-text">
-            <div class="name">PUSTEKINFO</div>
-            <div class="sub">Sekretariat Jendral DPR RI</div>
-          </div>
+          <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
         </div>
-        <p class="footer-desc">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
+        <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
         <div class="footer-social">
           <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
           <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
@@ -931,27 +992,27 @@
       </div>
 
       <div class="footer-col">
-        <span class="head">TAUTAN</span>
+        <span class="head" data-en="LINKS">TAUTAN</span>
         <div class="footer-links">
-          <a href="#"><span class="chev">›</span> Sistem Akademik</a>
-          <a href="#"><span class="chev">›</span> Sistem Kepegawaian</a>
-          <a href="#"><span class="chev">›</span> Sistem Keuangan</a>
+          <a href="#"><span class="chev">›</span> <span data-en="Academic System">Sistem Akademik</span></a>
+          <a href="#"><span class="chev">›</span> <span data-en="HR System">Sistem Kepegawaian</span></a>
+          <a href="#"><span class="chev">›</span> <span data-en="Finance System">Sistem Keuangan</span></a>
           <a href="#"><span class="chev">›</span> PPID</a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">BANTUAN</span>
+        <span class="head" data-en="HELP">BANTUAN</span>
         <div class="footer-links">
           <a href="#"><span class="chev">›</span> Helpdesk</a>
-          <a href="#"><span class="chev">›</span> Pengaduan</a>
+          <a href="#"><span class="chev">›</span> <span data-en="Complaints">Pengaduan</span></a>
           <a href="#"><span class="chev">›</span> FAQ</a>
           <a href="#"><span class="chev">›</span> Whistleblowing</a>
         </div>
       </div>
 
       <div class="footer-col">
-        <span class="head">KONTAK</span>
+        <span class="head" data-en="CONTACT">KONTAK</span>
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -970,8 +1031,8 @@
     </div>
 
     <div class="footer-inner footer-bottom">
-      <p>© 2026 Pustekinfo. Seluruh hak dilindungi.</p>
-      <p>Referensi mockup — bukan situs resmi</p>
+      <p data-en="© 2026 Pustekinfo. All rights reserved.">© 2026 Pustekinfo. Seluruh hak dilindungi.</p>
+      <p data-en="Mockup reference — not an official site">Referensi mockup — bukan situs resmi</p>
     </div>
   </footer>
 
@@ -982,9 +1043,7 @@
 
   function applyTheme(isDark) {
       document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-      themeToggle.classList.toggle("active", isDark);
       themeToggle.setAttribute("aria-pressed", String(isDark));
-      themeToggle.textContent = isDark ? "◑" : "◐";
   }
 
   applyTheme(document.documentElement.getAttribute("data-theme") === "dark");
@@ -993,11 +1052,46 @@
       const isDark = document.documentElement.getAttribute("data-theme") !== "dark";
       localStorage.setItem("theme", isDark ? "dark" : "light");
       applyTheme(isDark);
+      themeToggle.classList.add("pulse");
+      setTimeout(() => themeToggle.classList.remove("pulse"), 450);
   });
+
+  // ---- Ganti bahasa (ID/EN) ----
+  const langToggle = document.getElementById("langToggle");
+
+  function applyLang(lang) {
+      document.documentElement.setAttribute("lang", lang);
+      document.querySelectorAll("[data-en]").forEach((el) => {
+          if (el.dataset.idText === undefined) el.dataset.idText = el.textContent;
+          el.textContent = lang === "en" ? el.dataset.en : el.dataset.idText;
+      });
+      document.querySelectorAll("[data-en-html]").forEach((el) => {
+          if (el.dataset.idHtml === undefined) el.dataset.idHtml = el.innerHTML;
+          el.innerHTML = lang === "en" ? el.dataset.enHtml : el.dataset.idHtml;
+      });
+      document.querySelectorAll("[data-en-placeholder]").forEach((el) => {
+          if (el.dataset.idPlaceholder === undefined) el.dataset.idPlaceholder = el.placeholder;
+          el.placeholder = lang === "en" ? el.dataset.enPlaceholder : el.dataset.idPlaceholder;
+      });
+      if (langToggle) {
+          langToggle.textContent = lang === "en" ? "ID" : "EN";
+          langToggle.setAttribute("aria-pressed", String(lang === "en"));
+      }
+  }
+
+  applyLang(localStorage.getItem("lang") || "id");
+
+  if (langToggle) {
+      langToggle.addEventListener("click", () => {
+          const next = document.documentElement.getAttribute("lang") === "en" ? "id" : "en";
+          localStorage.setItem("lang", next);
+          applyLang(next);
+      });
+  }
 
   // ---- Dropdown Profil di mobile ----
   const profilDropdown = document.getElementById("profilDropdown");
-  if (window.innerWidth <= 900) {
+  if (profilDropdown && window.innerWidth <= 900) {
     profilDropdown.querySelector("a").addEventListener("click", (e) => {
       e.preventDefault();
       profilDropdown.classList.toggle("open");

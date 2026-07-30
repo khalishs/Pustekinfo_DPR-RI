@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AgendaEvent;
 use App\Models\NewsItem;
 use App\Models\SiteSetting;
+use App\Models\PageBanner;
 use Carbon\Carbon;
 
 class InformasiController extends Controller
@@ -49,12 +50,18 @@ class InformasiController extends Controller
             'news'          => $news,
             'kategoriList'  => NewsItem::select('category')->distinct()->pluck('category'),
             'kategoriAktif' => $kategori,
-            'todayEvents'   => AgendaEvent::whereDate('event_date', Carbon::today())->get(),
+            'todayEvents'   => AgendaEvent::whereDate('event_date', Carbon::today())->orderBy('event_time')->get(),
+            'upcomingEvents' => AgendaEvent::whereDate('event_date', '>', Carbon::today())
+                ->orderBy('event_date')
+                ->orderBy('event_time')
+                ->take(4)
+                ->get(),
             'calendarDays'  => $calendarDays,
             'monthLabel'    => $bulanIndo[$monthStart->month - 1].' '.$monthStart->year,
             'prevMonth'     => $monthStart->copy()->subMonth()->format('Y-m'),
             'nextMonth'     => $monthStart->copy()->addMonth()->format('Y-m'),
             'setting'       => SiteSetting::first(),
+            'pageBanner'    => PageBanner::where('page', 'informasi')->first(),
         ]);
     }
 
