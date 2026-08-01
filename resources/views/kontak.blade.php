@@ -407,7 +407,7 @@
     border-radius: 10px;
     padding:30px;
     max-width: 500px;
-    height: 370px;
+    height: 430px;
   }
   .kontak-info h2{
     margin-top:14px;
@@ -522,6 +522,11 @@
     color:var(--navy);
     margin-bottom:8px;
   }
+  .form-field label.required::after{
+    content:" *";
+    color:#c0392b;
+  }
+  [data-theme="dark"] .form-field label.required::after{color:#ff8f8a;}
   .form-field input,
   .form-field select,
   .form-field textarea{
@@ -541,7 +546,7 @@
   .form-field select:focus,
   .form-field textarea:focus{
     outline:none;
-    border-color:var(--teal);
+    border-color:var(--teal); 
     box-shadow:0 0 0 3px rgba(20,128,140,.12);
   }
   .form-field select{
@@ -1003,7 +1008,7 @@
           </div>
           <div class="kontak-info-body">
             <div class="title" data-en="Address">Alamat</div>
-            <div class="desc">{{ $setting->address ?? 'Alamat belum diatur' }}</div>
+            <div class="desc" data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</div>
           </div>
         </div>
 
@@ -1045,11 +1050,11 @@
 
           <div class="form-row">
             <div class="form-field">
-              <label for="nama" data-en="Full name">Nama lengkap</label>
+              <label for="nama" class="required" data-en="Full name">Nama lengkap</label>
               <input type="text" id="nama" name="nama" placeholder="Nama Anda" data-en-placeholder="Your name" required>
             </div>
             <div class="form-field">
-              <label for="email">Email</label>
+              <label for="email" class="required">Email</label>
               <input type="email" id="email" name="email" placeholder="nama@email.com" required>
             </div>
           </div>
@@ -1072,7 +1077,7 @@
 
           <div class="form-row">
             <div class="form-field full">
-              <label for="pesan" data-en="Message">Pesan</label>
+              <label for="pesan" class="required" data-en="Message">Pesan</label>
               <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." required></textarea>
             </div>
           </div>
@@ -1097,10 +1102,9 @@
       <h2 data-en="Find us">Temukan kami</h2>
 
       <div class="lokasi-map">
-        {{-- Ganti nilai pb= di bawah dengan link embed dari Google Maps
-             (Google Maps > Bagikan > Sematkan peta > salin kode iframe, lalu ambil bagian pb=...) --}}
+        {{-- Link peta diatur melalui Admin Panel > Pengaturan Footer > Link Peta (Google Maps Embed) --}}
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4137668829876!2d106.79718367398998!3d-6.209030293778832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f6b735ae6133%3A0x214dde968c25b376!2sSekretariat%20Jenderal%20Dewan%20Perwakilan%20Rakyat%20Republik%20Indonesia!5e0!3m2!1sid!2sus!4v1784135196454!5m2!1sid!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+          src="{{ $setting->maps_embed_url ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4137668829876!2d106.79718367398998!3d-6.209030293778832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f6b735ae6133%3A0x214dde968c25b376!2sSekretariat%20Jenderal%20Dewan%20Perwakilan%20Rakyat%20Republik%20Indonesia!5e0!3m2!1sid!2sus!4v1784135196454!5m2!1sid!2sus' }}"
           width="100%"
           height="100%"
           style="border:0;"
@@ -1160,7 +1164,7 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            {{ $setting->address ?? 'Alamat belum diatur' }}
+            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>

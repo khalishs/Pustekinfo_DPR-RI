@@ -375,9 +375,9 @@
         <img src="{{ asset('storage/'.$featured->image) }}" alt="{{ $featured->title }}">
         <div class="inner">
           <span class="sorotan-badge" data-en="HIGHLIGHT">SOROTAN</span>
-          <div class="sorotan-title">{{ $featured->title }}</div>
+          <div class="sorotan-title" data-en="{{ $featured->title_en ?: $featured->title }}">{{ $featured->title }}</div>
           @if($featured->description)
-            <p class="sorotan-desc">{{ $featured->description }}</p>
+            <p class="sorotan-desc" data-en="{{ $featured->description_en ?: $featured->description }}">{{ $featured->description }}</p>
           @endif
         </div>
       </div>
@@ -387,7 +387,7 @@
       <a href="{{ route('galeri') }}" class="galeri-filter {{ !$activeCategory ? 'active' : '' }}"><span data-en="All">Semua</span> <span class="count">{{ $totalFoto }}</span></a>
       @foreach($categories as $cat)
         <a href="{{ route('galeri', ['kategori' => $cat->slug]) }}" class="galeri-filter {{ $activeCategory == $cat->slug ? 'active' : '' }}">
-          {{ $cat->name }} <span class="count">{{ $cat->items_count }}</span>
+          <span data-en="{{ $cat->name_en ?: $cat->name }}">{{ $cat->name }}</span> <span class="count">{{ $cat->items_count }}</span>
         </a>
       @endforeach
     </div>
@@ -397,10 +397,10 @@
         <div class="galeri-card">
           <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
           @if($item->category)
-            <span class="cat-badge">{{ $item->category->name }}</span>
+            <span class="cat-badge" data-en="{{ $item->category->name_en ?: $item->category->name }}">{{ $item->category->name }}</span>
           @endif
           @if($item->title)
-            <div class="overlay"><span>{{ $item->title }}</span></div>
+            <div class="overlay"><span data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</span></div>
           @endif
         </div>
       @empty
@@ -453,7 +453,7 @@
       <div class="footer-col">
         <span class="head" data-en="CONTACT">KONTAK</span>
         <div class="footer-contact">
-          <div class="item"><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>{{ $setting->address ?? 'Alamat belum diatur' }}</div>
+          <div class="item"><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span></div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>{{ $setting->phone ?? '-' }}</div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>{{ $setting->email ?? '-' }}</div>
         </div>

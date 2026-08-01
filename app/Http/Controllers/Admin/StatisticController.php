@@ -32,6 +32,7 @@ private function validated(Request $request): array
     return $request->validate([
         'key'        => 'required|in:apps,karyawan,pengguna,spbe',
         'label'      => 'required|string|max:255',
+        'label_en'   => 'nullable|string|max:255',
         'value'      => 'required|numeric',
         'suffix'     => 'nullable|string|max:10',
         'decimals'   => 'required|integer|min:0|max:2',

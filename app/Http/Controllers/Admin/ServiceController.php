@@ -51,12 +51,16 @@ class ServiceController extends Controller
     private function validated(Request $request): array
     {
         $data = $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'required|string',
-            'features'    => 'nullable|string',
-            'icon_svg'    => 'required|string',
-            'cta_text'    => 'required|string|max:255',
-            'sort_order'  => 'required|integer',
+            'title'          => 'required|string|max:255',
+            'title_en'       => 'nullable|string|max:255',
+            'description'    => 'required|string',
+            'description_en' => 'nullable|string',
+            'features'       => 'nullable|string',
+            'features_en'    => 'nullable|string',
+            'icon_svg'       => 'required|string',
+            'cta_text'       => 'required|string|max:255',
+            'cta_text_en'    => 'nullable|string|max:255',
+            'sort_order'     => 'required|integer',
         ]);
 
         $data['features'] = collect(preg_split('/\r\n|\r|\n/', (string) $data['features']))
@@ -64,6 +68,13 @@ class ServiceController extends Controller
             ->filter()
             ->values()
             ->all();
+
+        $featuresEn = collect(preg_split('/\r\n|\r|\n/', (string) $data['features_en']))
+            ->map(fn ($line) => trim($line))
+            ->filter()
+            ->values()
+            ->all();
+        $data['features_en'] = $featuresEn ?: null;
 
         return $data;
     }

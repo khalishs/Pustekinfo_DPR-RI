@@ -19,16 +19,22 @@ class LeadershipController extends Controller
     public function update(Request $request)
 {
     $data = $request->validate([
-        'name'           => 'required|string|max:255',
-        'position'       => 'required|string|max:255',
-        'welcome_title'  => 'required|string|max:255',
-        'description'    => 'required|string',
-        'signature_role' => 'required|string|max:255',
-        'education'      => 'nullable|string|max:255',
-        'term'           => 'nullable|string|max:255',
-        'expertise'      => 'nullable|string|max:255',
-        'email'          => 'nullable|email|max:255',
-        'photo'          => 'nullable|image|max:2048',
+        'name'              => 'required|string|max:255',
+        'position'          => 'required|string|max:255',
+        'welcome_title'     => 'required|string|max:255',
+        'welcome_title_en'  => 'nullable|string|max:255',
+        'description'       => 'required|string',
+        'description_en'    => 'nullable|string',
+        'signature_role'    => 'required|string|max:255',
+        'signature_role_en' => 'nullable|string|max:255',
+        'education'         => 'nullable|string|max:255',
+        'education_en'      => 'nullable|string|max:255',
+        'term'              => 'nullable|string|max:255',
+        'term_en'           => 'nullable|string|max:255',
+        'expertise'         => 'nullable|string|max:255',
+        'expertise_en'      => 'nullable|string|max:255',
+        'email'             => 'nullable|email|max:255',
+        'photo'             => 'nullable|image|max:2048',
     ]);
 
     $leadership = Leadership::first() ?? new Leadership();

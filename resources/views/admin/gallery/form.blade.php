@@ -7,10 +7,16 @@
     @if($item->exists) @method('PUT') @endif
 
     <div class="form-group">
-      <label>Judul Kegiatan</label>
+      <label class="required">Judul Kegiatan</label>
       <input type="text" name="title" value="{{ old('title', $item->title) }}" required>
       @error('title')<small class="error">{{ $message }}</small>@enderror
       <small>Foto dengan judul kegiatan yang sama akan dihitung sebagai 1 kegiatan terdokumentasi.</small>
+    </div>
+
+    <div class="form-group">
+      <label>Judul Kegiatan (EN)</label>
+      <input type="text" name="title_en" value="{{ old('title_en', $item->title_en) }}">
+      <small>Opsional — kosongkan untuk memakai judul Bahasa Indonesia di atas.</small>
     </div>
 
     <div class="form-group">
@@ -19,7 +25,12 @@
     </div>
 
     <div class="form-group">
-      <label>Foto</label>
+      <label>Deskripsi (EN, opsional)</label>
+      <textarea name="description_en">{{ old('description_en', $item->description_en) }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="{{ $item->exists ? '' : 'required' }}">Foto</label>
       @if($item->image)
         <img src="{{ asset('storage/'.$item->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
       @endif
@@ -29,7 +40,7 @@
     </div>
 
     <div class="form-group">
-      <label>Kategori</label>
+      <label class="required">Kategori</label>
       <select name="category_id" required>
         <option value="">— Pilih kategori —</option>
         @foreach($categories as $cat)
@@ -41,7 +52,7 @@
     </div>
 
     <div class="form-group">
-      <label>Ukuran kartu</label>
+      <label class="required">Ukuran kartu</label>
       <select name="size" required>
         <option value="big" {{ old('size', $item->size) == 'big' ? 'selected' : '' }}>Besar (2x2)</option>
         <option value="wide" {{ old('size', $item->size) == 'wide' ? 'selected' : '' }}>Lebar</option>
@@ -51,7 +62,7 @@
     </div>
 
     <div class="form-group">
-      <label>Urutan tampil</label>
+      <label class="required">Urutan tampil</label>
       <input type="number" name="sort_order" value="{{ old('sort_order', $item->sort_order ?? 0) }}" required>
     </div>
 

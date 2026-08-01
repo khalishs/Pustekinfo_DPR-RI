@@ -69,9 +69,13 @@ class NewsItemController extends Controller
     {
         return $request->validate([
             'title'           => 'required|string|max:255',
+            'title_en'        => 'nullable|string|max:255',
             'category'        => 'required|string|max:100',
+            'category_en'     => 'nullable|string|max:100',
             'excerpt'         => 'required|string',
+            'excerpt_en'      => 'nullable|string',
             'content'         => 'nullable|string',
+            'content_en'      => 'nullable|string',
             'image'           => 'nullable|image|max:2048',
             'author'          => 'required|string|max:255',
             'reading_minutes' => 'required|integer|min:1',

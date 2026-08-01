@@ -7,24 +7,49 @@
     @if($newsItem->exists) @method('PUT') @endif
 
     <div class="form-group">
-      <label>Judul</label>
+      <label class="required">Judul</label>
       <input type="text" name="title" value="{{ old('title', $newsItem->title) }}" required>
       @error('title')<small class="error">{{ $message }}</small>@enderror
     </div>
 
     <div class="form-group">
-      <label>Kategori</label>
+      <label>Judul (EN)</label>
+      <input type="text" name="title_en" value="{{ old('title_en', $newsItem->title_en) }}">
+      @error('title_en')<small class="error">{{ $message }}</small>@enderror
+      <small>Opsional — kosongkan untuk memakai judul Bahasa Indonesia di atas.</small>
+    </div>
+
+    <div class="form-group">
+      <label class="required">Kategori</label>
       <input type="text" name="category" value="{{ old('category', $newsItem->category) }}" placeholder="Pengumuman, Sistem, Pelatihan, dll" required>
     </div>
 
     <div class="form-group">
-      <label>Ringkasan</label>
+      <label>Kategori (EN)</label>
+      <input type="text" name="category_en" value="{{ old('category_en', $newsItem->category_en) }}" placeholder="Announcement, System, Training, etc">
+      <small>Opsional — kosongkan untuk memakai kategori Bahasa Indonesia di atas.</small>
+    </div>
+
+    <div class="form-group">
+      <label class="required">Ringkasan</label>
       <textarea name="excerpt" required>{{ old('excerpt', $newsItem->excerpt) }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Ringkasan (EN)</label>
+      <textarea name="excerpt_en">{{ old('excerpt_en', $newsItem->excerpt_en) }}</textarea>
+      <small>Opsional — kosongkan untuk memakai ringkasan Bahasa Indonesia di atas.</small>
     </div>
 
     <div class="form-group">
       <label>Isi lengkap (opsional)</label>
       <textarea name="content" style="min-height:180px;">{{ old('content', $newsItem->content) }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Isi lengkap (EN, opsional)</label>
+      <textarea name="content_en" style="min-height:180px;">{{ old('content_en', $newsItem->content_en) }}</textarea>
+      <small>Opsional — kosongkan untuk memakai isi Bahasa Indonesia di atas.</small>
     </div>
 
     <div class="form-group">
@@ -38,12 +63,12 @@
     </div>
 
     <div class="form-group">
-      <label>Penulis</label>
+      <label class="required">Penulis</label>
       <input type="text" name="author" value="{{ old('author', $newsItem->author ?? 'Humas Pustekinfo') }}" required>
     </div>
 
     <div class="form-group">
-      <label>Estimasi waktu baca (menit)</label>
+      <label class="required">Estimasi waktu baca (menit)</label>
       <input type="number" name="reading_minutes" value="{{ old('reading_minutes', $newsItem->reading_minutes ?? 3) }}" min="1" required>
     </div>
 

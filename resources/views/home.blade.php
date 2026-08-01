@@ -456,8 +456,8 @@
 
   .profil.show{opacity:1;transform:translateY(0);}
   .profil-grid{
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 1px 25px 1px 25px;
     padding: 30px;
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -2197,7 +2197,7 @@
             <div class="stat-icon">{!! $icons[$stat->key] ?? $icons['apps'] !!}</div>
             <div>
               <div class="stat-num" data-target="{{ $stat->value }}" data-suffix="{{ $stat->suffix }}" data-decimals="{{ $stat->decimals }}">0</div>
-              <div class="stat-label">{{ $stat->label }}</div>
+              <div class="stat-label" data-en="{{ $stat->label_en ?: $stat->label }}">{{ $stat->label }}</div>
             </div>
           </div>
         @empty
@@ -2345,11 +2345,11 @@
           <div class="quote-mark"><span></span><span></span></div>
 
           <div class="eyebrow" data-en="WELCOME">SELAMAT DATANG</div>
-          <h2>{{ $leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik' }}</h2>
-          <p class="desc">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
+          <h2 data-en="{{ ($leadership->welcome_title_en ?? null) ?: ($leadership->welcome_title ?? 'Technology for better service') }}">{{ $leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik' }}</h2>
+          <p class="desc" data-en="{{ ($leadership->description_en ?? null) ?: ($leadership->description ?? 'The leadership message has not been filled in via the admin panel.') }}">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
 
           <div class="signature">{{ $leadership->name ?? 'Nama Kepala Unit' }}</div>
-          <div class="sign-role">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
+          <div class="sign-role" data-en="{{ ($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center') }}">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
         </div>
       </div>
     </div>
@@ -2370,12 +2370,12 @@
       <div class="berita-grid">
 
         <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ asset('storage/'.$featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
-          <span class="badge">{{ $featuredNews->category ?? 'BERITA' }}</span>
+          <span class="badge" data-en="{{ ($featuredNews->category_en ?? null) ?: ($featuredNews->category ?? 'NEWS') }}">{{ $featuredNews->category ?? 'BERITA' }}</span>
 
           <div class="berita-featured-body">
-            <h3>{{ $featuredNews->title ?? 'Belum ada berita utama' }}</h3>
+            <h3 data-en="{{ ($featuredNews->title_en ?? null) ?: ($featuredNews->title ?? 'No featured news yet') }}">{{ $featuredNews->title ?? 'Belum ada berita utama' }}</h3>
             @if($featuredNews)
-              <p>{{ $featuredNews->excerpt }}</p>
+              <p data-en="{{ $featuredNews->excerpt_en ?: $featuredNews->excerpt }}">{{ $featuredNews->excerpt }}</p>
               <div class="meta">
                 <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $featuredNews->published_at?->format('d M Y') }}</span>
                 <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {{ $featuredNews->author }}</span>
@@ -2391,8 +2391,8 @@
             <a href="{{ route('berita.show', $news) }}" class="berita-item">
               <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset('storage/'.$news->image) }}');background-size:cover;background-position:center;" @endif></div>
               <div class="berita-item-body">
-                <div class="cat">{{ $news->category }}</div>
-                <div class="title">{{ $news->title }}</div>
+                <div class="cat" data-en="{{ $news->category_en ?: $news->category }}">{{ $news->category }}</div>
+                <div class="title" data-en="{{ $news->title_en ?: $news->title }}">{{ $news->title }}</div>
                 <div class="meta">
                   <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $news->published_at?->format('d M Y') }}</span>
                   <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $news->reading_minutes }} mnt</span>
@@ -2459,7 +2459,7 @@
               <div class="agenda-event">
                 <div class="agenda-event-top">
                   <span class="bullet"></span>
-                  <div class="title">{{ $event->title }}</div>
+                  <div class="title" data-en="{{ $event->title_en ?: $event->title }}">{{ $event->title }}</div>
                 </div>
                 <div class="agenda-event-meta">
                   @if($event->event_time)
@@ -2480,7 +2480,7 @@
                 <div class="agenda-event upcoming">
                   <div class="agenda-event-top">
                     <span class="bullet"></span>
-                    <div class="title">{{ $event->title }}</div>
+                    <div class="title" data-en="{{ $event->title_en ?: $event->title }}">{{ $event->title }}</div>
                   </div>
                   <div class="agenda-event-meta">
                     <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $event->event_date->format('d M Y') }}</span>
@@ -2690,7 +2690,7 @@
       <div class="footer-contact">
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          {{ $setting->address ?? 'Alamat belum diatur' }}
+          <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
         </div>
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>

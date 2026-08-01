@@ -8,7 +8,7 @@
     @if($photo->exists) @method('PUT') @endif
 
     <div class="form-group">
-      <label>Foto</label>
+      <label class="{{ $photo->exists ? '' : 'required' }}">Foto</label>
       @if($photo->image)
         <img src="{{ asset('storage/'.$photo->image) }}" style="width:200px;border-radius:8px;margin-bottom:10px;display:block;">
       @endif
@@ -18,7 +18,7 @@
     </div>
 
     <div class="form-group">
-      <label>Urutan tampil</label>
+      <label class="required">Urutan tampil</label>
       <input type="number" name="sort_order" value="{{ old('sort_order', $photo->sort_order ?? 0) }}" required>
       @error('sort_order')<small class="error">{{ $message }}</small>@enderror
     </div>

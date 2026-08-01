@@ -65,10 +65,12 @@ class HeroSlideController extends Controller
     private function validated(Request $request, bool $imageRequired): array
     {
         return $request->validate([
-            'title'      => 'nullable|string|max:255',
-            'subtitle'   => 'nullable|string|max:255',
-            'sort_order' => 'required|integer',
-            'image'      => ($imageRequired ? 'required' : 'nullable') . '|image|max:4096',
+            'title'       => 'nullable|string|max:255',
+            'title_en'    => 'nullable|string|max:255',
+            'subtitle'    => 'nullable|string|max:255',
+            'subtitle_en' => 'nullable|string|max:255',
+            'sort_order'  => 'required|integer',
+            'image'       => ($imageRequired ? 'required' : 'nullable') . '|image|max:4096',
         ]);
     }
 }

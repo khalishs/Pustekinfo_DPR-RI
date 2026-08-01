@@ -702,7 +702,7 @@
         @forelse($news as $item)
           <a href="{{ route('berita.show', $item) }}" class="info-news-card">
             <div class="info-news-thumb">
-              <span class="info-news-badge">{{ $item->category }}</span>
+              <span class="info-news-badge" data-en="{{ $item->category_en ?: $item->category }}">{{ $item->category }}</span>
               <svg viewBox="0 0 24 24">{!! $newsIcons[strtolower($item->category)] ?? $defaultNewsIcon !!}</svg>
             </div>
             <div class="info-news-body">
@@ -710,8 +710,8 @@
                 <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 {{ $item->published_at?->format('d M Y') }}
               </div>
-              <div class="info-news-title">{{ $item->title }}</div>
-              <div class="info-news-desc">{{ $item->excerpt }}</div>
+              <div class="info-news-title" data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</div>
+              <div class="info-news-desc" data-en="{{ $item->excerpt_en ?: $item->excerpt }}">{{ $item->excerpt }}</div>
             </div>
           </a>
         @empty
@@ -775,7 +775,7 @@
             <div class="agenda-event">
               <div class="agenda-event-top">
                 <span class="bullet"></span>
-                <div class="title">{{ $event->title }}</div>
+                <div class="title" data-en="{{ $event->title_en ?: $event->title }}">{{ $event->title }}</div>
               </div>
               <div class="agenda-event-meta">
                 @if($event->event_time)
@@ -796,7 +796,7 @@
               <div class="agenda-event upcoming">
                 <div class="agenda-event-top">
                   <span class="bullet"></span>
-                  <div class="title">{{ $event->title }}</div>
+                  <div class="title" data-en="{{ $event->title_en ?: $event->title }}">{{ $event->title }}</div>
                 </div>
                 <div class="agenda-event-meta">
                   <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $event->event_date->format('d M Y') }}</span>
@@ -914,7 +914,7 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            {{ $setting->address ?? 'Alamat belum diatur' }}
+            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>

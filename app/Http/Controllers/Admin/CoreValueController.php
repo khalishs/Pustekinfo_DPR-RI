@@ -49,10 +49,12 @@ class CoreValueController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
-            'title'       => 'required|string|max:100',
-            'description' => 'required|string',
-            'icon'        => 'required|in:integrity,innovative,professional,collaborative,service,accountable',
-            'sort_order'  => 'required|integer',
+            'title'          => 'required|string|max:100',
+            'title_en'       => 'nullable|string|max:100',
+            'description'    => 'required|string',
+            'description_en' => 'nullable|string',
+            'icon'           => 'required|in:integrity,innovative,professional,collaborative,service,accountable',
+            'sort_order'     => 'required|integer',
         ]);
     }
 }

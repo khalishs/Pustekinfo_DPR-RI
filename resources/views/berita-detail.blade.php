@@ -330,8 +330,8 @@
   <header class="hero-profil">
     <div class="hero-profil-inner">
       <p class="breadcrumb"><a href="{{ route('home') }}" data-en="Home">Beranda</a> / <a href="{{ route('informasi') }}" data-en="Information">Informasi</a> / <span data-en="News">Berita</span></p>
-      <span class="article-badge">{{ $news->category }}</span>
-      <h1>{{ $news->title }}</h1>
+      <span class="article-badge" data-en="{{ $news->category_en ?: $news->category }}">{{ $news->category }}</span>
+      <h1 data-en="{{ $news->title_en ?: $news->title }}">{{ $news->title }}</h1>
       <div class="article-meta">
         <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $news->published_at?->format('d M Y') }}</span>
         @if($news->author)
@@ -355,7 +355,7 @@
       <img src="{{ asset('storage/'.$news->image) }}" alt="{{ $news->title }}" class="article-image">
     @endif
 
-    <div class="article-body">{{ $news->content ?: $news->excerpt }}</div>
+    <div class="article-body" data-en="{{ ($news->content_en ?: $news->excerpt_en) ?: ($news->content ?: $news->excerpt) }}">{{ $news->content ?: $news->excerpt }}</div>
   </div>
 
   <div class="footer-divider"></div>
@@ -397,7 +397,7 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            {{ $setting->address ?? 'Alamat belum diatur' }}
+            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>

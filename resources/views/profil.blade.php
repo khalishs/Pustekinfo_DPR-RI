@@ -755,8 +755,8 @@
           <div class="timeline-item">
             <span class="timeline-dot"></span>
             <span class="timeline-year">{{ $t->year }}</span>
-            <h4>{{ $t->title }}</h4>
-            <p>{{ $t->description }}</p>
+            <h4 data-en="{{ $t->title_en ?: $t->title }}">{{ $t->title }}</h4>
+            <p data-en="{{ $t->description_en ?: $t->description }}">{{ $t->description }}</p>
           </div>
         @empty
           <p style="color:#8a97a0;" data-en="No agency history data yet.">Belum ada data sejarah instansi.</p>
@@ -784,9 +784,9 @@
           <svg viewBox="0 0 24 24"><path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 21c0-4-3-7-3-7s-3 3-3 7"/></svg>
           <span data-en="WELCOME">SELAMAT DATANG</span>
         </div>
-        <p class="desc">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
+        <p class="desc" data-en="{{ ($leadership->description_en ?? null) ?: ($leadership->description ?? 'The leadership message has not been filled in via the admin panel.') }}">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
         <div class="signature">{{ $leadership->name ?? 'Nama Kepala Pusat' }}</div>
-        <div class="sign-role">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
+        <div class="sign-role" data-en="{{ ($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center') }}">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
       </div>
     </div>
       <div class="eyebrow" style="margin-top:56px;">
@@ -799,7 +799,7 @@
             <div class="photo-thumb" @if($m->photo) style="background-image:url('{{ asset('storage/'.$m->photo) }}');background-size:cover;background-position:center;" @endif>
               @if(!$m->photo) <span data-en="Photo">Foto</span> @endif
             </div>
-            <div class="photo-info"><strong>{{ $m->name }}</strong><span>{{ $m->position }}</span></div>
+            <div class="photo-info"><strong>{{ $m->name }}</strong><span data-en="{{ $m->position_en ?: $m->position }}">{{ $m->position }}</span></div>
           </div>
         @empty
           <p style="color:#8a97a0;grid-column:1/-1;" data-en="No leadership/structure data yet.">Belum ada data pimpinan/struktur.</p>
@@ -822,9 +822,9 @@
         <div class="bio-dark-grid">
           <div class="bio-dark-item"><label data-en="Name">Nama</label><span>{{ $leadership->name ?? '-' }}</span></div>
           <div class="bio-dark-item"><label data-en="Position">Jabatan</label><span>{{ $leadership->position ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label data-en="Education">Pendidikan</label><span>{{ $leadership->education ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label data-en="Term of office">Masa jabatan</label><span>{{ $leadership->term ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label data-en="Area of expertise">Bidang keahlian</label><span>{{ $leadership->expertise ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Education">Pendidikan</label><span data-en="{{ ($leadership->education_en ?? null) ?: ($leadership->education ?? '-') }}">{{ $leadership->education ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Term of office">Masa jabatan</label><span data-en="{{ ($leadership->term_en ?? null) ?: ($leadership->term ?? '-') }}">{{ $leadership->term ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Area of expertise">Bidang keahlian</label><span data-en="{{ ($leadership->expertise_en ?? null) ?: ($leadership->expertise ?? '-') }}">{{ $leadership->expertise ?? '-' }}</span></div>
           <div class="bio-dark-item"><label data-en="Email">Email</label><span>{{ $leadership->email ?? '-' }}</span></div>
         </div>
       </div>
@@ -843,14 +843,14 @@
       <div class="org-chart">
         <div class="org-node top">
           <strong>{{ $kepala->name ?? 'Kepala Pustekinfo' }}</strong>
-          <span>{{ $kepala->position ?? 'Pimpinan Unit' }}</span>
+          <span data-en="{{ ($kepala->position_en ?? null) ?: ($kepala->position ?? 'Unit Head') }}">{{ $kepala->position ?? 'Pimpinan Unit' }}</span>
         </div>
 
         @if($sekretariat)
           <div class="org-connector"></div>
           <div class="org-node">
             <strong>{{ $sekretariat->name }}</strong>
-            <span>{{ $sekretariat->position }}</span>
+            <span data-en="{{ $sekretariat->position_en ?: $sekretariat->position }}">{{ $sekretariat->position }}</span>
           </div>
         @endif
 
@@ -859,7 +859,7 @@
           @forelse($bidangList as $b)
             <div class="org-node">
               <strong>{{ $b->name }}</strong>
-              <span>{{ $b->position }}</span>
+              <span data-en="{{ $b->position_en ?: $b->position }}">{{ $b->position }}</span>
             </div>
           @empty
             <p style="color:#8a97a0;" data-en="No division data yet.">Belum ada data bidang.</p>
@@ -920,7 +920,7 @@
             <span data-en="VISION">VISI</span>
           </div>
           <h3 data-en="Pustekinfo's Vision">Visi Pustekinfo</h3>
-          <p>{{ $visionMission->vision_text ?? 'Visi belum diisi lewat panel admin.' }}</p>
+          <p data-en="{{ ($visionMission->vision_text_en ?? null) ?: ($visionMission->vision_text ?? 'The vision has not been filled in via the admin panel.') }}">{{ $visionMission->vision_text ?? 'Visi belum diisi lewat panel admin.' }}</p>
         </div>
         <div class="vm-card">
           <div class="eyebrow">
@@ -928,9 +928,10 @@
             <span data-en="MISSION">MISI</span>
           </div>
           <h3 data-en="Our strategic steps">Langkah strategis kami</h3>
+          @php $misiEn = $visionMission?->missionListEn() ?? []; @endphp
           <ol>
-            @forelse($visionMission?->missionList() ?? [] as $poin)
-              <li>{{ $poin }}</li>
+            @forelse($visionMission?->missionList() ?? [] as $i => $poin)
+              <li data-en="{{ ($misiEn[$i] ?? null) ?: $poin }}">{{ $poin }}</li>
             @empty
               <li data-en="Mission has not been filled in via the admin panel.">Misi belum diisi lewat panel admin.</li>
             @endforelse
@@ -961,8 +962,8 @@
         @forelse($coreValues as $v)
           <div class="value-card">
             <div class="value-icon"><svg viewBox="0 0 24 24">{!! $valueIcons[$v->icon] ?? $valueIcons['integrity'] !!}</svg></div>
-            <h4>{{ $v->title }}</h4>
-            <p>{{ $v->description }}</p>
+            <h4 data-en="{{ $v->title_en ?: $v->title }}">{{ $v->title }}</h4>
+            <p data-en="{{ $v->description_en ?: $v->description }}">{{ $v->description }}</p>
           </div>
         @empty
           <p style="color:white;grid-column:1/-1;" data-en="No organizational values data yet.">Belum ada data nilai organisasi.</p>
@@ -1016,7 +1017,7 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            {{ $setting->address ?? 'Alamat belum diatur' }}
+            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
