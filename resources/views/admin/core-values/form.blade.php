@@ -8,18 +8,30 @@
     @if($value->exists) @method('PUT') @endif
 
     <div class="form-group">
-      <label>Judul (contoh: Integritas)</label>
+      <label class="required">Judul (contoh: Integritas)</label>
       <input type="text" name="title" value="{{ old('title', $value->title) }}" required>
       @error('title')<small class="error">{{ $message }}</small>@enderror
     </div>
 
     <div class="form-group">
-      <label>Deskripsi</label>
+      <label>Judul (EN)</label>
+      <input type="text" name="title_en" value="{{ old('title_en', $value->title_en) }}">
+      <small>Opsional — kosongkan untuk memakai judul Bahasa Indonesia di atas.</small>
+    </div>
+
+    <div class="form-group">
+      <label class="required">Deskripsi</label>
       <textarea name="description" required>{{ old('description', $value->description) }}</textarea>
     </div>
 
     <div class="form-group">
-      <label>Ikon</label>
+      <label>Deskripsi (EN)</label>
+      <textarea name="description_en">{{ old('description_en', $value->description_en) }}</textarea>
+      <small>Opsional — kosongkan untuk memakai deskripsi Bahasa Indonesia di atas.</small>
+    </div>
+
+    <div class="form-group">
+      <label class="required">Ikon</label>
       <select name="icon" required>
         <option value="integrity" {{ old('icon', $value->icon) == 'integrity' ? 'selected' : '' }}>Bintang (Integritas)</option>
         <option value="innovative" {{ old('icon', $value->icon) == 'innovative' ? 'selected' : '' }}>Lampu (Inovatif)</option>
@@ -31,7 +43,7 @@
     </div>
 
     <div class="form-group">
-      <label>Urutan tampil</label>
+      <label class="required">Urutan tampil</label>
       <input type="number" name="sort_order" value="{{ old('sort_order', $value->sort_order ?? 0) }}" required>
     </div>
 

@@ -68,12 +68,14 @@ class OrganizationMemberController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
-            'name'             => 'required|string|max:255',
-            'position'         => 'required|string|max:255',
-            'unit_description' => 'nullable|string',
-            'level'            => 'required|in:kepala,sekretariat,bidang',
-            'sort_order'       => 'required|integer',
-            'photo'            => 'nullable|image|max:2048',
+            'name'                => 'required|string|max:255',
+            'position'            => 'required|string|max:255',
+            'position_en'         => 'nullable|string|max:255',
+            'unit_description'    => 'nullable|string',
+            'unit_description_en' => 'nullable|string',
+            'level'               => 'required|in:kepala,sekretariat,bidang',
+            'sort_order'          => 'required|integer',
+            'photo'               => 'nullable|image|max:2048',
         ]);
     }
 }

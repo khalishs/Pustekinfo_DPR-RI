@@ -8,14 +8,20 @@
     @if($member->exists) @method('PUT') @endif
 
     <div class="form-group">
-      <label>Nama</label>
+      <label class="required">Nama</label>
       <input type="text" name="name" value="{{ old('name', $member->name) }}" required>
       @error('name')<small class="error">{{ $message }}</small>@enderror
     </div>
 
     <div class="form-group">
-      <label>Jabatan</label>
+      <label class="required">Jabatan</label>
       <input type="text" name="position" value="{{ old('position', $member->position) }}" required>
+    </div>
+
+    <div class="form-group">
+      <label>Jabatan (EN)</label>
+      <input type="text" name="position_en" value="{{ old('position_en', $member->position_en) }}">
+      <small>Opsional — kosongkan untuk memakai jabatan Bahasa Indonesia di atas.</small>
     </div>
 
     <div class="form-group">
@@ -28,7 +34,7 @@
     </div>
 
     <div class="form-group">
-      <label>Level</label>
+      <label class="required">Level</label>
       <select name="level" required>
         <option value="kepala" {{ old('level', $member->level) == 'kepala' ? 'selected' : '' }}>Kepala (puncak bagan — hanya 1)</option>
         <option value="sekretariat" {{ old('level', $member->level) == 'sekretariat' ? 'selected' : '' }}>Sekretariat (baris kedua — hanya 1)</option>
@@ -43,7 +49,12 @@
     </div>
 
     <div class="form-group">
-      <label>Urutan tampil</label>
+      <label>Deskripsi Unit (EN, opsional)</label>
+      <textarea name="unit_description_en" placeholder="Manages networking, data center, etc.">{{ old('unit_description_en', $member->unit_description_en) }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="required">Urutan tampil</label>
       <input type="number" name="sort_order" value="{{ old('sort_order', $member->sort_order ?? 0) }}" required>
     </div>
 

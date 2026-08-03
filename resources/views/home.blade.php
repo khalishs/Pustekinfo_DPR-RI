@@ -149,21 +149,19 @@
 
   .nav-actions{display:flex;align-items:center;gap:12px;}
 
-  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  /* ---------- Tombol mode gelap (di navbar, sebelah tombol translate) ---------- */
   .theme-fab{
-    position:fixed;left:24px;bottom:24px;z-index:9999;
-    width:52px;height:52px;border-radius:50%;
+    width:38px;height:38px;border-radius:50%;flex-shrink:0;position:relative;
     border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
     display:flex;align-items:center;justify-content:center;
-    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
-    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
+    cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
   }
-  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
-  .theme-fab:active{transform:scale(.92);}
+  .theme-fab:active{transform:scale(.9);}
   @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
   .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
   .theme-fab-icon{
-    position:absolute;width:22px;height:22px;
+    position:absolute;width:18px;height:18px;
     display:flex;align-items:center;justify-content:center;
     transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
   }
@@ -175,8 +173,8 @@
   [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
   [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
   @media (max-width:900px){
-    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
-    .theme-fab-icon{width:19px;height:19px;}
+    .theme-fab{width:32px;height:32px;}
+    .theme-fab-icon{width:16px;height:16px;}
   }
 
   .lang-btn{
@@ -241,8 +239,11 @@
   }
   .hero-slider{
     position:absolute;
-    inset:0;
+    left:0;right:0;
+    top:-38%;
+    height:176%;
     overflow:hidden;
+    will-change:transform;
 }
 
 .hero-slide{
@@ -456,8 +457,8 @@
 
   .profil.show{opacity:1;transform:translateY(0);}
   .profil-grid{
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 1px 25px 1px 25px;
     padding: 30px;
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -555,18 +556,27 @@
     padding-top:22px;
     margin-top:22px;
   }
+  .feature{transition:transform .25s ease;}
+  .feature:hover{transform:translateY(-3px);}
   .feature .icon{
     width: 30px; height: 30px;
     color: var(--teal);
     stroke:currentColor;
     line-height:1;
+    transition:transform .35s cubic-bezier(.34,1.56,.64,1), color .25s ease;
+  }
+  .feature:hover .icon{
+    transform:scale(1.2) rotate(-8deg);
+    color:var(--gold);
   }
   .feature .title{
     margin-top:12px;
     font-size:15px;
     font-weight:700;
     color:var(--navy);
+    transition:color .25s ease;
   }
+  .feature:hover .title{color:var(--teal);}
   .feature .desc{
     margin-top:6px;
     font-size:13.5px;
@@ -594,19 +604,21 @@
   }
   .layanan.show{opacity:1;transform:translateY(0);}
 
-  /* Pola batik versi terang khusus untuk background navy, supaya tetap kontras & tidak menyatu dengan warna navy */
+  /* Pola batik sama seperti konten-batik (bukan versi terpisah lagi) — pakai filter alpha-boost
+     yang sama dipakai dark mode, supaya tetap konsisten & kontras di atas navy */
   .layanan::before{
     content:"";
     position:absolute;
     inset:0;
     background-image:url('{{ asset('images/pola-batik.png') }}');
-    background-repeat:no-repeat;
+    background-repeat:repeat-y;
     background-position:center top;
     background-size:5000px auto;
-    filter:brightness(0) invert(1);
-    opacity:.40;
+    filter:url(#batikAlphaBoost);
     pointer-events:none;
     z-index:0;
+    transform:translateY(var(--parallax-layanan, 0px));
+    will-change:transform;
   }
 
   .layanan-inner{
@@ -1707,7 +1719,8 @@
      ikut mempengaruhi warna konten/section di dalamnya */
 }
 
-/* Layer pola batik untuk LIGHT mode */
+/* Layer pola batik untuk LIGHT mode — di-tile vertikal (repeat-y) supaya polanya
+   ikut muncul & discroll di sepanjang section (Profil s/d Akses & Dokumen), bukan cuma sekali di atas */
 .konten-batik::before{
   content:"";
   position:absolute;
@@ -1715,10 +1728,12 @@
   z-index:-1;
   pointer-events:none;
   background-image:url('{{ asset('images/pola-batik.png') }}');
-  background-repeat:no-repeat;
+  background-repeat:repeat-y;
   background-position:center top;
   background-size:5000px auto;
   filter:url(#batikBoostLight);
+  transform:translateY(var(--parallax-batik, 0px));
+  will-change:transform;
 }
 
 /* Overlay pola batik khusus DARK mode: pola aslinya alpha-nya sangat tipis (maks ~10%)
@@ -2080,6 +2095,8 @@
 [data-theme="dark"] .feature-row{border-top-color:rgba(255,255,255,.1);}
 [data-theme="dark"] .feature .title{color:#eaf3f5;}
 [data-theme="dark"] .feature .desc{color:#8ea0a8;}
+[data-theme="dark"] .feature:hover .icon{color:#e0b869;}
+[data-theme="dark"] .feature:hover .title{color:#5FC0D1;}
 
 [data-theme="dark"] .sambutan-card{background:#122530;box-shadow:0 40px 70px -30px rgba(0,0,0,.6);}
 [data-theme="dark"] .sambutan-content .desc{color:#8ea0a8;}
@@ -2122,26 +2139,16 @@
     <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
       <filter id="batikAlphaBoost">
         <feComponentTransfer>
-          <feFuncA type="linear" slope="4.5" intercept="0"/>
+          <feFuncA type="linear" slope="5.5" intercept="0"/>
         </feComponentTransfer>
       </filter>
       <filter id="batikBoostLight">
-        <feColorMatrix type="saturate" values="2.2"/>
+        <feColorMatrix type="saturate" values="2.8"/>
         <feComponentTransfer>
-          <feFuncA type="linear" slope="2.6" intercept="0"/>
+          <feFuncA type="linear" slope="3.4" intercept="0"/>
         </feComponentTransfer>
       </filter>
     </svg>
-
-    {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
-    <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
-      <span class="theme-fab-icon icon-moon">
-        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </span>
-      <span class="theme-fab-icon icon-sun">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      </span>
-    </button>
 
     <nav class="navbar">
       <div class="brand">
@@ -2158,6 +2165,14 @@
       </ul>
 
       <div class="nav-actions">
+        <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+          <span class="theme-fab-icon icon-moon">
+            <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+          <span class="theme-fab-icon icon-sun">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+        </button>
         <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
         <button class="burger" id="burgerBtn" aria-label="Buka menu">
           <span></span><span></span><span></span>
@@ -2197,7 +2212,7 @@
             <div class="stat-icon">{!! $icons[$stat->key] ?? $icons['apps'] !!}</div>
             <div>
               <div class="stat-num" data-target="{{ $stat->value }}" data-suffix="{{ $stat->suffix }}" data-decimals="{{ $stat->decimals }}">0</div>
-              <div class="stat-label">{{ $stat->label }}</div>
+              <div class="stat-label" data-en="{{ $stat->label_en ?: $stat->label }}">{{ $stat->label }}</div>
             </div>
           </div>
         @empty
@@ -2345,11 +2360,11 @@
           <div class="quote-mark"><span></span><span></span></div>
 
           <div class="eyebrow" data-en="WELCOME">SELAMAT DATANG</div>
-          <h2>{{ $leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik' }}</h2>
-          <p class="desc">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
+          <h2 data-en="{{ ($leadership->welcome_title_en ?? null) ?: ($leadership->welcome_title ?? 'Technology for better service') }}">{{ $leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik' }}</h2>
+          <p class="desc" data-en="{{ ($leadership->description_en ?? null) ?: ($leadership->description ?? 'The leadership message has not been filled in via the admin panel.') }}">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
 
           <div class="signature">{{ $leadership->name ?? 'Nama Kepala Unit' }}</div>
-          <div class="sign-role">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
+          <div class="sign-role" data-en="{{ ($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center') }}">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
         </div>
       </div>
     </div>
@@ -2370,12 +2385,12 @@
       <div class="berita-grid">
 
         <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ asset('storage/'.$featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
-          <span class="badge">{{ $featuredNews->category ?? 'BERITA' }}</span>
+          <span class="badge" data-en="{{ ($featuredNews->category_en ?? null) ?: ($featuredNews->category ?? 'NEWS') }}">{{ $featuredNews->category ?? 'BERITA' }}</span>
 
           <div class="berita-featured-body">
-            <h3>{{ $featuredNews->title ?? 'Belum ada berita utama' }}</h3>
+            <h3 data-en="{{ ($featuredNews->title_en ?? null) ?: ($featuredNews->title ?? 'No featured news yet') }}">{{ $featuredNews->title ?? 'Belum ada berita utama' }}</h3>
             @if($featuredNews)
-              <p>{{ $featuredNews->excerpt }}</p>
+              <p data-en="{{ $featuredNews->excerpt_en ?: $featuredNews->excerpt }}">{{ $featuredNews->excerpt }}</p>
               <div class="meta">
                 <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $featuredNews->published_at?->format('d M Y') }}</span>
                 <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {{ $featuredNews->author }}</span>
@@ -2391,8 +2406,8 @@
             <a href="{{ route('berita.show', $news) }}" class="berita-item">
               <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset('storage/'.$news->image) }}');background-size:cover;background-position:center;" @endif></div>
               <div class="berita-item-body">
-                <div class="cat">{{ $news->category }}</div>
-                <div class="title">{{ $news->title }}</div>
+                <div class="cat" data-en="{{ $news->category_en ?: $news->category }}">{{ $news->category }}</div>
+                <div class="title" data-en="{{ $news->title_en ?: $news->title }}">{{ $news->title }}</div>
                 <div class="meta">
                   <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $news->published_at?->format('d M Y') }}</span>
                   <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $news->reading_minutes }} mnt</span>
@@ -2459,7 +2474,7 @@
               <div class="agenda-event">
                 <div class="agenda-event-top">
                   <span class="bullet"></span>
-                  <div class="title">{{ $event->title }}</div>
+                  <div class="title" data-en="{{ $event->title_en ?: $event->title }}">{{ $event->title }}</div>
                 </div>
                 <div class="agenda-event-meta">
                   @if($event->event_time)
@@ -2480,7 +2495,7 @@
                 <div class="agenda-event upcoming">
                   <div class="agenda-event-top">
                     <span class="bullet"></span>
-                    <div class="title">{{ $event->title }}</div>
+                    <div class="title" data-en="{{ $event->title_en ?: $event->title }}">{{ $event->title }}</div>
                   </div>
                   <div class="agenda-event-meta">
                     <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $event->event_date->format('d M Y') }}</span>
@@ -2690,7 +2705,7 @@
       <div class="footer-contact">
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          {{ $setting->address ?? 'Alamat belum diatur' }}
+          <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
         </div>
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -2843,57 +2858,62 @@ document.querySelectorAll(".stat").forEach(stat => {
 const profileCounter = document.querySelector(".profil-media .num");
 const profileCard = document.querySelector(".profil-media");
 
-function animateProfileCounter() {
+// Counter badge ".num" sudah tidak ada di markup saat ini (dihapus saat redesign) —
+// guard ini mencegah error null reference selama elemennya belum dikembalikan.
+if (profileCounter && profileCard) {
 
-    const target = parseInt(profileCounter.dataset.target);
-    const duration = 1200;
-    const startTime = performance.now();
+    function animateProfileCounter() {
 
-    profileCounter.style.color = "var(--teal)"; // Reset warna saat animasi dimulai
+        const target = parseInt(profileCounter.dataset.target);
+        const duration = 1200;
+        const startTime = performance.now();
 
-    function update(currentTime){
+        profileCounter.style.color = "var(--teal)"; // Reset warna saat animasi dimulai
 
-        const progress = Math.min((currentTime - startTime) / duration, 1);
-        const value = Math.floor(target * progress);
+        function update(currentTime){
 
-        profileCounter.innerText = value + "+";
+            const progress = Math.min((currentTime - startTime) / duration, 1);
+            const value = Math.floor(target * progress);
 
-        if(progress < 1){
-            requestAnimationFrame(update);
-        }else{
-          profileCounter.style.color = "#0a2e45";
-          profileCounter.style.textShadow = "0 0 15px rgba(212,179,120,.6)"; 
+            profileCounter.innerText = value + "+";
+
+            if(progress < 1){
+                requestAnimationFrame(update);
+            }else{
+              profileCounter.style.color = "#0a2e45";
+              profileCounter.style.textShadow = "0 0 15px rgba(212,179,120,.6)";
+            }
         }
+
+        requestAnimationFrame(update);
     }
 
-    requestAnimationFrame(update);
-}
+    // Animasi saat pertama kali muncul
+    const profileObserver = new IntersectionObserver(entries => {
 
-// Animasi saat pertama kali muncul
-const profileObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
 
-    entries.forEach(entry => {
+            if(entry.isIntersecting){
+                animateProfileCounter();
+                profileObserver.unobserve(entry.target);
+            }
 
-        if(entry.isIntersecting){
-            animateProfileCounter();
-            profileObserver.unobserve(entry.target);
-        }
+        });
 
+    },{
+        threshold:0.5
     });
 
-},{
-    threshold:0.5
-});
+    profileObserver.observe(profileCard);
 
-profileObserver.observe(profileCard);
+    // Hover = hitung ulang
+    profileCard.addEventListener("click",()=>{
 
-// Hover = hitung ulang
-profileCard.addEventListener("click",()=>{
+        profileCounter.innerText = "0";
+        animateProfileCounter();
 
-    profileCounter.innerText = "0";
-    animateProfileCounter();
-
-});
+    });
+}
 
 const profilSection = document.querySelector(".profil");
 
@@ -3053,6 +3073,48 @@ const aksesObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 aksesObserver.observe(aksesSection);
 
+// ---- Parallax: hero slider & pola batik dekoratif (Layanan, konten-batik) ----
+(function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const heroEl = document.querySelector(".hero");
+    const layers = [
+        { el: document.querySelector(".hero-slider"), measure: heroEl, factor: 0.6, max: 220 },
+        { el: document.querySelector(".konten-batik"), factor: 0.3, max: 260, prop: "--parallax-batik" },
+        { el: document.querySelector(".layanan"), factor: 0.35, max: 140, prop: "--parallax-layanan" },
+    ].filter(layer => layer.el);
+
+    if (!layers.length) return;
+
+    let ticking = false;
+
+    function updateParallax() {
+        layers.forEach(({ el, measure, factor, max, prop }) => {
+            const rectTop = (measure || el).getBoundingClientRect().top;
+            const offset = Math.max(-max, Math.min(max, -rectTop * factor));
+            if (prop) {
+                el.style.setProperty(prop, offset.toFixed(1) + "px");
+            } else {
+                el.style.transform = `translateY(${offset.toFixed(1)}px)`;
+            }
+        });
+        ticking = false;
+    }
+
+    function onScrollOrResize() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    updateParallax();
+})();
+
 </script>
+
+@include('partials.interactive-cursor')
 </body>
 </html>

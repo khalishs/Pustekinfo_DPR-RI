@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GalleryItem extends Model
 {
-    protected $fillable = ['title', 'description', 'image', 'category_id', 'size', 'is_featured', 'sort_order'];
+    protected $fillable = ['title', 'title_en', 'description', 'description_en', 'image', 'category_id', 'size', 'is_featured', 'sort_order'];
 
     protected $casts = ['is_featured' => 'boolean'];
 

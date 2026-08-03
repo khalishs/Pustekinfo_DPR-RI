@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class SiteSetting extends Model
 {
-    protected $fillable = ['address', 'phone', 'email', 'instagram_url', 'youtube_url', 'x_url'];
+    protected $fillable = ['address', 'address_en', 'phone', 'email', 'instagram_url', 'youtube_url', 'x_url', 'maps_embed_url', 'show_location'];
+
+    protected $casts = [
+        'show_location' => 'boolean',
+    ];
 }

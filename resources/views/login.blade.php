@@ -43,6 +43,12 @@
         .text-greeting{
             margin-bottom: 70px;
         }
+
+        .ct-left{
+            display: flex;
+            align-items: center;
+        }
+
         
 
             @media (max-width: 768px) {
@@ -135,7 +141,7 @@
     </svg>
 
     <!-- Sisi Kiri: Branding (Hidden di HP, muncul di MD ke atas) -->
-    <div class="hidden md:flex md:w-5/12 text-white p-12 flex-col justify-between relative overflow-hidden shadow-2xl"
+    <div class="ct-left hidden md:flex md:w-5/12 text-white p-12 flex-col justify-between relative overflow-hidden shadow-2xl"
          style="background-image: url('{{ asset('images/latar2.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         
 

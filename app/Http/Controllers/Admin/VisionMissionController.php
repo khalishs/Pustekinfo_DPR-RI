@@ -18,8 +18,10 @@ class VisionMissionController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'vision_text'   => 'required|string',
-            'mission_items' => 'required|string',
+            'vision_text'      => 'required|string',
+            'vision_text_en'   => 'nullable|string',
+            'mission_items'    => 'required|string',
+            'mission_items_en' => 'nullable|string',
         ]);
 
         $item = VisionMission::first() ?? new VisionMission();

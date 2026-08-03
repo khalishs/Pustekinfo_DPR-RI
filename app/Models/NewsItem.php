@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class NewsItem extends Model
 {
     protected $fillable = [
-        'title', 'category', 'excerpt', 'content', 'image',
+        'title', 'title_en', 'category', 'category_en', 'excerpt', 'excerpt_en',
+        'content', 'content_en', 'image',
         'author', 'reading_minutes', 'is_featured', 'published_at',
     ];
 

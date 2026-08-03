@@ -49,12 +49,14 @@ class AgendaEventController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'event_date'  => 'required|date',
-            'event_time'  => 'nullable|date_format:H:i',
-            'location'    => 'nullable|string|max:255',
-            'color_tag'   => 'required|in:c1,c2,c3',
+            'title'          => 'required|string|max:255',
+            'title_en'       => 'nullable|string|max:255',
+            'description'    => 'nullable|string',
+            'description_en' => 'nullable|string',
+            'event_date'     => 'required|date',
+            'event_time'     => 'nullable|date_format:H:i',
+            'location'       => 'nullable|string|max:255',
+            'color_tag'      => 'required|in:c1,c2,c3',
         ]);
     }
 }

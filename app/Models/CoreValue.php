@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class CoreValue extends Model
 {
-    protected $fillable = ['title', 'description', 'icon', 'sort_order'];
+    protected $fillable = ['title', 'title_en', 'description', 'description_en', 'icon', 'sort_order'];
 }
