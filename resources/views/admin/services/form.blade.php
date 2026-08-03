@@ -3,7 +3,7 @@
 @section('title', $service->exists ? 'Edit Layanan' : 'Tambah Layanan')
 @section('content')
 <div class="card">
-  <form action="{{ $service->exists ? route('admin.services.update', $service) : route('admin.services.store') }}" method="POST">
+  <form action="{{ $service->exists ? route('admin.services.update', $service) : route('admin.services.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @if($service->exists) @method('PUT') @endif
 
@@ -47,10 +47,13 @@
     </div>
 
     <div class="form-group">
-      <label class="required">Kode SVG Ikon (isi &lt;path&gt;/&lt;line&gt;/&lt;circle&gt; saja, tanpa tag &lt;svg&gt;)</label>
-      <textarea name="icon_svg" required>{{ old('icon_svg', $service->icon_svg) }}</textarea>
-      @error('icon_svg')<small class="error">{{ $message }}</small>@enderror
-      <small>Contoh: &lt;path d="M5 12.55a11 11 0 0 1 14.08 0"/&gt;</small>
+      <label class="{{ $service->exists ? '' : 'required' }}">Gambar Ikon</label>
+      @if($service->icon_image)
+        <img src="{{ asset('storage/'.$service->icon_image) }}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;margin-bottom:10px;display:block;background:#f1f4f5;">
+      @endif
+      <input type="file" name="icon_image" accept="image/*" {{ $service->exists ? '' : 'required' }}>
+      @error('icon_image')<small class="error">{{ $message }}</small>@enderror
+      @if($service->exists)<small>Kosongkan jika tidak ingin mengganti gambar.</small>@endif
     </div>
 
     <div class="form-group">

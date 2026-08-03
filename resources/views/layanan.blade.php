@@ -98,21 +98,19 @@
   .caret{font-size:10px;opacity:.6;}
   .nav-actions{display:flex;align-items:center;gap:12px;}
 
-  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  /* ---------- Tombol mode gelap (di navbar, sebelah tombol translate) ---------- */
   .theme-fab{
-    position:fixed;left:24px;bottom:24px;z-index:9999;
-    width:52px;height:52px;border-radius:50%;
+    width:38px;height:38px;border-radius:50%;flex-shrink:0;position:relative;
     border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
     display:flex;align-items:center;justify-content:center;
-    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
-    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
+    cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
   }
-  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
-  .theme-fab:active{transform:scale(.92);}
+  .theme-fab:active{transform:scale(.9);}
   @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
   .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
   .theme-fab-icon{
-    position:absolute;width:22px;height:22px;
+    position:absolute;width:18px;height:18px;
     display:flex;align-items:center;justify-content:center;
     transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
   }
@@ -124,8 +122,8 @@
   [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
   [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
   @media (max-width:900px){
-    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
-    .theme-fab-icon{width:19px;height:19px;}
+    .theme-fab{width:32px;height:32px;}
+    .theme-fab-icon{width:16px;height:16px;}
   }
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;}
   .btn-login{padding:10px 22px;border-radius:20px;border:none;background:var(--navy);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;}
@@ -188,17 +186,18 @@
     display:flex;align-items:center;gap:7px;
     white-space:nowrap;padding:18px 6px;margin-right:36px;
     color:rgba(255,255,255,.55);font-weight:700;font-size:13.5px;
-    position:relative;transition:color .2s ease;flex-shrink:0;
+    position:relative;transition:color .2s ease, transform .2s ease;flex-shrink:0;
   }
-  .tab-link .tab-icon{width:15px;height:15px;flex-shrink:0;}
-  .tab-link .tab-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   .tab-link::after{
     content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;
     background:var(--teal);border-radius:2px 2px 0 0;
-    transform:scaleX(0);transform-origin:left;transition:transform .25s ease;
+    transform:scaleX(0);transform-origin:left;opacity:.5;
+    transition:transform .25s ease, opacity .25s ease;
   }
+  .tab-link:hover{color:var(--white);transform:translateY(-1px);}
+  .tab-link:hover::after{transform:scaleX(1);}
   .tab-link.active{color:var(--white);}
-  .tab-link.active::after{transform:scaleX(1);}
+  .tab-link.active::after{transform:scaleX(1);opacity:1;}
 
   .tabs-nav-sticky{
     position:fixed;top:-70px;left:0;width:100%;z-index:9998;
@@ -241,14 +240,25 @@
   /* ================= KARTU LAYANAN ================= */
   .svc-grid{display:grid;grid-template-columns:38% 1fr;gap:40px;margin-top:40px;align-items:stretch;}
   .svc-icon-box{
+    position:relative;
     border-radius:1px 16px 1px 16px;
     background:radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
-    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
     min-height:280px;
     box-shadow:0 30px 60px -30px rgba(11,34,51,.4);
+    cursor:pointer;
+    transition:box-shadow .35s ease;
   }
-  .svc-icon-box svg{width:76px;height:76px;stroke:rgba(255,255,255,.85);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;}
+  .svc-icon-box:hover{
+    box-shadow:0 30px 60px -30px rgba(11,34,51,.4), 0 0 50px -6px rgba(20,128,140,.6);
+  }
+  .svc-icon-box img{
+    position:absolute;inset:0;
+    width:100%;height:100%;object-fit:cover;
+    transition:transform .5s ease;
+  }
+  .svc-icon-box:hover img{transform:scale(1.08);}
 
   .svc-content{display:flex;flex-direction:column;justify-content:center;}
   .svc-content > .desc{color:#5b6b73;font-size:14px;line-height:1.75;}
@@ -259,13 +269,21 @@
     padding:13px 16px;border-radius:10px;
     border:1px solid #e7ecee;background:var(--white);
     font-size:13px;font-weight:700;color:var(--navy);
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .svc-feature:hover{
+    transform:translateY(-2px);
+    border-color:var(--teal);
+    box-shadow:0 12px 24px -16px rgba(20,128,140,.5);
   }
   .svc-feature-icon{
     width:22px;height:22px;border-radius:50%;flex-shrink:0;
     background:rgba(20,128,140,.1);color:var(--teal);
     display:flex;align-items:center;justify-content:center;
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1), background-color .2s ease, color .2s ease;
   }
   .svc-feature-icon svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+  .svc-feature:hover .svc-feature-icon{background:var(--teal);color:var(--white);transform:scale(1.15) rotate(-8deg);}
 
   .svc-cta{
     margin-top:18px;display:flex;align-items:center;gap:10px;
@@ -278,7 +296,6 @@
   @media (max-width:900px){
     .svc-grid{grid-template-columns:1fr;gap:24px;}
     .svc-icon-box{min-height:180px;}
-    .svc-icon-box svg{width:56px;height:56px;}
   }
   @media (max-width:560px){
     .svc-features{grid-template-columns:1fr;}
@@ -366,6 +383,7 @@
   [data-theme="dark"] .tabs-nav{border-color:transparent;}
   [data-theme="dark"] .tabs-scroll{border-bottom-color:rgba(255,255,255,.1);}
   [data-theme="dark"] .tab-link{color:rgba(255,255,255,.45);}
+  [data-theme="dark"] .tab-link:hover{color:#eaf3f5;}
   [data-theme="dark"] .tab-link.active{color:#eaf3f5;}
   [data-theme="dark"] .tab-link::after{background:#5FC0D1;}
   [data-theme="dark"] .tabs-nav-sticky{background:#071219;border-bottom-color:rgba(255,255,255,.08);box-shadow:0 12px 24px -18px rgba(0,0,0,.6);}
@@ -380,9 +398,14 @@
       linear-gradient(160deg, #0b1720 0%, #0b1720 45%, #14839C 100%);
     box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
   }
+  [data-theme="dark"] .svc-icon-box:hover{
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6), 0 0 50px -6px rgba(95,192,209,.65);
+  }
   [data-theme="dark"] .svc-content > .desc{color:#8ea0a8;}
   [data-theme="dark"] .svc-feature{background:#122530;border-color:rgba(255,255,255,.1);color:#eaf3f5;}
+  [data-theme="dark"] .svc-feature:hover{border-color:#5FC0D1;box-shadow:0 12px 24px -16px rgba(95,192,209,.4);}
   [data-theme="dark"] .svc-feature-icon{background:rgba(95,192,209,.15);color:#5FC0D1;}
+  [data-theme="dark"] .svc-feature:hover .svc-feature-icon{background:#5FC0D1;color:#0b1720;}
   [data-theme="dark"] .svc-cta{background:rgba(95,192,209,.1);border-color:rgba(95,192,209,.25);color:#5FC0D1;}
 
   [data-theme="dark"] .footer-divider{background:linear-gradient(10deg, #057888 0%, #0b1720 55%, #0b1720 100%);}
@@ -417,16 +440,6 @@
     </filter>
   </svg>
 
-  {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
-  <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
-    <span class="theme-fab-icon icon-moon">
-      <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </span>
-    <span class="theme-fab-icon icon-sun">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </span>
-  </button>
-
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
@@ -443,6 +456,14 @@
     </ul>
 
     <div class="nav-actions">
+      <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+        <span class="theme-fab-icon icon-moon">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+        <span class="theme-fab-icon icon-sun">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </span>
+      </button>
       <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
@@ -462,7 +483,6 @@
       <div class="tabs-scroll">
         @foreach($services as $i => $s)
           <a href="#{{ $s['id'] }}" class="tab-link {{ $i === 0 ? 'active' : '' }}" data-target="{{ $s['id'] }}">
-            <span class="tab-icon"><svg viewBox="0 0 24 24">{!! $s['icon'] !!}</svg></span>
             <span data-en="{{ $s['title_en'] ?: $s['title'] }}">{{ $s['title'] }}</span>
           </a>
         @endforeach
@@ -474,7 +494,6 @@
     <div class="tabs-scroll">
       @foreach($services as $i => $s)
         <a href="#{{ $s['id'] }}" class="tab-link {{ $i === 0 ? 'active' : '' }}" data-target="{{ $s['id'] }}">
-          <span class="tab-icon"><svg viewBox="0 0 24 24">{!! $s['icon'] !!}</svg></span>
           {{ $s['title'] }}
         </a>
       @endforeach
@@ -490,7 +509,7 @@
 
         <div class="svc-grid">
           <div class="svc-icon-box">
-            <svg viewBox="0 0 24 24">{!! $s['icon'] !!}</svg>
+            <img src="{{ asset('storage/'.$s['icon']) }}" alt="{{ $s['title'] }}">
           </div>
           <div class="svc-content">
             <p class="desc" data-en="{{ $s['desc_en'] ?: $s['desc'] }}">{{ $s['desc'] }}</p>
@@ -705,5 +724,7 @@
 
   });
 </script>
+
+@include('partials.interactive-cursor')
 </body>
 </html>

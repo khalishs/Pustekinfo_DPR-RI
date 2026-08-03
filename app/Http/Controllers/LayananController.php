@@ -21,7 +21,7 @@ class LayananController extends Controller
             'features_en' => $service->features_en,
             'cta'         => $service->cta_text,
             'cta_en'      => $service->cta_text_en,
-            'icon'        => $service->icon_svg,
+            'icon'        => $service->icon_image,
         ])->all();
 
         return view('layanan', [

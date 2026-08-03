@@ -28,6 +28,8 @@ class SiteSettingController extends Controller
             'maps_embed_url' => 'nullable|url',
         ]);
 
+        $data['show_location'] = $request->boolean('show_location');
+
         $setting = SiteSetting::first() ?? new SiteSetting();
         $setting->fill($data)->save();
 

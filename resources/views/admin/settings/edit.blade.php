@@ -45,6 +45,11 @@
     </div>
 
     <div class="form-group">
+      <label><input type="checkbox" name="show_location" value="1" style="width:auto;display:inline-block;" {{ old('show_location', $setting->show_location ?? true) ? 'checked' : '' }}> Tampilkan section Lokasi di halaman Kontak</label>
+      <small>Jika dinonaktifkan, seluruh section Lokasi (judul, peta, dsb) akan disembunyikan dari halaman Kontak.</small>
+    </div>
+
+    <div class="form-group">
       <label>Link Peta (Google Maps Embed)</label>
       <input type="url" name="maps_embed_url" value="{{ old('maps_embed_url', $setting->maps_embed_url) }}" placeholder="https://www.google.com/maps/embed?pb=...">
       <small>Buka Google Maps &rarr; Bagikan &rarr; Sematkan peta &rarr; salin kode iframe &rarr; ambil hanya nilai atribut <code>src="..."</code>-nya, lalu tempel di sini. Kosongkan untuk memakai peta default.</small>

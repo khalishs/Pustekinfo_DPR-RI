@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -24,7 +25,10 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
-        Service::create($this->validated($request));
+        $data = $this->validated($request, true);
+        $data['icon_image'] = $request->file('icon_image')->store('layanan', 'public');
+
+        Service::create($data);
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan ditambahkan.');
     }
@@ -36,19 +40,31 @@ class ServiceController extends Controller
 
     public function update(Request $request, Service $service)
     {
-        $service->update($this->validated($request));
+        $data = $this->validated($request, false);
+
+        if ($request->hasFile('icon_image')) {
+            if ($service->icon_image) {
+                Storage::disk('public')->delete($service->icon_image);
+            }
+            $data['icon_image'] = $request->file('icon_image')->store('layanan', 'public');
+        }
+
+        $service->update($data);
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan diperbarui.');
     }
 
     public function destroy(Service $service)
     {
+        if ($service->icon_image) {
+            Storage::disk('public')->delete($service->icon_image);
+        }
         $service->delete();
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan dihapus.');
     }
 
-    private function validated(Request $request): array
+    private function validated(Request $request, bool $imageRequired): array
     {
         $data = $request->validate([
             'title'          => 'required|string|max:255',
@@ -57,7 +73,7 @@ class ServiceController extends Controller
             'description_en' => 'nullable|string',
             'features'       => 'nullable|string',
             'features_en'    => 'nullable|string',
-            'icon_svg'       => 'required|string',
+            'icon_image'     => ($imageRequired ? 'required' : 'nullable') . '|image|max:2048',
             'cta_text'       => 'required|string|max:255',
             'cta_text_en'    => 'nullable|string|max:255',
             'sort_order'     => 'required|integer',
