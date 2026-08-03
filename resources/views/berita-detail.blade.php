@@ -75,21 +75,19 @@
   .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);view-transition-name:nav-underline;}
   .nav-actions{display:flex;align-items:center;gap:12px;}
 
-  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  /* ---------- Tombol mode gelap (di navbar, sebelah tombol translate) ---------- */
   .theme-fab{
-    position:fixed;left:24px;bottom:24px;z-index:9999;
-    width:52px;height:52px;border-radius:50%;
+    width:38px;height:38px;border-radius:50%;flex-shrink:0;position:relative;
     border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
     display:flex;align-items:center;justify-content:center;
-    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
-    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
+    cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
   }
-  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
-  .theme-fab:active{transform:scale(.92);}
+  .theme-fab:active{transform:scale(.9);}
   @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
   .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
   .theme-fab-icon{
-    position:absolute;width:22px;height:22px;
+    position:absolute;width:18px;height:18px;
     display:flex;align-items:center;justify-content:center;
     transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
   }
@@ -101,8 +99,8 @@
   [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
   [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
   @media (max-width:900px){
-    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
-    .theme-fab-icon{width:19px;height:19px;}
+    .theme-fab{width:32px;height:32px;}
+    .theme-fab-icon{width:16px;height:16px;}
   }
 
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;}
@@ -293,16 +291,6 @@
     </filter>
   </svg>
 
-  {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
-  <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
-    <span class="theme-fab-icon icon-moon">
-      <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </span>
-    <span class="theme-fab-icon icon-sun">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </span>
-  </button>
-
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
@@ -319,6 +307,14 @@
     </ul>
 
     <div class="nav-actions">
+      <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+        <span class="theme-fab-icon icon-moon">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+        <span class="theme-fab-icon icon-sun">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </span>
+      </button>
       <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
@@ -330,8 +326,8 @@
   <header class="hero-profil">
     <div class="hero-profil-inner">
       <p class="breadcrumb"><a href="{{ route('home') }}" data-en="Home">Beranda</a> / <a href="{{ route('informasi') }}" data-en="Information">Informasi</a> / <span data-en="News">Berita</span></p>
-      <span class="article-badge">{{ $news->category }}</span>
-      <h1>{{ $news->title }}</h1>
+      <span class="article-badge" data-en="{{ $news->category_en ?: $news->category }}">{{ $news->category }}</span>
+      <h1 data-en="{{ $news->title_en ?: $news->title }}">{{ $news->title }}</h1>
       <div class="article-meta">
         <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $news->published_at?->format('d M Y') }}</span>
         @if($news->author)
@@ -355,7 +351,7 @@
       <img src="{{ asset('storage/'.$news->image) }}" alt="{{ $news->title }}" class="article-image">
     @endif
 
-    <div class="article-body">{{ $news->content ?: $news->excerpt }}</div>
+    <div class="article-body" data-en="{{ ($news->content_en ?: $news->excerpt_en) ?: ($news->content ?: $news->excerpt) }}">{{ $news->content ?: $news->excerpt }}</div>
   </div>
 
   <div class="footer-divider"></div>
@@ -397,7 +393,7 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            {{ $setting->address ?? 'Alamat belum diatur' }}
+            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -481,5 +477,7 @@
       });
   }
 </script>
+
+@include('partials.interactive-cursor')
 </body>
 </html>

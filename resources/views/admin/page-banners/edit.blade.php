@@ -11,7 +11,7 @@
     @method('PUT')
 
     <div class="form-group">
-      <label>Gambar Banner Saat Ini</label>
+      <label class="required">Gambar Banner Saat Ini</label>
       @if($banner->image)
         <img src="{{ asset('storage/'.$banner->image) }}" style="width:100%;max-width:420px;aspect-ratio:16/6;object-fit:cover;border-radius:8px;margin-bottom:10px;display:block;">
       @else

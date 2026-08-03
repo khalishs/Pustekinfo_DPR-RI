@@ -59,6 +59,7 @@ class GalleryCategoryController extends Controller
     {
         return $request->validate([
             'name'       => 'required|string|max:100',
+            'name_en'    => 'nullable|string|max:100',
             'sort_order' => 'required|integer',
         ]);
     }

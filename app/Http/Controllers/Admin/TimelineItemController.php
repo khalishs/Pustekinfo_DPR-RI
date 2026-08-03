@@ -49,10 +49,12 @@ class TimelineItemController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
-            'year'        => 'required|string|max:20',
-            'title'       => 'required|string|max:255',
-            'description' => 'required|string',
-            'sort_order'  => 'required|integer',
+            'year'           => 'required|string|max:20',
+            'title'          => 'required|string|max:255',
+            'title_en'       => 'nullable|string|max:255',
+            'description'    => 'required|string',
+            'description_en' => 'nullable|string',
+            'sort_order'     => 'required|integer',
         ]);
     }
 }

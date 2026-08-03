@@ -74,12 +74,14 @@ class GalleryItemController extends Controller
     private function validated(Request $request, bool $imageRequired): array
     {
         return $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'category_id' => 'required|exists:gallery_categories,id',
-            'size'        => 'required|in:big,med,wide,small',
-            'sort_order'  => 'required|integer',
-            'image'       => ($imageRequired ? 'required' : 'nullable') . '|image|max:2048',
+            'title'          => 'required|string|max:255',
+            'title_en'       => 'nullable|string|max:255',
+            'description'    => 'nullable|string',
+            'description_en' => 'nullable|string',
+            'category_id'    => 'required|exists:gallery_categories,id',
+            'size'           => 'required|in:big,med,wide,small',
+            'sort_order'     => 'required|integer',
+            'image'          => ($imageRequired ? 'required' : 'nullable') . '|image|max:2048',
         ]);
     }
 }

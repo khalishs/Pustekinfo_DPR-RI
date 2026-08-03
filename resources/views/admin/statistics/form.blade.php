@@ -6,7 +6,7 @@
     @csrf
     @method('PUT')
     <div class="form-group">
-      <label>Kategori</label>
+      <label class="required">Kategori</label>
       <select name="key" required>
         <option value="">— Pilih kategori —</option>
         <option value="apps" {{ old('key', $statistic->key) == 'apps' ? 'selected' : '' }}>Aplikasi Terkelola</option>
@@ -19,12 +19,17 @@
     </div>
 
     <div class="form-group">
-      <label>Label</label>
+      <label class="required">Label</label>
       <input type="text" name="label" value="{{ old('label', $statistic->label) }}" required>
       @error('label')<small class="error">{{ $message }}</small>@enderror
     </div>
     <div class="form-group">
-      <label>Nilai (angka)</label>
+      <label>Label (EN)</label>
+      <input type="text" name="label_en" value="{{ old('label_en', $statistic->label_en) }}">
+      <small>Opsional — kosongkan untuk memakai label Bahasa Indonesia di atas.</small>
+    </div>
+    <div class="form-group">
+      <label class="required">Nilai (angka)</label>
       <input type="number" step="0.01" name="value" value="{{ old('value', $statistic->value) }}" required>
     </div>
     <div class="form-group">
@@ -32,11 +37,11 @@
       <input type="text" name="suffix" value="{{ old('suffix', $statistic->suffix) }}">
     </div>
     <div class="form-group">
-      <label>Jumlah angka desimal</label>
+      <label class="required">Jumlah angka desimal</label>
       <input type="number" name="decimals" value="{{ old('decimals', $statistic->decimals ?? 0) }}" min="0" max="2" required>
     </div>
     <div class="form-group">
-      <label>Urutan tampil</label>
+      <label class="required">Urutan tampil</label>
       <input type="number" name="sort_order" value="{{ old('sort_order', $statistic->sort_order ?? 0) }}" required>
     </div>
 

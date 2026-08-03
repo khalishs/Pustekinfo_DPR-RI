@@ -7,7 +7,7 @@
     @method('PUT')
 
     <div class="form-group">
-      <label>Username</label>
+      <label class="required">Username</label>
       <input type="text" name="name" value="{{ old('name', $user->name) }}" required>
       @error('name')<small class="error">{{ $message }}</small>@enderror
     </div>

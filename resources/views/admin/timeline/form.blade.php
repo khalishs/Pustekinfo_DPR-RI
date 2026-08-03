@@ -8,24 +8,36 @@
     @if($item->exists) @method('PUT') @endif
 
     <div class="form-group">
-      <label>Tahun</label>
+      <label class="required">Tahun</label>
       <input type="text" name="year" value="{{ old('year', $item->year) }}" placeholder="1985" required>
       @error('year')<small class="error">{{ $message }}</small>@enderror
     </div>
 
     <div class="form-group">
-      <label>Judul</label>
+      <label class="required">Judul</label>
       <input type="text" name="title" value="{{ old('title', $item->title) }}" required>
       @error('title')<small class="error">{{ $message }}</small>@enderror
     </div>
 
     <div class="form-group">
-      <label>Deskripsi</label>
+      <label>Judul (EN)</label>
+      <input type="text" name="title_en" value="{{ old('title_en', $item->title_en) }}">
+      <small>Opsional — kosongkan untuk memakai judul Bahasa Indonesia di atas.</small>
+    </div>
+
+    <div class="form-group">
+      <label class="required">Deskripsi</label>
       <textarea name="description" required>{{ old('description', $item->description) }}</textarea>
     </div>
 
     <div class="form-group">
-      <label>Urutan tampil</label>
+      <label>Deskripsi (EN)</label>
+      <textarea name="description_en">{{ old('description_en', $item->description_en) }}</textarea>
+      <small>Opsional — kosongkan untuk memakai deskripsi Bahasa Indonesia di atas.</small>
+    </div>
+
+    <div class="form-group">
+      <label class="required">Urutan tampil</label>
       <input type="number" name="sort_order" value="{{ old('sort_order', $item->sort_order ?? 0) }}" required>
     </div>
 

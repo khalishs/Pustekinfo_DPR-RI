@@ -108,21 +108,19 @@
   .caret{font-size:10px;opacity:.6;}
   .nav-actions{display:flex;align-items:center;gap:12px;}
 
-  /* ---------- Tombol mode gelap (mengambang, kiri bawah) ---------- */
+  /* ---------- Tombol mode gelap (di navbar, sebelah tombol translate) ---------- */
   .theme-fab{
-    position:fixed;left:24px;bottom:24px;z-index:9999;
-    width:52px;height:52px;border-radius:50%;
+    width:38px;height:38px;border-radius:50%;flex-shrink:0;position:relative;
     border:1px solid #dfe4e7;background:var(--white);color:#5b6b73;
     display:flex;align-items:center;justify-content:center;
-    cursor:pointer;box-shadow:0 10px 30px -10px rgba(11,34,51,.35);
-    transition:background .3s ease, border-color .3s ease, color .3s ease, transform .25s ease, box-shadow .3s ease;
+    cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
   }
-  .theme-fab:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 34px -12px rgba(11,34,51,.45);}
-  .theme-fab:active{transform:scale(.92);}
+  .theme-fab:active{transform:scale(.9);}
   @keyframes theme-fab-pulse{0%{transform:scale(1);}45%{transform:scale(.86);}100%{transform:scale(1);}}
   .theme-fab.pulse{animation:theme-fab-pulse .45s ease;}
   .theme-fab-icon{
-    position:absolute;width:22px;height:22px;
+    position:absolute;width:18px;height:18px;
     display:flex;align-items:center;justify-content:center;
     transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
   }
@@ -134,8 +132,8 @@
   [data-theme="dark"] .theme-fab .icon-moon{opacity:0;transform:rotate(-90deg) scale(.4);}
   [data-theme="dark"] .theme-fab .icon-sun{opacity:1;transform:rotate(0) scale(1);}
   @media (max-width:900px){
-    .theme-fab{left:16px;bottom:16px;width:46px;height:46px;}
-    .theme-fab-icon{width:19px;height:19px;}
+    .theme-fab{width:32px;height:32px;}
+    .theme-fab-icon{width:16px;height:16px;}
   }
 
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;}
@@ -200,15 +198,18 @@
   .tab-link{
     white-space:nowrap;padding:18px 6px;margin-right:36px;
     color:rgba(255,255,255,.55);font-weight:700;font-size:13.5px;
-    position:relative;transition:color .2s ease;flex-shrink:0;
+    position:relative;transition:color .2s ease, transform .2s ease;flex-shrink:0;
   }
   .tab-link::after{
     content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;
     background:var(--teal);border-radius:2px 2px 0 0;
-    transform:scaleX(0);transform-origin:left;transition:transform .25s ease;
+    transform:scaleX(0);transform-origin:left;opacity:.5;
+    transition:transform .25s ease, opacity .25s ease;
   }
+  .tab-link:hover{color:var(--white);transform:translateY(-1px);}
+  .tab-link:hover::after{transform:scaleX(1);}
   .tab-link.active{color:var(--white);}
-  .tab-link.active::after{transform:scaleX(1);}
+  .tab-link.active::after{transform:scaleX(1);opacity:1;}
 
   /* sticky pill saat sudah lewat hero */
   .tabs-nav-sticky{
@@ -672,16 +673,6 @@
     </filter>
   </svg>
 
-  {{-- ================= TOMBOL MODE GELAP (mengambang) ================= --}}
-  <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
-    <span class="theme-fab-icon icon-moon">
-      <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </span>
-    <span class="theme-fab-icon icon-sun">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </span>
-  </button>
-
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
@@ -698,6 +689,14 @@
     </ul>
 
     <div class="nav-actions">
+      <button class="theme-fab" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">
+        <span class="theme-fab-icon icon-moon">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+        <span class="theme-fab-icon icon-sun">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </span>
+      </button>
       <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
@@ -755,8 +754,8 @@
           <div class="timeline-item">
             <span class="timeline-dot"></span>
             <span class="timeline-year">{{ $t->year }}</span>
-            <h4>{{ $t->title }}</h4>
-            <p>{{ $t->description }}</p>
+            <h4 data-en="{{ $t->title_en ?: $t->title }}">{{ $t->title }}</h4>
+            <p data-en="{{ $t->description_en ?: $t->description }}">{{ $t->description }}</p>
           </div>
         @empty
           <p style="color:#8a97a0;" data-en="No agency history data yet.">Belum ada data sejarah instansi.</p>
@@ -784,9 +783,9 @@
           <svg viewBox="0 0 24 24"><path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 21c0-4-3-7-3-7s-3 3-3 7"/></svg>
           <span data-en="WELCOME">SELAMAT DATANG</span>
         </div>
-        <p class="desc">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
+        <p class="desc" data-en="{{ ($leadership->description_en ?? null) ?: ($leadership->description ?? 'The leadership message has not been filled in via the admin panel.') }}">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
         <div class="signature">{{ $leadership->name ?? 'Nama Kepala Pusat' }}</div>
-        <div class="sign-role">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
+        <div class="sign-role" data-en="{{ ($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center') }}">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
       </div>
     </div>
       <div class="eyebrow" style="margin-top:56px;">
@@ -799,7 +798,7 @@
             <div class="photo-thumb" @if($m->photo) style="background-image:url('{{ asset('storage/'.$m->photo) }}');background-size:cover;background-position:center;" @endif>
               @if(!$m->photo) <span data-en="Photo">Foto</span> @endif
             </div>
-            <div class="photo-info"><strong>{{ $m->name }}</strong><span>{{ $m->position }}</span></div>
+            <div class="photo-info"><strong>{{ $m->name }}</strong><span data-en="{{ $m->position_en ?: $m->position }}">{{ $m->position }}</span></div>
           </div>
         @empty
           <p style="color:#8a97a0;grid-column:1/-1;" data-en="No leadership/structure data yet.">Belum ada data pimpinan/struktur.</p>
@@ -822,9 +821,9 @@
         <div class="bio-dark-grid">
           <div class="bio-dark-item"><label data-en="Name">Nama</label><span>{{ $leadership->name ?? '-' }}</span></div>
           <div class="bio-dark-item"><label data-en="Position">Jabatan</label><span>{{ $leadership->position ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label data-en="Education">Pendidikan</label><span>{{ $leadership->education ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label data-en="Term of office">Masa jabatan</label><span>{{ $leadership->term ?? '-' }}</span></div>
-          <div class="bio-dark-item"><label data-en="Area of expertise">Bidang keahlian</label><span>{{ $leadership->expertise ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Education">Pendidikan</label><span data-en="{{ ($leadership->education_en ?? null) ?: ($leadership->education ?? '-') }}">{{ $leadership->education ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Term of office">Masa jabatan</label><span data-en="{{ ($leadership->term_en ?? null) ?: ($leadership->term ?? '-') }}">{{ $leadership->term ?? '-' }}</span></div>
+          <div class="bio-dark-item"><label data-en="Area of expertise">Bidang keahlian</label><span data-en="{{ ($leadership->expertise_en ?? null) ?: ($leadership->expertise ?? '-') }}">{{ $leadership->expertise ?? '-' }}</span></div>
           <div class="bio-dark-item"><label data-en="Email">Email</label><span>{{ $leadership->email ?? '-' }}</span></div>
         </div>
       </div>
@@ -843,14 +842,14 @@
       <div class="org-chart">
         <div class="org-node top">
           <strong>{{ $kepala->name ?? 'Kepala Pustekinfo' }}</strong>
-          <span>{{ $kepala->position ?? 'Pimpinan Unit' }}</span>
+          <span data-en="{{ ($kepala->position_en ?? null) ?: ($kepala->position ?? 'Unit Head') }}">{{ $kepala->position ?? 'Pimpinan Unit' }}</span>
         </div>
 
         @if($sekretariat)
           <div class="org-connector"></div>
           <div class="org-node">
             <strong>{{ $sekretariat->name }}</strong>
-            <span>{{ $sekretariat->position }}</span>
+            <span data-en="{{ $sekretariat->position_en ?: $sekretariat->position }}">{{ $sekretariat->position }}</span>
           </div>
         @endif
 
@@ -859,7 +858,7 @@
           @forelse($bidangList as $b)
             <div class="org-node">
               <strong>{{ $b->name }}</strong>
-              <span>{{ $b->position }}</span>
+              <span data-en="{{ $b->position_en ?: $b->position }}">{{ $b->position }}</span>
             </div>
           @empty
             <p style="color:#8a97a0;" data-en="No division data yet.">Belum ada data bidang.</p>
@@ -920,7 +919,7 @@
             <span data-en="VISION">VISI</span>
           </div>
           <h3 data-en="Pustekinfo's Vision">Visi Pustekinfo</h3>
-          <p>{{ $visionMission->vision_text ?? 'Visi belum diisi lewat panel admin.' }}</p>
+          <p data-en="{{ ($visionMission->vision_text_en ?? null) ?: ($visionMission->vision_text ?? 'The vision has not been filled in via the admin panel.') }}">{{ $visionMission->vision_text ?? 'Visi belum diisi lewat panel admin.' }}</p>
         </div>
         <div class="vm-card">
           <div class="eyebrow">
@@ -928,9 +927,10 @@
             <span data-en="MISSION">MISI</span>
           </div>
           <h3 data-en="Our strategic steps">Langkah strategis kami</h3>
+          @php $misiEn = $visionMission?->missionListEn() ?? []; @endphp
           <ol>
-            @forelse($visionMission?->missionList() ?? [] as $poin)
-              <li>{{ $poin }}</li>
+            @forelse($visionMission?->missionList() ?? [] as $i => $poin)
+              <li data-en="{{ ($misiEn[$i] ?? null) ?: $poin }}">{{ $poin }}</li>
             @empty
               <li data-en="Mission has not been filled in via the admin panel.">Misi belum diisi lewat panel admin.</li>
             @endforelse
@@ -961,8 +961,8 @@
         @forelse($coreValues as $v)
           <div class="value-card">
             <div class="value-icon"><svg viewBox="0 0 24 24">{!! $valueIcons[$v->icon] ?? $valueIcons['integrity'] !!}</svg></div>
-            <h4>{{ $v->title }}</h4>
-            <p>{{ $v->description }}</p>
+            <h4 data-en="{{ $v->title_en ?: $v->title }}">{{ $v->title }}</h4>
+            <p data-en="{{ $v->description_en ?: $v->description }}">{{ $v->description }}</p>
           </div>
         @empty
           <p style="color:white;grid-column:1/-1;" data-en="No organizational values data yet.">Belum ada data nilai organisasi.</p>
@@ -1016,7 +1016,7 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            {{ $setting->address ?? 'Alamat belum diatur' }}
+            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -1165,5 +1165,7 @@ window.addEventListener("scroll", () => {
 
   });
 </script>
+
+@include('partials.interactive-cursor')
 </body>
 </html>

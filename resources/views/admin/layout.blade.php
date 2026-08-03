@@ -311,6 +311,7 @@
 
   .form-group{margin-bottom:18px;max-width:560px;}
   label{display:block;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:7px;}
+  label.required::after{content:" *";color:var(--danger);}
   input,textarea,select{
     width:100%;padding:11px 14px;border:1.5px solid #e2e8ec;border-radius:10px;
     font-size:14px;font-family:inherit;transition:border-color .15s ease, box-shadow .15s ease;
