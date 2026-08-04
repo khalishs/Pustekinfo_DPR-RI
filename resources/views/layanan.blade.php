@@ -307,9 +307,11 @@
   .footer{position:relative;background:var(--navy);padding:64px 100px 0;overflow:hidden;}
   /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
   .footer::before{
-    content:"";position:absolute;left:-120px;top:0;bottom:-80px;width:700px;
-    background-image:url('{{ asset('images/motif-batik.png') }}');
-    background-repeat:no-repeat;background-position:left center;background-size:550px auto;
+    content:"";position:absolute;inset:-40px 0 -80px;
+    background-repeat:no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+    background-image:url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}');
+    background-position:left -100px bottom -30px,right -80px top -40px,30% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
+    background-size:480px auto,320px auto,150px auto,130px auto,170px auto,140px auto,220px auto;
     filter:brightness(0) invert(1);opacity:.35;pointer-events:none;z-index:0;
   }
   .footer-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
@@ -332,7 +334,11 @@
   .footer-bottom p{color:rgba(255,255,255,.45);font-size:12.5px;font-weight:500;}
   @media (max-width:900px){
     .footer{padding:50px 20px 0;}
-    .footer::before{width:150px;background-size:150px auto;opacity:.25;}
+    .footer::before{
+      background-size:170px auto,140px auto,65px auto,55px auto,70px auto,60px auto,90px auto;
+      background-position:left -40px bottom -10px,right -40px top -20px,38% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
+      opacity:.25;
+    }
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
     .footer-brand-logo{width:150px;}
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}

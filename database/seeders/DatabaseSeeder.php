@@ -16,15 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $pegawai = ['ilham', 'sulthan', 'davar', 'dimas', 'alwa', 'khalis', 'kevin'];
+        $user = ['ilham', 'sulthan', 'davar', 'dimas', 'alwa', 'khalis', 'kevin'];
 
-        foreach ($pegawai as $name) {
+        foreach ($user as $name) {
             User::updateOrCreate(
                 ['name' => $name],
                 [
                     'password' => Hash::make($name . '123'),
                     'role' => 'pegawai',
-                    'is_admin' => $name === 'khalis',
+                    'is_admin' => true,
                 ]
             );
         }
@@ -32,4 +32,4 @@ class DatabaseSeeder extends Seeder
         $this->call(StatisticSeeder::class);
         $this->call(ServiceSeeder::class);
     }
-}
+ }
