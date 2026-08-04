@@ -66,7 +66,7 @@ class ProfilPhotoController extends Controller
     {
         return $request->validate([
             'sort_order' => 'required|integer',
-            'image'      => ($imageRequired ? 'required' : 'nullable') . '|image|max:4096',
+            'image'      => ($imageRequired ? 'required' : 'nullable') . '|image|min:2048|max:10240',
         ]);
     }
 }

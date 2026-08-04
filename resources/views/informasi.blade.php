@@ -233,14 +233,14 @@
     inset:0;
     z-index:-1;
     pointer-events:none;
-    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-image:url('{{ asset('images/group-batik.png') }}');
     background-repeat:no-repeat;
     background-position:center top;
-    background-size:5000px auto;
+    background-size:10000px auto;
     filter:url(#batikBoostLight);
   }
   [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
-  [data-theme="dark"] .konten-batik::before{filter:url(#batikAlphaBoost);}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);}
   /* section putih/mist bergantian dimatikan di dalam area batik, supaya
      polanya tetap terlihat sampai bawah — sama seperti di beranda */
   .konten-batik section.page-section:nth-child(even){background:transparent;}
@@ -360,19 +360,7 @@
     border-radius:16px;padding:26px 26px 30px;display:flex;flex-direction:column;
     box-shadow:0 30px 60px -30px rgba(11,34,51,.35);
   }
-  .agenda-today::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:url('{{ asset('images/pola-batik.png') }}');
-    background-repeat:no-repeat;
-    background-position:center top;
-    background-size:4000px auto;
-    filter:brightness(0) invert(1);
-    opacity:.40;
-    pointer-events:none;
-    z-index:0;
-  }
+  /* Tidak ada lagi pola batik terpisah di sini — cukup pakai layer .konten-batik::before */
   
   .agenda-today-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.14);}
   .agenda-today-head .label{display:flex;align-items:center;gap:8px;color:var(--white);font-size:13px;font-weight:800;}
@@ -586,10 +574,12 @@
 <body>
 
   <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
-    <filter id="batikAlphaBoost">
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="4.5" intercept="0"/>
-      </feComponentTransfer>
+    <filter id="batikTintTeal">
+      <feColorMatrix type="matrix" values="
+        0 0 0 0 0.0784
+        0 0 0 0 0.5137
+        0 0 0 0 0.6118
+        0 0 0 4.5 0"/>
     </filter>
     <filter id="batikBoostLight">
       <feColorMatrix type="saturate" values="2.2"/>

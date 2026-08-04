@@ -27,14 +27,14 @@
     inset:0;
     z-index:-1;
     pointer-events:none;
-    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-image:url('{{ asset('images/group-batik.png') }}');
     background-repeat:no-repeat;
     background-position:center top;
-    background-size:5000px auto;
+    background-size:10000px auto;
     filter:url(#batikBoostLight);
   }
   [data-theme="dark"] body::before{
-    filter:url(#batikAlphaBoost);
+    filter:url(#batikTintTeal);
   }
   @media (max-width:900px){
     body::before{background-size:3000px auto;}
@@ -305,10 +305,12 @@
 <body>
 
   <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
-    <filter id="batikAlphaBoost">
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="4.5" intercept="0"/>
-      </feComponentTransfer>
+    <filter id="batikTintTeal">
+      <feColorMatrix type="matrix" values="
+        0 0 0 0 0.0784
+        0 0 0 0 0.5137
+        0 0 0 0 0.6118
+        0 0 0 4.5 0"/>
     </filter>
     <filter id="batikBoostLight">
       <feColorMatrix type="saturate" values="2.2"/>

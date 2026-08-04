@@ -34,7 +34,7 @@ class LeadershipController extends Controller
         'expertise'         => 'nullable|string|max:255',
         'expertise_en'      => 'nullable|string|max:255',
         'email'             => 'nullable|email|max:255',
-        'photo'             => 'nullable|image|max:2048',
+        'photo'             => 'nullable|image|min:2048|max:10240',
     ]);
 
     $leadership = Leadership::first() ?? new Leadership();
