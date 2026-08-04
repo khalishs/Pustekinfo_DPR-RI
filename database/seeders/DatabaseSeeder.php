@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
                 [
                     'password' => Hash::make($name . '123'),
                     'role' => 'pegawai',
-                    'is_admin' => $name === 'khalis',
+                    'is_admin' => true,
                 ]
             );
         }
@@ -32,4 +32,4 @@ class DatabaseSeeder extends Seeder
         $this->call(StatisticSeeder::class);
         $this->call(ServiceSeeder::class);
     }
-}
+ }
