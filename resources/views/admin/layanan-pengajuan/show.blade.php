@@ -1,0 +1,76 @@
+{{-- resources/views/admin/layanan-pengajuan/show.blade.php --}}
+@extends('admin.layout')
+@section('title', 'Detail Pengajuan')
+@section('content')
+<div class="page-head">
+  <h2>Pengajuan dari {{ $serviceRequest->nama }}</h2>
+</div>
+<div class="card">
+  <div class="form-group">
+    <label>Kode Pengajuan</label>
+    <p>{{ $serviceRequest->kode }}</p>
+  </div>
+  <div class="form-group">
+    <label>Nama</label>
+    <p>{{ $serviceRequest->nama }}</p>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <p>{{ $serviceRequest->email }}</p>
+  </div>
+  <div class="form-group">
+    <label>No. Telepon</label>
+    <p>{{ $serviceRequest->no_tlpn }}</p>
+  </div>
+  @if($serviceRequest->instansi)
+  <div class="form-group">
+    <label>Instansi</label>
+    <p>{{ $serviceRequest->instansi }}</p>
+  </div>
+  @endif
+  <div class="form-group">
+    <label>Jenis Layanan</label>
+    <p>{{ $serviceRequest->jenis_layanan }}</p>
+  </div>
+  <div class="form-group">
+    <label>Tanggal Pengajuan</label>
+    <p>{{ $serviceRequest->created_at->format('d M Y H:i') }}</p>
+  </div>
+  <div class="form-group" style="max-width:100%;">
+    <label>Pesan</label>
+    <p style="white-space:pre-line;">{{ $serviceRequest->pesan }}</p>
+  </div>
+  <div class="form-group">
+    <label>Status Saat Ini</label>
+    <p>@include('admin.layanan-pengajuan._status-badge', ['status' => $serviceRequest->status])</p>
+  </div>
+
+  <form action="{{ route('admin.layanan-pengajuan.update', $serviceRequest) }}" method="POST" style="max-width:520px;">
+    @csrf @method('PUT')
+
+    <div class="form-group">
+      <label for="status">Perbarui Status</label>
+      <select id="status" name="status">
+        @foreach(\App\Models\ServiceRequest::STATUSES as $value => $label)
+          <option value="{{ $value }}" @selected($serviceRequest->status === $value)>{{ $label }}</option>
+        @endforeach
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="catatan_admin">Catatan Admin</label>
+      <textarea id="catatan_admin" name="catatan_admin" rows="4" placeholder="Catatan ini akan terlihat oleh pemohon di halaman cek status.">{{ old('catatan_admin', $serviceRequest->catatan_admin) }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Simpan Status</button>
+  </form>
+
+  <div style="margin-top:20px;">
+    <a href="{{ route('admin.layanan-pengajuan.index') }}" class="btn btn-outline">Kembali</a>
+    <form action="{{ route('admin.layanan-pengajuan.destroy', $serviceRequest) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Hapus pengajuan ini?')">
+      @csrf @method('DELETE')
+      <button class="btn btn-danger">Hapus</button>
+    </form>
+  </div>
+</div>
+@endsection

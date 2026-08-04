@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\ProfilPhotoController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\ServiceRequestController;
 use App\Http\Controllers\ProfilController;
 
 
@@ -35,6 +36,10 @@ Route::view('/kontak', 'kontak')->name('kontak');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
 Route::get('/layanan', [LayananController::class, 'index'])->name('layanan');
+Route::get('/layanan/ajukan', [LayananController::class, 'ajukan'])->name('layanan.ajukan');
+Route::post('/layanan/ajukan', [LayananController::class, 'ajukanStore'])->name('layanan.ajukan.store');
+Route::get('/layanan/status', [LayananController::class, 'status'])->name('layanan.status');
+Route::post('/layanan/status', [LayananController::class, 'statusCheck'])->name('layanan.status.check');
 Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi');
 Route::get('/berita/{news}', [InformasiController::class, 'show'])->name('berita.show');
 Route::get('/login', function () {
@@ -122,4 +127,8 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
 
     Route::resource('messages', ContactMessageController::class)
         ->only(['index', 'show', 'destroy']);
+
+    Route::resource('layanan-pengajuan', ServiceRequestController::class)
+        ->only(['index', 'show', 'update', 'destroy'])
+        ->parameters(['layanan-pengajuan' => 'layananPengajuan']);
 });

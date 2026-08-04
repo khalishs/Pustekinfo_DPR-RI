@@ -173,6 +173,7 @@
   .hero-profil p{
     margin:20px auto 0;max-width:600px;color:rgba(255,255,255,.7);font-size:15px;line-height:1.75;font-weight:500;
   }
+  @media (max-width:900px){.hero-profil{margin-top:62px;padding:70px 20px 44px;}.hero-profil h1{font-size:24px;}}
 
   /* ================= STICKY TABS (SCROLLSPY) ================= */
   .tabs-nav{position:relative;z-index:5;margin-top:46px;}
@@ -481,26 +482,35 @@
 
     <div class="tabs-nav">
       <div class="tabs-scroll">
-        @foreach($services as $i => $s)
-          <a href="#{{ $s['id'] }}" class="tab-link {{ $i === 0 ? 'active' : '' }}" data-target="{{ $s['id'] }}">
-            <span data-en="{{ $s['title_en'] ?: $s['title'] }}">{{ $s['title'] }}</span>
-          </a>
-        @endforeach
+        <a href="#layanan-list" class="tab-link active" data-target="layanan-list">
+          <span data-en="Services">Layanan</span>
+        </a>
+        <a href="{{ route('layanan.ajukan') }}" class="tab-link">
+          <span data-en="Apply for a Service">Ajukan Layanan</span>
+        </a>
+        <a href="{{ route('layanan.status') }}" class="tab-link">
+          <span data-en="Check Status">Lihat Status</span>
+        </a>
       </div>
     </div>
   </header>
 
   <div class="tabs-nav-sticky" id="tabsSticky">
     <div class="tabs-scroll">
-      @foreach($services as $i => $s)
-        <a href="#{{ $s['id'] }}" class="tab-link {{ $i === 0 ? 'active' : '' }}" data-target="{{ $s['id'] }}">
-          {{ $s['title'] }}
-        </a>
-      @endforeach
+      <a href="#layanan-list" class="tab-link active" data-target="layanan-list">
+        <span data-en="Services">Layanan</span>
+      </a>
+      <a href="{{ route('layanan.ajukan') }}" class="tab-link">
+        <span data-en="Apply for a Service">Ajukan Layanan</span>
+      </a>
+      <a href="{{ route('layanan.status') }}" class="tab-link">
+        <span data-en="Check Status">Lihat Status</span>
+      </a>
     </div>
   </div>
 
   {{-- ================= PILAR LAYANAN ================= --}}
+  <div id="layanan-list">
   @foreach($services as $s)
     <section id="{{ $s['id'] }}" class="page-section">
       <div class="section-inner">
@@ -532,6 +542,7 @@
       </div>
     </section>
   @endforeach
+  </div>
 
   <div class="footer-divider"></div>
 
@@ -684,16 +695,6 @@
       });
     }, { threshold: 0.15 });
     sections.forEach(sec => revealObserver.observe(sec));
-
-    // ---- Scrollspy: sinkronkan tab hero + sticky ----
-    const allTabTriggers = document.querySelectorAll('.tab-link');
-    const setActiveTab = (id) => {
-      allTabTriggers.forEach(link => link.classList.toggle('active', link.dataset.target === id));
-    };
-    const spyObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => { if (entry.isIntersecting) setActiveTab(entry.target.id); });
-    }, { root: null, rootMargin: '-30% 0px -60% 0px', threshold: 0 });
-    sections.forEach(sec => spyObserver.observe(sec));
 
     // ---- Munculkan tab sticky setelah melewati hero ----
     const heroProfil = document.querySelector(".hero-profil");
