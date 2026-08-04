@@ -26,7 +26,7 @@ class LayananController extends Controller
 
         return view('layanan', [
             'services'   => $services,
-            'setting'    => SiteSetting::first(),
+            'setting'    => SiteSetting::first() ?? new SiteSetting(),
             'pageBanner' => PageBanner::where('page', 'layanan')->first(),
         ]);
     }

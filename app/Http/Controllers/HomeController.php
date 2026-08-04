@@ -54,7 +54,7 @@ class HomeController extends Controller
                 ->take(4)
                 ->get(),
             'galleries' => GalleryItem::with('category')->orderBy('sort_order')->take(8)->get(),
-            'setting'       => SiteSetting::first(),
+            'setting'       => SiteSetting::first() ?? new SiteSetting(),
             'calendarDays'  => $calendarDays,
             'monthLabel'    => $bulanIndo[$monthStart->month - 1] . ' ' . $monthStart->year,
         ]);
