@@ -156,6 +156,7 @@
   .hero-profil p{
     margin:20px auto 0;max-width:600px;color:rgba(255,255,255,.7);font-size:15px;line-height:1.75;font-weight:500;
   }
+  @media (max-width:900px){.hero-profil{margin-top:62px;padding:70px 20px 44px;}.hero-profil h1{font-size:24px;}}
 
   /* ================= STICKY TABS (SCROLLSPY) ================= */
   .tabs-nav{position:relative;z-index:5;margin-top:46px;}
@@ -171,8 +172,6 @@
     color:rgba(255,255,255,.55);font-weight:700;font-size:13.5px;
     position:relative;transition:color .2s ease, transform .2s ease;flex-shrink:0;
   }
-  .tab-link .tab-icon{width:15px;height:15px;flex-shrink:0;transition:transform .25s ease;}
-  .tab-link .tab-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   .tab-link::after{
     content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;
     background:var(--teal);border-radius:2px 2px 0 0;
@@ -181,7 +180,6 @@
   }
   .tab-link:hover{color:var(--white);transform:translateY(-1px);}
   .tab-link:hover::after{transform:scaleX(1);}
-  .tab-link:hover .tab-icon{transform:scale(1.12);}
   .tab-link.active{color:var(--white);}
   .tab-link.active::after{transform:scaleX(1);opacity:1;}
 
@@ -682,7 +680,6 @@
       <div class="tabs-scroll">
         @foreach($tabs as $i => $t)
           <a href="#{{ $t['id'] }}" class="tab-link {{ $i === 0 ? 'active' : '' }}" data-target="{{ $t['id'] }}">
-            <span class="tab-icon"><svg viewBox="0 0 24 24">{!! $t['icon'] !!}</svg></span>
             <span data-en="{{ $t['label_en'] }}">{{ $t['label'] }}</span>
           </a>
         @endforeach
@@ -694,7 +691,6 @@
     <div class="tabs-scroll">
       @foreach($tabs as $i => $t)
         <a href="#{{ $t['id'] }}" class="tab-link {{ $i === 0 ? 'active' : '' }}" data-target="{{ $t['id'] }}">
-          <span class="tab-icon"><svg viewBox="0 0 24 24">{!! $t['icon'] !!}</svg></span>
           <span data-en="{{ $t['label_en'] }}">{{ $t['label'] }}</span>
         </a>
       @endforeach

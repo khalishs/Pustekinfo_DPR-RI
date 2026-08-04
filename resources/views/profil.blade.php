@@ -183,6 +183,7 @@
   .hero-profil p{
     margin:20px auto 0;max-width:600px;color:rgba(255,255,255,.7);font-size:15px;line-height:1.75;font-weight:500;
   }
+  @media (max-width:900px){.hero-profil{margin-top:62px;padding:70px 20px 44px;}.hero-profil h1{font-size:24px;}}
 
   /* ================= STICKY TABS (SCROLLSPY) ================= */
   .tabs-nav{
