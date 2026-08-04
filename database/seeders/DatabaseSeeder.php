@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $pegawai = ['ilham', 'sulthan', 'davar', 'dimas', 'alwa', 'khalis', 'kevin'];
+        $user = ['ilham', 'sulthan', 'davar', 'dimas', 'alwa', 'khalis', 'kevin'];
 
-        foreach ($pegawai as $name) {
+        foreach ($user as $name) {
             User::updateOrCreate(
                 ['name' => $name],
                 [
