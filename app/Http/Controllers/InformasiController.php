@@ -60,7 +60,7 @@ class InformasiController extends Controller
             'monthLabel'    => $bulanIndo[$monthStart->month - 1].' '.$monthStart->year,
             'prevMonth'     => $monthStart->copy()->subMonth()->format('Y-m'),
             'nextMonth'     => $monthStart->copy()->addMonth()->format('Y-m'),
-            'setting'       => SiteSetting::first(),
+            'setting'       => SiteSetting::first() ?? new SiteSetting(),
             'pageBanner'    => PageBanner::where('page', 'informasi')->first(),
         ]);
     }
@@ -69,7 +69,7 @@ class InformasiController extends Controller
     {
         return view('berita-detail', [
             'news'    => $news,
-            'setting' => SiteSetting::first(),
+            'setting' => SiteSetting::first() ?? new SiteSetting(),
         ]);
     }
 }

@@ -25,7 +25,7 @@ class ProfilController extends Controller
             'bidangList'    => $members->where('level', 'bidang')->values(),
             'visionMission' => VisionMission::first(),
             'coreValues'    => CoreValue::orderBy('sort_order')->get(),
-            'setting'       => SiteSetting::first(),
+            'setting'       => SiteSetting::first() ?? new SiteSetting(),
             'pageBanner'    => PageBanner::where('page', 'profil')->first(),
         ]);
     }

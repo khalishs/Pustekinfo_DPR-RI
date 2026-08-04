@@ -42,7 +42,7 @@ class GaleriController extends Controller
             'items'                  => $items,
             'categories'             => $categories,
             'activeCategory'         => $categorySlug,
-            'setting'                => SiteSetting::first(),
+            'setting'                => SiteSetting::first() ?? new SiteSetting(),
             'totalFoto'              => $totalFoto,
             'kegiatanTerdokumentasi' => $kegiatanTerdokumentasi,
             'totalKategori'          => $totalKategori,

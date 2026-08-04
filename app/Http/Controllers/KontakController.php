@@ -12,7 +12,7 @@ class KontakController extends Controller
     public function index()
     {
         return view('kontak', [
-            'setting'    => SiteSetting::first(),
+            'setting'    => SiteSetting::first() ?? new SiteSetting(),
             'pageBanner' => PageBanner::where('page', 'kontak')->first(),
         ]);
     }
