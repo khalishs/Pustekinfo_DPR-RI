@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\ContactMessage;
+use App\Models\ServiceRequest;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -28,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('admin.layout', function ($view) {
             $view->with('unreadMessagesCount', ContactMessage::where('is_read', false)->count());
+            $view->with('pendingLayananCount', ServiceRequest::where('status', 'diajukan')->count());
         });
     }
 }

@@ -290,6 +290,7 @@
     flex-wrap:wrap;
   }
   .btn{
+    display:inline-block;
     padding:15px 30px;
     border-radius:5px;
     font-size:14px;
@@ -2194,8 +2195,8 @@
         <h1 data-en-html="Supporting DPR RI's Performance through Integrated <br> Information Technology <br> Services.">Mendukung Kinerja DPR RI melalui Layanan <br> Teknologi Informasi yang <br> Terintegrasi.</h1>
         <p data-en="Pustekinfo provides information technology services, infrastructure management, applications, networks, and information security to support the operations of all work units effectively, securely, and sustainably.">Pustekinfo menyediakan layanan teknologi informasi, pengelolaan infrastruktur, aplikasi, jaringan, dan keamanan informasi untuk mendukung operasional seluruh unit kerja secara efektif, aman, dan berkelanjutan.</p>
         <div class="hero-actions">
-          <button class="btn btn-primary" data-en="Request IT Service">Ajukan Layanan IT</button>
-          <button class="btn btn-ghost" data-en="View Service Status">Lihat Status Layanan</button>
+          <a href="{{ route('layanan.ajukan') }}" class="btn btn-primary" data-en="Request IT Service">Ajukan Layanan IT</a>
+          <a href="{{ route('layanan.status') }}" class="btn btn-ghost" data-en="View Service Status">Lihat Status Layanan</a>
         </div>
       </div>
     </header>
