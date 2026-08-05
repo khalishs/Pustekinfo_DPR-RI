@@ -495,7 +495,7 @@
             <div class="ajukan-info-num">3</div>
             <div class="ajukan-info-body">
               <div class="title" data-en="Track the Status">Pantau Status</div>
-              <div class="desc" data-en="Check your request status anytime using your phone number.">Cek status pengajuan Anda kapan saja menggunakan nomor telepon Anda.</div>
+              <div class="desc" data-en="Check your request status anytime using your ticket code.">Cek status pengajuan Anda kapan saja menggunakan kode tiket Anda.</div>
             </div>
           </div>
         </div>

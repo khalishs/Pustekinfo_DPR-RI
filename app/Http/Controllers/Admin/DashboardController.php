@@ -8,6 +8,7 @@ use App\Models\ContactMessage;
 use App\Models\GalleryItem;
 use App\Models\NewsItem;
 use App\Models\OrganizationMember;
+use App\Models\ServiceRequest;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -21,6 +22,8 @@ class DashboardController extends Controller
             'organizationMemberCount' => OrganizationMember::count(),
             'unreadMessagesCount' => ContactMessage::where('is_read', false)->count(),
             'latestMessages' => ContactMessage::latest()->take(5)->get(),
+            'pendingLayananCount' => ServiceRequest::where('status', 'diajukan')->count(),
+            'latestLayananRequests' => ServiceRequest::latest()->take(5)->get(),
         ]);
     }
 }

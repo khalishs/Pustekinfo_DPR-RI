@@ -6,11 +6,17 @@ use App\Models\Service;
 use App\Models\ServiceRequest;
 use App\Models\SiteSetting;
 use App\Models\PageBanner;
+use App\Support\NormalizesPhoneNumbers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class LayananController extends Controller
 {
+    use NormalizesPhoneNumbers;
+
+    // Sementara, dipakai kalau nomor WA belum diisi lewat Pengaturan Kontak di admin.
+    private const FALLBACK_WA_NUMBER = '08159646281';
+
     public function index()
     {
         $services = Service::orderBy('sort_order')->get()->map(fn (Service $service) => [
@@ -60,7 +66,7 @@ class LayananController extends Controller
         $serviceRequest = ServiceRequest::create($data);
 
         $setting = SiteSetting::first() ?? new SiteSetting();
-        $waNumber = $this->toWhatsappNumber($setting->phone);
+        $waNumber = $this->toWhatsappNumber($setting->phone) ?? $this->toWhatsappNumber(self::FALLBACK_WA_NUMBER);
         $waMessage = "Halo, saya ingin mengajukan layanan.\n\n"
             . "Kode Pengajuan: {$serviceRequest->kode}\n"
             . "Nama: {$serviceRequest->nama}\n"
@@ -91,36 +97,14 @@ class LayananController extends Controller
     public function statusCheck(Request $request)
     {
         $data = $request->validate([
-            'no_tlpn' => 'required|string|max:30',
+            'kode' => 'required|string|max:30',
         ]);
-
-        $noTlpn = $this->toWhatsappNumber($data['no_tlpn']) ?? $this->normalizeDigits($data['no_tlpn']);
 
         return view('layanan-status', [
             'setting'    => SiteSetting::first() ?? new SiteSetting(),
             'pageBanner' => PageBanner::where('page', 'layanan')->first(),
-            'results'    => ServiceRequest::where('no_tlpn', $noTlpn)->latest()->get(),
+            'results'    => ServiceRequest::where('kode', strtoupper(trim($data['kode'])))->get(),
             'searched'   => true,
         ]);
-    }
-
-    private function normalizeDigits(string $value): string
-    {
-        return preg_replace('/\D+/', '', $value) ?? '';
-    }
-
-    private function toWhatsappNumber(?string $phone): ?string
-    {
-        if (! $phone) {
-            return null;
-        }
-
-        $digits = $this->normalizeDigits($phone);
-
-        if (str_starts_with($digits, '0')) {
-            $digits = '62' . substr($digits, 1);
-        }
-
-        return $digits ?: null;
     }
 }

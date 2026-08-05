@@ -374,7 +374,7 @@
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt; / &lt;span&gt;Check Status&lt;/span&gt;">Beranda / <span>Layanan</span> / <span>Cek Status</span></p>
       <h1 data-en-html="Check your <span class=&quot;accent&quot;>request status</span>">Cek status <span class="accent">pengajuan Anda</span></h1>
-      <p data-en="Enter the phone number you used when submitting your request to see its current status.">Masukkan nomor telepon yang Anda gunakan saat mengajukan untuk melihat status terkininya.</p>
+      <p data-en="Enter the ticket code you received when submitting your request to see its current status.">Masukkan kode tiket yang Anda terima saat mengajukan untuk melihat status terkininya.</p>
     </div>
 
     <div class="tabs-nav">
@@ -415,14 +415,14 @@
       <div class="status-card">
         <div class="eyebrow" data-en="CHECK STATUS">CEK STATUS</div>
         <h3 data-en="Find Your Request">Temukan Pengajuan Anda</h3>
-        <p data-en="Enter the same WhatsApp / phone number you used to submit your request.">Masukkan nomor WhatsApp / telepon yang sama seperti saat Anda mengajukan.</p>
+        <p data-en="Enter the ticket code you received when submitting your request.">Masukkan kode tiket yang Anda terima saat mengajukan layanan.</p>
 
         <form class="status-form" method="POST" action="{{ route('layanan.status.check') }}">
           @csrf
           <div class="form-field">
-            <label for="no_tlpn" data-en="WhatsApp / phone number">Nomor WhatsApp / Telepon</label>
-            <input type="text" id="no_tlpn" name="no_tlpn" value="{{ old('no_tlpn') }}" placeholder="08xxxxxxxxxx" required>
-            @error('no_tlpn')<small class="error">{{ $message }}</small>@enderror
+            <label for="kode" data-en="Ticket code">Kode Tiket</label>
+            <input type="text" id="kode" name="kode" value="{{ old('kode') }}" placeholder="LYN-XXXXXXXX" required>
+            @error('kode')<small class="error">{{ $message }}</small>@enderror
           </div>
           <button type="submit" class="btn-cari">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -432,7 +432,7 @@
 
         @if($searched)
           @if($results->isEmpty())
-            <div class="status-empty" data-en="No requests found for this phone number.">Tidak ditemukan pengajuan untuk nomor telepon ini.</div>
+            <div class="status-empty" data-en="No request found for this ticket code.">Tidak ditemukan pengajuan untuk kode tiket ini.</div>
           @else
             <div class="status-results">
               @foreach($results as $result)

@@ -28,6 +28,11 @@
     <div class="stat-value">{{ $unreadMessagesCount }}</div>
     <div class="stat-label">Pesan Belum Dibaca</div>
   </div>
+  <div class="stat-card {{ $pendingLayananCount > 0 ? 'stat-card-alert' : '' }}">
+    <span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span>
+    <div class="stat-value">{{ $pendingLayananCount }}</div>
+    <div class="stat-label">Pengajuan Menunggu</div>
+  </div>
 </div>
 
 <div class="card">
@@ -62,6 +67,31 @@
       </tr>
     @empty
       <tr><td colspan="4">Belum ada pesan masuk.</td></tr>
+    @endforelse
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="page-head">
+    <h2>Pengajuan Layanan Terbaru</h2>
+    <a href="{{ route('admin.layanan-pengajuan.index') }}" class="btn btn-outline">Lihat Semua</a>
+  </div>
+  <div class="table-responsive">
+  <table>
+    <thead><tr><th>Kode</th><th>Nama</th><th>Jenis Layanan</th><th>Tanggal</th><th class="text-center">Status</th></tr></thead>
+    <tbody>
+    @forelse($latestLayananRequests as $req)
+      <tr>
+        <td><a href="{{ route('admin.layanan-pengajuan.show', $req) }}">{{ $req->kode }}</a></td>
+        <td>{{ $req->nama }}</td>
+        <td>{{ $req->jenis_layanan }}</td>
+        <td>{{ $req->created_at->format('d M Y H:i') }}</td>
+        <td class="text-center">@include('admin.layanan-pengajuan._status-badge', ['status' => $req->status])</td>
+      </tr>
+    @empty
+      <tr><td colspan="5">Belum ada pengajuan layanan.</td></tr>
     @endforelse
     </tbody>
   </table>
