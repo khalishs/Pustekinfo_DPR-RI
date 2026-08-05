@@ -8,7 +8,7 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Foto</th><th>Judul</th><th>Kategori</th><th>Ukuran</th><th class="text-center">Urutan</th><th></th></tr></thead>
+    <thead><tr><th>Foto</th><th>Judul</th><th>Kategori</th><th>Ukuran</th><th>Home</th><th class="text-center">Urutan</th><th></th></tr></thead>
     <tbody>
     @forelse($items as $item)
       <tr>
@@ -16,6 +16,7 @@
         <td>{{ $item->title ?? '-' }}</td>
         <td>{{ $item->category->name ?? '-' }}</td>
         <td><span class="badge cap">{{ $item->size }}</span></td>
+        <td>@if($item->show_on_home)<span class="badge-success">Ya</span>@else<span class="badge-muted">Tidak</span>@endif</td>
         <td class="text-center"><span class="badge-count">{{ $item->sort_order }}</span></td>
         <td class="row-actions">
           <a href="{{ route('admin.gallery.edit', $item) }}" class="btn btn-outline">Edit</a>
@@ -26,7 +27,7 @@
         </td>
       </tr>
     @empty
-      <tr><td colspan="6">Belum ada foto galeri.</td></tr>
+      <tr><td colspan="7">Belum ada foto galeri.</td></tr>
     @endforelse
     </tbody>
   </table>

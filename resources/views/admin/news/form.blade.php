@@ -80,6 +80,8 @@
 
       <div class="form-group" style="align-self:end;">
         <label><input type="checkbox" name="is_featured" value="1" style="width:auto;display:inline-block;" {{ old('is_featured', $newsItem->is_featured) ? 'checked' : '' }}> Jadikan berita utama (featured)</label>
+        @error('is_featured')<small class="error">{{ $message }}</small>@enderror
+        <small>Cuma satu berita yang bisa jadi berita utama. Batalkan berita utama yang aktif dulu untuk memindahkannya.</small>
       </div>
     </div>
 

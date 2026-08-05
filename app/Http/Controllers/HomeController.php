@@ -53,7 +53,7 @@ class HomeController extends Controller
                 ->orderBy('event_time')
                 ->take(4)
                 ->get(),
-            'galleries' => GalleryItem::with('category')->orderBy('sort_order')->take(8)->get(),
+            'galleries' => GalleryItem::with('category')->where('show_on_home', true)->orderBy('sort_order')->take(8)->get(),
             'setting'       => SiteSetting::first() ?? new SiteSetting(),
             'calendarDays'  => $calendarDays,
             'monthLabel'    => $bulanIndo[$monthStart->month - 1] . ' ' . $monthStart->year,
