@@ -75,7 +75,7 @@ class OrganizationMemberController extends Controller
             'unit_description_en' => 'nullable|string',
             'level'               => 'required|in:kepala,sekretariat,bidang',
             'sort_order'          => 'required|integer',
-            'photo'               => 'nullable|image|max:2048',
+            'photo'               => 'nullable|image|min:2048|max:10240',
         ]);
     }
 }

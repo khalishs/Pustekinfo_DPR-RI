@@ -607,21 +607,21 @@
 
   /* Pola batik sama seperti konten-batik (bukan versi terpisah lagi) — pakai filter alpha-boost
      yang sama dipakai dark mode, supaya tetap konsisten & kontras di atas navy */
-  .layanan::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:url('{{ asset('images/pola-batik.png') }}');
-    background-repeat:repeat-y;
-    background-position:center top;
-    background-size:5000px auto;
-    filter:url(#batikAlphaBoost);
-    pointer-events:none;
-    z-index:0;
-    transform:translateY(var(--parallax-layanan, 0px));
-    will-change:transform;
+ .layanan::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url('{{ asset('images/group-batik.png') }}');
+  background-repeat:repeat-y;
+  background-position:center top;
+  background-size:10000px auto;
+  filter:url(#batikTintTeal);
+  opacity:.1;   /* 0 = tak terlihat, 1 = penuh — atur sesuai selera */
+  pointer-events:none;
+  z-index:0;
+  transform:translateY(var(--parallax-layanan, 0px));
+  will-change:transform;
   }
-
   .layanan-inner{
     position:relative;
     z-index:1;
@@ -1268,19 +1268,7 @@
     box-shadow:0 30px 60px -30px rgba(11,34,51,.35);
   }
 
-  .agenda-today::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:url('{{ asset('images/pola-batik.png') }}');
-    background-repeat:no-repeat;
-    background-position:center top;
-    background-size:4000px auto;
-    filter:brightness(0) invert(1);
-    opacity:.40;
-    pointer-events:none;
-    z-index:0;
-  }
+  /* Tidak ada lagi pola batik terpisah di sini — cukup pakai layer .konten-batik::before */
 
   .agenda-today-head{
     display:flex;
@@ -1728,10 +1716,10 @@
   inset:0;
   z-index:-1;
   pointer-events:none;
-  background-image:url('{{ asset('images/pola-batik.png') }}');
+  background-image:url('{{ asset('images/group-batik.png') }}');
   background-repeat:repeat-y;
   background-position:center top;
-  background-size:5000px auto;
+  background-size:10000px auto;
   filter:url(#batikBoostLight);
   transform:translateY(var(--parallax-batik, 0px));
   will-change:transform;
@@ -1744,7 +1732,7 @@
   background-color:#0e1b23;
 }
 [data-theme="dark"] .konten-batik::before{
-  filter:url(#batikAlphaBoost);
+  filter:url(#batikTintTeal);
 }
 
 @media (max-width:900px){
@@ -2162,11 +2150,13 @@
 <body>
 
     <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
-      <filter id="batikAlphaBoost">
-        <feComponentTransfer>
-          <feFuncA type="linear" slope="5.5" intercept="0"/>
-        </feComponentTransfer>
-      </filter>
+    <filter id="batikTintTeal">
+      <feColorMatrix type="matrix" values="
+        0 0 0 0 0.0784
+        0 0 0 0 0.5137
+        0 0 0 0 0.6118
+        0 0 0 5.5 0"/>   
+    </filter>  
       <filter id="batikBoostLight">
         <feColorMatrix type="saturate" values="2.8"/>
         <feComponentTransfer>
@@ -2314,7 +2304,7 @@
   <section id="layanan" class="layanan">
     <div class="layanan-inner">
       <div class="eyebrow" data-en="WHAT WE DO">APA YANG KAMI KERJAKAN</div>
-      <h2 data-en="Information technology services">Layanan teknologi informasi</h2>
+      <h2 data-en="Information technology services">Layanan Teknologi Informasi</h2>
 
       <div class="layanan-grid">
         <div class="layanan-card">
@@ -2402,7 +2392,7 @@
       <div class="berita-head">
         <div>
           <div class="eyebrow" data-en="LATEST NEWS">KABAR TERBARU</div>
-          <h2 data-en="News &amp; activities">Berita &amp; kegiatan</h2>
+          <h2 data-en="News &amp; activities">Berita &amp; Kegiatan</h2>
         </div>
         <a href="{{ route('informasi') }}" class="berita-link"><span data-en="ALL NEWS">SEMUA BERITA</span> <span>→</span></a>
       </div>

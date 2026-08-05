@@ -26,7 +26,7 @@ class PageBannerController extends Controller
         $this->ensureValidPage($page);
 
         $request->validate([
-            'image' => 'required|image|max:4096',
+            'image' => 'required|image|min:2048|max:10240',
         ]);
 
         $banner = PageBanner::firstOrNew(['page' => $page]);

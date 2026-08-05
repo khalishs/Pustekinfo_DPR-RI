@@ -70,7 +70,7 @@ class HeroSlideController extends Controller
             'subtitle'    => 'nullable|string|max:255',
             'subtitle_en' => 'nullable|string|max:255',
             'sort_order'  => 'required|integer',
-            'image'       => ($imageRequired ? 'required' : 'nullable') . '|image|max:4096',
+            'image'       => ($imageRequired ? 'required' : 'nullable') . '|image|min:2048|max:10240',
         ]);
     }
 }

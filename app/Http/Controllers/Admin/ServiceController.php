@@ -73,7 +73,7 @@ class ServiceController extends Controller
             'description_en' => 'nullable|string',
             'features'       => 'nullable|string',
             'features_en'    => 'nullable|string',
-            'icon_image'     => ($imageRequired ? 'required' : 'nullable') . '|image|max:2048',
+            'icon_image'     => ($imageRequired ? 'required' : 'nullable') . '|image|min:2048|max:10240',
             'cta_text'       => 'required|string|max:255',
             'cta_text_en'    => 'nullable|string|max:255',
             'sort_order'     => 'required|integer',

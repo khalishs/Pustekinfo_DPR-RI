@@ -76,7 +76,7 @@ class NewsItemController extends Controller
             'excerpt_en'      => 'nullable|string',
             'content'         => 'nullable|string',
             'content_en'      => 'nullable|string',
-            'image'           => 'nullable|image|max:2048',
+            'image'           => 'nullable|image|min:2048|max:10240',
             'author'          => 'required|string|max:255',
             'reading_minutes' => 'required|integer|min:1',
             'is_featured'     => 'nullable|boolean',
