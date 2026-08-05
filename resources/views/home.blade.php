@@ -229,13 +229,16 @@
     margin-top: 70px;
     position:relative;
     background: var(--white);
-    height:650px;
+    /* Navbar (70px) + hero = pas 1 layar penuh saat pertama dibuka, di device apa pun.
+       100dvh dipakai belakangan supaya browser lama yang belum kenal dvh tetap dapat fallback 100vh. */
+    min-height:calc(100vh - 70px);
+    min-height:calc(100dvh - 70px);
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
     overflow:hidden;
-    padding:10px 24px 130px;
+    padding:10px 24px 60px;
   }
   .hero-slider{
     position:absolute;
@@ -292,12 +295,32 @@
     background:linear-gradient(180deg, rgba(11,49,74,.55) 0%, rgba(11,60,86,.72) 55%, rgba(9,46,58,.88) 100%);
     pointer-events:none;
   }
-  .hero-content{margin-top:130px;position:relative;z-index:2;max-width:900px;}
+  .hero-content{margin-top:24px;position:relative;z-index:2;max-width:900px;}
+  .hero-content .eyebrow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:20px;
+    color:#fff;
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+  }
+  .hero-content .eyebrow::before,
+  .hero-content .eyebrow::after{
+    content:"";
+    width:22px;height:2px;
+    background:#5FC0D1;
+    display:inline-block;
+  }
   .hero-content h1{
     color:var(--white);
-    font-size:38px;
-    font-weight:700;
-    line-height:1.22;
+    font-size:46px;
+    font-weight:800;
+    line-height:1.18;
     letter-spacing:-.01em;
     text-shadow:0 2px 18px rgba(0,0,0,.2);
   }
@@ -315,6 +338,53 @@
     gap:16px;
     justify-content:center;
     flex-wrap:wrap;
+  }
+
+  /* ---------- Hero: petunjuk scroll ---------- */
+  .hero-scroll-cue{
+    position:absolute;
+    left:50%;
+    bottom:30px;
+    transform:translateX(-50%);
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    color:rgba(255,255,255,.8);
+    text-decoration:none;
+    transition:color .2s ease;
+  }
+  .hero-scroll-cue:hover{color:#fff;}
+  .hero-scroll-cue .label{
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+  }
+  .hero-scroll-cue .mouse{
+    width:24px;height:38px;
+    border:1.5px solid rgba(255,255,255,.6);
+    border-radius:14px;
+    display:flex;
+    justify-content:center;
+    padding-top:7px;
+    transition:border-color .2s ease;
+  }
+  .hero-scroll-cue:hover .mouse{border-color:#fff;}
+  .hero-scroll-cue .dot{
+    width:4px;height:8px;
+    border-radius:2px;
+    background:#fff;
+    animation:heroScrollDot 1.8s ease-in-out infinite;
+  }
+  @keyframes heroScrollDot{
+    0%{opacity:1;transform:translateY(0);}
+    70%{opacity:0;transform:translateY(10px);}
+    100%{opacity:0;transform:translateY(10px);}
+  }
+  @media (max-width:900px){
+    .hero-scroll-cue{display:none;}
   }
   .btn{
     display:inline-block;
@@ -338,7 +408,7 @@
   .stats-bar{
     position:relative;
     z-index:3;
-    margin:-60px 100px 0;
+    margin:40px 100px 0;
     background: linear-gradient(150deg,#073D5F 40%,#057888 100%);
     border-radius:14px;
     display:grid;
@@ -447,12 +517,18 @@
       border-bottom:1px solid #f1f4f5;
     }
     .nav-links li.active::after{display:none;}
-    .hero{margin-top:62px;padding:90px 20px 200px;}
+    .hero{
+      margin-top:62px;
+      min-height:calc(100vh - 62px);
+      min-height:calc(100dvh - 62px);
+      padding:70px 20px 60px;
+    }
+    .hero-content{margin-top:16px;}
     .hero-content h1{font-size:26px;}
 
     .stats-bar{
       grid-template-columns:repeat(2,1fr);
-      margin:-90px 16px 0;
+      margin:24px 16px 0;
       border-radius:12px;
     }
     .stat{
@@ -475,7 +551,9 @@
 
   /* ---------- Profil Singkat ---------- */
   .profil{
-    padding:70px 100px 110px;
+    position:relative;
+    overflow:hidden;
+    padding:40px 100px 110px;
     opacity:0;
     transform:translateY(80px);
     transition:
@@ -485,6 +563,8 @@
 
   .profil.show{opacity:1;transform:translateY(0);}
   .profil-grid{
+    position:relative;
+    z-index:1;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 1px 25px 1px 25px;
     padding: 30px;
@@ -492,7 +572,7 @@
     grid-template-columns:1fr 1fr;
     gap:80px;
     align-items:center;
-    margin: 40px auto;
+    margin: 20px auto;
     max-width:1240px;
   }
   .profil-media{
@@ -613,7 +693,7 @@
   }
 
   @media (max-width:900px){
-    .profil{padding:50px 20px 70px;}
+    .profil{padding:30px 20px 70px;}
     .profil-grid{grid-template-columns:1fr;gap:60px;}
     .feature-row{gap:24px;}
   }
@@ -778,6 +858,8 @@
 
   /* ---------- Sambutan Pimpinan ---------- */
   .sambutan{
+    position:relative;
+    overflow:hidden;
     padding:90px 100px 110px;
     opacity: 0;
     transform:translateY(60px);
@@ -786,6 +868,8 @@
   .sambutan.show{opacity:1;transform:translateY(0);}
   
   .sambutan-inner{
+    position:relative;
+    z-index:1;
     max-width:1240px;
     margin:0 auto;
   }
@@ -812,7 +896,6 @@
     background:var(--white);
     border-radius:1px 16px 1px 16px;
     overflow:hidden;
-    box-shadow:0 40px 70px -30px rgba(11,34,51,.35);
   }
 
   .sambutan-photo{
@@ -909,7 +992,7 @@
   /* ---------- Berita & Kegiatan ---------- */
   .berita{
     position:relative;
-    background-color: rgba(255, 255, 255, 0.5);
+    overflow:hidden;
     padding:90px 100px 120px;
     opacity:0;
     transform:translateY(60px);
@@ -917,7 +1000,7 @@
   }
   .berita.show{opacity:1;transform:translateY(0);}
 
-  .berita-inner{max-width:1240px;margin:0 auto;}
+  .berita-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;}
 
   .berita-head{
     display:flex;
@@ -985,7 +1068,6 @@
     background:
       radial-gradient(120% 120% at 15% 10%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
-    box-shadow:0 30px 60px -24px rgba(11,34,51,.35);
     transition:box-shadow .3s ease, transform .3s ease;
   }
   .berita-featured:hover{
@@ -1169,7 +1251,6 @@
     background:var(--white);
     border-radius:16px;
     padding:28px 30px 22px;
-    box-shadow:0 30px 60px -30px rgba(11,34,51,.25);
   }
   .agenda-cal-head{
     display:flex;
@@ -1298,7 +1379,6 @@
     padding:26px 26px 30px;
     display:flex;
     flex-direction:column;
-    box-shadow:0 30px 60px -30px rgba(11,34,51,.35);
   }
 
   /* Tidak ada lagi pola batik terpisah di sini — cukup pakai layer .konten-batik::before */
@@ -1409,7 +1489,7 @@
   /* ---------- Galeri Kegiatan ---------- */
 .galeri{
   position:relative;
-  background-color: rgba(255, 255, 255, 0.5);
+  overflow:hidden;
   padding:90px 100px 120px;
   opacity:0;
   transform:translateY(60px);
@@ -1417,7 +1497,7 @@
 }
 .galeri.show{opacity:1;transform:translateY(0);}
 
-.galeri-inner{max-width:1240px;margin:0 auto;}
+.galeri-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;}
 
 .galeri-head{
   display:flex;
@@ -1643,7 +1723,6 @@
   background:var(--white);
   border-radius:12px;
   padding:18px 20px;
-  box-shadow:0 6px 20px -10px rgba(11,34,51,.12);
   cursor:pointer;
   transition:transform .2s ease, box-shadow .2s ease;
 }
@@ -1771,6 +1850,27 @@
 @media (max-width:900px){
   .konten-batik::before{background-size:3000px auto;}
   .layanan::before{background-size:3000px auto;}
+}
+
+/* ---------- Blob dekoratif (elemen murni CSS untuk efek parallax yang terlihat) ---------- */
+.pxl-blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(60px);
+  pointer-events:none;
+  z-index:0;
+  opacity:.4;
+  will-change:transform;
+}
+.pxl-blob--a{ top:-14%; left:-8%; width:340px; height:340px; background:var(--teal); }
+.pxl-blob--b{ bottom:-16%; right:-6%; width:280px; height:280px; background:var(--gold); }
+
+[data-theme="dark"] .pxl-blob{ opacity:.3; }
+
+@media (max-width:900px){
+  .pxl-blob{ filter:blur(38px); }
+  .pxl-blob--a{ width:200px; height:200px; }
+  .pxl-blob--b{ width:170px; height:170px; }
 }
 
 /* ---------- CTA Bantuan Teknis ---------- */
@@ -2144,7 +2244,7 @@
 [data-theme="dark"] .feature:hover .icon{color:#e0b869;}
 [data-theme="dark"] .feature:hover .title{color:#5FC0D1;}
 
-[data-theme="dark"] .sambutan-card{background:#122530;box-shadow:0 40px 70px -30px rgba(0,0,0,.6);}
+[data-theme="dark"] .sambutan-card{background:#122530;}
 [data-theme="dark"] .sambutan-content .desc{color:#8ea0a8;}
 [data-theme="dark"] .sambutan-content .signature{color:#eaf3f5;}
 [data-theme="dark"] .sambutan-content .sign-role{color:#8ea0a8;}
@@ -2156,7 +2256,7 @@
 [data-theme="dark"] .berita-item-body .meta{color:#8ea0a8;}
 [data-theme="dark"] .berita-link{color:#5FC0D1;border-bottom-color:#5FC0D1;}
 
-[data-theme="dark"] .agenda-cal{background:#122530;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);}
+[data-theme="dark"] .agenda-cal{background:#122530;}
 [data-theme="dark"] .agenda-cal-daynames span{color:#6d8189;}
 [data-theme="dark"] .agenda-day{color:#eaf3f5;}
 [data-theme="dark"] .agenda-day:hover{background:rgba(95,192,209,.12);color:#5FC0D1;}
@@ -2169,7 +2269,7 @@
 [data-theme="dark"] .galeri{background-color: rgba(0, 0, 0, 0.8);}
 [data-theme="dark"] .galeri-link{color:#5FC0D1;border-bottom-color:#5FC0D1;}
 
-[data-theme="dark"] .akses-item{background:#122530;box-shadow:0 6px 20px -10px rgba(0,0,0,.5);}
+[data-theme="dark"] .akses-item{background:#122530;}
 [data-theme="dark"] .akses-item-body .title{color:#eaf3f5;}
 [data-theme="dark"] .akses-item-body .desc{color:#8ea0a8;}
 [data-theme="dark"] .akses-item.dokumen .akses-icon{background:rgba(255,255,255,.08);color:#c3cdd2;}
@@ -2236,7 +2336,7 @@
         @forelse($heroSlides as $slide)
           <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$slide->image) }}')"></div>
         @empty
-          <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict3.jpg') }}')"></div>
+          <div class="hero-slide" style="background-image:url('{{ asset('images/hero-gedung-dpr.jpg') }}')"></div>
         @endforelse
       </div>
       @if($heroSlides->count() > 1)
@@ -2248,13 +2348,19 @@
         </button>
       @endif
       <div class="hero-content">
-        <h1 data-en-html="Supporting DPR RI's Performance through Integrated <br> Information Technology <br> Services.">Mendukung Kinerja DPR RI melalui Layanan <br> Teknologi Informasi yang <br> Terintegrasi.</h1>
+        <div class="eyebrow" data-en="Center for Information &amp; Communication Technology">Pusat Teknologi Informasi dan Komunikasi</div>
+        <h1 data-en-html="Supporting DPR RI's Performance Through Integrated <br> Information Technology <br> Services.">Mendukung Kinerja DPR RI Melalui Layanan <br> Teknologi Informasi Yang <br> Terintegrasi.</h1>
         <p data-en="Pustekinfo provides information technology services, infrastructure management, applications, networks, and information security to support the operations of all work units effectively, securely, and sustainably.">Pustekinfo menyediakan layanan teknologi informasi, pengelolaan infrastruktur, aplikasi, jaringan, dan keamanan informasi untuk mendukung operasional seluruh unit kerja secara efektif, aman, dan berkelanjutan.</p>
         <div class="hero-actions">
           <a href="{{ route('layanan.ajukan') }}" class="btn btn-primary" data-en="Request IT Service">Ajukan Layanan IT</a>
           <a href="{{ route('layanan.status') }}" class="btn btn-ghost" data-en="View Service Status">Lihat Status Layanan</a>
         </div>
       </div>
+
+      <a href="#profil" class="hero-scroll-cue" aria-label="Gulir ke bawah">
+        <span class="mouse"><span class="dot"></span></span>
+        <span class="label" data-en="Scroll">Scroll</span>
+      </a>
     </header>
 
     <section class="stats-bar" style="--stat-cols:{{ max($stats->count(), 1) }};">
@@ -2282,6 +2388,8 @@
 
         {{-- ================= PROFIL SINGKAT ================= --}}
         <section id="profil" class="profil">
+          <span class="pxl-blob pxl-blob--a" aria-hidden="true"></span>
+          <span class="pxl-blob pxl-blob--b" aria-hidden="true"></span>
           <div class="profil-grid">
 
             <div class="profil-media">
@@ -2295,7 +2403,7 @@
 
             <div class="profil-copy">
               <div class="eyebrow" data-en="SHORT PROFILE">PROFIL SINGKAT</div>
-              <h2 data-en="The institution's information technology support unit">Unit pendukung teknologi informasi lembaga</h2>
+              <h2 data-en="The Institution's Information Technology Support Unit">Unit Pendukung Teknologi Informasi Lembaga</h2>
               <p data-en="Responsible for managing the network, information systems, data, and cyber security within the institution, so that all work processes run efficiently and accountably.">Bertanggung jawab atas pengelolaan jaringan, sistem informasi, data, dan keamanan siber di lingkungan lembaga, agar seluruh proses kerja berjalan efisien dan akuntabel.</p>
 
               <div class="profil-features">
@@ -2309,14 +2417,14 @@
                           <polyline points="4 18 5.5 19.5 8 17"></polyline><line x1="10" y1="18" x2="20" y2="18"></line>
                       </svg>
                   </div>
-                  <div class="title" data-en="Main duties">Tugas pokok</div>
+                  <div class="title" data-en="Main Duties">Tugas Pokok</div>
                   <div class="desc" data-en="Managing IT infrastructure, networks, and data centers.">Mengelola infrastruktur TI, jaringan, dan pusat data.</div>
                 </div>
                 <div class="feature">
                   <div class="icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7"></rect><rect x="14" y="13" width="7" height="7"></rect><line x1="10" y1="7.5" x2="14" y2="7.5"></line><line x1="14" y1="7.5" x2="14" y2="16.5"></line></svg>
                   </div>
-                  <div class="title" data-en="Main functions">Fungsi utama</div>
+                  <div class="title" data-en="Main Functions">Fungsi Utama</div>
                   <div class="desc" data-en="Developing and maintaining cross-unit systems.">Mengembangkan dan memelihara sistem lintas unit kerja.</div>
                 </div>
               </div>
@@ -2346,14 +2454,14 @@
   <section id="layanan" class="layanan">
     <div class="layanan-inner">
       <div class="eyebrow" data-en="WHAT WE DO">APA YANG KAMI KERJAKAN</div>
-      <h2 data-en="Information technology services">Layanan Teknologi Informasi</h2>
+      <h2 data-en="Information Technology Services">Layanan Teknologi Informasi</h2>
 
       <div class="layanan-grid">
         <div class="layanan-card">
           <div class="icon">
             <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
           </div>
-          <div class="title" data-en="Network &amp; internet">Jaringan &amp; internet</div>
+          <div class="title" data-en="Network &amp; Internet">Jaringan &amp; Internet</div>
           <div class="desc" data-en="Management of connectivity and network infrastructure.">Pengelolaan konektivitas dan infrastruktur jaringan.</div>
         </div>
 
@@ -2361,7 +2469,7 @@
           <div class="icon">
             <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </div>
-          <div class="title" data-en="Information systems">Sistem informasi</div>
+          <div class="title" data-en="Information Systems">Sistem Informasi</div>
           <div class="desc" data-en="Development and integration of internal and public service applications.">Pengembangan dan integrasi aplikasi layanan internal maupun publik.</div>
         </div>
 
@@ -2369,7 +2477,7 @@
           <div class="icon">
             <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
           </div>
-          <div class="title" data-en="Helpdesk &amp; complaints">Helpdesk &amp; aduan</div>
+          <div class="title" data-en="Helpdesk &amp; Complaints">Helpdesk &amp; Aduan</div>
           <div class="desc" data-en="Complaint and technical support services for device or system issues.">Layanan pengaduan dan bantuan teknis untuk kendala perangkat maupun sistem.</div>
         </div>
 
@@ -2377,7 +2485,7 @@
           <div class="icon">
             <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.2 3.4 9.9 8 11 4.6-1.1 8-5.8 8-11V5l-8-3z"/></svg>
           </div>
-          <div class="title" data-en="Information security">Keamanan informasi</div>
+          <div class="title" data-en="Information Security">Keamanan Informasi</div>
           <div class="desc" data-en="Protection of data and systems from cyber threats according to security standards.">Perlindungan data dan sistem dari ancaman siber sesuai standar keamanan.</div>
         </div>
 
@@ -2385,7 +2493,7 @@
           <div class="icon">
             <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
           </div>
-          <div class="title" data-en="Data center &amp; cloud">Data center &amp; cloud</div>
+          <div class="title" data-en="Data Center &amp; Cloud">Data Center &amp; Cloud</div>
           <div class="desc" data-en="Providing secure and reliable data storage infrastructure.">Penyediaan infrastruktur penyimpanan data yang aman dan andal.</div>
         </div>
 
@@ -2393,7 +2501,7 @@
           <div class="icon">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </div>
-          <div class="title" data-en="Website management">Pengelolaan website</div>
+          <div class="title" data-en="Website Management">Pengelolaan Website</div>
           <div class="desc" data-en="Maintenance and updates of the official portal and work unit subdomains.">Pemeliharaan dan pembaruan portal resmi serta subdomain unit kerja.</div>
         </div>
       </div>
@@ -2402,6 +2510,8 @@
 
   {{-- ================= SAMBUTAN PIMPINAN ================= --}}
   <section id="sambutan" class="sambutan">
+    <span class="pxl-blob pxl-blob--a" aria-hidden="true"></span>
+    <span class="pxl-blob pxl-blob--b" aria-hidden="true"></span>
     <div class="sambutan-inner">
       <div class="eyebrow" data-en="LEADERSHIP MESSAGE">SAMBUTAN PIMPINAN</div>
 
@@ -2429,12 +2539,14 @@
 
   {{-- ================= BERITA & KEGIATAN ================= --}}
   <section id="berita" class="berita">
+    <span class="pxl-blob pxl-blob--a" aria-hidden="true"></span>
+    <span class="pxl-blob pxl-blob--b" aria-hidden="true"></span>
     <div class="berita-inner">
 
       <div class="berita-head">
         <div>
           <div class="eyebrow" data-en="LATEST NEWS">KABAR TERBARU</div>
-          <h2 data-en="News &amp; activities">Berita &amp; Kegiatan</h2>
+          <h2 data-en="News &amp; Activities">Berita &amp; Kegiatan</h2>
         </div>
         <a href="{{ route('informasi') }}" class="berita-link"><span data-en="ALL NEWS">SEMUA BERITA</span> <span>→</span></a>
       </div>
@@ -2484,7 +2596,7 @@
     <div class="agenda-inner">
 
       <div class="eyebrow" data-en="SCHEDULE">JADWAL</div>
-      <h2 data-en="Activity agenda">Agenda kegiatan</h2>
+      <h2 data-en="Activity Agenda">Agenda Kegiatan</h2>
 
       <div class="agenda-grid">
 
@@ -2576,12 +2688,14 @@
 
  {{-- ================= GALERI KEGIATAN ================= --}}
 <section id="galeri" class="galeri">
+  <span class="pxl-blob pxl-blob--a" aria-hidden="true"></span>
+  <span class="pxl-blob pxl-blob--b" aria-hidden="true"></span>
   <div class="galeri-inner">
 
     <div class="galeri-head">
       <div>
         <div class="eyebrow" data-en="DOCUMENTATION">DOKUMENTASI</div>
-        <h2 data-en="Activity gallery">Galeri kegiatan</h2>
+        <h2 data-en="Activity Gallery">Galeri Kegiatan</h2>
       </div>
       <a href="{{ route('galeri') }}" class="galeri-link"><span data-en="VIEW ALL GALLERY">LIHAT SEMUA GALERI</span> <span>→</span></a>
     </div>
@@ -2608,14 +2722,14 @@
       <div class="eyebrow" data-en="QUICK ACCESS">AKSES CEPAT</div>
       <h2>
         <span class="head-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
-        <span data-en="Popular services">Layanan populer</span>
+        <span data-en="Popular Services">Layanan Populer</span>
       </h2>
 
       <div class="akses-list">
         <div class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg></div>
           <div class="akses-item-body">
-            <div class="title" data-en="Submit a help ticket">Ajukan tiket bantuan</div>
+            <div class="title" data-en="Submit a Help Ticket">Ajukan Tiket Bantuan</div>
             <div class="desc" data-en="Report your technical issue">Laporkan kendala teknis Anda</div>
           </div>
           <div class="akses-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
@@ -2624,7 +2738,7 @@
         <div class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.5 12.5 19 4"/><path d="M17 6l2 2"/><path d="M14 9l2 2"/></svg></div>
           <div class="akses-item-body">
-            <div class="title" data-en="Reset password">Reset kata sandi</div>
+            <div class="title" data-en="Reset Password">Reset Kata Sandi</div>
             <div class="desc" data-en="Recover access to your account">Pulihkan akses akun Anda</div>
           </div>
           <div class="akses-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
@@ -2633,7 +2747,7 @@
         <div class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></div>
           <div class="akses-item-body">
-            <div class="title" data-en="Institutional email request">Permintaan email lembaga</div>
+            <div class="title" data-en="Institutional Email Request">Permintaan Email Lembaga</div>
             <div class="desc" data-en="Create an official email account">Buat akun email resmi</div>
           </div>
           <div class="akses-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
@@ -2642,7 +2756,7 @@
         <div class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div>
           <div class="akses-item-body">
-            <div class="title" data-en="Network &amp; WiFi access">Akses jaringan &amp; WiFi</div>
+            <div class="title" data-en="Network &amp; WiFi Access">Akses Jaringan &amp; WiFi</div>
             <div class="desc" data-en="Register a device on the network">Daftarkan perangkat ke jaringan</div>
           </div>
           <div class="akses-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
@@ -2655,7 +2769,7 @@
       <div class="eyebrow">DOKUMEN</div>
       <h2>
         <span class="head-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span>
-        Publikasi &amp; unduhan
+        Publikasi &amp; Unduhan
       </h2>
 
       <div class="akses-list">
@@ -3151,44 +3265,80 @@ const aksesObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 aksesObserver.observe(aksesSection);
 
-// ---- Parallax: hero slider & pola batik dekoratif (Layanan, konten-batik) ----
+// ---- Parallax: dari hero sampai galeri, dengan easing supaya gerakannya halus & natural ----
 (function () {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const heroEl = document.querySelector(".hero");
+    const heroSlider = document.querySelector(".hero-slider");
+    const heroContent = document.querySelector(".hero-content");
+
+    function blobLayers(sectionSelector) {
+        const section = document.querySelector(sectionSelector);
+        if (!section) return [];
+        const a = section.querySelector(".pxl-blob--a");
+        const b = section.querySelector(".pxl-blob--b");
+        return [
+            a && { el: a, factor: 0.2, max: 90 },
+            b && { el: b, factor: -0.26, max: 80 },
+        ].filter(Boolean);
+    }
+
     const layers = [
-        { el: document.querySelector(".hero-slider"), measure: heroEl, factor: 0.6, max: 220 },
-        { el: document.querySelector(".konten-batik"), factor: 0.3, max: 260, prop: "--parallax-batik" },
-        { el: document.querySelector(".layanan"), factor: 0.35, max: 140, prop: "--parallax-layanan" },
+        ...blobLayers("#profil"),
+        ...blobLayers("#sambutan"),
+        ...blobLayers("#berita"),
+        ...blobLayers("#galeri"),
     ].filter(layer => layer.el);
+    layers.forEach(l => { l.current = 0; });
 
-    if (!layers.length) return;
+    if (!layers.length && !heroSlider) return;
 
-    let ticking = false;
+    // Semakin kecil, gerakannya semakin "berat"/mengejar dengan lambat (terasa halus, bukan kaku).
+    const EASE = 0.085;
+    let heroCurrent = 0;
+    let heroContentCurrent = 0;
 
-    function updateParallax() {
-        layers.forEach(({ el, measure, factor, max, prop }) => {
-            const rectTop = (measure || el).getBoundingClientRect().top;
-            const offset = Math.max(-max, Math.min(max, -rectTop * factor));
-            if (prop) {
-                el.style.setProperty(prop, offset.toFixed(1) + "px");
+    function clampedTarget(el, factor, max) {
+        const rectTop = el.getBoundingClientRect().top;
+        return Math.max(-max, Math.min(max, -rectTop * factor));
+    }
+
+    function frame() {
+        layers.forEach(l => {
+            const target = clampedTarget(l.el, l.factor, l.max);
+            l.current += (target - l.current) * EASE;
+            if (l.prop) {
+                l.el.style.setProperty(l.prop, l.current.toFixed(1) + "px");
             } else {
-                el.style.transform = `translateY(${offset.toFixed(1)}px)`;
+                l.el.style.transform = `translateY(${l.current.toFixed(1)}px)`;
             }
         });
-        ticking = false;
-    }
 
-    function onScrollOrResize() {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
+        if (heroEl && heroSlider) {
+            const heroRect = heroEl.getBoundingClientRect();
+            const heroHeight = heroEl.offsetHeight || 650;
+            // 0 = hero baru terlihat, 1 = hero baru saja meninggalkan viewport bagian atas.
+            const progress = Math.max(0, Math.min(1, -heroRect.top / heroHeight));
+
+            const heroTarget = Math.max(-260, Math.min(260, -heroRect.top * 0.45));
+            heroCurrent += (heroTarget - heroCurrent) * EASE;
+            const scale = 1 + progress * 0.09;
+            heroSlider.style.transform = `translateY(${heroCurrent.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+
+            if (heroContent) {
+                const contentTarget = Math.max(-70, Math.min(70, -heroRect.top * 0.16));
+                heroContentCurrent += (contentTarget - heroContentCurrent) * EASE;
+                const fade = Math.max(0, 1 - progress * 1.7);
+                heroContent.style.transform = `translateY(${heroContentCurrent.toFixed(1)}px)`;
+                heroContent.style.opacity = fade.toFixed(2);
+            }
         }
+
+        requestAnimationFrame(frame);
     }
 
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize);
-    updateParallax();
+    requestAnimationFrame(frame);
 })();
 
 </script>

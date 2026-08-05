@@ -7,77 +7,81 @@
     @csrf
     @if($service->exists) @method('PUT') @endif
 
-    <div class="form-group">
-      <label class="required">Judul Layanan</label>
-      <input type="text" name="title" value="{{ old('title', $service->title) }}" required>
-      @error('title')<small class="error">{{ $message }}</small>@enderror
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="required">Judul Layanan</label>
+        <input type="text" name="title" value="{{ old('title', $service->title) }}" required>
+        @error('title')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group">
+        <label>Judul Layanan (EN)</label>
+        <input type="text" name="title_en" value="{{ old('title_en', $service->title_en) }}">
+        @error('title_en')<small class="error">{{ $message }}</small>@enderror
+        <small>Opsional — kosongkan untuk memakai judul Bahasa Indonesia di atas.</small>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label class="required">Deskripsi</label>
+        <textarea name="description" required>{{ old('description', $service->description) }}</textarea>
+        @error('description')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group form-span-2">
+        <label>Deskripsi (EN)</label>
+        <textarea name="description_en">{{ old('description_en', $service->description_en) }}</textarea>
+        @error('description_en')<small class="error">{{ $message }}</small>@enderror
+        <small>Opsional — kosongkan untuk memakai deskripsi Bahasa Indonesia di atas.</small>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label>Daftar Fitur (satu baris = satu fitur)</label>
+        <textarea name="features" style="min-height:120px;">{{ old('features', $service->exists ? implode("\n", $service->features) : '') }}</textarea>
+        @error('features')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group form-span-2">
+        <label>Daftar Fitur (EN, satu baris = satu fitur, urutan harus sama dengan versi Indonesia)</label>
+        <textarea name="features_en" style="min-height:120px;">{{ old('features_en', $service->exists && $service->features_en ? implode("\n", $service->features_en) : '') }}</textarea>
+        @error('features_en')<small class="error">{{ $message }}</small>@enderror
+        <small>Opsional — kosongkan baris yang belum diterjemahkan untuk memakai versi Indonesia.</small>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label class="{{ $service->exists ? '' : 'required' }}">Gambar Ikon</label>
+        @if($service->icon_image)
+          <img src="{{ asset('storage/'.$service->icon_image) }}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;margin-bottom:10px;display:block;background:#f1f4f5;">
+        @endif
+        <input type="file" name="icon_image" accept="image/png" {{ $service->exists ? '' : 'required' }}>
+        <small>Format PNG, ukuran 2–10 MB.</small>
+        @error('icon_image')<small class="error">{{ $message }}</small>@enderror
+        @if($service->exists)<small>Kosongkan jika tidak ingin mengganti gambar.</small>@endif
+      </div>
+
+      <div class="form-group">
+        <label class="required">Teks Ajakan (CTA)</label>
+        <input type="text" name="cta_text" value="{{ old('cta_text', $service->cta_text) }}" required>
+        @error('cta_text')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group">
+        <label>Teks Ajakan (CTA) (EN)</label>
+        <input type="text" name="cta_text_en" value="{{ old('cta_text_en', $service->cta_text_en) }}">
+        @error('cta_text_en')<small class="error">{{ $message }}</small>@enderror
+        <small>Opsional — kosongkan untuk memakai teks Bahasa Indonesia di atas.</small>
+      </div>
+
+      <div class="form-group">
+        <label class="required">Urutan tampil</label>
+        <input type="number" name="sort_order" value="{{ old('sort_order', $service->sort_order ?? 0) }}" required>
+        @error('sort_order')<small class="error">{{ $message }}</small>@enderror
+      </div>
     </div>
 
-    <div class="form-group">
-      <label>Judul Layanan (EN)</label>
-      <input type="text" name="title_en" value="{{ old('title_en', $service->title_en) }}">
-      @error('title_en')<small class="error">{{ $message }}</small>@enderror
-      <small>Opsional — kosongkan untuk memakai judul Bahasa Indonesia di atas.</small>
+    <div class="form-actions">
+      <button class="btn btn-primary">Simpan</button>
+      <a href="{{ route('admin.services.index') }}" class="btn btn-outline">Batal</a>
     </div>
-
-    <div class="form-group">
-      <label class="required">Deskripsi</label>
-      <textarea name="description" required>{{ old('description', $service->description) }}</textarea>
-      @error('description')<small class="error">{{ $message }}</small>@enderror
-    </div>
-
-    <div class="form-group">
-      <label>Deskripsi (EN)</label>
-      <textarea name="description_en">{{ old('description_en', $service->description_en) }}</textarea>
-      @error('description_en')<small class="error">{{ $message }}</small>@enderror
-      <small>Opsional — kosongkan untuk memakai deskripsi Bahasa Indonesia di atas.</small>
-    </div>
-
-    <div class="form-group">
-      <label>Daftar Fitur (satu baris = satu fitur)</label>
-      <textarea name="features" style="min-height:120px;">{{ old('features', $service->exists ? implode("\n", $service->features) : '') }}</textarea>
-      @error('features')<small class="error">{{ $message }}</small>@enderror
-    </div>
-
-    <div class="form-group">
-      <label>Daftar Fitur (EN, satu baris = satu fitur, urutan harus sama dengan versi Indonesia)</label>
-      <textarea name="features_en" style="min-height:120px;">{{ old('features_en', $service->exists && $service->features_en ? implode("\n", $service->features_en) : '') }}</textarea>
-      @error('features_en')<small class="error">{{ $message }}</small>@enderror
-      <small>Opsional — kosongkan baris yang belum diterjemahkan untuk memakai versi Indonesia.</small>
-    </div>
-
-    <div class="form-group">
-      <label class="{{ $service->exists ? '' : 'required' }}">Gambar Ikon</label>
-      @if($service->icon_image)
-        <img src="{{ asset('storage/'.$service->icon_image) }}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;margin-bottom:10px;display:block;background:#f1f4f5;">
-      @endif
-      <input type="file" name="icon_image" accept="image/png" {{ $service->exists ? '' : 'required' }}>
-      <small>Format PNG, ukuran 2–10 MB.</small>
-      @error('icon_image')<small class="error">{{ $message }}</small>@enderror
-      @if($service->exists)<small>Kosongkan jika tidak ingin mengganti gambar.</small>@endif
-    </div>
-
-    <div class="form-group">
-      <label class="required">Teks Ajakan (CTA)</label>
-      <input type="text" name="cta_text" value="{{ old('cta_text', $service->cta_text) }}" required>
-      @error('cta_text')<small class="error">{{ $message }}</small>@enderror
-    </div>
-
-    <div class="form-group">
-      <label>Teks Ajakan (CTA) (EN)</label>
-      <input type="text" name="cta_text_en" value="{{ old('cta_text_en', $service->cta_text_en) }}">
-      @error('cta_text_en')<small class="error">{{ $message }}</small>@enderror
-      <small>Opsional — kosongkan untuk memakai teks Bahasa Indonesia di atas.</small>
-    </div>
-
-    <div class="form-group">
-      <label class="required">Urutan tampil</label>
-      <input type="number" name="sort_order" value="{{ old('sort_order', $service->sort_order ?? 0) }}" required>
-      @error('sort_order')<small class="error">{{ $message }}</small>@enderror
-    </div>
-
-    <button class="btn btn-primary">Simpan</button>
-    <a href="{{ route('admin.services.index') }}" class="btn btn-outline">Batal</a>
   </form>
 </div>
 @endsection

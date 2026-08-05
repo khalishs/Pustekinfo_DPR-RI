@@ -1003,7 +1003,7 @@
       {{-- Kolom kiri: Informasi kontak --}}
       <div class="kontak-info">
         <div class="eyebrow" data-en="CONTACT INFORMATION">INFORMASI KONTAK</div>
-        <h2 data-en="Have a question?">Ada pertanyaan?</h2>
+        <h2 data-en="Have a Question?">Ada Pertanyaan?</h2>
 
         <div class="kontak-info-list">
           <div class="kontak-info-item">
@@ -1041,7 +1041,7 @@
 
       {{-- Kolom kanan: Form kirim pesan --}}
       <div class="kontak-form-card">
-        <h3 data-en="Send a message">Kirim pesan</h3>
+        <h3 data-en="Send a Message">Kirim Pesan</h3>
         <p data-en="Fill out the form below, our team will respond within 1&times;24 working hours.">Isi formulir berikut, tim kami akan merespons dalam 1&times;24 jam kerja.</p>
 
         @if(session('status'))
@@ -1110,7 +1110,7 @@
   <section class="lokasi">
     <div class="lokasi-inner">
       <div class="eyebrow" data-en="LOCATION">LOKASI</div>
-      <h2 data-en="Find us">Temukan kami</h2>
+      <h2 data-en="Find Us">Temukan Kami</h2>
 
       <div class="lokasi-map">
         {{-- Link peta diatur melalui Admin Panel > Pengaturan Footer > Link Peta (Google Maps Embed) --}}

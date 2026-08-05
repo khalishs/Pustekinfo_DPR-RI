@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --sidebar-w:264px;
+    --sidebar-w:300px;
     --navy:#12242E;
     --navy-deep:#0b2233;
     --teal:#14839C;
@@ -71,9 +71,10 @@
   .sidebar .brand-logo{
     position:relative;
     width:42px;height:42px;flex-shrink:0;
-    background:rgba(255,255,255,.1);
-    border:1px solid rgba(255,255,255,.18);
+    background:#ffffff;
+    border:1px solid rgba(255,255,255,.4);
     border-radius:12px;
+    box-shadow:0 2px 10px -2px rgba(0,0,0,.25);
     display:flex;align-items:center;justify-content:center;
     padding:6px;
   }
@@ -159,9 +160,9 @@
   .sidebar .bottom form button svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   .sidebar .bottom form button:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
 
-  /* ---------- Off-canvas controls (tablet/mobile) ---------- */
+  /* ---------- Menu toggle (burger, di topbar sebelah kiri judul — buka/tutup sidebar) ---------- */
   .menu-toggle{
-    display:none;
+    display:flex;
     align-items:center;justify-content:center;
     width:38px;height:38px;flex-shrink:0;
     border-radius:10px;border:1px solid var(--line);
@@ -177,36 +178,8 @@
   }
   .sidebar.open ~ .sidebar-backdrop{opacity:1;pointer-events:auto;}
 
-  /* ---------- Desktop edge toggle (buka/tutup sidebar) ---------- */
-  .sidebar-edge-toggle{
-    display:none;
-    align-items:center;justify-content:center;
-    position:absolute;
-    top:50%;right:-14px;
-    transform:translateY(-50%);
-    width:28px;height:56px;
-    background:#073D5F;
-    color:#fff;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    box-shadow:2px 0 12px -2px rgba(11,34,51,.35);
-    z-index:11;
-    transition:background .18s ease;
-  }
-  .sidebar-edge-toggle:hover{background:#0f6b7f;}
-  .sidebar-edge-toggle svg{
-    width:14px;height:14px;stroke:currentColor;fill:none;
-    stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
-    transition:transform .25s ease;
-  }
-  .sidebar.sidebar-closed .sidebar-edge-toggle svg{transform:rotate(180deg);}
   .sidebar.sidebar-closed{transform:translateX(calc(var(--sidebar-w) * -1));box-shadow:none;}
   .sidebar.sidebar-closed ~ .main{margin-left:0;}
-
-  @media (min-width:1025px){
-    .sidebar-edge-toggle{display:flex;}
-  }
 
   /* ---------- Resize handle (hover di ujung sidebar untuk atur lebar) ---------- */
   .sidebar-resize-handle{
@@ -300,6 +273,18 @@
   .btn-outline:hover{border-color:var(--teal);color:var(--teal);}
 
   .form-group{margin-bottom:18px;max-width:560px;}
+
+  /* ---------- Form grid 2 kolom (supaya tidak ada ruang kosong di samping) ---------- */
+  .form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4px 32px;
+    width:100%;
+  }
+  .form-grid .form-group{max-width:none;}
+  .form-grid .form-span-2{grid-column:1 / -1;}
+  .form-actions{margin-top:8px;}
+
   label{display:block;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:7px;}
   label.required::after{content:" *";color:var(--danger);}
   input,textarea,select{
@@ -400,7 +385,6 @@
     }
     .sidebar.open{transform:translateX(0);}
     .main{margin-left:0;}
-    .menu-toggle{display:flex;}
     .topbar{padding:16px 20px;}
     .content{padding:24px 20px 50px;}
   }
@@ -417,15 +401,13 @@
     .page-head .btn{width:100%;justify-content:center;}
     th,td{padding:11px 10px;font-size:12.5px;}
     .form-group{max-width:100%;}
+    .form-grid{grid-template-columns:1fr;gap:0;}
     .row-actions{flex-wrap:wrap;}
   }
 </style>
 </head>
 <body>
   <aside class="sidebar">
-    <button type="button" class="sidebar-edge-toggle" id="sidebarEdgeToggle" aria-label="Buka/tutup sidebar" title="Buka/tutup sidebar">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
     <div class="sidebar-resize-handle" id="sidebarResizeHandle" title="Tarik untuk mengubah lebar sidebar"></div>
     <div class="brand">
       <div class="brand-logo"><img src="{{ asset('images/Logo.png') }}" alt="Logo"></div>
@@ -591,7 +573,6 @@
       var sidebar = document.querySelector('.sidebar');
       var toggle = document.getElementById('sidebarToggle');
       var backdrop = document.getElementById('sidebarBackdrop');
-      var edgeToggle = document.getElementById('sidebarEdgeToggle');
       var STORAGE_KEY = 'pustekinfo_sidebar_closed';
 
       function closeSidebar(){
@@ -603,8 +584,25 @@
         document.body.style.overflow = 'hidden';
       }
 
+      // Buka/tutup sidebar (desktop: collapse, tersimpan di localStorage)
+      function applySidebarClosedState(closed){
+        sidebar.classList.toggle('sidebar-closed', closed);
+        try { localStorage.setItem(STORAGE_KEY, closed ? '1' : '0'); } catch(e){}
+      }
+
+      try {
+        if (localStorage.getItem(STORAGE_KEY) === '1') {
+          applySidebarClosedState(true);
+        }
+      } catch(e){}
+
+      // Satu tombol burger di topbar: desktop = collapse sidebar, mobile/tablet = drawer off-canvas
       toggle && toggle.addEventListener('click', function(){
-        sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        if (window.innerWidth > 1024) {
+          applySidebarClosedState(!sidebar.classList.contains('sidebar-closed'));
+        } else {
+          sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        }
       });
       backdrop && backdrop.addEventListener('click', closeSidebar);
       sidebar.querySelectorAll('nav a').forEach(function(link){
@@ -617,29 +615,11 @@
         if (window.innerWidth > 1024) closeSidebar();
       });
 
-      // Desktop edge toggle: buka/tutup sidebar, state disimpan di localStorage
-      function applySidebarClosedState(closed){
-        sidebar.classList.toggle('sidebar-closed', closed);
-        try { localStorage.setItem(STORAGE_KEY, closed ? '1' : '0'); } catch(e){}
-      }
-
-      if (edgeToggle){
-        try {
-          if (localStorage.getItem(STORAGE_KEY) === '1') {
-            applySidebarClosedState(true);
-          }
-        } catch(e){}
-
-        edgeToggle.addEventListener('click', function(){
-          applySidebarClosedState(!sidebar.classList.contains('sidebar-closed'));
-        });
-      }
-
       // Resize handle: tarik di ujung sidebar untuk menyesuaikan lebarnya
       var resizeHandle = document.getElementById('sidebarResizeHandle');
       var rootEl = document.documentElement;
       var WIDTH_KEY = 'pustekinfo_sidebar_width';
-      var MIN_W = 200, MAX_W = 380;
+      var MIN_W = 220, MAX_W = 420;
 
       function setSidebarWidth(px){
         px = Math.min(MAX_W, Math.max(MIN_W, Math.round(px)));
@@ -679,7 +659,7 @@
         resizeHandle.addEventListener('pointerup', stopResize);
         resizeHandle.addEventListener('pointercancel', stopResize);
         resizeHandle.addEventListener('dblclick', function(){
-          setSidebarWidth(264);
+          setSidebarWidth(300);
         });
       }
 
