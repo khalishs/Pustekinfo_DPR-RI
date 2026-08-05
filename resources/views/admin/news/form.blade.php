@@ -57,7 +57,8 @@
       @if($newsItem->image)
         <img src="{{ asset('storage/'.$newsItem->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
       @endif
-      <input type="file" name="image" accept="image/*">
+      <input type="file" name="image" accept="image/png">
+      <small>Format PNG, ukuran 2–10 MB.</small>
       @error('image')<small class="error">{{ $message }}</small>@enderror
       <small>Kosongkan jika tidak ingin mengganti gambar.</small>
     </div>

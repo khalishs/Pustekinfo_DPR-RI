@@ -24,6 +24,12 @@ class NewsItemController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request);
+        $data['title'] = ucfirst($data['title']);
+        $data['is_featured'] = $request->boolean('is_featured');
+
+        if ($data['is_featured']) {
+            NewsItem::where('is_featured', true)->update(['is_featured' => false]);
+        }
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('berita', 'public');
@@ -42,6 +48,12 @@ class NewsItemController extends Controller
     public function update(Request $request, NewsItem $news)
     {
         $data = $this->validated($request);
+        $data['title'] = ucfirst($data['title']);
+        $data['is_featured'] = $request->boolean('is_featured');
+
+        if ($data['is_featured']) {
+            NewsItem::where('is_featured', true)->where('id', '!=', $news->id)->update(['is_featured' => false]);
+        }
 
         if ($request->hasFile('image')) {
             if ($news->image) {
@@ -76,7 +88,7 @@ class NewsItemController extends Controller
             'excerpt_en'      => 'nullable|string',
             'content'         => 'nullable|string',
             'content_en'      => 'nullable|string',
-            'image'           => 'nullable|image|min:2048|max:10240',
+            'image'           => 'nullable|image|mimes:png|min:2048|max:10240',
             'author'          => 'required|string|max:255',
             'reading_minutes' => 'required|integer|min:1',
             'is_featured'     => 'nullable|boolean',

@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder
     {
         $user = ['ilham', 'sulthan', 'davar', 'dimas', 'alwa', 'khalis', 'kevin'];
 
-        foreach ($user as $name) {
+        foreach ($user as $index => $name) {
             User::updateOrCreate(
                 ['name' => $name],
                 [
                     'password' => Hash::make($name . '123'),
-                    'role' => 'pegawai',
+                    'role' => $index === 0 ? User::ROLE_SUPER_ADMIN : User::ROLE_USER,
                     'is_admin' => true,
                 ]
             );

@@ -19,16 +19,9 @@ class AccountController extends Controller
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255', Rule::unique('users', 'name')->ignore($user->id)],
-            'current_password' => ['nullable', 'required_with:password', 'current_password'],
-            'password' => ['nullable', 'confirmed', 'min:8'],
         ]);
 
         $user->name = $data['name'];
-
-        if (! empty($data['password'])) {
-            $user->password = $data['password'];
-        }
-
         $user->save();
 
         return redirect()->route('admin.account.edit')->with('success', 'Akun berhasil diperbarui.');

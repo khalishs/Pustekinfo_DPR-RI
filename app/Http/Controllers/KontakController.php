@@ -27,8 +27,39 @@ class KontakController extends Controller
             'pesan'  => 'required|string',
         ]);
 
-        ContactMessage::create($data);
+        $message = ContactMessage::create($data);
 
-        return back()->with('status', 'Pesan Anda berhasil dikirim. Tim kami akan segera merespons.');
+        $setting = SiteSetting::first() ?? new SiteSetting();
+        $waNumber = $this->toWhatsappNumber($setting->phone);
+        $waMessage = "Halo, saya mengirim pesan melalui formulir kontak website.\n\n"
+            . "Nama: {$message->nama}\n"
+            . "Email: {$message->email}\n"
+            . "Kategori: {$message->kategori}\n"
+            . "Pesan: {$message->pesan}";
+        $waUrl = $waNumber ? 'https://wa.me/' . $waNumber . '?text=' . rawurlencode($waMessage) : null;
+
+        return back()
+            ->with('status', 'Pesan Anda berhasil dikirim. Tim kami akan segera merespons.')
+            ->with('waUrl', $waUrl);
+    }
+
+    private function normalizeDigits(string $value): string
+    {
+        return preg_replace('/\D+/', '', $value) ?? '';
+    }
+
+    private function toWhatsappNumber(?string $phone): ?string
+    {
+        if (! $phone) {
+            return null;
+        }
+
+        $digits = $this->normalizeDigits($phone);
+
+        if (str_starts_with($digits, '0')) {
+            $digits = '62' . substr($digits, 1);
+        }
+
+        return $digits ?: null;
     }
 }

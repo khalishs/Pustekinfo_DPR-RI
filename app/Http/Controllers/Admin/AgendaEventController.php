@@ -10,8 +10,17 @@ class AgendaEventController extends Controller
 {
     public function index()
     {
+        $today = now()->toDateString();
+
         return view('admin.agenda.index', [
-            'events' => AgendaEvent::orderBy('event_date', 'desc')->get(),
+            'upcomingEvents' => AgendaEvent::whereDate('event_date', '>=', $today)
+                ->orderBy('event_date')
+                ->orderBy('event_time')
+                ->get(),
+            'pastEvents' => AgendaEvent::whereDate('event_date', '<', $today)
+                ->orderBy('event_date', 'desc')
+                ->orderBy('event_time', 'desc')
+                ->get(),
         ]);
     }
 
@@ -22,7 +31,10 @@ class AgendaEventController extends Controller
 
     public function store(Request $request)
     {
-        AgendaEvent::create($this->validated($request));
+        $data = $this->validated($request);
+        $data['title'] = ucfirst($data['title']);
+
+        AgendaEvent::create($data);
 
         return redirect()->route('admin.agenda.index')->with('success', 'Agenda ditambahkan.');
     }
@@ -34,7 +46,10 @@ class AgendaEventController extends Controller
 
     public function update(Request $request, AgendaEvent $agendum)
     {
-        $agendum->update($this->validated($request));
+        $data = $this->validated($request);
+        $data['title'] = ucfirst($data['title']);
+
+        $agendum->update($data);
 
         return redirect()->route('admin.agenda.index')->with('success', 'Agenda diperbarui.');
     }
@@ -56,7 +71,7 @@ class AgendaEventController extends Controller
             'event_date'     => 'required|date',
             'event_time'     => 'nullable|date_format:H:i',
             'location'       => 'nullable|string|max:255',
-            'color_tag'      => 'required|in:c1,c2,c3',
+            'color_tag'      => 'required|in:c1,c2,c3,c4,c5',
         ]);
     }
 }

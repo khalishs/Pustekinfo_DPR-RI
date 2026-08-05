@@ -258,7 +258,34 @@
 .hero-slide.active{
     opacity:1;
 }
-  
+
+  .hero-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:4;
+    width:44px;height:44px;
+    border-radius:50%;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.35);
+    backdrop-filter:blur(6px);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .hero-nav:hover{background:rgba(255,255,255,.28);}
+  .hero-nav:active{transform:translateY(-50%) scale(.94);}
+  .hero-nav.prev{left:22px;}
+  .hero-nav.next{right:22px;}
+  .hero-nav svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  @media (max-width:900px){
+    .hero-nav{width:36px;height:36px;}
+    .hero-nav.prev{left:10px;}
+    .hero-nav.next{right:10px;}
+    .hero-nav svg{width:16px;height:16px;}
+  }
+
   .hero::after{
     content:"";
     position:absolute;inset:0;
@@ -315,7 +342,7 @@
     background: linear-gradient(150deg,#073D5F 40%,#057888 100%);
     border-radius:14px;
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(var(--stat-cols, 4),1fr);
     box-shadow:0 20px 40px -12px rgba(11,34,51,.35);
   }
   .stat{
@@ -1219,19 +1246,23 @@
   .agenda-day.muted{color:#c7d0d4;font-weight:500;}
   .agenda-day.muted:hover{background:rgba(20,128,140,.06);color:#9aa8af;}
   .agenda-day.today{
-    background:rgba(20,128,140,.08);
-    border:1.5px solid var(--teal);
+    background:rgba(20,128,140,.05);
+    border:none;
+    border-top:2.5px solid var(--teal);
+    border-radius:4px 4px 10px 10px;
     color:var(--teal);
     font-weight:800;
   }
   .agenda-day .dot{
-    width:4px;height:4px;
+    width:6px;height:6px;
     border-radius:50%;
     margin-top:3px;
   }
   .agenda-day .dot.c1{background:#e0a340;}
   .agenda-day .dot.c2{background:#b0413e;}
   .agenda-day .dot.c3{background:#1f9d7c;}
+  .agenda-day .dot.c4{background:#3d7dd6;}
+  .agenda-day .dot.c5{background:#8e5fc9;}
 
   .agenda-legend{
     margin-top:20px;
@@ -1257,6 +1288,8 @@
   .agenda-legend i.c1{background:#e0a340;}
   .agenda-legend i.c2{background:#b0413e;}
   .agenda-legend i.c3{background:#1f9d7c;}
+  .agenda-legend i.c4{background:#3d7dd6;}
+  .agenda-legend i.c5{background:#8e5fc9;}
 
   /* --- Panel Hari Ini --- */
   .agenda-today{
@@ -2128,9 +2161,10 @@
 [data-theme="dark"] .agenda-day{color:#eaf3f5;}
 [data-theme="dark"] .agenda-day:hover{background:rgba(95,192,209,.12);color:#5FC0D1;}
 [data-theme="dark"] .agenda-day.muted{color:#3d4d54;}
-[data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.12);}
+[data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.08);border-top-color:#5FC0D1;}
 [data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
 [data-theme="dark"] .agenda-legend span{color:#8ea0a8;}
+[data-theme="dark"] .agenda-day .dot{box-shadow:0 0 0 1px rgba(255,255,255,.35);}
 
 [data-theme="dark"] .galeri{background-color: rgba(0, 0, 0, 0.8);}
 [data-theme="dark"] .galeri-link{color:#5FC0D1;border-bottom-color:#5FC0D1;}
@@ -2205,6 +2239,14 @@
           <div class="hero-slide" style="background-image:url('{{ asset('images/Hero-Pict3.jpg') }}')"></div>
         @endforelse
       </div>
+      @if($heroSlides->count() > 1)
+        <button type="button" class="hero-nav prev" id="heroPrev" aria-label="Slide sebelumnya">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="hero-nav next" id="heroNext" aria-label="Slide berikutnya">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      @endif
       <div class="hero-content">
         <h1 data-en-html="Supporting DPR RI's Performance through Integrated <br> Information Technology <br> Services.">Mendukung Kinerja DPR RI melalui Layanan <br> Teknologi Informasi yang <br> Terintegrasi.</h1>
         <p data-en="Pustekinfo provides information technology services, infrastructure management, applications, networks, and information security to support the operations of all work units effectively, securely, and sustainably.">Pustekinfo menyediakan layanan teknologi informasi, pengelolaan infrastruktur, aplikasi, jaringan, dan keamanan informasi untuk mendukung operasional seluruh unit kerja secara efektif, aman, dan berkelanjutan.</p>
@@ -2215,7 +2257,7 @@
       </div>
     </header>
 
-    <section class="stats-bar">
+    <section class="stats-bar" style="--stat-cols:{{ max($stats->count(), 1) }};">
         @php $icons = [
           'apps' => '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
           'karyawan' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg>',
@@ -2475,6 +2517,8 @@
             <span><i class="c1"></i><span data-en="Agenda Purpose 1">Tujuan Agenda 1</span></span>
             <span><i class="c2"></i><span data-en="Agenda Purpose 2">Tujuan Agenda 2</span></span>
             <span><i class="c3"></i><span data-en="Agenda Purpose 3">Tujuan Agenda 3</span></span>
+            <span><i class="c4"></i><span data-en="Agenda Purpose 4">Tujuan Agenda 4</span></span>
+            <span><i class="c5"></i><span data-en="Agenda Purpose 5">Tujuan Agenda 5</span></span>
           </div>
         </div>
 
@@ -3014,20 +3058,39 @@ agendaObserver.observe(agendaSection);
 const slides = document.querySelectorAll(".hero-slide");
 
 let currentSlide = 0;
+let heroInterval = null;
 
-setInterval(() => {
-
+function showHeroSlide(index){
     slides[currentSlide].classList.remove("active");
+    currentSlide = (index + slides.length) % slides.length;
+    slides[currentSlide].classList.add("active");
+}
 
-    currentSlide++;
+function startHeroAutoplay(){
+    heroInterval = setInterval(() => showHeroSlide(currentSlide + 1), 4000);
+}
 
-    if(currentSlide >= slides.length){
-        currentSlide = 0;
+if (slides.length > 1) {
+    startHeroAutoplay();
+
+    const heroPrev = document.getElementById("heroPrev");
+    const heroNext = document.getElementById("heroNext");
+
+    function restartHeroAutoplay(){
+        clearInterval(heroInterval);
+        startHeroAutoplay();
     }
 
-    slides[currentSlide].classList.add("active");
+    heroPrev && heroPrev.addEventListener("click", () => {
+        showHeroSlide(currentSlide - 1);
+        restartHeroAutoplay();
+    });
 
-}, 4000);
+    heroNext && heroNext.addEventListener("click", () => {
+        showHeroSlide(currentSlide + 1);
+        restartHeroAutoplay();
+    });
+}
 
 const profilSlides = document.querySelectorAll(".profil-slide");
 

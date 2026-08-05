@@ -3,7 +3,13 @@
 @section('content')
 <div class="page-head">
   <h2>Statistik</h2>
+  @if(!$maxReached)
+    <a href="{{ route('admin.statistics.create') }}" class="btn btn-primary">+ Tambah Statistik</a>
+  @endif
 </div>
+@if($maxReached)
+  <p style="margin:-8px 0 16px;font-size:12.5px;color:#8a97a0;font-weight:600;">Maksimal 5 data statistik sudah tercapai. Hapus salah satu untuk menambah yang baru.</p>
+@endif
 <div class="card">
   <div class="table-responsive">
   <table>
@@ -16,6 +22,10 @@
         <td class="text-center"><span class="badge-count">{{ $stat->sort_order }}</span></td>
         <td class="row-actions">
           <a href="{{ route('admin.statistics.edit', $stat) }}" class="btn btn-outline">Edit</a>
+          <form action="{{ route('admin.statistics.destroy', $stat) }}" method="POST" onsubmit="return confirm('Hapus statistik ini?')">
+            @csrf @method('DELETE')
+            <button class="btn btn-danger">Hapus</button>
+          </form>
         </td>
       </tr>
     @empty

@@ -1,14 +1,14 @@
 @extends('admin.layout')
-@section('title', 'Edit Statistik')
+@section('title', $statistic->exists ? 'Edit Statistik' : 'Tambah Statistik')
 @section('content')
 <div class="card">
-  <form action="{{ route('admin.statistics.update', $statistic) }}" method="POST">
+  <form action="{{ $statistic->exists ? route('admin.statistics.update', $statistic) : route('admin.statistics.store') }}" method="POST">
     @csrf
-    @method('PUT')
+    @if($statistic->exists) @method('PUT') @endif
     <div class="form-group">
-      <label class="required">Kategori</label>
-      <select name="key" required>
-        <option value="">— Pilih kategori —</option>
+      <label>Kategori</label>
+      <select name="key">
+        <option value="" {{ old('key', $statistic->key) ? '' : 'selected' }}>— Umum (ikon generik) —</option>
         <option value="apps" {{ old('key', $statistic->key) == 'apps' ? 'selected' : '' }}>Aplikasi Terkelola</option>
         <option value="karyawan" {{ old('key', $statistic->key) == 'karyawan' ? 'selected' : '' }}>Karyawan Pustekinfo</option>
         <option value="pengguna" {{ old('key', $statistic->key) == 'pengguna' ? 'selected' : '' }}>Pengguna Terlayani</option>

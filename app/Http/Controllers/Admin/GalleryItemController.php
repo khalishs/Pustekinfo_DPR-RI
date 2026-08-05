@@ -81,7 +81,7 @@ class GalleryItemController extends Controller
             'category_id'    => 'required|exists:gallery_categories,id',
             'size'           => 'required|in:big,med,wide,small',
             'sort_order'     => 'required|integer',
-            'image'          => ($imageRequired ? 'required' : 'nullable') . '|image|min:2048|max:10240',
+            'image'          => ($imageRequired ? 'required' : 'nullable') . '|image|mimes:png|min:2048|max:10240',
         ]);
     }
 }

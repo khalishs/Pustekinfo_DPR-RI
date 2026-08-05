@@ -50,6 +50,8 @@
         <option value="c1" {{ old('color_tag', $event->color_tag) == 'c1' ? 'selected' : '' }}>Kuning — Tujuan Agenda 1</option>
         <option value="c2" {{ old('color_tag', $event->color_tag) == 'c2' ? 'selected' : '' }}>Merah — Tujuan Agenda 2</option>
         <option value="c3" {{ old('color_tag', $event->color_tag) == 'c3' ? 'selected' : '' }}>Hijau — Tujuan Agenda 3</option>
+        <option value="c4" {{ old('color_tag', $event->color_tag) == 'c4' ? 'selected' : '' }}>Biru — Tujuan Agenda 4</option>
+        <option value="c5" {{ old('color_tag', $event->color_tag) == 'c5' ? 'selected' : '' }}>Ungu — Tujuan Agenda 5</option>
       </select>
     </div>
 

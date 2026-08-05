@@ -29,7 +29,8 @@
       @if($member->photo)
         <img src="{{ asset('storage/'.$member->photo) }}" style="width:120px;border-radius:8px;margin-bottom:10px;display:block;">
       @endif
-      <input type="file" name="photo" accept="image/*">
+      <input type="file" name="photo" accept="image/png">
+      <small>Format PNG, ukuran 2–10 MB.</small>
       <small>Kosongkan jika tidak ingin mengganti foto.</small>
     </div>
 

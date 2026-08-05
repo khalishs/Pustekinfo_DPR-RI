@@ -22,7 +22,8 @@
       @if($leadership->photo)
         <img src="{{ asset('storage/'.$leadership->photo) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
       @endif
-      <input type="file" name="photo" accept="image/*">
+      <input type="file" name="photo" accept="image/png">
+      <small>Format PNG, ukuran 2–10 MB.</small>
       @error('photo')<small class="error">{{ $message }}</small>@enderror
       <small>Kosongkan jika tidak ingin mengganti foto.</small>
     </div>

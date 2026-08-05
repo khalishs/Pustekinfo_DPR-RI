@@ -26,6 +26,7 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request, true);
+        $data['title'] = ucfirst($data['title']);
         $data['icon_image'] = $request->file('icon_image')->store('layanan', 'public');
 
         Service::create($data);
@@ -41,6 +42,7 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
         $data = $this->validated($request, false);
+        $data['title'] = ucfirst($data['title']);
 
         if ($request->hasFile('icon_image')) {
             if ($service->icon_image) {
@@ -73,7 +75,7 @@ class ServiceController extends Controller
             'description_en' => 'nullable|string',
             'features'       => 'nullable|string',
             'features_en'    => 'nullable|string',
-            'icon_image'     => ($imageRequired ? 'required' : 'nullable') . '|image|min:2048|max:10240',
+            'icon_image'     => ($imageRequired ? 'required' : 'nullable') . '|image|mimes:png|min:2048|max:10240',
             'cta_text'       => 'required|string|max:255',
             'cta_text_en'    => 'nullable|string|max:255',
             'sort_order'     => 'required|integer',
