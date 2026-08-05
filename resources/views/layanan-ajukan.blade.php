@@ -474,13 +474,13 @@
       {{-- Kolom kiri: Alur pengajuan --}}
       <div class="ajukan-info">
         <div class="eyebrow" data-en="HOW IT WORKS">ALUR PENGAJUAN</div>
-        <h2 data-en="Three easy steps">Tiga langkah mudah</h2>
+        <h2 data-en="Three Easy Steps">Tiga Langkah Mudah</h2>
 
         <div class="ajukan-info-list">
           <div class="ajukan-info-item">
             <div class="ajukan-info-num">1</div>
             <div class="ajukan-info-body">
-              <div class="title" data-en="Fill out the form">Isi formulir</div>
+              <div class="title" data-en="Fill Out the Form">Isi Formulir</div>
               <div class="desc" data-en="Fill in your details and the service you need.">Lengkapi data diri dan layanan yang Anda butuhkan.</div>
             </div>
           </div>
@@ -494,7 +494,7 @@
           <div class="ajukan-info-item">
             <div class="ajukan-info-num">3</div>
             <div class="ajukan-info-body">
-              <div class="title" data-en="Track the status">Pantau status</div>
+              <div class="title" data-en="Track the Status">Pantau Status</div>
               <div class="desc" data-en="Check your request status anytime using your phone number.">Cek status pengajuan Anda kapan saja menggunakan nomor telepon Anda.</div>
             </div>
           </div>
@@ -511,7 +511,7 @@
         @if(isset($submitted))
           <div class="sukses-card">
             <div class="sukses-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <h3 data-en="Request recorded">Pengajuan tercatat</h3>
+            <h3 data-en="Request Recorded">Pengajuan Tercatat</h3>
             <p data-en="Save this ticket code — you'll need it to check your request status.">Simpan kode tiket ini — Anda akan membutuhkannya untuk cek status pengajuan.</p>
             <div class="sukses-kode">{{ $submitted->kode }}</div>
             <div class="sukses-hint" data-en="Tap the button below to continue the conversation on WhatsApp.">Ketuk tombol di bawah untuk melanjutkan percakapan di WhatsApp.</div>
@@ -526,7 +526,7 @@
             </div>
           </div>
         @else
-          <h3 data-en="Service request form">Formulir pengajuan layanan</h3>
+          <h3 data-en="Service Request Form">Formulir Pengajuan Layanan</h3>
           <p data-en="Fill out the form below, our team will contact you via WhatsApp.">Isi formulir berikut, tim kami akan menghubungi Anda melalui WhatsApp.</p>
 
           <form class="ajukan-form" method="POST" action="{{ route('layanan.ajukan.store') }}">

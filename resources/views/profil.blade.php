@@ -751,7 +751,7 @@
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
         <span data-en="AGENCY HISTORY">SEJARAH INSTANSI</span>
       </div>
-      <h2 data-en="Pustekinfo's long journey">Perjalanan panjang Pustekinfo</h2>
+      <h2 data-en="Pustekinfo's Long Journey">Perjalanan Panjang Pustekinfo</h2>
       <p class="desc" data-en="Pustekinfo has gone through a long journey following technological developments, from a simple data processing unit to an information technology center that manages the institution's digital infrastructure.">
         Pustekinfo telah melalui perjalanan panjang mengikuti perkembangan teknologi, dari unit
         pengolahan data sederhana hingga menjadi pusat teknologi informasi yang mengelola
@@ -778,7 +778,7 @@
         <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         <span data-en="LEADERSHIP MESSAGE">SAMBUTAN PIMPINAN</span>
       </div>
-      <h2 data-en="A message from the Head of Pustekinfo">Kata sambutan Kepala Pustekinfo</h2>
+      <h2 data-en="A Message from the Head of Pustekinfo">Kata Sambutan Kepala Pustekinfo</h2>
 
       <div class="sambutan-card">
         <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
@@ -823,7 +823,7 @@
         <span class="badge">
           <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/></svg>
         </span>
-        <h2 data-en="Short biodata">Biodata singkat</h2>
+        <h2 data-en="Short Biodata">Biodata Singkat</h2>
       </div>
 
       <div class="bio-card">
@@ -846,7 +846,7 @@
         <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg>
         <span data-en="ORGANIZATIONAL CHART">BAGAN ORGANISASI</span>
       </div>
-      <h2 data-en="Pustekinfo's organizational structure">Struktur organisasi Pustekinfo</h2>
+      <h2 data-en="Pustekinfo's Organizational Structure">Struktur Organisasi Pustekinfo</h2>
 
       <div class="org-chart">
         <div class="org-node top">
@@ -884,7 +884,7 @@
         <span class="badge">
           <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         </span>
-        <h2 data-en="Work unit description">Uraian unit kerja</h2>
+        <h2 data-en="Work Unit Description">Uraian Unit Kerja</h2>
       </div>
 
       <div class="unit-grid">
@@ -919,7 +919,7 @@
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
         <span data-en="VISION &amp; MISSION">VISI &amp; MISI</span>
       </div>
-      <h2 data-en="Our direction and commitment">Arah dan komitmen kami</h2>
+      <h2 data-en="Our Direction and Commitment">Arah dan Komitmen Kami</h2>
 
       <div class="vm-grid">
         <div class="vm-card dark">
@@ -935,7 +935,7 @@
             <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             <span data-en="MISSION">MISI</span>
           </div>
-          <h3 data-en="Our strategic steps">Langkah strategis kami</h3>
+          <h3 data-en="Our Strategic Steps">Langkah Strategis Kami</h3>
           @php $misiEn = $visionMission?->missionListEn() ?? []; @endphp
           <ol>
             @forelse($visionMission?->missionList() ?? [] as $i => $poin)
