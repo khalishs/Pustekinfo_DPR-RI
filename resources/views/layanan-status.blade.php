@@ -414,7 +414,7 @@
 
       <div class="status-card">
         <div class="eyebrow" data-en="CHECK STATUS">CEK STATUS</div>
-        <h3 data-en="Find your request">Temukan pengajuan Anda</h3>
+        <h3 data-en="Find Your Request">Temukan Pengajuan Anda</h3>
         <p data-en="Enter the same WhatsApp / phone number you used to submit your request.">Masukkan nomor WhatsApp / telepon yang sama seperti saat Anda mengajukan.</p>
 
         <form class="status-form" method="POST" action="{{ route('layanan.status.check') }}">

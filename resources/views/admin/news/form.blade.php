@@ -6,83 +6,87 @@
     @csrf
     @if($newsItem->exists) @method('PUT') @endif
 
-    <div class="form-group">
-      <label class="required">Judul</label>
-      <input type="text" name="title" value="{{ old('title', $newsItem->title) }}" required>
-      @error('title')<small class="error">{{ $message }}</small>@enderror
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="required">Judul</label>
+        <input type="text" name="title" value="{{ old('title', $newsItem->title) }}" required>
+        @error('title')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group">
+        <label>Judul (EN)</label>
+        <input type="text" name="title_en" value="{{ old('title_en', $newsItem->title_en) }}">
+        @error('title_en')<small class="error">{{ $message }}</small>@enderror
+        <small>Opsional — kosongkan untuk memakai judul Bahasa Indonesia di atas.</small>
+      </div>
+
+      <div class="form-group">
+        <label class="required">Kategori</label>
+        <input type="text" name="category" value="{{ old('category', $newsItem->category) }}" placeholder="Pengumuman, Sistem, Pelatihan, dll" required>
+      </div>
+
+      <div class="form-group">
+        <label>Kategori (EN)</label>
+        <input type="text" name="category_en" value="{{ old('category_en', $newsItem->category_en) }}" placeholder="Announcement, System, Training, etc">
+        <small>Opsional — kosongkan untuk memakai kategori Bahasa Indonesia di atas.</small>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label class="required">Ringkasan</label>
+        <textarea name="excerpt" required>{{ old('excerpt', $newsItem->excerpt) }}</textarea>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label>Ringkasan (EN)</label>
+        <textarea name="excerpt_en">{{ old('excerpt_en', $newsItem->excerpt_en) }}</textarea>
+        <small>Opsional — kosongkan untuk memakai ringkasan Bahasa Indonesia di atas.</small>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label>Isi lengkap (opsional)</label>
+        <textarea name="content" style="min-height:180px;">{{ old('content', $newsItem->content) }}</textarea>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label>Isi lengkap (EN, opsional)</label>
+        <textarea name="content_en" style="min-height:180px;">{{ old('content_en', $newsItem->content_en) }}</textarea>
+        <small>Opsional — kosongkan untuk memakai isi Bahasa Indonesia di atas.</small>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label>Gambar</label>
+        @if($newsItem->image)
+          <img src="{{ asset('storage/'.$newsItem->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
+        @endif
+        <input type="file" name="image" accept="image/*">
+        @error('image')<small class="error">{{ $message }}</small>@enderror
+        <small>Kosongkan jika tidak ingin mengganti gambar.</small>
+      </div>
+
+      <div class="form-group">
+        <label class="required">Penulis</label>
+        <input type="text" name="author" value="{{ old('author', $newsItem->author ?? 'Humas Pustekinfo') }}" required>
+      </div>
+
+      <div class="form-group">
+        <label class="required">Estimasi waktu baca (menit)</label>
+        <input type="number" name="reading_minutes" value="{{ old('reading_minutes', $newsItem->reading_minutes ?? 3) }}" min="1" required>
+      </div>
+
+      <div class="form-group">
+        <label>Tanggal publish</label>
+        <input type="datetime-local" name="published_at" value="{{ old('published_at', $newsItem->published_at?->format('Y-m-d\TH:i')) }}">
+      </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_featured" value="1" style="width:auto;display:inline-block;" {{ old('is_featured', $newsItem->is_featured) ? 'checked' : '' }}> Jadikan berita utama (featured)</label>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label>Judul (EN)</label>
-      <input type="text" name="title_en" value="{{ old('title_en', $newsItem->title_en) }}">
-      @error('title_en')<small class="error">{{ $message }}</small>@enderror
-      <small>Opsional — kosongkan untuk memakai judul Bahasa Indonesia di atas.</small>
+    <div class="form-actions">
+      <button class="btn btn-primary">Simpan</button>
+      <a href="{{ route('admin.news.index') }}" class="btn btn-outline">Batal</a>
     </div>
-
-    <div class="form-group">
-      <label class="required">Kategori</label>
-      <input type="text" name="category" value="{{ old('category', $newsItem->category) }}" placeholder="Pengumuman, Sistem, Pelatihan, dll" required>
-    </div>
-
-    <div class="form-group">
-      <label>Kategori (EN)</label>
-      <input type="text" name="category_en" value="{{ old('category_en', $newsItem->category_en) }}" placeholder="Announcement, System, Training, etc">
-      <small>Opsional — kosongkan untuk memakai kategori Bahasa Indonesia di atas.</small>
-    </div>
-
-    <div class="form-group">
-      <label class="required">Ringkasan</label>
-      <textarea name="excerpt" required>{{ old('excerpt', $newsItem->excerpt) }}</textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Ringkasan (EN)</label>
-      <textarea name="excerpt_en">{{ old('excerpt_en', $newsItem->excerpt_en) }}</textarea>
-      <small>Opsional — kosongkan untuk memakai ringkasan Bahasa Indonesia di atas.</small>
-    </div>
-
-    <div class="form-group">
-      <label>Isi lengkap (opsional)</label>
-      <textarea name="content" style="min-height:180px;">{{ old('content', $newsItem->content) }}</textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Isi lengkap (EN, opsional)</label>
-      <textarea name="content_en" style="min-height:180px;">{{ old('content_en', $newsItem->content_en) }}</textarea>
-      <small>Opsional — kosongkan untuk memakai isi Bahasa Indonesia di atas.</small>
-    </div>
-
-    <div class="form-group">
-      <label>Gambar</label>
-      @if($newsItem->image)
-        <img src="{{ asset('storage/'.$newsItem->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
-      @endif
-      <input type="file" name="image" accept="image/*">
-      @error('image')<small class="error">{{ $message }}</small>@enderror
-      <small>Kosongkan jika tidak ingin mengganti gambar.</small>
-    </div>
-
-    <div class="form-group">
-      <label class="required">Penulis</label>
-      <input type="text" name="author" value="{{ old('author', $newsItem->author ?? 'Humas Pustekinfo') }}" required>
-    </div>
-
-    <div class="form-group">
-      <label class="required">Estimasi waktu baca (menit)</label>
-      <input type="number" name="reading_minutes" value="{{ old('reading_minutes', $newsItem->reading_minutes ?? 3) }}" min="1" required>
-    </div>
-
-    <div class="form-group">
-      <label>Tanggal publish</label>
-      <input type="datetime-local" name="published_at" value="{{ old('published_at', $newsItem->published_at?->format('Y-m-d\TH:i')) }}">
-    </div>
-
-    <div class="form-group">
-      <label><input type="checkbox" name="is_featured" value="1" style="width:auto;display:inline-block;" {{ old('is_featured', $newsItem->is_featured) ? 'checked' : '' }}> Jadikan berita utama (featured)</label>
-    </div>
-
-    <button class="btn btn-primary">Simpan</button>
-    <a href="{{ route('admin.news.index') }}" class="btn btn-outline">Batal</a>
   </form>
 </div>
 @endsection

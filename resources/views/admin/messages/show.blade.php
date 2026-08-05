@@ -6,31 +6,33 @@
   <h2>Pesan dari {{ $message->nama }}</h2>
 </div>
 <div class="card">
-  <div class="form-group">
-    <label>Nama</label>
-    <p>{{ $message->nama }}</p>
-  </div>
-  <div class="form-group">
-    <label>Email</label>
-    <p>{{ $message->email }}</p>
-  </div>
-  @if($message->instansi)
-  <div class="form-group">
-    <label>Instansi</label>
-    <p>{{ $message->instansi }}</p>
-  </div>
-  @endif
-  <div class="form-group">
-    <label>Kategori</label>
-    <p><span class="badge cap">{{ $message->kategori }}</span></p>
-  </div>
-  <div class="form-group">
-    <label>Tanggal Kirim</label>
-    <p>{{ $message->created_at->format('d M Y H:i') }}</p>
-  </div>
-  <div class="form-group" style="max-width:100%;">
-    <label>Pesan</label>
-    <p style="white-space:pre-line;">{{ $message->pesan }}</p>
+  <div class="form-grid">
+    <div class="form-group">
+      <label>Nama</label>
+      <p>{{ $message->nama }}</p>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <p>{{ $message->email }}</p>
+    </div>
+    @if($message->instansi)
+    <div class="form-group">
+      <label>Instansi</label>
+      <p>{{ $message->instansi }}</p>
+    </div>
+    @endif
+    <div class="form-group">
+      <label>Kategori</label>
+      <p><span class="badge cap">{{ $message->kategori }}</span></p>
+    </div>
+    <div class="form-group">
+      <label>Tanggal Kirim</label>
+      <p>{{ $message->created_at->format('d M Y H:i') }}</p>
+    </div>
+    <div class="form-group form-span-2">
+      <label>Pesan</label>
+      <p style="white-space:pre-line;">{{ $message->pesan }}</p>
+    </div>
   </div>
 
   <a href="{{ route('admin.messages.index') }}" class="btn btn-outline">Kembali</a>

@@ -10,19 +10,21 @@
     @csrf
     @method('PUT')
 
-    <div class="form-group">
-      <label class="required">Gambar Banner Saat Ini</label>
-      @if($banner->image)
-        <img src="{{ asset('storage/'.$banner->image) }}" style="width:100%;max-width:420px;aspect-ratio:16/6;object-fit:cover;border-radius:8px;margin-bottom:10px;display:block;">
-      @else
-        <p style="color:#8a97a0;font-size:13px;margin-bottom:10px;">Belum ada banner. Halaman akan memakai latar polos bawaan.</p>
-      @endif
-      <input type="file" name="image" accept="image/*" required>
-      @error('image')<small class="error">{{ $message }}</small>@enderror
-      <small>Disarankan gambar lebar (misal 1600×600px) agar tidak terpotong.</small>
+    <div class="form-grid">
+      <div class="form-group form-span-2">
+        <label class="required">Gambar Banner Saat Ini</label>
+        @if($banner->image)
+          <img src="{{ asset('storage/'.$banner->image) }}" style="width:100%;max-width:420px;aspect-ratio:16/6;object-fit:cover;border-radius:8px;margin-bottom:10px;display:block;">
+        @else
+          <p style="color:#8a97a0;font-size:13px;margin-bottom:10px;">Belum ada banner. Halaman akan memakai latar polos bawaan.</p>
+        @endif
+        <input type="file" name="image" accept="image/*" required>
+        @error('image')<small class="error">{{ $message }}</small>@enderror
+        <small>Disarankan gambar lebar (misal 1600×600px) agar tidak terpotong.</small>
+      </div>
     </div>
 
-    <div style="display:flex;gap:10px;">
+    <div class="form-actions" style="display:flex;gap:10px;">
       <button class="btn btn-primary">Simpan Banner</button>
       @if($banner->exists && $banner->image)
         <button class="btn btn-outline" type="submit" form="deleteBannerForm">Hapus Banner</button>

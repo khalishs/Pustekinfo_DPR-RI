@@ -699,7 +699,7 @@
   <section id="berita" class="page-section">
     <div class="section-inner">
       <div class="eyebrow eyebrow-dash" data-en="LATEST NEWS">KABAR TERBARU</div>
-      <h2 data-en="News &amp; activities">Berita &amp; kegiatan</h2>
+      <h2 data-en="News &amp; Activities">Berita &amp; Kegiatan</h2>
 
       <div class="info-filters-wrap">
         <div class="info-filters">
@@ -743,7 +743,7 @@
   <section id="agenda" class="page-section">
     <div class="section-inner">
       <div class="eyebrow eyebrow-dash" data-en="SCHEDULE">JADWAL</div>
-      <h2 data-en="Activity agenda">Agenda kegiatan</h2>
+      <h2 data-en="Activity Agenda">Agenda Kegiatan</h2>
 
       <div class="agenda-grid">
         <div class="agenda-cal">
@@ -831,7 +831,7 @@
   <section id="publikasi" class="page-section">
     <div class="section-inner">
       <div class="eyebrow eyebrow-dash" data-en="DOCUMENTS">DOKUMEN</div>
-      <h2 data-en="Publications &amp; downloads">Publikasi &amp; unduhan</h2>
+      <h2 data-en="Publications &amp; Downloads">Publikasi &amp; Unduhan</h2>
 
       <div class="info-filters-wrap">
         <div class="info-filters" id="docFilters">
@@ -867,7 +867,7 @@
   <section id="faq" class="page-section">
     <div class="section-inner">
       <div class="eyebrow eyebrow-dash" data-en="HELP">BANTUAN</div>
-      <h2 data-en="Frequently asked questions">Pertanyaan umum</h2>
+      <h2 data-en="Frequently Asked Questions">Pertanyaan Umum</h2>
 
       <div class="info-faq-list">
         @foreach($faqs as $item)

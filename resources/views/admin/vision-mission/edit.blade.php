@@ -7,32 +7,36 @@
     @csrf
     @method('PUT')
 
-    <div class="form-group">
-      <label class="required">Teks Visi</label>
-      <textarea name="vision_text" style="min-height:100px;" required>{{ old('vision_text', $item->vision_text) }}</textarea>
-      @error('vision_text')<small class="error">{{ $message }}</small>@enderror
+    <div class="form-grid">
+      <div class="form-group form-span-2">
+        <label class="required">Teks Visi</label>
+        <textarea name="vision_text" style="min-height:100px;" required>{{ old('vision_text', $item->vision_text) }}</textarea>
+        @error('vision_text')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group form-span-2">
+        <label>Teks Visi (EN)</label>
+        <textarea name="vision_text_en" style="min-height:100px;">{{ old('vision_text_en', $item->vision_text_en) }}</textarea>
+        <small>Opsional — kosongkan untuk memakai teks Bahasa Indonesia di atas.</small>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label class="required">Poin-poin Misi</label>
+        <textarea name="mission_items" style="min-height:160px;" required>{{ old('mission_items', $item->mission_items) }}</textarea>
+        @error('mission_items')<small class="error">{{ $message }}</small>@enderror
+        <small>Tulis satu poin misi per baris (tekan Enter untuk poin baru).</small>
+      </div>
+
+      <div class="form-group form-span-2">
+        <label>Poin-poin Misi (EN)</label>
+        <textarea name="mission_items_en" style="min-height:160px;">{{ old('mission_items_en', $item->mission_items_en) }}</textarea>
+        <small>Opsional — tulis satu poin per baris, urutan harus sama dengan versi Indonesia.</small>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label>Teks Visi (EN)</label>
-      <textarea name="vision_text_en" style="min-height:100px;">{{ old('vision_text_en', $item->vision_text_en) }}</textarea>
-      <small>Opsional — kosongkan untuk memakai teks Bahasa Indonesia di atas.</small>
+    <div class="form-actions">
+      <button class="btn btn-primary">Simpan</button>
     </div>
-
-    <div class="form-group">
-      <label class="required">Poin-poin Misi</label>
-      <textarea name="mission_items" style="min-height:160px;" required>{{ old('mission_items', $item->mission_items) }}</textarea>
-      @error('mission_items')<small class="error">{{ $message }}</small>@enderror
-      <small>Tulis satu poin misi per baris (tekan Enter untuk poin baru).</small>
-    </div>
-
-    <div class="form-group">
-      <label>Poin-poin Misi (EN)</label>
-      <textarea name="mission_items_en" style="min-height:160px;">{{ old('mission_items_en', $item->mission_items_en) }}</textarea>
-      <small>Opsional — tulis satu poin per baris, urutan harus sama dengan versi Indonesia.</small>
-    </div>
-
-    <button class="btn btn-primary">Simpan</button>
   </form>
 </div>
 @endsection
