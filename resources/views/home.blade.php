@@ -692,7 +692,9 @@
   inset:0;
   background-image:url('{{ asset('images/group-batik.png') }}');
   background-repeat:repeat-y;
-  background-position:center top;
+  /* Posisi disamakan (lewat JS) dengan pola batik .konten-batik di belakangnya,
+     supaya motifnya menyambung utuh, bukan mengulang dari awal lagi di section ini. */
+  background-position:center var(--batik-offset-y, top);
   background-size:10000px auto;
   filter:url(#batikTintTeal);
   opacity:.1;   /* 0 = tak terlihat, 1 = penuh — atur sesuai selera */
@@ -1818,27 +1820,6 @@
   .layanan::before{background-size:3000px auto;}
 }
 
-/* ---------- Blob dekoratif (elemen murni CSS untuk efek parallax yang terlihat) ---------- */
-.pxl-blob{
-  position:absolute;
-  border-radius:50%;
-  filter:blur(60px);
-  pointer-events:none;
-  z-index:0;
-  opacity:.4;
-  will-change:transform;
-}
-.pxl-blob--a{ top:-14%; left:-8%; width:340px; height:340px; background:var(--teal); }
-.pxl-blob--b{ bottom:-16%; right:-6%; width:280px; height:280px; background:var(--gold); }
-
-[data-theme="dark"] .pxl-blob{ opacity:.3; }
-
-@media (max-width:900px){
-  .pxl-blob{ filter:blur(38px); }
-  .pxl-blob--a{ width:200px; height:200px; }
-  .pxl-blob--b{ width:170px; height:170px; }
-}
-
 /* ---------- CTA Bantuan Teknis ---------- */
 .cta-bantuan{
   position:relative;
@@ -2345,8 +2326,6 @@
 
         {{-- ================= PROFIL SINGKAT ================= --}}
         <section id="profil" class="profil">
-          <span class="pxl-blob pxl-blob--a" aria-hidden="true"></span>
-          <span class="pxl-blob pxl-blob--b" aria-hidden="true"></span>
           <div class="profil-grid">
 
             <div class="profil-media">
@@ -2467,8 +2446,6 @@
 
   {{-- ================= SAMBUTAN PIMPINAN ================= --}}
   <section id="sambutan" class="sambutan">
-    <span class="pxl-blob pxl-blob--a" aria-hidden="true"></span>
-    <span class="pxl-blob pxl-blob--b" aria-hidden="true"></span>
     <div class="sambutan-inner">
       <div class="eyebrow" data-en="LEADERSHIP MESSAGE">SAMBUTAN PIMPINAN</div>
 
@@ -2496,8 +2473,6 @@
 
   {{-- ================= BERITA & KEGIATAN ================= --}}
   <section id="berita" class="berita">
-    <span class="pxl-blob pxl-blob--a" aria-hidden="true"></span>
-    <span class="pxl-blob pxl-blob--b" aria-hidden="true"></span>
     <div class="berita-inner">
 
       <div class="berita-head">
@@ -2643,8 +2618,6 @@
 
  {{-- ================= GALERI KEGIATAN ================= --}}
 <section id="galeri" class="galeri">
-  <span class="pxl-blob pxl-blob--a" aria-hidden="true"></span>
-  <span class="pxl-blob pxl-blob--b" aria-hidden="true"></span>
   <div class="galeri-inner">
 
     <div class="galeri-head">
@@ -3201,6 +3174,23 @@ const aksesObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 aksesObserver.observe(aksesSection);
 
+// ---- Samakan posisi pola batik section Layanan dengan pola batik di belakangnya (.konten-batik),
+// supaya motifnya menyambung jadi satu, bukan mengulang terpisah dari section-nya sendiri. ----
+(function () {
+    const wrap = document.querySelector(".konten-batik");
+    const layanan = document.querySelector(".layanan");
+    if (!wrap || !layanan) return;
+
+    function syncBatikOffset() {
+        const offset = layanan.getBoundingClientRect().top - wrap.getBoundingClientRect().top;
+        layanan.style.setProperty("--batik-offset-y", (-offset).toFixed(1) + "px");
+    }
+
+    syncBatikOffset();
+    window.addEventListener("resize", syncBatikOffset);
+    window.addEventListener("load", syncBatikOffset);
+})();
+
 // ---- Parallax: dari hero sampai galeri, dengan easing supaya gerakannya halus & natural ----
 (function () {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -3209,48 +3199,14 @@ aksesObserver.observe(aksesSection);
     const heroSlider = document.querySelector(".hero-slider");
     const heroContent = document.querySelector(".hero-content");
 
-    function blobLayers(sectionSelector) {
-        const section = document.querySelector(sectionSelector);
-        if (!section) return [];
-        const a = section.querySelector(".pxl-blob--a");
-        const b = section.querySelector(".pxl-blob--b");
-        return [
-            a && { el: a, factor: 0.2, max: 90 },
-            b && { el: b, factor: -0.26, max: 80 },
-        ].filter(Boolean);
-    }
-
-    const layers = [
-        ...blobLayers("#profil"),
-        ...blobLayers("#sambutan"),
-        ...blobLayers("#berita"),
-        ...blobLayers("#galeri"),
-    ].filter(layer => layer.el);
-    layers.forEach(l => { l.current = 0; });
-
-    if (!layers.length && !heroSlider) return;
+    if (!heroSlider) return;
 
     // Semakin kecil, gerakannya semakin "berat"/mengejar dengan lambat (terasa halus, bukan kaku).
     const EASE = 0.085;
     let heroCurrent = 0;
     let heroContentCurrent = 0;
 
-    function clampedTarget(el, factor, max) {
-        const rectTop = el.getBoundingClientRect().top;
-        return Math.max(-max, Math.min(max, -rectTop * factor));
-    }
-
     function frame() {
-        layers.forEach(l => {
-            const target = clampedTarget(l.el, l.factor, l.max);
-            l.current += (target - l.current) * EASE;
-            if (l.prop) {
-                l.el.style.setProperty(l.prop, l.current.toFixed(1) + "px");
-            } else {
-                l.el.style.transform = `translateY(${l.current.toFixed(1)}px)`;
-            }
-        });
-
         if (heroEl && heroSlider) {
             const heroRect = heroEl.getBoundingClientRect();
             const heroHeight = heroEl.offsetHeight || 650;
