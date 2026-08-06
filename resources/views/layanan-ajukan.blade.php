@@ -183,6 +183,7 @@
 
   .konten-batik{position:relative;z-index:0;background-color:#14839C1A;}
   .konten-batik::before{
+    opacity: .2;
     content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
     background-image:url('{{ asset('images/group-batik.png') }}');
     background-repeat:no-repeat;background-position:center top;background-size:10000px auto;

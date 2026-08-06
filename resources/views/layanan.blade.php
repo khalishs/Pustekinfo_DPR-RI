@@ -29,6 +29,7 @@
     content:"";
     position:absolute;
     inset:0;
+    opacity: .2;
     z-index:-1;
     pointer-events:none;
     background-image:url('{{ asset('images/group-batik.png') }}');

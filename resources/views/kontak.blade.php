@@ -364,6 +364,7 @@
   .konten-batik::before{
     content:"";
     position:absolute;
+    opacity: .2;
     inset:0;
     z-index:-1;
     pointer-events:none;

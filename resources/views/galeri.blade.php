@@ -29,6 +29,7 @@
     pointer-events:none;
     background-image:url('{{ asset('images/group-batik.png') }}');
     background-repeat:no-repeat;
+    opacity: .2;
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikBoostLight);

@@ -229,6 +229,7 @@
   }
   .konten-batik::before{
     content:"";
+    opacity: .2;
     position:absolute;
     inset:0;
     z-index:-1;
