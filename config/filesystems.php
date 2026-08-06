@@ -17,6 +17,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Media Disk
+    |--------------------------------------------------------------------------
+    |
+    | Disk used for all uploaded content (hero slides, gallery photos, news
+    | images, etc). Defaults to the local "public" disk. Set MEDIA_DISK=s3
+    | (plus the AWS_* / S3-compatible env vars below) to move uploads to
+    | cloud storage instead — no other code changes needed.
+    |
+    */
+
+    'media_disk' => env('MEDIA_DISK', 'public'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |
@@ -58,6 +72,19 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
             'report' => false,
+        ],
+
+        // Firebase Storage (a Google Cloud Storage bucket under the hood).
+        // Driver registered by spatie/laravel-google-cloud-storage.
+        'gcs' => [
+            'driver' => 'gcs',
+            'project_id' => env('FIREBASE_PROJECT_ID'),
+            'key_file_path' => env('FIREBASE_CREDENTIALS_PATH') ? storage_path(env('FIREBASE_CREDENTIALS_PATH')) : null,
+            'bucket' => env('FIREBASE_STORAGE_BUCKET'),
+            'path_prefix' => env('FIREBASE_STORAGE_PATH_PREFIX', ''),
+            'visibility' => 'public',
+            'url' => env('FIREBASE_STORAGE_BUCKET') ? 'https://storage.googleapis.com/'.env('FIREBASE_STORAGE_BUCKET') : null,
+            'throw' => false,
         ],
 
     ],

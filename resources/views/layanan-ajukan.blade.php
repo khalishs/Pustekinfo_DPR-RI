@@ -429,7 +429,7 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ media_url($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt; / &lt;span&gt;Apply&lt;/span&gt;">Beranda / <span>Layanan</span> / <span>Ajukan</span></p>
       <h1 data-en-html="Apply for a <span class=&quot;accent&quot;>service</span>">Ajukan <span class="accent">layanan</span></h1>

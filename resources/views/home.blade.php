@@ -359,6 +359,32 @@
   @media (max-width:900px){
     .hero-scroll-cue{display:none;}
   }
+
+  /* ---------- Hero: tombol navigasi slide (prev/next) ---------- */
+  .hero-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:2;
+    width:44px;height:44px;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.35);
+    background:rgba(11,34,51,.35);
+    color:#fff;
+    cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .hero-nav svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+  .hero-nav:hover{background:rgba(11,34,51,.6);border-color:#fff;}
+  .hero-nav-prev{left:24px;}
+  .hero-nav-next{right:24px;}
+  @media (max-width:900px){
+    .hero-nav{width:36px;height:36px;}
+    .hero-nav svg{width:16px;height:16px;}
+    .hero-nav-prev{left:12px;}
+    .hero-nav-next{right:12px;}
+  }
   .btn{
     display:inline-block;
     padding:15px 30px;
@@ -385,7 +411,9 @@
     background: linear-gradient(150deg,#073D5F 40%,#057888 100%);
     border-radius:14px;
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    /* Maksimal 5 kolom (dibatasi juga di query-nya) — lebar tiap kotak otomatis
+       menyesuaikan jumlah data yang benar-benar ada, bukan selalu terbagi 4. */
+    grid-template-columns:repeat(var(--stats-count, 4), 1fr);
   }
   .stat{
     display:flex;
@@ -1301,19 +1329,22 @@
   .agenda-day.muted{color:#c7d0d4;font-weight:500;}
   .agenda-day.muted:hover{background:rgba(20,128,140,.06);color:#9aa8af;}
   .agenda-day.today{
-    background:rgba(20,128,140,.08);
-    border:1.5px solid var(--teal);
+    background:rgba(20,128,140,.06);
+    border:1px solid rgba(20,128,140,.4);
     color:var(--teal);
     font-weight:800;
   }
   .agenda-day .dot{
-    width:4px;height:4px;
+    width:6px;height:6px;
     border-radius:50%;
     margin-top:3px;
   }
   .agenda-day .dot.c1{background:#e0a340;}
   .agenda-day .dot.c2{background:#b0413e;}
   .agenda-day .dot.c3{background:#1f9d7c;}
+  .agenda-day .dot.c4{background:#3b7dd8;}
+  .agenda-day .dot.c5{background:#8b5cf6;}
+  .agenda-day .dot.c6{background:#d6478a;}
 
   .agenda-legend{
     margin-top:20px;
@@ -1339,6 +1370,9 @@
   .agenda-legend i.c1{background:#e0a340;}
   .agenda-legend i.c2{background:#b0413e;}
   .agenda-legend i.c3{background:#1f9d7c;}
+  .agenda-legend i.c4{background:#3b7dd8;}
+  .agenda-legend i.c5{background:#8b5cf6;}
+  .agenda-legend i.c6{background:#d6478a;}
 
   /* --- Panel Hari Ini --- */
   .agenda-today{
@@ -2209,6 +2243,12 @@
 [data-theme="dark"] .agenda-day:hover{background:rgba(95,192,209,.12);color:#5FC0D1;}
 [data-theme="dark"] .agenda-day.muted{color:#3d4d54;}
 [data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.12);}
+[data-theme="dark"] .agenda-day .dot.c1,[data-theme="dark"] .agenda-legend i.c1{background:#f0b95e;}
+[data-theme="dark"] .agenda-day .dot.c2,[data-theme="dark"] .agenda-legend i.c2{background:#e0645f;}
+[data-theme="dark"] .agenda-day .dot.c3,[data-theme="dark"] .agenda-legend i.c3{background:#3ecb9e;}
+[data-theme="dark"] .agenda-day .dot.c4,[data-theme="dark"] .agenda-legend i.c4{background:#6ea8ff;}
+[data-theme="dark"] .agenda-day .dot.c5,[data-theme="dark"] .agenda-legend i.c5{background:#b18cff;}
+[data-theme="dark"] .agenda-day .dot.c6,[data-theme="dark"] .agenda-legend i.c6{background:#ff7bb3;}
 [data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
 [data-theme="dark"] .agenda-legend span{color:#8ea0a8;}
 
@@ -2280,7 +2320,7 @@
     <header class="hero">
       <div class="hero-slider">
         @forelse($heroSlides as $slide)
-          <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$slide->image) }}')"></div>
+          <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ media_url($slide->image) }}')"></div>
         @empty
           <div class="hero-slide" style="background-image:url('{{ asset('images/hero-gedung-dpr.jpg') }}')"></div>
         @endforelse
@@ -2299,9 +2339,18 @@
         <span class="mouse"><span class="dot"></span></span>
         <span class="label" data-en="Scroll">Scroll</span>
       </a>
+
+      @if($heroSlides->count() > 1)
+        <button type="button" class="hero-nav hero-nav-prev" id="heroPrev" aria-label="Slide sebelumnya">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="hero-nav hero-nav-next" id="heroNext" aria-label="Slide berikutnya">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      @endif
     </header>
 
-    <section class="stats-bar">
+    <section class="stats-bar" style="--stats-count:{{ max($stats->count(), 1) }};">
         @php $icons = [
           'apps' => '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
           'karyawan' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg>',
@@ -2331,7 +2380,7 @@
             <div class="profil-media">
               <div class="profil-media-frame">
                 @foreach($profilPhotos as $photo)
-                  <div class="profil-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$photo->image) }}')"></div>
+                  <div class="profil-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ media_url($photo->image) }}')"></div>
                 @endforeach
                 <span class="profil-badge" data-en="ABOUT US">TENTANG KAMI</span>
               </div>
@@ -2450,7 +2499,7 @@
       <div class="eyebrow" data-en="LEADERSHIP MESSAGE">SAMBUTAN PIMPINAN</div>
 
       <div class="sambutan-card">
-                <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
+                <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ media_url($leadership->photo) }}');background-size:cover;background-position:center;" @endif>
           <div class="who">
             <div class="name">{{ $leadership->name ?? 'Nama Kepala Unit' }}</div>
             <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
@@ -2485,7 +2534,7 @@
 
       <div class="berita-grid">
 
-        <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ asset('storage/'.$featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
+        <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ media_url($featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
           <span class="badge" data-en="{{ ($featuredNews->category_en ?? null) ?: ($featuredNews->category ?? 'NEWS') }}">{{ $featuredNews->category ?? 'BERITA' }}</span>
 
           <div class="berita-featured-body">
@@ -2505,7 +2554,7 @@
         <div class="berita-list">
           @forelse($latestNews as $news)
             <a href="{{ route('berita.show', $news) }}" class="berita-item">
-              <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset('storage/'.$news->image) }}');background-size:cover;background-position:center;" @endif></div>
+              <div class="berita-thumb" @if($news->image) style="background-image:url('{{ media_url($news->image) }}');background-size:cover;background-position:center;" @endif></div>
               <div class="berita-item-body">
                 <div class="cat" data-en="{{ $news->category_en ?: $news->category }}">{{ $news->category }}</div>
                 <div class="title" data-en="{{ $news->title_en ?: $news->title }}">{{ $news->title }}</div>
@@ -2561,6 +2610,9 @@
             <span><i class="c1"></i><span data-en="Agenda Purpose 1">Tujuan Agenda 1</span></span>
             <span><i class="c2"></i><span data-en="Agenda Purpose 2">Tujuan Agenda 2</span></span>
             <span><i class="c3"></i><span data-en="Agenda Purpose 3">Tujuan Agenda 3</span></span>
+            <span><i class="c4"></i><span data-en="Agenda Purpose 4">Tujuan Agenda 4</span></span>
+            <span><i class="c5"></i><span data-en="Agenda Purpose 5">Tujuan Agenda 5</span></span>
+            <span><i class="c6"></i><span data-en="Agenda Purpose 6">Tujuan Agenda 6</span></span>
           </div>
         </div>
 
@@ -2632,7 +2684,7 @@
     <div class="galeri-grid" id="galeriGrid">
       @forelse($galleries as $item)
         <div class="galeri-card {{ $item->size }}" data-category="{{ $item->category->slug ?? '' }}">
-          <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
+          <img src="{{ media_url($item->image) }}" alt="{{ $item->title }}">
         </div>
       @empty
         <p style="color:#8a97a0;" data-en="No gallery photos yet.">Belum ada foto galeri.</p>
@@ -2654,14 +2706,14 @@
       </h2>
 
       <div class="akses-list">
-        <div class="akses-item">
+        <a href="{{ route('layanan.ajukan', ['jenis' => 'Helpdesk & aduan']) }}" class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg></div>
           <div class="akses-item-body">
             <div class="title" data-en="Submit a Help Ticket">Ajukan Tiket Bantuan</div>
             <div class="desc" data-en="Report your technical issue">Laporkan kendala teknis Anda</div>
           </div>
           <div class="akses-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-        </div>
+        </a>
 
         <div class="akses-item">
           <div class="akses-icon"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.5 12.5 19 4"/><path d="M17 6l2 2"/><path d="M14 9l2 2"/></svg></div>
@@ -3100,20 +3152,36 @@ agendaObserver.observe(agendaSection);
 const slides = document.querySelectorAll(".hero-slide");
 
 let currentSlide = 0;
+let heroAutoplay;
 
-setInterval(() => {
-
+function showHeroSlide(index) {
+    if (!slides.length) return;
     slides[currentSlide].classList.remove("active");
-
-    currentSlide++;
-
-    if(currentSlide >= slides.length){
-        currentSlide = 0;
-    }
-
+    currentSlide = (index + slides.length) % slides.length;
     slides[currentSlide].classList.add("active");
+}
 
-}, 4000);
+function startHeroAutoplay() {
+    heroAutoplay = setInterval(() => showHeroSlide(currentSlide + 1), 4000);
+}
+
+function restartHeroAutoplay() {
+    clearInterval(heroAutoplay);
+    startHeroAutoplay();
+}
+
+startHeroAutoplay();
+
+const heroPrevBtn = document.getElementById("heroPrev");
+const heroNextBtn = document.getElementById("heroNext");
+heroPrevBtn && heroPrevBtn.addEventListener("click", () => {
+    showHeroSlide(currentSlide - 1);
+    restartHeroAutoplay();
+});
+heroNextBtn && heroNextBtn.addEventListener("click", () => {
+    showHeroSlide(currentSlide + 1);
+    restartHeroAutoplay();
+});
 
 const profilSlides = document.querySelectorAll(".profil-slide");
 

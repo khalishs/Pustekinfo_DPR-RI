@@ -28,10 +28,10 @@
       <div class="form-group form-span-2">
         <label>Foto</label>
         @if($member->photo)
-          <img src="{{ asset('storage/'.$member->photo) }}" style="width:120px;border-radius:8px;margin-bottom:10px;display:block;">
+          <img src="{{ media_url($member->photo) }}" style="width:120px;border-radius:8px;margin-bottom:10px;display:block;">
         @endif
-        <input type="file" name="photo" accept="image/*">
-        <small>Kosongkan jika tidak ingin mengganti foto.</small>
+        <input type="file" name="photo" accept="image/png">
+        <small>Format PNG, ukuran 2–10 MB. Kosongkan jika tidak ingin mengganti foto.</small>
       </div>
 
       <div class="form-group">

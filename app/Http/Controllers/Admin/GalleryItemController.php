@@ -28,7 +28,7 @@ class GalleryItemController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request, true);
-        $data['image'] = $request->file('image')->store('galeri', 'public');
+        $data['image'] = $request->file('image')->store('galeri', config('filesystems.media_disk'));
         $data['is_featured'] = $request->boolean('is_featured');
 
         GalleryItem::create($data);
@@ -51,9 +51,9 @@ class GalleryItemController extends Controller
 
         if ($request->hasFile('image')) {
             if ($gallery->image) {
-                Storage::disk('public')->delete($gallery->image);
+                Storage::disk(config('filesystems.media_disk'))->delete($gallery->image);
             }
-            $data['image'] = $request->file('image')->store('galeri', 'public');
+            $data['image'] = $request->file('image')->store('galeri', config('filesystems.media_disk'));
         }
 
         $gallery->update($data);
@@ -64,7 +64,7 @@ class GalleryItemController extends Controller
     public function destroy(GalleryItem $gallery)
     {
         if ($gallery->image) {
-            Storage::disk('public')->delete($gallery->image);
+            Storage::disk(config('filesystems.media_disk'))->delete($gallery->image);
         }
         $gallery->delete();
 
@@ -81,7 +81,7 @@ class GalleryItemController extends Controller
             'category_id'    => 'required|exists:gallery_categories,id',
             'size'           => 'required|in:big,med,wide,small',
             'sort_order'     => 'required|integer',
-            'image'          => ($imageRequired ? 'required' : 'nullable') . '|image|min:2048|max:10240',
+            'image'          => ($imageRequired ? 'required' : 'nullable') . '|mimes:png|min:2048|max:10240',
         ]);
     }
 }

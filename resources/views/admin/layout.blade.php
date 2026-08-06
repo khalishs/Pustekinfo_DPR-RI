@@ -225,16 +225,6 @@
   .topbar-left{display:flex;align-items:center;gap:14px;min-width:0;}
   .topbar-titles h1{font-size:21px;font-weight:800;color:var(--navy);letter-spacing:-.01em;}
   .topbar-titles p{margin-top:3px;font-size:12.5px;color:#8a97a0;font-weight:500;}
-  .topbar-chip{
-    display:flex;align-items:center;gap:7px;
-    padding:8px 14px;border-radius:20px;
-    background:rgba(20,128,140,.08);
-    border:1px solid rgba(20,128,140,.16);
-    color:var(--teal);
-    font-size:12px;font-weight:700;
-    white-space:nowrap;
-  }
-  .topbar-chip .pulse{width:6px;height:6px;border-radius:50%;background:var(--success);flex-shrink:0;box-shadow:0 0 0 3px rgba(31,157,124,.18);}
 
   .content{padding:30px 36px 64px;width:100%;}
 
@@ -246,6 +236,8 @@
     border:1px solid #c9ecd9;
   }
   .flash::before{content:"✓";display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--success);color:#fff;font-size:11px;flex-shrink:0;}
+  .flash-error{background:#fbeaea;color:var(--danger);border:1px solid #f3caca;}
+  .flash-error::before{content:"!";background:var(--danger);}
 
   .card{
     background:#fff;border-radius:16px;padding:26px;
@@ -366,7 +358,6 @@
   [data-theme="dark"] .theme-toggle:hover{border-color:var(--teal-light);color:var(--teal-light);}
   [data-theme="dark"] .topbar{background:rgba(27,30,34,.85);border-color:rgba(255,255,255,.06);}
   [data-theme="dark"] .topbar-titles p{color:#8b929a;}
-  [data-theme="dark"] .topbar-chip{background:rgba(20,128,140,.15);border-color:rgba(20,128,140,.28);}
   [data-theme="dark"] .flash{background:rgba(31,157,124,.13);color:#6fd6b3;border-color:rgba(31,157,124,.26);}
   [data-theme="dark"] .card{background:#24282d;border-color:rgba(255,255,255,.06);box-shadow:0 8px 28px -16px rgba(0,0,0,.4);}
   [data-theme="dark"] th{color:#8b929a;}
@@ -397,7 +388,6 @@
     .sidebar.open{transform:translateX(0);}
     .main{margin-left:0;}
     .topbar{padding:16px 20px;}
-    .topbar-chip{display:none;}
     .content{padding:24px 20px 50px;}
   }
 
@@ -534,6 +524,16 @@
           @endif
         </a>
       </details>
+
+      @if(auth()->user()?->isSuperAdmin())
+        <details class="nav-group" open>
+          <summary>Administrator</summary>
+          <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            Manajemen Akun
+          </a>
+        </details>
+      @endif
     </nav>
 
     <div class="bottom">
@@ -569,16 +569,15 @@
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
-        <div class="topbar-chip">
-          <span class="pulse"></span>
-          Situs aktif
-        </div>
         <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       </div>
     </div>
     <div class="content">
       @if(session('success'))
         <div class="flash">{{ session('success') }}</div>
+      @endif
+      @if(session('error'))
+        <div class="flash flash-error">{{ session('error') }}</div>
       @endif
       @yield('content')
     </div>

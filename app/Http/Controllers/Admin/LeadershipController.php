@@ -34,16 +34,16 @@ class LeadershipController extends Controller
         'expertise'         => 'nullable|string|max:255',
         'expertise_en'      => 'nullable|string|max:255',
         'email'             => 'nullable|email|max:255',
-        'photo'             => 'nullable|image|min:2048|max:10240',
+        'photo'             => 'nullable|mimes:png|min:2048|max:10240',
     ]);
 
     $leadership = Leadership::first() ?? new Leadership();
 
     if ($request->hasFile('photo')) {
         if ($leadership->photo) {
-            Storage::disk('public')->delete($leadership->photo);
+            Storage::disk(config('filesystems.media_disk'))->delete($leadership->photo);
         }
-        $data['photo'] = $request->file('photo')->store('sambutan', 'public');
+        $data['photo'] = $request->file('photo')->store('sambutan', config('filesystems.media_disk'));
     }
 
     $leadership->fill($data)->save();

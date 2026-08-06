@@ -26,7 +26,7 @@ class OrganizationMemberController extends Controller
         $data = $this->validated($request);
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('organisasi', 'public');
+            $data['photo'] = $request->file('photo')->store('organisasi', config('filesystems.media_disk'));
         }
 
         OrganizationMember::create($data);
@@ -45,9 +45,9 @@ class OrganizationMemberController extends Controller
 
         if ($request->hasFile('photo')) {
             if ($organizationMember->photo) {
-                Storage::disk('public')->delete($organizationMember->photo);
+                Storage::disk(config('filesystems.media_disk'))->delete($organizationMember->photo);
             }
-            $data['photo'] = $request->file('photo')->store('organisasi', 'public');
+            $data['photo'] = $request->file('photo')->store('organisasi', config('filesystems.media_disk'));
         }
 
         $organizationMember->update($data);
@@ -58,7 +58,7 @@ class OrganizationMemberController extends Controller
     public function destroy(OrganizationMember $organizationMember)
     {
         if ($organizationMember->photo) {
-            Storage::disk('public')->delete($organizationMember->photo);
+            Storage::disk(config('filesystems.media_disk'))->delete($organizationMember->photo);
         }
         $organizationMember->delete();
 
@@ -75,7 +75,7 @@ class OrganizationMemberController extends Controller
             'unit_description_en' => 'nullable|string',
             'level'               => 'required|in:kepala,sekretariat,bidang',
             'sort_order'          => 'required|integer',
-            'photo'               => 'nullable|image|min:2048|max:10240',
+            'photo'               => 'nullable|mimes:png|min:2048|max:10240',
         ]);
     }
 }
