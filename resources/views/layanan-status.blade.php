@@ -342,7 +342,7 @@
 
   <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
     <filter id="batikTintTeal"><feColorMatrix type="matrix" values="0 0 0 0 0.0784 0 0 0 0 0.5137 0 0 0 0 0.6118 0 0 0 4.5 0"/></filter>
-    <filter id="batikBoostLight"><feColorMatrix type="saturate" values="2.2"/><feComponentTransfer><feFuncA type="linear" slope="2.6" intercept="0"/></feComponentTransfer></filter>
+    <filter id="batikBoostLight"><feColorMatrix type="matrix" values="0 0 0 0 0.0784 0 0 0 0 0.5137 0 0 0 0 0.6118 0 0 0 2.6 0"/></filter>
   </svg>
 
   {{-- ================= NAVBAR ================= --}}

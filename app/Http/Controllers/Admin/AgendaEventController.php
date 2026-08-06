@@ -56,7 +56,9 @@ class AgendaEventController extends Controller
             'event_date'     => 'required|date',
             'event_time'     => 'nullable|date_format:H:i',
             'location'       => 'nullable|string|max:255',
-            'color_tag'      => 'required|in:c1,c2,c3',
+            'color'          => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        ], [
+            'color.regex' => 'Warna harus berupa kode hex yang valid.',
         ]);
     }
 }
