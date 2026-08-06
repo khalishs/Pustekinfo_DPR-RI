@@ -562,6 +562,8 @@
     font-family:inherit;
   }
   .form-field.full{grid-column:1/-1;}
+  .form-field small.error{display:block;margin-top:6px;color:#c0392b;font-size:12px;font-weight:600;}
+  [data-theme="dark"] .form-field small.error{color:#ff8f8a;}
 
   .kontak-form-footer{
     margin-top:26px;
@@ -883,7 +885,7 @@
   [data-theme="dark"] .form-field input,
   [data-theme="dark"] .form-field select,
   [data-theme="dark"] .form-field textarea{
-    background:#0b1720;
+    background-color:#0b1720;
     border-color:rgba(255,255,255,.14);
     color:#c3cdd2;
   }
@@ -1051,34 +1053,39 @@
           <div class="form-row">
             <div class="form-field">
               <label for="nama" class="required" data-en="Full name">Nama lengkap</label>
-              <input type="text" id="nama" name="nama" placeholder="Nama Anda" data-en-placeholder="Your name" required>
+              <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s]+" title="Nama hanya boleh berisi huruf" required>
+              @error('nama')<small class="error">{{ $message }}</small>@enderror
             </div>
             <div class="form-field">
               <label for="email" class="required">Email</label>
-              <input type="email" id="email" name="email" placeholder="nama@email.com" required>
+              <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="nama@email.com" required>
+              @error('email')<small class="error">{{ $message }}</small>@enderror
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-field">
               <label for="instansi" data-en="Work unit / Institution">Unit kerja / Instansi</label>
-              <input type="text" id="instansi" name="instansi" placeholder="Opsional" data-en-placeholder="Optional">
+              <input type="text" id="instansi" name="instansi" value="{{ old('instansi') }}" placeholder="Opsional" data-en-placeholder="Optional">
+              @error('instansi')<small class="error">{{ $message }}</small>@enderror
             </div>
             <div class="form-field">
               <label for="kategori" data-en="Category">Kategori</label>
               <select id="kategori" name="kategori">
-                <option value="umum" data-en="General question">Pertanyaan umum</option>
-                <option value="teknis" data-en="Technical support">Bantuan teknis</option>
-                <option value="kerjasama" data-en="Partnership">Kerja sama</option>
-                <option value="pengaduan" data-en="Complaint">Pengaduan</option>
+                <option value="umum" data-en="General question" @selected(old('kategori', 'umum') === 'umum')>Pertanyaan umum</option>
+                <option value="teknis" data-en="Technical support" @selected(old('kategori') === 'teknis')>Bantuan teknis</option>
+                <option value="kerjasama" data-en="Partnership" @selected(old('kategori') === 'kerjasama')>Kerja sama</option>
+                <option value="pengaduan" data-en="Complaint" @selected(old('kategori') === 'pengaduan')>Pengaduan</option>
               </select>
+              @error('kategori')<small class="error">{{ $message }}</small>@enderror
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-field full">
               <label for="pesan" class="required" data-en="Message">Pesan</label>
-              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." required></textarea>
+              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." required>{{ old('pesan') }}</textarea>
+              @error('pesan')<small class="error">{{ $message }}</small>@enderror
             </div>
           </div>
 
@@ -1281,6 +1288,13 @@
     }
     observeSection(".kontak-page", 0.1);
     observeSection(".lokasi", 0.15);
+
+    const namaInput = document.getElementById("nama");
+    if (namaInput) {
+        namaInput.addEventListener("input", () => {
+            namaInput.value = namaInput.value.replace(/[^A-Za-z\s]/g, "");
+        });
+    }
 
   </script>
 

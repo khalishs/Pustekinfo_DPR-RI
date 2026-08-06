@@ -28,7 +28,7 @@ class LayananController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'nama'          => ['required', 'string', 'max:255', 'regex:/^[\pL\s.\'-]+$/u'],
+            'nama'          => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'email'         => 'required|email|max:255',
             'no_tlpn'       => ['required', 'string', 'max:20', function ($attribute, $value, $fail) {
                 $digits = $this->normalizeDigits($value);

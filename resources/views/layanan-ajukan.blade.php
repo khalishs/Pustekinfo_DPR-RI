@@ -361,7 +361,7 @@
   [data-theme="dark"] .ajukan-form-card > p{color:#8ea0a8;}
   [data-theme="dark"] .form-field label{color:#eaf3f5;}
   [data-theme="dark"] .form-field input, [data-theme="dark"] .form-field select, [data-theme="dark"] .form-field textarea{
-    background:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;
+    background-color:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;
   }
   [data-theme="dark"] .form-field input::placeholder, [data-theme="dark"] .form-field textarea::placeholder{color:#8ea0a8;}
   [data-theme="dark"] .form-field input:focus, [data-theme="dark"] .form-field select:focus, [data-theme="dark"] .form-field textarea:focus{
@@ -533,7 +533,7 @@
             <div class="form-row">
               <div class="form-field">
                 <label for="nama" class="required" data-en="Full name">Nama lengkap</label>
-                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s.'-]+" title="Nama hanya boleh berisi huruf" required>
+                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s]+" title="Nama hanya boleh berisi huruf" required>
                 @error('nama')<small class="error">{{ $message }}</small>@enderror
               </div>
               <div class="form-field">
@@ -744,6 +744,13 @@
     if (noTlpnInput) {
         noTlpnInput.addEventListener("input", () => {
             noTlpnInput.value = noTlpnInput.value.replace(/[^0-9]/g, "").slice(0, 14);
+        });
+    }
+
+    const namaInput = document.getElementById("nama");
+    if (namaInput) {
+        namaInput.addEventListener("input", () => {
+            namaInput.value = namaInput.value.replace(/[^A-Za-z\s]/g, "");
         });
     }
   </script>
