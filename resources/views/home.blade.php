@@ -407,8 +407,9 @@
     margin:40px 100px 0;
     background: linear-gradient(150deg,#073D5F 40%,#057888 100%);
     border-radius:14px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
   }
   .stat{
     display:flex;
@@ -418,6 +419,7 @@
     border-right:1px solid var(--line);
     transition:all .3s ease;
     cursor:pointer;
+    flex:0 1 auto;
   }
 
 .stat:hover .stat-icon{
@@ -526,7 +528,8 @@
     .hero-arrow-next{right:10px;}
 
     .stats-bar{
-      grid-template-columns:repeat(2,1fr);
+      flex-wrap:wrap;
+      justify-content:center;
       margin:24px 16px 0;
       border-radius:12px;
     }
@@ -534,8 +537,10 @@
       border-right:none;
       border-bottom:1px solid var(--line);
       gap:12px;
+      flex:1 1 45%;
+      justify-content:center;
     }
-    .stat:nth-last-child(-n+2){border-bottom:none;}
+    .stat:last-child{border-bottom:none;}
     .stat-icon{width:38px;height:38px;border-radius:10px;}
     .stat-icon svg{width:18px;height:18px;}
     .stat-num{font-size:19px;}
@@ -2337,25 +2342,19 @@
       </a>
     </header>
 
-    <section class="stats-bar">
-        @php $icons = [
-          'apps' => '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
-          'karyawan' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg>',
-          'pengguna' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-          'spbe' => '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>',
-        ]; @endphp
-        @forelse($stats as $stat)
+    @if($stats->count())
+      <section class="stats-bar">
+        @foreach($stats as $stat)
           <div class="stat">
-            <div class="stat-icon">{!! $icons[$stat->key] ?? $icons['apps'] !!}</div>
+            <div class="stat-icon"><svg viewBox="0 0 24 24">{!! $stat->icon_svg !!}</svg></div>
             <div>
               <div class="stat-num" data-target="{{ $stat->value }}" data-suffix="{{ $stat->suffix }}" data-decimals="{{ $stat->decimals }}">0</div>
               <div class="stat-label" data-en="{{ $stat->label_en ?: $stat->label }}">{{ $stat->label }}</div>
             </div>
           </div>
-        @empty
-          <div class="stat"><div><div class="stat-label" data-en="No statistics data yet">Belum ada data statistik</div></div></div>
-        @endforelse
+        @endforeach
       </section>
+    @endif
         <div class="spacer"></div>
 
         {{-- Pembungkus: satu pola batik menyatu untuk seluruh section di bawah ini (Profil s/d Akses & Dokumen) --}}
