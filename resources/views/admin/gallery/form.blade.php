@@ -61,6 +61,8 @@
           <option value="med" {{ old('size', $item->size) == 'med' ? 'selected' : '' }}>Sedang</option>
           <option value="small" {{ old('size', $item->size ?? 'small') == 'small' ? 'selected' : '' }}>Kecil</option>
         </select>
+        @error('size')<small class="error">{{ $message }}</small>@enderror
+        <small>Slot di Home &mdash; Besar: {{ $sizeCounts['big'] ?? 0 }}/{{ $sizeLimits['big'] }}, Sedang: {{ $sizeCounts['med'] ?? 0 }}/{{ $sizeLimits['med'] }}, Lebar: {{ $sizeCounts['wide'] ?? 0 }}/{{ $sizeLimits['wide'] }}, Kecil: {{ $sizeCounts['small'] ?? 0 }}/{{ $sizeLimits['small'] }}.</small>
       </div>
 
       <div class="form-group">
@@ -70,6 +72,14 @@
 
       <div class="form-group" style="align-self:end;">
         <label><input type="checkbox" name="is_featured" value="1" style="width:auto;display:inline-block;" {{ old('is_featured', $item->is_featured) ? 'checked' : '' }}> Jadikan sorotan di halaman galeri</label>
+        @error('is_featured')<small class="error">{{ $message }}</small>@enderror
+        <small>Cuma satu foto yang bisa jadi sorotan. Centang foto lain akan menggantikan sorotan yang sedang aktif harus dibatalkan dulu.</small>
+      </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="show_on_home" value="1" style="width:auto;display:inline-block;" {{ old('show_on_home', $item->show_on_home) ? 'checked' : '' }}> Tampilkan di halaman utama (Home)</label>
+        @error('show_on_home')<small class="error">{{ $message }}</small>@enderror
+        <small>Slot terpakai: {{ $homeCount }}/{{ $maxHomeItems }}. Maksimal {{ $maxHomeItems }} foto yang bisa tampil di Home.</small>
       </div>
     </div>
 

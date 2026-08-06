@@ -368,7 +368,7 @@
     filter:url(#batikBoostLight);
   }
   [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
-  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.4;}
 
   /* section putih/mist bergantian dimatikan di dalam area batik, supaya
      polanya tetap terlihat sampai bawah — sama seperti di beranda */
@@ -532,8 +532,8 @@
   @media (max-width:560px){.values-grid{grid-template-columns:1fr;}}
 
   /* ================= FOOTER (sama seperti beranda) ================= */
-  .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #0b2233 55%, #0b2233 100%);}
-  .footer{position:relative;background:var(--navy);padding:64px 100px 0;overflow:hidden;}
+  .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #052D46 55%, #052D46 100%);}
+  .footer{position:relative;background:#052D46;padding:64px 100px 0;overflow:hidden;}
   /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
   .footer::before{
     content:"";position:absolute;inset:-40px 0 -80px;

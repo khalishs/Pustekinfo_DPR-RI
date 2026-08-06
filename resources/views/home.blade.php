@@ -262,32 +262,28 @@
     opacity:1;
 }
 
-  .hero-nav{
+  .hero-arrow{
     position:absolute;
     top:50%;
     transform:translateY(-50%);
-    z-index:4;
-    width:44px;height:44px;
+    z-index:3;
+    width:48px;height:48px;
     border-radius:50%;
-    background:rgba(255,255,255,.14);
     border:1px solid rgba(255,255,255,.35);
-    backdrop-filter:blur(6px);
+    background:rgba(11,49,74,.35);
+    backdrop-filter:blur(4px);
     color:#fff;
-    display:flex;align-items:center;justify-content:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     cursor:pointer;
-    transition:background .2s ease, transform .2s ease;
+    transition:.25s ease;
+    padding:0;
   }
-  .hero-nav:hover{background:rgba(255,255,255,.28);}
-  .hero-nav:active{transform:translateY(-50%) scale(.94);}
-  .hero-nav.prev{left:22px;}
-  .hero-nav.next{right:22px;}
-  .hero-nav svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-  @media (max-width:900px){
-    .hero-nav{width:36px;height:36px;}
-    .hero-nav.prev{left:10px;}
-    .hero-nav.next{right:10px;}
-    .hero-nav svg{width:16px;height:16px;}
-  }
+  .hero-arrow:hover{background:rgba(11,49,74,.65);border-color:rgba(255,255,255,.65);}
+  .hero-arrow svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+  .hero-arrow-prev{left:24px;}
+  .hero-arrow-next{right:24px;}
 
   .hero::after{
     content:"";
@@ -525,6 +521,10 @@
     }
     .hero-content{margin-top:16px;}
     .hero-content h1{font-size:26px;}
+    .hero-arrow{width:36px;height:36px;}
+    .hero-arrow svg{width:16px;height:16px;}
+    .hero-arrow-prev{left:10px;}
+    .hero-arrow-next{right:10px;}
 
     .stats-bar{
       grid-template-columns:repeat(2,1fr);
@@ -1847,6 +1847,7 @@
 }
 [data-theme="dark"] .konten-batik::before{
   filter:url(#batikTintTeal);
+  opacity:.4;
 }
 
 @media (max-width:900px){
@@ -1969,7 +1970,7 @@
 /* ---------- Footer ---------- */
 .footer{
   position:relative;
-  background:var(--navy);
+  background:#052D46;
   padding:64px 100px 0;
   overflow:hidden;
 }
@@ -2321,11 +2322,11 @@
         @endforelse
       </div>
       @if($heroSlides->count() > 1)
-        <button type="button" class="hero-nav prev" id="heroPrev" aria-label="Slide sebelumnya">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        <button type="button" class="hero-arrow hero-arrow-prev" aria-label="Gambar sebelumnya">
+          <svg viewBox="0 0 24 24"><polyline points="15 6 9 12 15 18"/></svg>
         </button>
-        <button type="button" class="hero-nav next" id="heroNext" aria-label="Slide berikutnya">
-          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        <button type="button" class="hero-arrow hero-arrow-next" aria-label="Gambar berikutnya">
+          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
         </button>
       @endif
       <div class="hero-content">
@@ -3143,38 +3144,37 @@ agendaObserver.observe(agendaSection);
 
 
 const slides = document.querySelectorAll(".hero-slide");
+const heroPrevBtn = document.querySelector(".hero-arrow-prev");
+const heroNextBtn = document.querySelector(".hero-arrow-next");
 
 let currentSlide = 0;
-let heroInterval = null;
+let heroAutoplay;
 
-function showHeroSlide(index){
+function setHeroSlide(index){
     slides[currentSlide].classList.remove("active");
     currentSlide = (index + slides.length) % slides.length;
     slides[currentSlide].classList.add("active");
 }
 
 function startHeroAutoplay(){
-    heroInterval = setInterval(() => showHeroSlide(currentSlide + 1), 4000);
+    heroAutoplay = setInterval(() => setHeroSlide(currentSlide + 1), 4000);
+}
+
+function restartHeroAutoplay(){
+    clearInterval(heroAutoplay);
+    startHeroAutoplay();
 }
 
 if (slides.length > 1) {
     startHeroAutoplay();
 
-    const heroPrev = document.getElementById("heroPrev");
-    const heroNext = document.getElementById("heroNext");
-
-    function restartHeroAutoplay(){
-        clearInterval(heroInterval);
-        startHeroAutoplay();
-    }
-
-    heroPrev && heroPrev.addEventListener("click", () => {
-        showHeroSlide(currentSlide - 1);
+    heroNextBtn && heroNextBtn.addEventListener("click", () => {
+        setHeroSlide(currentSlide + 1);
         restartHeroAutoplay();
     });
 
-    heroNext && heroNext.addEventListener("click", () => {
-        showHeroSlide(currentSlide + 1);
+    heroPrevBtn && heroPrevBtn.addEventListener("click", () => {
+        setHeroSlide(currentSlide - 1);
         restartHeroAutoplay();
     });
 }

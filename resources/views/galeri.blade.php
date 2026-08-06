@@ -35,6 +35,7 @@
   }
   [data-theme="dark"] body::before{
     filter:url(#batikTintTeal);
+    opacity:.4;
   }
   @media (max-width:900px){
     body::before{background-size:3000px auto;}
@@ -261,7 +262,7 @@
     .sorotan-title{font-size:18px;}
   }
 
-  .footer{position:relative;background:var(--navy);padding:64px 100px 0;margin-top:20px;overflow:hidden;}
+  .footer{position:relative;background:#052D46;padding:64px 100px 0;margin-top:20px;overflow:hidden;}
   /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
   .footer::before{
     content:"";position:absolute;inset:-40px 0 -80px;

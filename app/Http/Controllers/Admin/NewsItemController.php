@@ -23,13 +23,9 @@ class NewsItemController extends Controller
 
     public function store(Request $request)
     {
-        $data = $this->validated($request);
+        $data = $this->validated($request, null);
         $data['title'] = ucfirst($data['title']);
         $data['is_featured'] = $request->boolean('is_featured');
-
-        if ($data['is_featured']) {
-            NewsItem::where('is_featured', true)->update(['is_featured' => false]);
-        }
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('berita', 'public');
@@ -47,13 +43,9 @@ class NewsItemController extends Controller
 
     public function update(Request $request, NewsItem $news)
     {
-        $data = $this->validated($request);
+        $data = $this->validated($request, $news);
         $data['title'] = ucfirst($data['title']);
         $data['is_featured'] = $request->boolean('is_featured');
-
-        if ($data['is_featured']) {
-            NewsItem::where('is_featured', true)->where('id', '!=', $news->id)->update(['is_featured' => false]);
-        }
 
         if ($request->hasFile('image')) {
             if ($news->image) {
@@ -77,7 +69,7 @@ class NewsItemController extends Controller
         return redirect()->route('admin.news.index')->with('success', 'Berita dihapus.');
     }
 
-    private function validated(Request $request): array
+    private function validated(Request $request, ?NewsItem $news): array
     {
         return $request->validate([
             'title'           => 'required|string|max:255',
@@ -91,7 +83,19 @@ class NewsItemController extends Controller
             'image'           => 'nullable|image|mimes:png|min:2048|max:10240',
             'author'          => 'required|string|max:255',
             'reading_minutes' => 'required|integer|min:1',
-            'is_featured'     => 'nullable|boolean',
+            'is_featured'     => ['sometimes', 'boolean', function ($attribute, $value, $fail) use ($request, $news) {
+                if (! $request->boolean('is_featured')) {
+                    return;
+                }
+
+                $alreadyFeatured = NewsItem::where('is_featured', true)
+                    ->when($news, fn ($q) => $q->whereKeyNot($news->id))
+                    ->exists();
+
+                if ($alreadyFeatured) {
+                    $fail('Sudah ada berita lain yang dijadikan berita utama. Batalkan status berita utama tersebut terlebih dahulu sebelum memilih berita ini.');
+                }
+            }],
             'published_at'    => 'nullable|date',
         ]);
     }
