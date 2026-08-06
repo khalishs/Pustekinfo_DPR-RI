@@ -15,7 +15,7 @@
       <tr>
         <td>
           @if($m->photo)
-            <img src="{{ media_url($m->photo) }}" style="width:44px;height:44px;object-fit:cover;border-radius:50%;">
+            <img src="{{ asset('storage/'.$m->photo) }}" style="width:44px;height:44px;object-fit:cover;border-radius:50%;">
           @else
             <span style="color:#b7c2c7;font-size:12px;">Belum ada</span>
           @endif

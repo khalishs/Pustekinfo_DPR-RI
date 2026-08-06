@@ -4,7 +4,6 @@
 <div class="page-head">
   <h2>Statistik</h2>
 </div>
-<p style="margin:-8px 0 16px;color:#8a97a0;font-size:13px;">Hanya 5 data dengan urutan terkecil yang ditampilkan di beranda.</p>
 <div class="card">
   <div class="table-responsive">
   <table>

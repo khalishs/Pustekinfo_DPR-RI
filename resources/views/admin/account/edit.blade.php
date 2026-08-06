@@ -16,32 +16,27 @@
 
     <hr style="border:none;border-top:1px solid var(--line);margin:24px 0;">
 
-    @if($user->isSuperAdmin())
-      <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:16px;">Ubah Password</p>
-      <p style="font-size:12.5px;color:#8a97a0;margin-bottom:18px;margin-top:-10px;">Kosongkan bagian ini jika tidak ingin mengubah password.</p>
+    <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:16px;">Ubah Password</p>
+    <p style="font-size:12.5px;color:#8a97a0;margin-bottom:18px;margin-top:-10px;">Kosongkan bagian ini jika tidak ingin mengubah password.</p>
 
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Password Saat Ini</label>
-          <input type="password" name="current_password" autocomplete="current-password">
-          @error('current_password')<small class="error">{{ $message }}</small>@enderror
-        </div>
-
-        <div class="form-group">
-          <label>Password Baru</label>
-          <input type="password" name="password" autocomplete="new-password">
-          @error('password')<small class="error">{{ $message }}</small>@enderror
-        </div>
-
-        <div class="form-group">
-          <label>Konfirmasi Password Baru</label>
-          <input type="password" name="password_confirmation" autocomplete="new-password">
-        </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Password Saat Ini</label>
+        <input type="password" name="current_password" autocomplete="current-password">
+        @error('current_password')<small class="error">{{ $message }}</small>@enderror
       </div>
-    @else
-      <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px;">Password</p>
-      <p style="font-size:12.5px;color:#8a97a0;">Password akun ini mengikuti akun dan hanya bisa diubah oleh Super Admin lewat Manajemen Akun.</p>
-    @endif
+
+      <div class="form-group">
+        <label>Password Baru</label>
+        <input type="password" name="password" autocomplete="new-password">
+        @error('password')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group">
+        <label>Konfirmasi Password Baru</label>
+        <input type="password" name="password_confirmation" autocomplete="new-password">
+      </div>
+    </div>
 
     <div class="form-actions">
       <button class="btn btn-primary">Simpan Perubahan</button>

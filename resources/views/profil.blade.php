@@ -714,7 +714,7 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ media_url($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Profile&lt;/span&gt;">Beranda / <span>Profil</span></p>
       <h1 data-en="Getting to know Pustekinfo better">Mengenal lebih dekat Pustekinfo</h1>
@@ -781,7 +781,7 @@
       <h2 data-en="A Message from the Head of Pustekinfo">Kata Sambutan Kepala Pustekinfo</h2>
 
       <div class="sambutan-card">
-        <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ media_url($leadership->photo) }}');background-size:cover;background-position:center;" @endif>
+        <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
         <div class="who">
           <div class="name">{{ $leadership->name ?? 'Nama Kepala Pusat' }}</div>
           <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
@@ -804,7 +804,7 @@
       <div class="photo-grid">
         @forelse($members as $m)
           <div class="photo-card">
-            <div class="photo-thumb" @if($m->photo) style="background-image:url('{{ media_url($m->photo) }}');background-size:cover;background-position:center;" @endif>
+            <div class="photo-thumb" @if($m->photo) style="background-image:url('{{ asset('storage/'.$m->photo) }}');background-size:cover;background-position:center;" @endif>
               @if(!$m->photo) <span data-en="Photo">Foto</span> @endif
             </div>
             <div class="photo-info"><strong>{{ $m->name }}</strong><span data-en="{{ $m->position_en ?: $m->position }}">{{ $m->position }}</span></div>

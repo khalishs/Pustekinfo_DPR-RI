@@ -13,7 +13,7 @@
     <tbody>
     @forelse($photos as $photo)
       <tr>
-        <td><img src="{{ media_url($photo->image) }}" style="width:80px;height:80px;object-fit:cover;border-radius:6px;"></td>
+        <td><img src="{{ asset('storage/'.$photo->image) }}" style="width:80px;height:80px;object-fit:cover;border-radius:6px;"></td>
         <td class="text-center"><span class="badge-count">{{ $photo->sort_order }}</span></td>
         <td class="text-center">{!! $photo->is_active ? '<span class="badge-success">Aktif</span>' : '<span class="badge-muted">Nonaktif</span>' !!}</td>
         <td class="row-actions">

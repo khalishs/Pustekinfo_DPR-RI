@@ -56,7 +56,7 @@ class AgendaEventController extends Controller
             'event_date'     => 'required|date',
             'event_time'     => 'nullable|date_format:H:i',
             'location'       => 'nullable|string|max:255',
-            'color_tag'      => 'required|in:c1,c2,c3,c4,c5,c6',
+            'color_tag'      => 'required|in:c1,c2,c3',
         ]);
     }
 }
