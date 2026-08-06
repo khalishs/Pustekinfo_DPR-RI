@@ -533,7 +533,7 @@
             <div class="form-row">
               <div class="form-field">
                 <label for="nama" class="required" data-en="Full name">Nama lengkap</label>
-                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama Anda" data-en-placeholder="Your name" required>
+                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s.'-]+" title="Nama hanya boleh berisi huruf" required>
                 @error('nama')<small class="error">{{ $message }}</small>@enderror
               </div>
               <div class="form-field">
@@ -546,7 +546,7 @@
             <div class="form-row">
               <div class="form-field">
                 <label for="no_tlpn" class="required" data-en="WhatsApp / phone number">Nomor WhatsApp / Telepon</label>
-                <input type="text" id="no_tlpn" name="no_tlpn" value="{{ old('no_tlpn') }}" placeholder="08xxxxxxxxxx" required>
+                <input type="tel" id="no_tlpn" name="no_tlpn" value="{{ old('no_tlpn') }}" placeholder="08xxxxxxxxxx" inputmode="numeric" pattern="0[0-9]{9,13}" minlength="10" maxlength="14" title="Masukkan nomor HP/WhatsApp yang valid, contoh: 08123456789" required>
                 @error('no_tlpn')<small class="error">{{ $message }}</small>@enderror
               </div>
               <div class="form-field">
@@ -739,6 +739,13 @@
         observer.observe(section);
     }
     observeSection(".ajukan-page", 0.1);
+
+    const noTlpnInput = document.getElementById("no_tlpn");
+    if (noTlpnInput) {
+        noTlpnInput.addEventListener("input", () => {
+            noTlpnInput.value = noTlpnInput.value.replace(/[^0-9]/g, "").slice(0, 14);
+        });
+    }
   </script>
 
 @include('partials.interactive-cursor')
