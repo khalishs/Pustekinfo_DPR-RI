@@ -26,16 +26,16 @@ class PageBannerController extends Controller
         $this->ensureValidPage($page);
 
         $request->validate([
-            'image' => 'required|image|min:2048|max:10240',
+            'image' => 'required|mimes:png|min:2048|max:10240',
         ]);
 
         $banner = PageBanner::firstOrNew(['page' => $page]);
 
         if ($banner->image) {
-            Storage::disk('public')->delete($banner->image);
+            Storage::disk(config('filesystems.media_disk'))->delete($banner->image);
         }
 
-        $banner->image = $request->file('image')->store('banners', 'public');
+        $banner->image = $request->file('image')->store('banners', config('filesystems.media_disk'));
         $banner->save();
 
         return redirect()->route('admin.page-banners.edit', $page)
@@ -50,7 +50,7 @@ class PageBannerController extends Controller
 
         if ($banner) {
             if ($banner->image) {
-                Storage::disk('public')->delete($banner->image);
+                Storage::disk(config('filesystems.media_disk'))->delete($banner->image);
             }
             $banner->delete();
         }

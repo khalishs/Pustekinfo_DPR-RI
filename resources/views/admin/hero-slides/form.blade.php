@@ -11,9 +11,10 @@
       <div class="form-group form-span-2">
         <label class="{{ $slide->exists ? '' : 'required' }}">Gambar Latar</label>
         @if($slide->image)
-          <img src="{{ asset('storage/'.$slide->image) }}" style="width:240px;border-radius:8px;margin-bottom:10px;display:block;">
+          <img src="{{ media_url($slide->image) }}" style="width:240px;border-radius:8px;margin-bottom:10px;display:block;">
         @endif
-        <input type="file" name="image" accept="image/*" {{ $slide->exists ? '' : 'required' }}>
+        <input type="file" name="image" accept="image/png" {{ $slide->exists ? '' : 'required' }}>
+        <small>Format PNG, ukuran 2–10 MB.</small>
         @error('image')<small class="error">{{ $message }}</small>@enderror
         @if($slide->exists)<small>Kosongkan jika tidak ingin mengganti gambar.</small>@endif
       </div>

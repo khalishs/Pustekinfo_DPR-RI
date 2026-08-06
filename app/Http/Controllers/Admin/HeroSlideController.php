@@ -26,7 +26,7 @@ class HeroSlideController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request, true);
-        $data['image'] = $request->file('image')->store('hero', 'public');
+        $data['image'] = $request->file('image')->store('hero', config('filesystems.media_disk'));
         $data['is_active'] = $request->boolean('is_active');
 
         HeroSlide::create($data);
@@ -45,8 +45,8 @@ class HeroSlideController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($heroSlide->image);
-            $data['image'] = $request->file('image')->store('hero', 'public');
+            Storage::disk(config('filesystems.media_disk'))->delete($heroSlide->image);
+            $data['image'] = $request->file('image')->store('hero', config('filesystems.media_disk'));
         }
 
         $heroSlide->update($data);
@@ -56,7 +56,7 @@ class HeroSlideController extends Controller
 
     public function destroy(HeroSlide $heroSlide)
     {
-        Storage::disk('public')->delete($heroSlide->image);
+        Storage::disk(config('filesystems.media_disk'))->delete($heroSlide->image);
         $heroSlide->delete();
 
         return redirect()->route('admin.hero-slides.index')->with('success', 'Slide dihapus.');
@@ -70,7 +70,7 @@ class HeroSlideController extends Controller
             'subtitle'    => 'nullable|string|max:255',
             'subtitle_en' => 'nullable|string|max:255',
             'sort_order'  => 'required|integer',
-            'image'       => ($imageRequired ? 'required' : 'nullable') . '|image|min:2048|max:10240',
+            'image'       => ($imageRequired ? 'required' : 'nullable') . '|mimes:png|min:2048|max:10240',
         ]);
     }
 }

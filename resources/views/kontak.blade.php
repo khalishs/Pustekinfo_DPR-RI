@@ -982,7 +982,7 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ media_url($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Contact&lt;/span&gt;">Beranda / <span>Kontak</span></p>
       <h1 data-en-html="We're ready to <span class=&quot;accent&quot;>help you</span>">Kami siap <span class="accent">membantu Anda</span></h1>
@@ -1041,9 +1041,15 @@
         <p data-en="Fill out the form below, our team will respond within 1&times;24 working hours.">Isi formulir berikut, tim kami akan merespons dalam 1&times;24 jam kerja.</p>
 
         @if(session('status'))
-          <div style="margin-bottom:20px;padding:14px 18px;border-radius:10px;background:#e6f7ee;color:#1f9d7c;font-size:13.5px;font-weight:600;">
+          <div style="margin-bottom:12px;padding:14px 18px;border-radius:10px;background:#e6f7ee;color:#1f9d7c;font-size:13.5px;font-weight:600;">
             {{ session('status') }}
           </div>
+          @if(session('waUrl'))
+            <a href="{{ session('waUrl') }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;padding:12px 20px;border-radius:24px;background:#1f9d7c;color:#fff;font-size:13px;font-weight:700;text-decoration:none;">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              <span data-en="Continue on WhatsApp">Lanjut ke WhatsApp</span>
+            </a>
+          @endif
         @endif
         <form class="kontak-form" method="POST" action="{{ route('kontak.kirim') }}">
           @csrf
@@ -1096,7 +1102,8 @@
   </section>
 
   {{-- ================= LOKASI ================= --}}
-  @if($setting->show_location ?? true)
+  {{-- Section ini otomatis tidak tampil kalau admin menonaktifkan lokasi atau belum mengisi Link Peta --}}
+  @if(($setting->show_location ?? true) && !empty($setting->maps_embed_url))
   <section class="lokasi">
     <div class="lokasi-inner">
       <div class="eyebrow" data-en="LOCATION">LOKASI</div>
@@ -1105,7 +1112,7 @@
       <div class="lokasi-map">
         {{-- Link peta diatur melalui Admin Panel > Pengaturan Footer > Link Peta (Google Maps Embed) --}}
         <iframe
-          src="{{ $setting->maps_embed_url ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4137668829876!2d106.79718367398998!3d-6.209030293778832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f6b735ae6133%3A0x214dde968c25b376!2sSekretariat%20Jenderal%20Dewan%20Perwakilan%20Rakyat%20Republik%20Indonesia!5e0!3m2!1sid!2sus!4v1784135196454!5m2!1sid!2sus' }}"
+          src="{{ $setting->maps_embed_url }}"
           width="100%"
           height="100%"
           style="border:0;"

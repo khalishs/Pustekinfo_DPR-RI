@@ -27,7 +27,12 @@ class NewsItemController extends Controller
         $data['is_featured'] = $request->boolean('is_featured');
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('berita', 'public');
+            $data['image'] = $request->file('image')->store('berita', config('filesystems.media_disk'));
+        }
+
+        if (! empty($data['is_featured'])) {
+            // Highlight cuma boleh aktif di satu berita.
+            NewsItem::where('is_featured', true)->update(['is_featured' => false]);
         }
 
         NewsItem::create($data);
@@ -47,9 +52,14 @@ class NewsItemController extends Controller
 
         if ($request->hasFile('image')) {
             if ($news->image) {
-                Storage::disk('public')->delete($news->image);
+                Storage::disk(config('filesystems.media_disk'))->delete($news->image);
             }
-            $data['image'] = $request->file('image')->store('berita', 'public');
+            $data['image'] = $request->file('image')->store('berita', config('filesystems.media_disk'));
+        }
+
+        if (! empty($data['is_featured'])) {
+            // Highlight cuma boleh aktif di satu berita.
+            NewsItem::where('is_featured', true)->where('id', '!=', $news->id)->update(['is_featured' => false]);
         }
 
         $news->update($data);
@@ -60,7 +70,7 @@ class NewsItemController extends Controller
     public function destroy(NewsItem $news)
     {
         if ($news->image) {
-            Storage::disk('public')->delete($news->image);
+            Storage::disk(config('filesystems.media_disk'))->delete($news->image);
         }
         $news->delete();
 
@@ -78,7 +88,7 @@ class NewsItemController extends Controller
             'excerpt_en'      => 'nullable|string',
             'content'         => 'nullable|string',
             'content_en'      => 'nullable|string',
-            'image'           => 'nullable|image|min:2048|max:10240',
+            'image'           => 'nullable|mimes:png|min:2048|max:10240',
             'author'          => 'required|string|max:255',
             'reading_minutes' => 'required|integer|min:1',
             'is_featured'     => ['sometimes', 'boolean', function ($attribute, $value, $fail) use ($request, $news) {

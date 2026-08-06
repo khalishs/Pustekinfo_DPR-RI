@@ -17,7 +17,7 @@
         <td>{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->format('H:i') : '-' }}</td>
         <td>{{ $event->location ?? '-' }}</td>
         <td>
-          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:{{ ['c1'=>'#e0a340','c2'=>'#b0413e','c3'=>'#1f9d7c'][$event->color_tag] }};"></span>
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:{{ ['c1'=>'#e0a340','c2'=>'#b0413e','c3'=>'#1f9d7c','c4'=>'#3b7dd8','c5'=>'#8b5cf6','c6'=>'#d6478a'][$event->color_tag] }};"></span>
         </td>
         <td class="row-actions">
           <a href="{{ route('admin.agenda.edit', $event) }}" class="btn btn-outline">Edit</a>

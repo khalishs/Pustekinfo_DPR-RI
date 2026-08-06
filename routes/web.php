@@ -131,4 +131,9 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::resource('layanan-pengajuan', ServiceRequestController::class)
         ->only(['index', 'show', 'update', 'destroy'])
         ->parameters(['layanan-pengajuan' => 'layananPengajuan']);
+
+    Route::middleware('superadmin')->group(function () {
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class)
+            ->except('show');
+    });
 });

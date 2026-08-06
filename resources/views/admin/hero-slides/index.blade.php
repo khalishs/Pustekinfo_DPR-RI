@@ -13,7 +13,7 @@
     <tbody>
     @forelse($slides as $slide)
       <tr>
-        <td><img src="{{ asset('storage/'.$slide->image) }}" style="width:80px;height:45px;object-fit:cover;border-radius:6px;"></td>
+        <td><img src="{{ media_url($slide->image) }}" style="width:80px;height:45px;object-fit:cover;border-radius:6px;"></td>
         <td>{{ $slide->title ?: '—' }}</td>
         <td>{{ $slide->subtitle ?: '—' }}</td>
         <td class="text-center"><span class="badge-count">{{ $slide->sort_order }}</span></td>

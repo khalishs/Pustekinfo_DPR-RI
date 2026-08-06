@@ -14,7 +14,7 @@
       <tr>
         <td>
           @if($news->image)
-            <img src="{{ asset('storage/'.$news->image) }}" style="width:60px;height:45px;object-fit:cover;border-radius:6px;">
+            <img src="{{ media_url($news->image) }}" style="width:60px;height:45px;object-fit:cover;border-radius:6px;">
           @else
             <span style="color:#b7c2c7;font-size:12px;">Tidak ada</span>
           @endif

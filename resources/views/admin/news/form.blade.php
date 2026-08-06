@@ -56,9 +56,10 @@
       <div class="form-group form-span-2">
         <label>Gambar</label>
         @if($newsItem->image)
-          <img src="{{ asset('storage/'.$newsItem->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
+          <img src="{{ media_url($newsItem->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
         @endif
-        <input type="file" name="image" accept="image/*">
+        <input type="file" name="image" accept="image/png">
+        <small>Format PNG, ukuran 2–10 MB.</small>
         @error('image')<small class="error">{{ $message }}</small>@enderror
         <small>Kosongkan jika tidak ingin mengganti gambar.</small>
       </div>
@@ -79,9 +80,8 @@
       </div>
 
       <div class="form-group" style="align-self:end;">
-        <label><input type="checkbox" name="is_featured" value="1" style="width:auto;display:inline-block;" {{ old('is_featured', $newsItem->is_featured) ? 'checked' : '' }}> Jadikan berita utama (featured)</label>
-        @error('is_featured')<small class="error">{{ $message }}</small>@enderror
-        <small>Cuma satu berita yang bisa jadi berita utama. Batalkan berita utama yang aktif dulu untuk memindahkannya.</small>
+        <label><input type="checkbox" name="is_featured" value="1" style="width:auto;display:inline-block;" {{ old('is_featured', $newsItem->is_featured) ? 'checked' : '' }}> Jadikan berita utama (highlight)</label>
+        <small>Hanya boleh satu berita yang jadi highlight — mengaktifkan ini otomatis menonaktifkan highlight di berita lain.</small>
       </div>
     </div>
 

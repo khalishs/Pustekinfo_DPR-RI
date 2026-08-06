@@ -26,7 +26,7 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request, true);
-        $data['icon_image'] = $request->file('icon_image')->store('layanan', 'public');
+        $data['icon_image'] = $request->file('icon_image')->store('layanan', config('filesystems.media_disk'));
 
         Service::create($data);
 
@@ -44,9 +44,9 @@ class ServiceController extends Controller
 
         if ($request->hasFile('icon_image')) {
             if ($service->icon_image) {
-                Storage::disk('public')->delete($service->icon_image);
+                Storage::disk(config('filesystems.media_disk'))->delete($service->icon_image);
             }
-            $data['icon_image'] = $request->file('icon_image')->store('layanan', 'public');
+            $data['icon_image'] = $request->file('icon_image')->store('layanan', config('filesystems.media_disk'));
         }
 
         $service->update($data);
@@ -57,7 +57,7 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         if ($service->icon_image) {
-            Storage::disk('public')->delete($service->icon_image);
+            Storage::disk(config('filesystems.media_disk'))->delete($service->icon_image);
         }
         $service->delete();
 
@@ -73,7 +73,7 @@ class ServiceController extends Controller
             'description_en' => 'nullable|string',
             'features'       => 'nullable|string',
             'features_en'    => 'nullable|string',
-            'icon_image'     => ($imageRequired ? 'required' : 'nullable') . '|image|min:2048|max:10240',
+            'icon_image'     => ($imageRequired ? 'required' : 'nullable') . '|mimes:png|min:2048|max:10240',
             'cta_text'       => 'required|string|max:255',
             'cta_text_en'    => 'nullable|string|max:255',
             'sort_order'     => 'required|integer',

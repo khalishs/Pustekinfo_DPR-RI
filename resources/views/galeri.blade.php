@@ -203,32 +203,41 @@
   .sorotan-title{margin-top:14px;font-size:22px;font-weight:800;color:#fff;line-height:1.35;}
   .sorotan-desc{margin-top:10px;font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.7;}
 
-  .galeri-filters-wrap{position:relative;margin-bottom:32px;}
-  .galeri-filters-wrap::before{
-    content:"";position:absolute;top:-36px;left:-30px;right:-30px;bottom:-36px;
-    background:
-      radial-gradient(45% 100% at 12% 50%, rgba(20,128,140,.32), transparent 70%),
-      radial-gradient(35% 100% at 60% 50%, rgba(201,163,78,.2), transparent 70%),
-      radial-gradient(30% 100% at 92% 50%, rgba(20,128,140,.22), transparent 70%);
-    filter:blur(28px);
-    z-index:0;pointer-events:none;
+  /* ---------- Layout 2 kolom: sidebar kategori + grid foto ---------- */
+  .galeri-layout{display:grid;grid-template-columns:230px 1fr;gap:32px;align-items:start;}
+  .galeri-sidebar{position:sticky;top:96px;}
+  .galeri-sidebar-inner{
+    position:relative;
+    background:var(--white);
+    border:1px solid #eef1f3;
+    border-radius:16px;
+    padding:22px 20px;
+    overflow:hidden;
   }
-  .galeri-filters{position:relative;z-index:1;display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;padding:4px 2px;}
-  .galeri-filters::-webkit-scrollbar{display:none;}
-  .galeri-filter{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:20px;border:1px solid #dfe4e7;background:var(--white);font-size:13px;font-weight:700;color:#5b6b73;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease, border-color .2s ease, color .2s ease;flex-shrink:0;white-space:nowrap;}
-  .galeri-filter:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);box-shadow:0 10px 24px -10px rgba(20,128,140,.5);}
+  .galeri-sidebar-inner::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(90% 60% at 0% 0%, rgba(20,128,140,.1), transparent 70%),
+      radial-gradient(70% 50% at 100% 100%, rgba(201,163,78,.08), transparent 70%);
+    pointer-events:none;
+  }
+  .galeri-sidebar-title{position:relative;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a97a0;margin-bottom:14px;}
+  .galeri-filters{position:relative;z-index:1;display:flex;flex-direction:column;gap:8px;}
+  .galeri-filter{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid #dfe4e7;background:var(--white);font-size:13px;font-weight:700;color:#5b6b73;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, color .2s ease;white-space:nowrap;}
+  .galeri-filter:hover{border-color:var(--teal);color:var(--teal);box-shadow:0 8px 18px -10px rgba(20,128,140,.4);}
   .galeri-filter.active{background:var(--navy);border-color:var(--navy);color:var(--white);box-shadow:0 8px 20px -10px rgba(11,34,51,.5);}
   .galeri-filter.active:hover{box-shadow:0 12px 26px -10px rgba(11,34,51,.6);}
   .galeri-filter .count{opacity:.6;font-weight:600;}
-  [data-theme="dark"] .galeri-filters-wrap::before{
+  [data-theme="dark"] .galeri-sidebar-inner{background:#1b2226;border-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .galeri-sidebar-inner::before{
     background:
-      radial-gradient(45% 100% at 12% 50%, rgba(95,192,209,.28), transparent 70%),
-      radial-gradient(35% 100% at 60% 50%, rgba(201,163,78,.18), transparent 70%),
-      radial-gradient(30% 100% at 92% 50%, rgba(95,192,209,.2), transparent 70%);
+      radial-gradient(90% 60% at 0% 0%, rgba(95,192,209,.12), transparent 70%),
+      radial-gradient(70% 50% at 100% 100%, rgba(201,163,78,.1), transparent 70%);
   }
-  [data-theme="dark"] .galeri-filter:hover{border-color:#5FC0D1;color:#5FC0D1;box-shadow:0 10px 24px -10px rgba(95,192,209,.4);}
+  [data-theme="dark"] .galeri-filter{background:#20282d;border-color:rgba(255,255,255,.08);color:#c3cdd2;}
+  [data-theme="dark"] .galeri-filter:hover{border-color:#5FC0D1;color:#5FC0D1;box-shadow:0 8px 18px -10px rgba(95,192,209,.35);}
 
-  .galeri-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;gap:20px;}
+  .galeri-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:150px;gap:20px;}
   .galeri-card{position:relative;border-radius:14px;overflow:hidden;background:linear-gradient(160deg,var(--navy) 0%,var(--teal) 100%);transition:transform .3s ease, box-shadow .3s ease;}
   /* Susunan bento: kartu pertama besar (2x2), kartu ke-4 & ke-11 melebar (2x1) — pola berulang tiap 12 item (1 halaman) */
   .galeri-card:nth-child(1){grid-column:span 2;grid-row:span 2;}
@@ -247,6 +256,12 @@
 
   @media (max-width:900px){
     .galeri-page{padding:40px 20px 60px;}
+    .galeri-layout{grid-template-columns:1fr;gap:20px;}
+    .galeri-sidebar{position:static;}
+    .galeri-sidebar-inner{padding:16px;}
+    .galeri-filters{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+    .galeri-filters::-webkit-scrollbar{display:none;}
+    .galeri-filter{flex-shrink:0;}
     .galeri-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:auto;gap:14px;}
     .galeri-card{aspect-ratio:4/3;}
     .galeri-card:nth-child(1),
@@ -356,7 +371,7 @@
     </div>
   </nav>
 
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ media_url($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Gallery&lt;/span&gt;">Beranda / <span>Galeri</span></p>
       <h1 data-en-html="Documentation of <span class=&quot;accent&quot;>Our Activities</span>">Dokumentasi <span class="accent">Kegiatan Kami</span></h1>
@@ -397,7 +412,7 @@
 
     @if($featured)
       <div class="sorotan-card">
-        <img src="{{ asset('storage/'.$featured->image) }}" alt="{{ $featured->title }}">
+        <img src="{{ media_url($featured->image) }}" alt="{{ $featured->title }}">
         <div class="inner">
           <span class="sorotan-badge" data-en="HIGHLIGHT">SOROTAN</span>
           <div class="sorotan-title" data-en="{{ $featured->title_en ?: $featured->title }}">{{ $featured->title }}</div>
@@ -408,38 +423,45 @@
       </div>
     @endif
 
-    <div class="galeri-filters-wrap">
-      <div class="galeri-filters">
-        <a href="{{ route('galeri') }}" class="galeri-filter {{ !$activeCategory ? 'active' : '' }}"><span data-en="All">Semua</span> <span class="count">{{ $totalFoto }}</span></a>
-        @foreach($categories as $cat)
-          <a href="{{ route('galeri', ['kategori' => $cat->slug]) }}" class="galeri-filter {{ $activeCategory == $cat->slug ? 'active' : '' }}">
-            <span data-en="{{ $cat->name_en ?: $cat->name }}">{{ $cat->name }}</span> <span class="count">{{ $cat->items_count }}</span>
-          </a>
-        @endforeach
-      </div>
-    </div>
-
-    <div class="galeri-grid">
-      @forelse($items as $item)
-        <div class="galeri-card">
-          <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
-          @if($item->category)
-            <span class="cat-badge" data-en="{{ $item->category->name_en ?: $item->category->name }}">{{ $item->category->name }}</span>
-          @endif
-          @if($item->title)
-            <div class="overlay"><span data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</span></div>
-          @endif
+    <div class="galeri-layout">
+      <aside class="galeri-sidebar">
+        <div class="galeri-sidebar-inner">
+          <div class="galeri-sidebar-title" data-en="CATEGORY">KATEGORI</div>
+          <div class="galeri-filters">
+            <a href="{{ route('galeri') }}" class="galeri-filter {{ !$activeCategory ? 'active' : '' }}"><span data-en="All">Semua</span> <span class="count">{{ $totalFoto }}</span></a>
+            @foreach($categories as $cat)
+              <a href="{{ route('galeri', ['kategori' => $cat->slug]) }}" class="galeri-filter {{ $activeCategory == $cat->slug ? 'active' : '' }}">
+                <span data-en="{{ $cat->name_en ?: $cat->name }}">{{ $cat->name }}</span> <span class="count">{{ $cat->items_count }}</span>
+              </a>
+            @endforeach
+          </div>
         </div>
-      @empty
-        <div class="galeri-empty" data-en="No photos in this category yet.">Belum ada foto pada kategori ini.</div>
-      @endforelse
-    </div>
+      </aside>
 
-    @if($items->hasMorePages())
-      <div class="load-more">
-        <a href="{{ $items->nextPageUrl() }}" data-en="Load more">Muat lebih banyak</a>
+      <div class="galeri-main">
+        <div class="galeri-grid">
+          @forelse($items as $item)
+            <div class="galeri-card">
+              <img src="{{ media_url($item->image) }}" alt="{{ $item->title }}">
+              @if($item->category)
+                <span class="cat-badge" data-en="{{ $item->category->name_en ?: $item->category->name }}">{{ $item->category->name }}</span>
+              @endif
+              @if($item->title)
+                <div class="overlay"><span data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</span></div>
+              @endif
+            </div>
+          @empty
+            <div class="galeri-empty" data-en="No photos in this category yet.">Belum ada foto pada kategori ini.</div>
+          @endforelse
+        </div>
+
+        @if($items->hasMorePages())
+          <div class="load-more">
+            <a href="{{ $items->nextPageUrl() }}" data-en="Load more">Muat lebih banyak</a>
+          </div>
+        @endif
       </div>
-    @endif
+    </div>
 
   </main>
 

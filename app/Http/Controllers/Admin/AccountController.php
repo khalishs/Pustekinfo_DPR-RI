@@ -17,15 +17,22 @@ class AccountController extends Controller
     {
         $user = $request->user();
 
-        $data = $request->validate([
+        $rules = [
             'name' => ['required', 'string', 'max:255', Rule::unique('users', 'name')->ignore($user->id)],
-            'current_password' => ['nullable', 'required_with:password', 'current_password'],
-            'password' => ['nullable', 'confirmed', 'min:8'],
-        ]);
+        ];
+
+        // Password akun "User" ditentukan oleh Super Admin lewat Manajemen Akun,
+        // jadi field ganti password di sini hanya berlaku untuk Super Admin.
+        if ($user->isSuperAdmin()) {
+            $rules['current_password'] = ['nullable', 'required_with:password', 'current_password'];
+            $rules['password'] = ['nullable', 'confirmed', 'min:8'];
+        }
+
+        $data = $request->validate($rules);
 
         $user->name = $data['name'];
 
-        if (! empty($data['password'])) {
+        if ($user->isSuperAdmin() && ! empty($data['password'])) {
             $user->password = $data['password'];
         }
 
