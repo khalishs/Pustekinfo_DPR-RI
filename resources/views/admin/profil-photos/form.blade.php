@@ -11,10 +11,9 @@
       <div class="form-group form-span-2">
         <label class="{{ $photo->exists ? '' : 'required' }}">Foto</label>
         @if($photo->image)
-          <img src="{{ media_url($photo->image) }}" style="width:200px;border-radius:8px;margin-bottom:10px;display:block;">
+          <img src="{{ asset('storage/'.$photo->image) }}" style="width:200px;border-radius:8px;margin-bottom:10px;display:block;">
         @endif
-        <input type="file" name="image" accept="image/png" {{ $photo->exists ? '' : 'required' }}>
-        <small>Format PNG, ukuran 2–10 MB.</small>
+        <input type="file" name="image" accept="image/*" {{ $photo->exists ? '' : 'required' }}>
         @error('image')<small class="error">{{ $message }}</small>@enderror
         @if($photo->exists)<small>Kosongkan jika tidak ingin mengganti foto.</small>@endif
       </div>

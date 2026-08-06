@@ -38,8 +38,8 @@ class GalleryItemController extends Controller
 
     public function store(Request $request)
     {
-        $data = $this->validated($request, true);
-        $data['image'] = $request->file('image')->store('galeri', config('filesystems.media_disk'));
+        $data = $this->validated($request, true, null);
+        $data['image'] = $request->file('image')->store('galeri', 'public');
         $data['is_featured'] = $request->boolean('is_featured');
         $data['show_on_home'] = $request->boolean('show_on_home');
 
@@ -79,9 +79,9 @@ class GalleryItemController extends Controller
 
         if ($request->hasFile('image')) {
             if ($gallery->image) {
-                Storage::disk(config('filesystems.media_disk'))->delete($gallery->image);
+                Storage::disk('public')->delete($gallery->image);
             }
-            $data['image'] = $request->file('image')->store('galeri', config('filesystems.media_disk'));
+            $data['image'] = $request->file('image')->store('galeri', 'public');
         }
 
         $gallery->update($data);
@@ -92,7 +92,7 @@ class GalleryItemController extends Controller
     public function destroy(GalleryItem $gallery)
     {
         if ($gallery->image) {
-            Storage::disk(config('filesystems.media_disk'))->delete($gallery->image);
+            Storage::disk('public')->delete($gallery->image);
         }
         $gallery->delete();
 
@@ -130,7 +130,35 @@ class GalleryItemController extends Controller
                 }
             }],
             'sort_order'     => 'required|integer',
-            'image'          => ($imageRequired ? 'required' : 'nullable') . '|mimes:png|min:2048|max:10240',
+            'image'          => ($imageRequired ? 'required' : 'nullable') . '|image|min:2048|max:10240',
+            'is_featured'    => ['sometimes', function ($attribute, $value, $fail) use ($request, $gallery) {
+                if (! $request->boolean('is_featured')) {
+                    return;
+                }
+
+                $alreadyFeatured = GalleryItem::where('is_featured', true)
+                    ->when($gallery, fn ($q) => $q->whereKeyNot($gallery->id))
+                    ->exists();
+
+                if ($alreadyFeatured) {
+                    $fail('Sudah ada foto lain yang dijadikan sorotan. Batalkan sorotan foto tersebut terlebih dahulu sebelum memilih foto ini.');
+                }
+            }],
+            'show_on_home'   => ['sometimes', function ($attribute, $value, $fail) use ($request, $gallery) {
+                if (! $request->boolean('show_on_home')) {
+                    return;
+                }
+
+                $countOnHome = GalleryItem::where('show_on_home', true)
+                    ->when($gallery, fn ($q) => $q->whereKeyNot($gallery->id))
+                    ->count();
+
+                if ($countOnHome >= self::MAX_HOME_ITEMS) {
+                    $message = 'Maksimal ' . self::MAX_HOME_ITEMS . ' foto yang bisa ditampilkan di halaman utama (Home). Batalkan salah satu foto lain dari Home terlebih dahulu.';
+                    session()->flash('error', $message);
+                    $fail($message);
+                }
+            }],
         ]);
     }
 }

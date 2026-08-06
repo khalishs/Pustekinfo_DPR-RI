@@ -342,14 +342,11 @@
     font-size:13.5px;font-weight:600;color:var(--navy);border-radius:10px;transition:background .2s ease, color .2s ease;
   }
   .agenda-day.muted{color:#c7d0d4;font-weight:500;}
-  .agenda-day.today{background:rgba(20,128,140,.06);border:1px solid rgba(20,128,140,.4);color:var(--teal);font-weight:800;}
-  .agenda-day .dot{width:6px;height:6px;border-radius:50%;margin-top:3px;}
+  .agenda-day.today{background:rgba(20,128,140,.08);border:1.5px solid var(--teal);color:var(--teal);font-weight:800;}
+  .agenda-day .dot{width:4px;height:4px;border-radius:50%;margin-top:3px;}
   .agenda-day .dot.c1{background:#e0a340;}
   .agenda-day .dot.c2{background:#b0413e;}
   .agenda-day .dot.c3{background:#1f9d7c;}
-  .agenda-day .dot.c4{background:#3b7dd8;}
-  .agenda-day .dot.c5{background:#8b5cf6;}
-  .agenda-day .dot.c6{background:#d6478a;}
 
   .agenda-legend{margin-top:20px;padding-top:18px;border-top:1px solid #eef1f3;display:flex;gap:22px;flex-wrap:wrap;}
   .agenda-legend span{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#7a8a92;}
@@ -357,9 +354,6 @@
   .agenda-legend i.c1{background:#e0a340;}
   .agenda-legend i.c2{background:#b0413e;}
   .agenda-legend i.c3{background:#1f9d7c;}
-  .agenda-legend i.c4{background:#3b7dd8;}
-  .agenda-legend i.c5{background:#8b5cf6;}
-  .agenda-legend i.c6{background:#d6478a;}
 
   .agenda-today{
     background:#073D5F;
@@ -556,12 +550,6 @@
   [data-theme="dark"] .agenda-day{color:#c3cdd2;}
   [data-theme="dark"] .agenda-day.muted{color:#4d5d64;}
   [data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.12);border-color:#5FC0D1;color:#5FC0D1;}
-  [data-theme="dark"] .agenda-day .dot.c1,[data-theme="dark"] .agenda-legend i.c1{background:#f0b95e;}
-  [data-theme="dark"] .agenda-day .dot.c2,[data-theme="dark"] .agenda-legend i.c2{background:#e0645f;}
-  [data-theme="dark"] .agenda-day .dot.c3,[data-theme="dark"] .agenda-legend i.c3{background:#3ecb9e;}
-  [data-theme="dark"] .agenda-day .dot.c4,[data-theme="dark"] .agenda-legend i.c4{background:#6ea8ff;}
-  [data-theme="dark"] .agenda-day .dot.c5,[data-theme="dark"] .agenda-legend i.c5{background:#b18cff;}
-  [data-theme="dark"] .agenda-day .dot.c6,[data-theme="dark"] .agenda-legend i.c6{background:#ff7bb3;}
   [data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
   [data-theme="dark"] .agenda-legend span{color:#8ea0a8;}
   [data-theme="dark"] .agenda-today{box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
@@ -677,7 +665,7 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ media_url($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Information&lt;/span&gt;">Beranda / <span>Informasi</span></p>
       <h1 data-en-html="Center for <span class=&quot;accent&quot;>Information &amp; Publications</span>">Pusat <span class="accent">Informasi &amp; Publikasi</span></h1>
@@ -786,9 +774,6 @@
             <span><i class="c1"></i><span data-en="Agenda Purpose 1">Tujuan Agenda 1</span></span>
             <span><i class="c2"></i><span data-en="Agenda Purpose 2">Tujuan Agenda 2</span></span>
             <span><i class="c3"></i><span data-en="Agenda Purpose 3">Tujuan Agenda 3</span></span>
-            <span><i class="c4"></i><span data-en="Agenda Purpose 4">Tujuan Agenda 4</span></span>
-            <span><i class="c5"></i><span data-en="Agenda Purpose 5">Tujuan Agenda 5</span></span>
-            <span><i class="c6"></i><span data-en="Agenda Purpose 6">Tujuan Agenda 6</span></span>
           </div>
         </div>
 

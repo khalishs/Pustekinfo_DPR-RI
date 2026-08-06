@@ -50,10 +50,9 @@
       <div class="form-group form-span-2">
         <label class="{{ $service->exists ? '' : 'required' }}">Gambar Ikon</label>
         @if($service->icon_image)
-          <img src="{{ media_url($service->icon_image) }}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;margin-bottom:10px;display:block;background:#f1f4f5;">
+          <img src="{{ asset('storage/'.$service->icon_image) }}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;margin-bottom:10px;display:block;background:#f1f4f5;">
         @endif
-        <input type="file" name="icon_image" accept="image/png" {{ $service->exists ? '' : 'required' }}>
-        <small>Format PNG, ukuran 2–10 MB.</small>
+        <input type="file" name="icon_image" accept="image/*" {{ $service->exists ? '' : 'required' }}>
         @error('icon_image')<small class="error">{{ $message }}</small>@enderror
         @if($service->exists)<small>Kosongkan jika tidak ingin mengganti gambar.</small>@endif
       </div>

@@ -9,10 +9,7 @@
         "php": "^8.2",
         "filament/filament": "^5.7",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1",
-        "league/flysystem-aws-s3-v3": "^3.35",
-        "league/flysystem-google-cloud-storage": "^3.34",
-        "spatie/laravel-google-cloud-storage": "^2.4"
+        "laravel/tinker": "^2.10.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -28,10 +25,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        },
-        "files": [
-            "app/Support/helpers.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -46,7 +40,6 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --force --ansi",
             "@php artisan db:seed --force --ansi",
-            "@php artisan storage:link --ansi",
             "npm install",
             "npm run build"
         ],

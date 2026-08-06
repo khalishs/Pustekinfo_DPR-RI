@@ -43,7 +43,7 @@ class HomeController extends Controller
         return view('home', [
             'heroSlides'    => HeroSlide::where('is_active', true)->orderBy('sort_order')->get(),
             'profilPhotos'  => ProfilPhoto::where('is_active', true)->orderBy('sort_order')->get(),
-            'stats'         => Statistic::orderBy('sort_order')->take(5)->get(),
+            'stats'         => Statistic::orderBy('sort_order')->get(),
             'leadership'    => Leadership::first(),
             'featuredNews'  => NewsItem::where('is_featured', true)->latest('published_at')->first(),
             'latestNews'    => NewsItem::where('is_featured', false)->latest('published_at')->take(4)->get(),

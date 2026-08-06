@@ -480,7 +480,7 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ media_url($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt;">Beranda / <span>Layanan</span></p>
       <h1 data-en-html="Information Technology <span class=&quot;accent&quot;>Services</span>">Layanan <span class="accent">Teknologi Informasi</span></h1>
@@ -526,7 +526,7 @@
 
         <div class="svc-grid">
           <div class="svc-icon-box">
-            <img src="{{ media_url($s['icon']) }}" alt="{{ $s['title'] }}">
+            <img src="{{ asset('storage/'.$s['icon']) }}" alt="{{ $s['title'] }}">
           </div>
           <div class="svc-content">
             <p class="desc" data-en="{{ $s['desc_en'] ?: $s['desc'] }}">{{ $s['desc'] }}</p>
