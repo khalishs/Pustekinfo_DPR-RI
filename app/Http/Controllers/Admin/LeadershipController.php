@@ -19,7 +19,6 @@ class LeadershipController extends Controller
     public function update(Request $request)
 {
     $data = $request->validate([
-        'name'              => 'required|string|max:255',
         'position'          => 'required|string|max:255',
         'welcome_title'     => 'required|string|max:255',
         'welcome_title_en'  => 'nullable|string|max:255',

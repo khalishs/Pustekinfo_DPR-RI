@@ -9,7 +9,7 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Foto</th><th>Nama</th><th>Jabatan</th><th>Level</th><th class="text-center">Urutan</th><th></th></tr></thead>
+    <thead><tr><th>Foto</th><th>Jabatan</th><th>Level</th><th class="text-center">Urutan</th><th></th></tr></thead>
     <tbody>
     @forelse($members as $m)
       <tr>
@@ -20,9 +20,8 @@
             <span style="color:#b7c2c7;font-size:12px;">Belum ada</span>
           @endif
         </td>
-        <td>{{ $m->name }}</td>
         <td>{{ $m->position }}</td>
-        <td><span class="badge">{{ ['kepala'=>'Kepala','sekretariat'=>'Sekretariat','bidang'=>'Bidang'][$m->level] }}</span></td>
+        <td><span class="badge">{{ ['kepala'=>'Kepala','bidang'=>'Bidang'][$m->level] }}</span></td>
         <td class="text-center"><span class="badge-count">{{ $m->sort_order }}</span></td>
         <td class="row-actions">
           <a href="{{ route('admin.organization-members.edit', $m) }}" class="btn btn-outline">Edit</a>
@@ -33,7 +32,7 @@
         </td>
       </tr>
     @empty
-      <tr><td colspan="6">Belum ada data struktur organisasi.</td></tr>
+      <tr><td colspan="5">Belum ada data struktur organisasi.</td></tr>
     @endforelse
     </tbody>
   </table>

@@ -19,9 +19,7 @@ class ProfilController extends Controller
         return view('profil', [
             'timeline'      => TimelineItem::orderBy('sort_order')->get(),
             'leadership'    => Leadership::first(),
-            'members'       => $members,
             'kepala'        => $members->firstWhere('level', 'kepala'),
-            'sekretariat'   => $members->firstWhere('level', 'sekretariat'),
             'bidangList'    => $members->where('level', 'bidang')->values(),
             'visionMission' => VisionMission::first(),
             'coreValues'    => CoreValue::orderBy('sort_order')->get(),

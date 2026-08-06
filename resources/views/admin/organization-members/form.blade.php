@@ -9,12 +9,6 @@
 
     <div class="form-grid">
       <div class="form-group">
-        <label class="required">Nama</label>
-        <input type="text" name="name" value="{{ old('name', $member->name) }}" required>
-        @error('name')<small class="error">{{ $message }}</small>@enderror
-      </div>
-
-      <div class="form-group">
         <label class="required">Jabatan</label>
         <input type="text" name="position" value="{{ old('position', $member->position) }}" required>
       </div>
@@ -37,11 +31,10 @@
       <div class="form-group">
         <label class="required">Level</label>
         <select name="level" required>
-          <option value="kepala" {{ old('level', $member->level) == 'kepala' ? 'selected' : '' }}>Kepala (puncak bagan — hanya 1)</option>
-          <option value="sekretariat" {{ old('level', $member->level) == 'sekretariat' ? 'selected' : '' }}>Sekretariat (baris kedua — hanya 1)</option>
-          <option value="bidang" {{ old('level', $member->level ?? 'bidang') == 'bidang' ? 'selected' : '' }}>Bidang (baris bawah — bisa banyak)</option>
+          <option value="kepala" {{ old('level', $member->level) == 'kepala' ? 'selected' : '' }}>Kepala (baris atas bagan — hanya 1)</option>
+          <option value="bidang" {{ old('level', $member->level ?? 'bidang') == 'bidang' ? 'selected' : '' }}>Bidang (baris bawah bagan — bisa banyak)</option>
         </select>
-        <small>Anggota level "Bidang" otomatis muncul juga di Foto Pimpinan dan Uraian Unit Kerja.</small>
+        <small>Bagan organisasi cuma 2 baris: 1 Kepala di atas, dan semua anggota "Bidang" berjajar di bawahnya.</small>
       </div>
 
       <div class="form-group form-span-2">

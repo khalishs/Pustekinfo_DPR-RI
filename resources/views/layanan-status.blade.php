@@ -184,7 +184,7 @@
     filter:url(#batikBoostLight);
   }
   [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
-  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.4;}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.1;}
   @media (max-width:900px){.konten-batik::before{background-size:3000px auto;}}
 
   /* ---------- Cek status ---------- */
@@ -288,6 +288,9 @@
   [data-theme="dark"] html{background:#0b1720;}
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  .navbar-logo-dark{display:none;transform:scale(1);}
+  [data-theme="dark"] .navbar-logo-light{display:none;}
+  [data-theme="dark"] .navbar-logo-dark{display:block;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -345,7 +348,8 @@
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">

@@ -41,7 +41,6 @@
   .berita-featured-body h3,
   .berita-item-body .title,
   .sambutan-content h2,
-  .sambutan-photo .who .name,
   .agenda-cal-head .month,
   .agenda-event-top .title {
     font-family:'Plus Jakarta Sans', system-ui, sans-serif;
@@ -915,11 +914,6 @@
       radial-gradient(120% 120% at 25% 20%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 50%, var(--teal) 100%);
   }
-  .sambutan-photo .who .name{
-    color:var(--white);
-    font-size:16px;
-    font-weight:700;
-  }
   .sambutan-photo .who .role{
     margin-top:4px;
     color:rgba(255,255,255,.7);
@@ -972,13 +966,6 @@
     font-size:14.5px;
     line-height:1.75;
     max-width:440px;
-  }
-  .sambutan-content .signature{
-    margin-top:30px;
-    font-family:'Dancing Script', cursive;
-    font-weight:700;
-    font-size:30px;
-    color:var(--navy);
   }
   .sambutan-content .sign-role{
     margin-top:4px;
@@ -1845,7 +1832,7 @@
 }
 [data-theme="dark"] .konten-batik::before{
   filter:url(#batikTintTeal);
-  opacity:.4;
+  opacity:.1;
 }
 
 @media (max-width:900px){
@@ -2159,6 +2146,9 @@
 [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
 
 [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+.navbar-logo-dark{display:none;transform:scale(1);}
+[data-theme="dark"] .navbar-logo-light{display:none;}
+[data-theme="dark"] .navbar-logo-dark{display:block;}
 [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
 [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
 [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -2226,7 +2216,6 @@
 
 [data-theme="dark"] .sambutan-card{background:#122530;}
 [data-theme="dark"] .sambutan-content .desc{color:#8ea0a8;}
-[data-theme="dark"] .sambutan-content .signature{color:#eaf3f5;}
 [data-theme="dark"] .sambutan-content .sign-role{color:#8ea0a8;}
 
 [data-theme="dark"] .berita{background-color: rgba(0, 0, 0, 0.8);}
@@ -2280,7 +2269,8 @@
 
     <nav class="navbar">
       <div class="brand">
-        <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
+        <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+        <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
       </div>
 
       <ul class="nav-links">
@@ -2487,7 +2477,6 @@
       <div class="sambutan-card">
                 <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
           <div class="who">
-            <div class="name">{{ $leadership->name ?? 'Nama Kepala Unit' }}</div>
             <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
           </div>
         </div>
@@ -2499,7 +2488,6 @@
           <h2 data-en="{{ ($leadership->welcome_title_en ?? null) ?: ($leadership->welcome_title ?? 'Technology for better service') }}">{{ $leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik' }}</h2>
           <p class="desc" data-en="{{ ($leadership->description_en ?? null) ?: ($leadership->description ?? 'The leadership message has not been filled in via the admin panel.') }}">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
 
-          <div class="signature">{{ $leadership->name ?? 'Nama Kepala Unit' }}</div>
           <div class="sign-role" data-en="{{ ($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center') }}">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
         </div>
       </div>
