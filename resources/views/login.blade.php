@@ -91,6 +91,7 @@
         }
         [data-theme="dark"] .login-batik-bg{
             filter: url(#batikTintTeal);
+            opacity: .4;
         }
         .icon-btn{
             width:36px;height:36px;border-radius:50%;

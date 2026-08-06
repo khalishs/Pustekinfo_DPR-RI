@@ -359,6 +359,7 @@
   [data-theme="dark"] .topbar{background:rgba(27,30,34,.85);border-color:rgba(255,255,255,.06);}
   [data-theme="dark"] .topbar-titles p{color:#8b929a;}
   [data-theme="dark"] .flash{background:rgba(31,157,124,.13);color:#6fd6b3;border-color:rgba(31,157,124,.26);}
+  [data-theme="dark"] .flash-error{background:rgba(176,65,62,.15);color:#e79a97;border-color:rgba(176,65,62,.32);}
   [data-theme="dark"] .card{background:#24282d;border-color:rgba(255,255,255,.06);box-shadow:0 8px 28px -16px rgba(0,0,0,.4);}
   [data-theme="dark"] th{color:#8b929a;}
   [data-theme="dark"] tbody tr:hover{background:rgba(255,255,255,.025);}

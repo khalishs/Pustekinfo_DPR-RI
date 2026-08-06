@@ -39,6 +39,7 @@
   }
   [data-theme="dark"] body::before{
     filter:url(#batikTintTeal);
+    opacity:.4;
   }
   @media (max-width:900px){
     body::before{background-size:3000px auto;}
@@ -171,8 +172,8 @@
   .article-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
 
   /* ================= FOOTER ================= */
-  .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #0b2233 55%, #0b2233 100%);}
-  .footer{position:relative;background:var(--navy);padding:64px 100px 0;overflow:hidden;}
+  .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #052D46 55%, #052D46 100%);}
+  .footer{position:relative;background:#052D46;padding:64px 100px 0;overflow:hidden;}
   /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
   .footer::before{
     content:"";position:absolute;inset:-40px 0 -80px;
@@ -261,8 +262,6 @@
   [data-theme="dark"] .article-image{box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
   [data-theme="dark"] .article-body{color:#c3cdd2;}
 
-  [data-theme="dark"] .footer-divider{background:linear-gradient(10deg, #057888 0%, #0b1720 55%, #0b1720 100%);}
-  [data-theme="dark"] .footer{background:#0b1720;}
   [data-theme="dark"] .footer-desc{color:rgba(255,255,255,.5);}
   [data-theme="dark"] .footer-social a{border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.65);}
   [data-theme="dark"] .footer-social a:hover{background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;}
