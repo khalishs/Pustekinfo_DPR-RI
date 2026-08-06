@@ -246,6 +246,8 @@
     border:1px solid #c9ecd9;
   }
   .flash::before{content:"✓";display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--success);color:#fff;font-size:11px;flex-shrink:0;}
+  .flash-error{background:#fbeaea;color:var(--danger);border-color:#f2cfcf;}
+  .flash-error::before{content:"✕";background:var(--danger);}
 
   .card{
     background:#fff;border-radius:16px;padding:26px;
@@ -368,6 +370,7 @@
   [data-theme="dark"] .topbar-titles p{color:#8b929a;}
   [data-theme="dark"] .topbar-chip{background:rgba(20,128,140,.15);border-color:rgba(20,128,140,.28);}
   [data-theme="dark"] .flash{background:rgba(31,157,124,.13);color:#6fd6b3;border-color:rgba(31,157,124,.26);}
+  [data-theme="dark"] .flash-error{background:rgba(176,65,62,.15);color:#e79a97;border-color:rgba(176,65,62,.32);}
   [data-theme="dark"] .card{background:#24282d;border-color:rgba(255,255,255,.06);box-shadow:0 8px 28px -16px rgba(0,0,0,.4);}
   [data-theme="dark"] th{color:#8b929a;}
   [data-theme="dark"] tbody tr:hover{background:rgba(255,255,255,.025);}
@@ -579,6 +582,9 @@
     <div class="content">
       @if(session('success'))
         <div class="flash">{{ session('success') }}</div>
+      @endif
+      @if(session('error'))
+        <div class="flash flash-error">{{ session('error') }}</div>
       @endif
       @yield('content')
     </div>

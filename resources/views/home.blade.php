@@ -261,7 +261,30 @@
 .hero-slide.active{
     opacity:1;
 }
-  
+
+  .hero-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:3;
+    width:48px;height:48px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.35);
+    background:rgba(11,49,74,.35);
+    backdrop-filter:blur(4px);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:.25s ease;
+    padding:0;
+  }
+  .hero-arrow:hover{background:rgba(11,49,74,.65);border-color:rgba(255,255,255,.65);}
+  .hero-arrow svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+  .hero-arrow-prev{left:24px;}
+  .hero-arrow-next{right:24px;}
+
   .hero::after{
     content:"";
     position:absolute;inset:0;
@@ -497,6 +520,10 @@
     }
     .hero-content{margin-top:16px;}
     .hero-content h1{font-size:26px;}
+    .hero-arrow{width:36px;height:36px;}
+    .hero-arrow svg{width:16px;height:16px;}
+    .hero-arrow-prev{left:10px;}
+    .hero-arrow-next{right:10px;}
 
     .stats-bar{
       grid-template-columns:repeat(2,1fr);
@@ -1813,6 +1840,7 @@
 }
 [data-theme="dark"] .konten-batik::before{
   filter:url(#batikTintTeal);
+  opacity:.4;
 }
 
 @media (max-width:900px){
@@ -1935,7 +1963,7 @@
 /* ---------- Footer ---------- */
 .footer{
   position:relative;
-  background:var(--navy);
+  background:#052D46;
   padding:64px 100px 0;
   overflow:hidden;
 }
@@ -2285,6 +2313,14 @@
           <div class="hero-slide" style="background-image:url('{{ asset('images/hero-gedung-dpr.jpg') }}')"></div>
         @endforelse
       </div>
+      @if($heroSlides->count() > 1)
+        <button type="button" class="hero-arrow hero-arrow-prev" aria-label="Gambar sebelumnya">
+          <svg viewBox="0 0 24 24"><polyline points="15 6 9 12 15 18"/></svg>
+        </button>
+        <button type="button" class="hero-arrow hero-arrow-next" aria-label="Gambar berikutnya">
+          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+        </button>
+      @endif
       <div class="hero-content">
         <div class="eyebrow" data-en="Center for Information &amp; Communication Technology">Pusat Teknologi Informasi dan Komunikasi</div>
         <h1 data-en-html="Supporting DPR RI's Performance Through Integrated <br> Information Technology <br> Services.">Mendukung Kinerja DPR RI Melalui Layanan <br> Teknologi Informasi Yang <br> Terintegrasi.</h1>
@@ -3098,22 +3134,40 @@ agendaObserver.observe(agendaSection);
 
 
 const slides = document.querySelectorAll(".hero-slide");
+const heroPrevBtn = document.querySelector(".hero-arrow-prev");
+const heroNextBtn = document.querySelector(".hero-arrow-next");
 
 let currentSlide = 0;
+let heroAutoplay;
 
-setInterval(() => {
-
+function setHeroSlide(index){
     slides[currentSlide].classList.remove("active");
-
-    currentSlide++;
-
-    if(currentSlide >= slides.length){
-        currentSlide = 0;
-    }
-
+    currentSlide = (index + slides.length) % slides.length;
     slides[currentSlide].classList.add("active");
+}
 
-}, 4000);
+function startHeroAutoplay(){
+    heroAutoplay = setInterval(() => setHeroSlide(currentSlide + 1), 4000);
+}
+
+function restartHeroAutoplay(){
+    clearInterval(heroAutoplay);
+    startHeroAutoplay();
+}
+
+if (slides.length > 1) {
+    startHeroAutoplay();
+
+    heroNextBtn && heroNextBtn.addEventListener("click", () => {
+        setHeroSlide(currentSlide + 1);
+        restartHeroAutoplay();
+    });
+
+    heroPrevBtn && heroPrevBtn.addEventListener("click", () => {
+        setHeroSlide(currentSlide - 1);
+        restartHeroAutoplay();
+    });
+}
 
 const profilSlides = document.querySelectorAll(".profil-slide");
 
