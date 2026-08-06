@@ -342,18 +342,14 @@
     font-size:13.5px;font-weight:600;color:var(--navy);border-radius:10px;transition:background .2s ease, color .2s ease;
   }
   .agenda-day.muted{color:#c7d0d4;font-weight:500;}
+  .agenda-day.has-event:not(.today){border:1.5px solid rgba(20,128,140,.3);}
   .agenda-day.today{background:rgba(20,128,140,.08);border:1.5px solid var(--teal);color:var(--teal);font-weight:800;}
-  .agenda-day .dot{width:4px;height:4px;border-radius:50%;margin-top:3px;}
-  .agenda-day .dot.c1{background:#e0a340;}
-  .agenda-day .dot.c2{background:#b0413e;}
-  .agenda-day .dot.c3{background:#1f9d7c;}
+  .agenda-day .dots{display:flex;align-items:center;justify-content:center;gap:3px;margin-top:4px;flex-wrap:wrap;max-width:90%;}
+  .agenda-day .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 1px rgba(255,255,255,.6);}
+  .agenda-day .dot-more{font-size:9px;font-weight:800;color:#9aa8af;line-height:1;}
 
-  .agenda-legend{margin-top:20px;padding-top:18px;border-top:1px solid #eef1f3;display:flex;gap:22px;flex-wrap:wrap;}
-  .agenda-legend span{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#7a8a92;}
-  .agenda-legend i{width:7px;height:7px;border-radius:50%;display:inline-block;}
-  .agenda-legend i.c1{background:#e0a340;}
-  .agenda-legend i.c2{background:#b0413e;}
-  .agenda-legend i.c3{background:#1f9d7c;}
+  .agenda-legend{margin-top:20px;padding-top:18px;border-top:1px solid #eef1f3;display:flex;align-items:center;gap:8px;color:#9aa8af;font-size:12px;font-weight:600;}
+  .agenda-legend svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
 
   .agenda-today{
     background:#073D5F;
@@ -549,9 +545,10 @@
   [data-theme="dark"] .agenda-cal-daynames span{color:#8ea0a8;}
   [data-theme="dark"] .agenda-day{color:#c3cdd2;}
   [data-theme="dark"] .agenda-day.muted{color:#4d5d64;}
+  [data-theme="dark"] .agenda-day.has-event:not(.today){border-color:rgba(95,192,209,.3);}
   [data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.12);border-color:#5FC0D1;color:#5FC0D1;}
-  [data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
-  [data-theme="dark"] .agenda-legend span{color:#8ea0a8;}
+  [data-theme="dark"] .agenda-day .dot{box-shadow:0 0 0 1px rgba(18,37,48,.8);}
+  [data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);color:#6d8189;}
   [data-theme="dark"] .agenda-today{box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
 
   /* ---- Publikasi & unduhan ---- */
@@ -588,10 +585,11 @@
         0 0 0 4.5 0"/>
     </filter>
     <filter id="batikBoostLight">
-      <feColorMatrix type="saturate" values="2.2"/>
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="2.6" intercept="0"/>
-      </feComponentTransfer>
+      <feColorMatrix type="matrix" values="
+        0 0 0 0 0.0784
+        0 0 0 0 0.5137
+        0 0 0 0 0.6118
+        0 0 0 2.6 0"/>
     </filter>
   </svg>
 
@@ -762,18 +760,24 @@
 
           <div class="agenda-cal-days">
             @foreach($calendarDays as $day)
-              <div class="agenda-day {{ $day['muted'] ? 'muted' : '' }} {{ $day['today'] ? 'today' : '' }}">
+              <div class="agenda-day {{ $day['muted'] ? 'muted' : '' }} {{ $day['today'] ? 'today' : '' }} {{ $day['events']->isNotEmpty() ? 'has-event' : '' }}">
                 {{ $day['day'] }}
-                @foreach($day['events'] as $ev)
-                  <span class="dot {{ $ev->color_tag }}"></span>
-                @endforeach
+                @if($day['events']->isNotEmpty())
+                  <span class="dots">
+                    @foreach($day['events']->take(5) as $ev)
+                      <span class="dot" style="background:{{ $ev->color }};" title="{{ $ev->title }}"></span>
+                    @endforeach
+                    @if($day['events']->count() > 5)
+                      <span class="dot-more">+{{ $day['events']->count() - 5 }}</span>
+                    @endif
+                  </span>
+                @endif
               </div>
             @endforeach
           </div>
           <div class="agenda-legend">
-            <span><i class="c1"></i><span data-en="Agenda Purpose 1">Tujuan Agenda 1</span></span>
-            <span><i class="c2"></i><span data-en="Agenda Purpose 2">Tujuan Agenda 2</span></span>
-            <span><i class="c3"></i><span data-en="Agenda Purpose 3">Tujuan Agenda 3</span></span>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span data-en="Dot color marks the event category set by the admin">Warna titik menandakan kategori kegiatan yang diatur admin</span>
           </div>
         </div>
 
