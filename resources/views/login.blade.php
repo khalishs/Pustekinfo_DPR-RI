@@ -88,10 +88,11 @@
             background-repeat: no-repeat;
             background-position: center center;
             background-size: 10000px auto;
+            opacity: .1;
         }
         [data-theme="dark"] .login-batik-bg{
             filter: url(#batikTintTeal);
-            opacity: .4;
+            opacity: .1;
         }
         .icon-btn{
             width:36px;height:36px;border-radius:50%;

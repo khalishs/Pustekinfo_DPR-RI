@@ -1000,6 +1000,7 @@
     position:relative;
     overflow:hidden;
     padding:90px 100px 120px;
+    background:var(--white);
     opacity:0;
     transform:translateY(60px);
     transition:opacity .9s ease, transform .9s ease;
@@ -1482,6 +1483,7 @@
   position:relative;
   overflow:hidden;
   padding:90px 100px 120px;
+  background:var(--white);
   opacity:0;
   transform:translateY(60px);
   transition:opacity .9s ease, transform .9s ease;
@@ -1824,6 +1826,7 @@
   background-position:center top;
   background-size:10000px auto;
   filter:url(#batikBoostLight);
+  opacity:.1;
   transform:translateY(var(--parallax-batik, 0px));
   will-change:transform;
 }
@@ -1836,7 +1839,7 @@
 }
 [data-theme="dark"] .konten-batik::before{
   filter:url(#batikTintTeal);
-  opacity:.4;
+  opacity:.1;
 }
 
 @media (max-width:900px){
@@ -1997,7 +2000,7 @@
     140px auto,
     220px auto;
   filter:brightness(0) invert(1);
-  opacity:.35;
+  opacity:.1;
   pointer-events:none;
   z-index:0;
 }
@@ -2135,7 +2138,7 @@
   .footer::before{
     background-size:170px auto, 140px auto, 65px auto, 55px auto, 70px auto, 60px auto, 90px auto;
     background-position:left -40px bottom -10px, right -40px top -20px, 38% 68%, 35% 15%, 55% 82%, 75% 20%, 90% 75%;
-    opacity:.25;
+    opacity:.1;
   }
   .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
   .footer-brand-logo{width:150px;}
@@ -3241,6 +3244,21 @@ aksesObserver.observe(aksesSection);
     syncBatikOffset();
     window.addEventListener("resize", syncBatikOffset);
     window.addEventListener("load", syncBatikOffset);
+
+    // .layanan masih punya animasi reveal (translateY 60px -> 0) yang baru jalan belakangan
+    // saat section-nya discroll ke viewport — posisi di atas dihitung sebelum animasi itu selesai,
+    // jadi begitu section-nya bergeser naik, pola batiknya jadi tidak nyambung lagi. Resync tiap
+    // frame selama animasi reveal berlangsung supaya polanya tetap menyambung sampai posisi akhir.
+    const revealObserver = new MutationObserver(() => {
+        if (!layanan.classList.contains("show")) return;
+        revealObserver.disconnect();
+        const start = performance.now();
+        (function tick(now) {
+            syncBatikOffset();
+            if (now - start < 950) requestAnimationFrame(tick);
+        })(start);
+    });
+    revealObserver.observe(layanan, { attributes: true, attributeFilter: ["class"] });
 })();
 
 // ---- Parallax: dari hero sampai galeri, dengan easing supaya gerakannya halus & natural ----
