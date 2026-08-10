@@ -66,7 +66,7 @@
     position:fixed;top:0;left:0;width:100%;z-index:9999;
   }
   .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
-    transform-origin:left center;}
+    transform-origin:left center;pointer-events:none;}
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
@@ -182,7 +182,7 @@
     background-image:url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}');
     background-position:left -100px bottom -30px,right -80px top -40px,30% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
     background-size:480px auto,320px auto,150px auto,130px auto,170px auto,140px auto,220px auto;
-    filter:brightness(0) invert(1);opacity:.1;pointer-events:none;z-index:0;
+    filter:brightness(0) invert(1);opacity:.5;pointer-events:none;z-index:0;
   }
   .footer-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}

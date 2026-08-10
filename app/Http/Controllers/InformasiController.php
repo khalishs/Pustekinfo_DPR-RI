@@ -41,14 +41,15 @@ class InformasiController extends Controller
 
         $kategori = request('kategori');
 
-        $news = NewsItem::when($kategori, fn ($q) => $q->where('category', $kategori))
+        $news = NewsItem::where('is_active', true)
+            ->when($kategori, fn ($q) => $q->where('category', $kategori))
             ->latest('published_at')
             ->paginate(9)
             ->withQueryString();
 
         return view('informasi', [
             'news'          => $news,
-            'kategoriList'  => NewsItem::select('category')->distinct()->pluck('category'),
+            'kategoriList'  => NewsItem::where('is_active', true)->select('category')->distinct()->pluck('category'),
             'kategoriAktif' => $kategori,
             'todayEvents'   => AgendaEvent::whereDate('event_date', Carbon::today())->orderBy('event_time')->get(),
             'upcomingEvents' => AgendaEvent::whereDate('event_date', '>', Carbon::today())
@@ -67,6 +68,8 @@ class InformasiController extends Controller
 
     public function show(NewsItem $news)
     {
+        abort_unless($news->is_active, 404);
+
         return view('berita-detail', [
             'news'    => $news,
             'setting' => SiteSetting::first() ?? new SiteSetting(),

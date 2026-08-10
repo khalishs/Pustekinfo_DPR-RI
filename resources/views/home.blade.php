@@ -69,7 +69,7 @@
      antara mode light & dark — mencegah navbar "geser" saat ganti tema, karena
      kedua file logo (persegi vs landscape) py rasio aspek yang beda jauh. */
   .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
-    transform-origin:left center;}
+    transform-origin:left center;pointer-events:none;}
 
   .nav-links{display:flex;align-items:center;gap:34px;}
 
@@ -1996,7 +1996,7 @@
     140px auto,
     220px auto;
   filter:brightness(0) invert(1);
-  opacity:.1;
+  opacity:.5;
   pointer-events:none;
   z-index:0;
 }
@@ -2279,7 +2279,7 @@
       </div>
 
       <ul class="nav-links">
-        <li class="active"><a href="#" data-en="Home">Beranda</a></li>
+        <li class="active"><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
         <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
         <li><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
         <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>

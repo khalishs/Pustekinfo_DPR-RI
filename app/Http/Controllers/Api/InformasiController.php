@@ -14,7 +14,8 @@ class InformasiController extends Controller
     {
         $kategori = $request->query('kategori');
 
-        $news = NewsItem::when($kategori, fn ($q) => $q->where('category', $kategori))
+        $news = NewsItem::where('is_active', true)
+            ->when($kategori, fn ($q) => $q->where('category', $kategori))
             ->latest('published_at')
             ->paginate(9);
 
@@ -23,6 +24,8 @@ class InformasiController extends Controller
 
     public function newsShow(NewsItem $news): JsonResponse
     {
+        abort_unless($news->is_active, 404);
+
         return response()->json(['data' => $news]);
     }
 

@@ -103,7 +103,7 @@
     object-fit:contain;
   }
   .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
-    transform-origin:left center;}
+    transform-origin:left center;pointer-events:none;}
   .nav-links{display:flex;align-items:center;gap:34px;}
 
   .nav-links li a{
@@ -681,7 +681,7 @@
     background-image:url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}');
     background-position:left -100px bottom -30px,right -80px top -40px,30% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
     background-size:480px auto,320px auto,150px auto,130px auto,170px auto,140px auto,220px auto;
-    filter:brightness(0) invert(1);opacity:.1;pointer-events:none;z-index:0;
+    filter:brightness(0) invert(1);opacity:.5;pointer-events:none;z-index:0;
   }
   .footer-inner{
     position:relative;

@@ -83,6 +83,12 @@
         @error('is_featured')<small class="error">{{ $message }}</small>@enderror
         <small>Cuma satu berita yang bisa jadi berita utama. Batalkan berita utama yang aktif dulu untuk memindahkannya.</small>
       </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_active" value="1" style="width:auto;display:inline-block;" {{ old('is_active', $newsItem->exists ? $newsItem->is_active : true) ? 'checked' : '' }}> Status aktif</label>
+        @error('is_active')<small class="error">{{ $message }}</small>@enderror
+        <small>Berita nonaktif tidak akan tampil di halaman mana pun untuk pengunjung situs.</small>
+      </div>
     </div>
 
     <div class="form-actions">

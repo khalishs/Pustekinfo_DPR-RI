@@ -25,6 +25,7 @@ class NewsItemController extends Controller
     {
         $data = $this->validated($request, null);
         $data['is_featured'] = $request->boolean('is_featured');
+        $data['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('berita', 'public');
@@ -44,6 +45,7 @@ class NewsItemController extends Controller
     {
         $data = $this->validated($request, $news);
         $data['is_featured'] = $request->boolean('is_featured');
+        $data['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('image')) {
             if ($news->image) {
@@ -55,6 +57,17 @@ class NewsItemController extends Controller
         $news->update($data);
 
         return redirect()->route('admin.news.index')->with('success', 'Berita diperbarui.');
+    }
+
+    public function toggleActive(NewsItem $news)
+    {
+        $newState = ! $news->is_active;
+        $news->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.news.index')->with(
+            'success',
+            $newState ? 'Berita diaktifkan kembali dan akan tampil ke pengguna.' : 'Berita dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
     }
 
     public function destroy(NewsItem $news)
@@ -94,6 +107,7 @@ class NewsItemController extends Controller
                     $fail('Sudah ada berita lain yang dijadikan berita utama. Batalkan status berita utama tersebut terlebih dahulu sebelum memilih berita ini.');
                 }
             }],
+            'is_active'       => 'sometimes|boolean',
             'published_at'    => 'nullable|date',
         ]);
     }

@@ -8,7 +8,7 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Gambar</th><th>Judul</th><th>Kategori</th><th>Utama</th><th>Tanggal</th><th></th></tr></thead>
+    <thead><tr><th>Gambar</th><th>Judul</th><th>Kategori</th><th>Utama</th><th class="text-center">Aktif</th><th>Tanggal</th><th></th></tr></thead>
     <tbody>
     @forelse($newsItems as $news)
       <tr>
@@ -22,6 +22,15 @@
         <td>{{ $news->title }}</td>
         <td><span class="badge cap">{{ $news->category }}</span></td>
         <td>{!! $news->is_featured ? '<span class="badge-success">Ya</span>' : '<span class="badge-muted">-</span>' !!}</td>
+        <td class="text-center">
+          <form action="{{ route('admin.news.toggle-active', $news) }}" method="POST">
+            @csrf @method('PATCH')
+            <label class="toggle-switch" title="{{ $news->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
+              <input type="checkbox" onchange="this.form.submit()" {{ $news->is_active ? 'checked' : '' }}>
+              <span class="slider"></span>
+            </label>
+          </form>
+        </td>
         <td>{{ $news->published_at?->format('d M Y') }}</td>
         <td class="row-actions">
           <a href="{{ route('admin.news.edit', $news) }}" class="btn-icon btn-icon-edit" title="Edit" aria-label="Edit">
@@ -36,7 +45,7 @@
         </td>
       </tr>
     @empty
-      <tr><td colspan="6">Belum ada berita.</td></tr>
+      <tr><td colspan="7">Belum ada berita.</td></tr>
     @endforelse
     </tbody>
   </table>
