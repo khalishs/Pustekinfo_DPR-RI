@@ -8,12 +8,6 @@
 
     <div class="form-grid">
       <div class="form-group">
-        <label class="required">Nama Pimpinan</label>
-        <input type="text" name="name" value="{{ old('name', $leadership->name) }}" required>
-        @error('name')<small class="error">{{ $message }}</small>@enderror
-      </div>
-
-      <div class="form-group">
         <label class="required">Jabatan (tampil di foto)</label>
         <input type="text" name="position" value="{{ old('position', $leadership->position ?? 'KEPALA PUSTEKINFO') }}" required>
       </div>

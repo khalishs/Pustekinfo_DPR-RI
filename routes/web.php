@@ -90,8 +90,10 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::put('akun', [AccountController::class, 'update'])->name('account.update');
     Route::resource('statistics', StatisticController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     Route::resource('news', NewsItemController::class)->except('show');
+    Route::patch('news/{news}/toggle-active', [NewsItemController::class, 'toggleActive'])->name('news.toggle-active');
     Route::resource('agenda', AgendaEventController::class)->except('show')->parameters(['agenda' => 'agendum']);
     Route::resource('gallery', GalleryItemController::class)->except('show');
+    Route::patch('gallery/{gallery}/toggle-featured', [GalleryItemController::class, 'toggleFeatured'])->name('gallery.toggle-featured');
     Route::get('sambutan', [LeadershipController::class, 'edit'])->name('leadership.edit');
     Route::put('sambutan', [LeadershipController::class, 'update'])->name('leadership.update');
     Route::get('pengaturan', [SiteSettingController::class, 'edit'])->name('settings.edit');

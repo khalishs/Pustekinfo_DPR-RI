@@ -284,6 +284,18 @@
   .btn-outline{background:#fff;border-color:var(--line);color:#5b6b73;}
   .btn-outline:hover{border-color:var(--teal);color:var(--teal);}
 
+  .btn-icon{
+    display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+    width:34px;height:34px;border-radius:9px;padding:0;
+    border:1.5px solid var(--line);background:#fff;color:#5b6b73;
+    cursor:pointer;transition:transform .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn-icon:hover{transform:translateY(-2px);}
+  .btn-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .btn-icon-edit:hover{border-color:var(--teal);color:var(--teal);background:rgba(20,128,140,.08);}
+  .btn-icon-delete{border-color:#e3b8b8;color:var(--danger);}
+  .btn-icon-delete:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
+
   .form-group{margin-bottom:18px;max-width:560px;}
 
   /* ---------- Form grid 2 kolom (supaya tidak ada ruang kosong di samping) ---------- */
@@ -316,6 +328,15 @@
   .badge-muted{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:var(--mist);color:#8a97a0;border:1px solid var(--line);}
   .cap{text-transform:capitalize;}
   th.text-center,td.text-center{text-align:center;}
+
+  .toggle-switch{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0;margin:0;}
+  .toggle-switch input[type="checkbox"]{position:absolute;opacity:0;width:100%;height:100%;margin:0;padding:0;border:none;cursor:pointer;}
+  .toggle-switch .slider{position:absolute;inset:0;background:#d7dde0;border-radius:24px;transition:background .2s ease;pointer-events:none;}
+  .toggle-switch .slider::before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s ease;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  .toggle-switch input:checked + .slider{background:var(--teal);}
+  .toggle-switch input:checked + .slider::before{transform:translateX(18px);}
+  .toggle-switch input:focus-visible + .slider{box-shadow:0 0 0 3px rgba(20,128,140,.25);}
+  [data-theme="dark"] .toggle-switch .slider{background:rgba(255,255,255,.15);}
 
   /* ---------- Dashboard stats ---------- */
   .stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-bottom:20px;}
@@ -377,6 +398,10 @@
   [data-theme="dark"] .btn-danger{background:transparent;border-color:rgba(176,65,62,.38);}
   [data-theme="dark"] .btn-outline{background:transparent;border-color:rgba(255,255,255,.12);color:#b8bfc4;}
   [data-theme="dark"] .btn-outline:hover{border-color:var(--teal-light);color:var(--teal-light);}
+  [data-theme="dark"] .btn-icon{background:transparent;border-color:rgba(255,255,255,.12);color:#b8bfc4;}
+  [data-theme="dark"] .btn-icon-edit:hover{border-color:var(--teal-light);color:var(--teal-light);background:rgba(20,128,140,.15);}
+  [data-theme="dark"] .btn-icon-delete{border-color:rgba(176,65,62,.38);}
+  [data-theme="dark"] .btn-icon-delete:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
   [data-theme="dark"] input,
   [data-theme="dark"] textarea,
   [data-theme="dark"] select{background:#202429;border-color:rgba(255,255,255,.1);color:var(--ink);}

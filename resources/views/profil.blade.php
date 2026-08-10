@@ -53,9 +53,7 @@
   .timeline-year,
   .timeline-item h4,
   .info-card h4,
-  .sambutan-photo .who .name,
   .bio-dark-item span,
-  .photo-info strong,
   .org-node strong,
   .unit-card h4,
   .vm-card h3,
@@ -74,7 +72,7 @@
     transform:translateY(0);
     transition:transform .35s ease;
   }
-  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */transform-origin:left center;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */transform-origin:left center;pointer-events:none;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
   .nav-links{display:flex;align-items:center;gap:34px;}
@@ -148,7 +146,7 @@
     .nav-links{display:none;}
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
     .nav-actions{gap:6px;flex-shrink:0;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
@@ -335,14 +333,12 @@
     background:radial-gradient(120% 120% at 25% 20%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 50%, var(--teal) 100%);
   }
-  .sambutan-photo .who .name{color:var(--white);font-size:16px;font-weight:700;}
   .sambutan-photo .who .role{margin-top:4px;color:rgba(255,255,255,.7);font-size:11px;font-weight:700;letter-spacing:.1em;}
   .sambutan-content{flex:1;position:relative;padding:50px 56px;display:flex;flex-direction:column;justify-content:center;}
   .sambutan-content .quote-mark{position:absolute;top:40px;right:48px;display:flex;gap:5px;}
   .sambutan-content .eyebrow{color:var(--teal);}
   .sambutan-content .desc{margin-top:16px;font-style:italic;color:#6b7b83;font-size:14px;line-height:1.75;border-left: 2px solid #057888 ;max-width:440px; padding-left: 10px;}
-  .sambutan-content .signature{margin-top:26px;font-family:'Dancing Script',cursive;font-weight:700;font-size:28px;color:var(--navy);}
-  .sambutan-content .sign-role{margin-top:4px;color:#7a8a92;font-size:13px;font-weight:500;}
+  .sambutan-content .sign-role{margin-top:16px;color:#7a8a92;font-size:13px;font-weight:500;}
   @media (max-width:900px){
     .sambutan-card{flex-direction:column;}
     .sambutan-photo{min-height:200px;}
@@ -359,6 +355,7 @@
     content:"";
     position:absolute;
     inset:0;
+    opacity: .2;
     z-index:-1;
     pointer-events:none;
     background-image:url('{{ asset('images/group-batik.png') }}');
@@ -442,32 +439,23 @@
     .bio-dark-item:last-child{border-bottom:none;}
   }
 
-  /* ================= FOTO PIMPINAN ================= */
-  .photo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px;}
-  .photo-card{border-radius:1px 14px 1px 14px;overflow:hidden;background:var(--white);box-shadow:0 20px 40px -24px rgba(11,34,51,.2);transition:transform .25s ease, box-shadow .25s ease;}
-  .photo-card:hover{transform:translateY(-6px);box-shadow:0 26px 44px -20px rgba(11,34,51,.3);}
-  .photo-thumb{
-    aspect-ratio:1/1;
-    background:radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
-      linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
-    display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.32);font-size:12px;font-weight:600;
-  }
-  .photo-info{padding:14px 16px;}
-  .photo-info strong{display:block;font-size:13.5px;color:var(--navy);}
-  .photo-info span{font-size:12px;color:#8a97a0;}
-  @media (max-width:900px){.photo-grid{grid-template-columns:repeat(2,1fr);}}
-
   /* ================= BAGAN ORGANISASI ================= */
   .org-chart{margin-top:44px;display:flex;flex-direction:column;align-items:center;}
   .org-node{
     background:var(--white);border-radius:12px;padding:16px 28px;text-align:center;
-    box-shadow:0 16px 32px -20px rgba(11,34,51,.25);min-width:210px;
+    box-shadow:0 16px 32px -20px rgba(11,34,51,.25);min-width:210px;max-width:280px;
+  }
+  .org-node-photo{
+    width:56px;height:56px;border-radius:50%;margin:0 auto 12px;
+    background:radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
+    background-size:cover;background-position:center;
+    border:3px solid rgba(20,131,156,.3);
   }
   .org-node strong{display:block;font-size:14.5px;color:var(--navy);}
-  .org-node span{font-size:12px;color:#8a97a0;}
   .org-node.top{background:linear-gradient(150deg,var(--navy) 40%,var(--teal) 100%);}
   .org-node.top strong{color:#fff;}
-  .org-node.top span{color:rgba(255,255,255,.6);}
+  .org-node.top .org-node-photo{border-color:rgba(255,255,255,.5);}
   .org-connector{width:2px;height:30px;background:#d7e6e8;}
   .org-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;}
 
@@ -542,7 +530,7 @@
     background-image:url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}');
     background-position:left -100px bottom -30px,right -80px top -40px,30% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
     background-size:480px auto,320px auto,150px auto,130px auto,170px auto,140px auto,220px auto;
-    filter:brightness(0) invert(1);opacity:.1;pointer-events:none;z-index:0;
+    filter:brightness(0) invert(1);opacity:.5;pointer-events:none;z-index:0;
   }
   .footer-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}
@@ -580,6 +568,9 @@
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
 
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  .navbar-logo-dark{display:none;transform:scale(1);}
+  [data-theme="dark"] .navbar-logo-light{display:none;}
+  [data-theme="dark"] .navbar-logo-dark{display:block;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -640,18 +631,12 @@
   /* Sambutan Pimpinan (kartu putih) */
   [data-theme="dark"] .sambutan-card{background:#122530;box-shadow:0 40px 70px -30px rgba(0,0,0,.6);}
   [data-theme="dark"] .sambutan-content .desc{color:#8ea0a8;}
-  [data-theme="dark"] .sambutan-content .signature{color:#eaf3f5;}
   [data-theme="dark"] .sambutan-content .sign-role{color:#8ea0a8;}
-
-  /* Foto pimpinan */
-  [data-theme="dark"] .photo-card{background:#122530;box-shadow:0 20px 40px -24px rgba(0,0,0,.5);}
-  [data-theme="dark"] .photo-info strong{color:#eaf3f5;}
-  [data-theme="dark"] .photo-info span{color:#8ea0a8;}
 
   /* Bagan organisasi */
   [data-theme="dark"] .org-node{background:#122530;box-shadow:0 16px 32px -20px rgba(0,0,0,.5);}
   [data-theme="dark"] .org-node strong{color:#eaf3f5;}
-  [data-theme="dark"] .org-node span{color:#8ea0a8;}
+  [data-theme="dark"] .org-node-photo{border-color:rgba(255,255,255,.14);}
   [data-theme="dark"] .org-connector{background:rgba(255,255,255,.14);}
 
   /* Visi & Misi (kartu MISI, versi terang) */
@@ -687,7 +672,8 @@
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
@@ -785,7 +771,6 @@
       <div class="sambutan-card">
         <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
         <div class="who">
-          <div class="name">{{ $leadership->name ?? 'Nama Kepala Pusat' }}</div>
           <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
         </div>
       </div>
@@ -795,26 +780,9 @@
           <span data-en="WELCOME">SELAMAT DATANG</span>
         </div>
         <p class="desc" data-en="{{ ($leadership->description_en ?? null) ?: ($leadership->description ?? 'The leadership message has not been filled in via the admin panel.') }}">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
-        <div class="signature">{{ $leadership->name ?? 'Nama Kepala Pusat' }}</div>
         <div class="sign-role" data-en="{{ ($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center') }}">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
       </div>
     </div>
-      <div class="eyebrow" style="margin-top:56px;">
-        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        <span data-en="LEADERSHIP PHOTOS">FOTO PIMPINAN</span>
-      </div>
-      <div class="photo-grid">
-        @forelse($members as $m)
-          <div class="photo-card">
-            <div class="photo-thumb" @if($m->photo) style="background-image:url('{{ asset('storage/'.$m->photo) }}');background-size:cover;background-position:center;" @endif>
-              @if(!$m->photo) <span data-en="Photo">Foto</span> @endif
-            </div>
-            <div class="photo-info"><strong>{{ $m->name }}</strong><span data-en="{{ $m->position_en ?: $m->position }}">{{ $m->position }}</span></div>
-          </div>
-        @empty
-          <p style="color:#8a97a0;grid-column:1/-1;" data-en="No leadership/structure data yet.">Belum ada data pimpinan/struktur.</p>
-        @endforelse
-      </div>
     </div>
   </section>
 
@@ -830,7 +798,6 @@
 
       <div class="bio-card">
         <div class="bio-dark-grid">
-          <div class="bio-dark-item"><label data-en="Name">Nama</label><span>{{ $leadership->name ?? '-' }}</span></div>
           <div class="bio-dark-item"><label data-en="Position">Jabatan</label><span>{{ $leadership->position ?? '-' }}</span></div>
           <div class="bio-dark-item"><label data-en="Education">Pendidikan</label><span data-en="{{ ($leadership->education_en ?? null) ?: ($leadership->education ?? '-') }}">{{ $leadership->education ?? '-' }}</span></div>
           <div class="bio-dark-item"><label data-en="Term of office">Masa jabatan</label><span data-en="{{ ($leadership->term_en ?? null) ?: ($leadership->term ?? '-') }}">{{ $leadership->term ?? '-' }}</span></div>
@@ -852,24 +819,16 @@
 
       <div class="org-chart">
         <div class="org-node top">
-          <strong>{{ $kepala->name ?? 'Kepala Pustekinfo' }}</strong>
-          <span data-en="{{ ($kepala->position_en ?? null) ?: ($kepala->position ?? 'Unit Head') }}">{{ $kepala->position ?? 'Pimpinan Unit' }}</span>
+          <div class="org-node-photo" @if($kepala?->photo) style="background-image:url('{{ asset('storage/'.$kepala->photo) }}');" @endif></div>
+          <strong data-en="{{ ($kepala->position_en ?? null) ?: ($kepala->position ?? 'Unit Head') }}">{{ $kepala->position ?? 'Pimpinan Unit' }}</strong>
         </div>
-
-        @if($sekretariat)
-          <div class="org-connector"></div>
-          <div class="org-node">
-            <strong>{{ $sekretariat->name }}</strong>
-            <span data-en="{{ $sekretariat->position_en ?: $sekretariat->position }}">{{ $sekretariat->position }}</span>
-          </div>
-        @endif
 
         <div class="org-connector"></div>
         <div class="org-row">
           @forelse($bidangList as $b)
             <div class="org-node">
-              <strong>{{ $b->name }}</strong>
-              <span data-en="{{ $b->position_en ?: $b->position }}">{{ $b->position }}</span>
+              <div class="org-node-photo" @if($b->photo) style="background-image:url('{{ asset('storage/'.$b->photo) }}');" @endif></div>
+              <strong data-en="{{ $b->position_en ?: $b->position }}">{{ $b->position }}</strong>
             </div>
           @empty
             <p style="color:#8a97a0;" data-en="No division data yet.">Belum ada data bidang.</p>

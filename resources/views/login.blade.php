@@ -83,7 +83,7 @@
             inset: 0;
             z-index: 1;
             pointer-events: none;
-
+            opacity: .2;
             background-image: url('{{ asset('images/group-batik.png') }}');
             background-repeat: no-repeat;
             background-position: center center;

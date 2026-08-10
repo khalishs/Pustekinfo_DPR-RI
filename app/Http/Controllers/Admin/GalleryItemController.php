@@ -89,6 +89,22 @@ class GalleryItemController extends Controller
         return redirect()->route('admin.gallery.index')->with('success', 'Foto galeri diperbarui.');
     }
 
+    public function toggleFeatured(GalleryItem $gallery)
+    {
+        $newState = ! $gallery->is_featured;
+
+        if ($newState) {
+            GalleryItem::where('is_featured', true)->whereKeyNot($gallery->id)->update(['is_featured' => false]);
+        }
+
+        $gallery->update(['is_featured' => $newState]);
+
+        return redirect()->route('admin.gallery.index')->with(
+            'success',
+            $newState ? 'Foto dijadikan sorotan. Sorotan foto lain otomatis dinonaktifkan.' : 'Sorotan foto dibatalkan.'
+        );
+    }
+
     public function destroy(GalleryItem $gallery)
     {
         if ($gallery->image) {

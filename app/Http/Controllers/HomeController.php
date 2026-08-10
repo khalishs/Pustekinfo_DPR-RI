@@ -45,8 +45,8 @@ class HomeController extends Controller
             'profilPhotos'  => ProfilPhoto::where('is_active', true)->orderBy('sort_order')->get(),
             'stats'         => Statistic::orderBy('sort_order')->get(),
             'leadership'    => Leadership::first(),
-            'featuredNews'  => NewsItem::where('is_featured', true)->latest('published_at')->first(),
-            'latestNews'    => NewsItem::where('is_featured', false)->latest('published_at')->take(4)->get(),
+            'featuredNews'  => NewsItem::where('is_featured', true)->where('is_active', true)->latest('published_at')->first(),
+            'latestNews'    => NewsItem::where('is_featured', false)->where('is_active', true)->latest('published_at')->take(4)->get(),
             'todayEvents'   => AgendaEvent::whereDate('event_date', $today)->orderBy('event_time')->get(),
             'upcomingEvents' => AgendaEvent::whereDate('event_date', '>', $today)
                 ->orderBy('event_date')
