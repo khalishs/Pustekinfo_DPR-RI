@@ -74,7 +74,7 @@
   }
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;transform:scale(4.9);transform-origin:left center;pointer-events:none;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;pointer-events:none;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
   .nav-links li.active a{color:var(--teal);}
@@ -336,7 +336,7 @@
   [data-theme="dark"] html{background:#0b1720;}
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
-  .navbar-logo-dark{display:none;transform:scale(1);}
+  .navbar-logo-dark{display:none;}
   [data-theme="dark"] .navbar-logo-light{display:none;}
   [data-theme="dark"] .navbar-logo-dark{display:block;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
