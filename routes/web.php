@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\ProfilPhotoController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\StelaVideoController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ServiceRequestController;
 use App\Http\Controllers\ProfilController;
@@ -122,6 +123,9 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
         ->parameters(['profil-photos' => 'profilPhoto']);
 
     Route::resource('services', ServiceController::class)->except('show');
+
+    Route::get('layanan-ajukan-video', [StelaVideoController::class, 'edit'])->name('stela-video.edit');
+    Route::put('layanan-ajukan-video', [StelaVideoController::class, 'update'])->name('stela-video.update');
 
     Route::get('banner/{page}', [PageBannerController::class, 'edit'])->name('page-banners.edit');
     Route::put('banner/{page}', [PageBannerController::class, 'update'])->name('page-banners.update');

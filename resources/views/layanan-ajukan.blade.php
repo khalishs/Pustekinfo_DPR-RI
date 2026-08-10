@@ -194,6 +194,27 @@
   [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.1;}
   @media (max-width:900px){.konten-batik::before{background-size:3000px auto;}}
 
+  /* ---------- Sekilas STELA ---------- */
+  .stela-section{max-width:900px;margin:0 auto;padding:70px 24px 60px;text-align:center;}
+  .stela-section h2{font-size:28px;font-weight:800;color:var(--navy);letter-spacing:-.01em;}
+  .stela-section > p{margin:14px auto 0;max-width:560px;color:#5b6b73;font-size:14.5px;line-height:1.75;}
+  .stela-divider{width:64px;height:3px;background:var(--teal);border-radius:2px;margin:22px auto 0;}
+  .stela-video-wrap{margin-top:34px;border-radius:16px;overflow:hidden;box-shadow:0 30px 60px -28px rgba(11,34,51,.28);border:1px solid #eef1f3;background:#000;}
+  .stela-video-wrap video{display:block;width:100%;max-height:520px;background:#000;}
+  .stela-video-wrap iframe{display:block;width:100%;aspect-ratio:16/9;border:none;background:#000;}
+  .stela-link{margin-top:40px;display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:8px;background:var(--navy);color:var(--white);font-size:13px;font-weight:700;letter-spacing:.03em;transition:.2s ease;}
+  .stela-link:hover{background:var(--teal);transform:translateY(-2px);}
+  .stela-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  @media (max-width:900px){
+    .stela-section{padding:50px 20px 40px;}
+    .stela-section h2{font-size:22px;}
+  }
+  [data-theme="dark"] .stela-section h2{color:#eaf3f5;}
+  [data-theme="dark"] .stela-section > p{color:#8ea0a8;}
+  [data-theme="dark"] .stela-video-wrap{border-color:rgba(255,255,255,.1);box-shadow:0 30px 60px -28px rgba(0,0,0,.6);}
+  [data-theme="dark"] .stela-link{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .stela-link:hover{background:#7fd3e0;}
+
   /* ---------- Ajukan: Info & Form ---------- */
   .ajukan-page{background:rgba(255, 255, 255, 0.2);padding:70px 100px 90px;opacity:0;transform:translateY(60px);transition:opacity .9s ease, transform .9s ease;}
   .ajukan-page.show{opacity:1;transform:translateY(0);}
@@ -470,6 +491,26 @@
   </div>
 
   <div class="konten-batik">
+
+  @if(($setting->stela_video_type === 'youtube' && $setting->stela_youtube_url) || ($setting->stela_video_type !== 'youtube' && $setting->stela_video))
+  {{-- ================= SEKILAS STELA ================= --}}
+  <section class="stela-section">
+    <h2 data-en="Get to Know STELA">Sekilas STELA</h2>
+    <p data-en="STELA is the DPR RI Service Ticketing and Escalation System.">STELA merupakan Sistem Tiket dan Eskalasi Layanan.</p>
+    <div class="stela-divider"></div>
+    <div class="stela-video-wrap">
+      @if($setting->stela_video_type === 'youtube')
+        <iframe src="{{ $setting->stela_youtube_embed_url }}" title="Sekilas STELA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      @else
+        <video controls preload="metadata" src="{{ asset('storage/'.$setting->stela_video) }}"></video>
+      @endif
+    </div>
+    <a href="{{ $setting->stela_url ?: 'https://stela.dpr.go.id' }}" target="_blank" rel="noopener" class="stela-link">
+      <span data-en="Visit STELA DPR RI">Kunjungi STELA DPR RI</span>
+      <svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+    </a>
+  </section>
+  @endif
 
   {{-- ================= INFORMASI & FORM ================= --}}
   <section class="ajukan-page">

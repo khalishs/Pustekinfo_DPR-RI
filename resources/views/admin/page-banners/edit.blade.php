@@ -18,7 +18,7 @@
         @else
           <p style="color:#8a97a0;font-size:13px;margin-bottom:10px;">Belum ada banner. Halaman akan memakai latar polos bawaan.</p>
         @endif
-        <input type="file" name="image" accept="image/*" required>
+        <input type="file" name="image" accept="image/*" data-min-kb="2048" data-max-kb="10240" required>
         @error('image')<small class="error">{{ $message }}</small>@enderror
         <small>Disarankan gambar lebar (misal 1600×600px) agar tidak terpotong.</small>
       </div>

@@ -500,6 +500,10 @@
             <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);">{{ $pendingLayananCount }}</span>
           @endif
         </a>
+        <a href="{{ route('admin.stela-video.edit') }}" class="{{ request()->routeIs('admin.stela-video.*') ? 'active' : '' }}">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
+          Video Sekilas STELA
+        </a>
       </details>
 
       <details class="nav-group" open>
@@ -722,6 +726,58 @@
         var isDark = document.documentElement.getAttribute('data-theme') !== 'dark';
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
         applyTheme(isDark);
+      });
+
+      // Validasi ukuran & tipe file (foto/video) begitu dipilih, supaya user tahu
+      // dari awal kalau filenya kurang/lebih dari limit — bukan setelah klik Simpan.
+      document.querySelectorAll('input[type="file"][data-max-kb]').forEach(function (input) {
+        var minKb = parseInt(input.dataset.minKb || '0', 10);
+        var maxKb = parseInt(input.dataset.maxKb, 10);
+        var allowedExt = input.dataset.ext ? input.dataset.ext.split(',') : null;
+
+        var errorEl = input.nextElementSibling;
+        if (!errorEl || errorEl.tagName !== 'SMALL' || !errorEl.classList.contains('error')) {
+          errorEl = document.createElement('small');
+          errorEl.className = 'error';
+          errorEl.style.display = 'none';
+          input.insertAdjacentElement('afterend', errorEl);
+        }
+        // Kalau errorEl sudah ada dari server (@error blade), biarkan tampil apa adanya
+        // sampai user memilih file baru — jangan langsung disembunyikan saat load.
+
+        function formatSize(kb) {
+          return kb >= 1024 ? (Math.round((kb / 1024) * 10) / 10) + 'MB' : kb + 'KB';
+        }
+
+        function showError(msg) {
+          errorEl.textContent = msg;
+          errorEl.style.display = 'block';
+          input.value = '';
+        }
+
+        input.addEventListener('change', function () {
+          errorEl.style.display = 'none';
+          var file = input.files && input.files[0];
+          if (!file) return;
+
+          if (allowedExt) {
+            var ext = file.name.split('.').pop().toLowerCase();
+            if (allowedExt.indexOf(ext) === -1) {
+              showError('Format file tidak didukung. Gunakan: ' + allowedExt.join(', ').toUpperCase() + '.');
+              return;
+            }
+          }
+
+          var sizeKb = file.size / 1024;
+          if (sizeKb > maxKb) {
+            showError('Ukuran file terlalu besar (maks ' + formatSize(maxKb) + '). File Anda: ' + formatSize(Math.round(sizeKb)) + '.');
+            return;
+          }
+          if (minKb > 0 && sizeKb < minKb) {
+            showError('Ukuran file terlalu kecil (min ' + formatSize(minKb) + '). File Anda: ' + formatSize(Math.round(sizeKb)) + '.');
+            return;
+          }
+        });
       });
     })();
   </script>
