@@ -373,6 +373,7 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikBoostLight);
+    opacity:.1;
   }
   [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
   [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.1;}
@@ -680,7 +681,7 @@
     background-image:url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}');
     background-position:left -100px bottom -30px,right -80px top -40px,30% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
     background-size:480px auto,320px auto,150px auto,130px auto,170px auto,140px auto,220px auto;
-    filter:brightness(0) invert(1);opacity:.35;pointer-events:none;z-index:0;
+    filter:brightness(0) invert(1);opacity:.1;pointer-events:none;z-index:0;
   }
   .footer-inner{
     position:relative;
@@ -811,7 +812,7 @@
     .footer::before{
       background-size:170px auto,140px auto,65px auto,55px auto,70px auto,60px auto,90px auto;
       background-position:left -40px bottom -10px,right -40px top -20px,38% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
-      opacity:.25;
+      opacity:.1;
     }
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
     .footer-brand-logo{width:150px;}

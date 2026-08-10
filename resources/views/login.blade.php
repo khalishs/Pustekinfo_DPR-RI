@@ -88,6 +88,7 @@
             background-repeat: no-repeat;
             background-position: center center;
             background-size: 10000px auto;
+            opacity: .1;
         }
         [data-theme="dark"] .login-batik-bg{
             filter: url(#batikTintTeal);
