@@ -74,7 +74,7 @@
   }
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .navbar-logo{height:50px;width:auto;object-fit:contain;transform:scale(4.9);transform-origin:left center;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;transform:scale(4.9);transform-origin:left center;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
   .nav-links li.active a{color:var(--teal);}
@@ -109,7 +109,7 @@
     .nav-links{display:none;}
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
     .burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;background:var(--white);cursor:pointer;align-items:center;}
     .burger span{width:16px;height:2px;background:#3c4a52;border-radius:2px;transition:.25s ease;}
     .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}

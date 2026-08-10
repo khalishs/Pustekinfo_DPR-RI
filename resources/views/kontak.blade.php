@@ -102,7 +102,7 @@
     height:50px;
     object-fit:contain;
   }
-  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
     transform-origin:left center;}
   .nav-links{display:flex;align-items:center;gap:34px;}
 
@@ -252,7 +252,7 @@
 
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
 
     .burger{
       display:none;

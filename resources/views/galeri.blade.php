@@ -46,7 +46,7 @@
   ul{list-style:none;}
   h1,h2,.stat-num,.sorotan-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
 
-  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
     transform-origin:left center;}
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
@@ -114,7 +114,7 @@
     .nav-links li.active::after{display:none;}
     .burger{display:flex;}
     .brand-logo{width:36px;height:36px;}
-    .navbar-logo{height:32px;width:auto;}
+    .navbar-logo{height:32px;width:122px;}
   }
 
   /* ---------- Hero / Page Banner (sama seperti Profil, Layanan, Informasi) ---------- */

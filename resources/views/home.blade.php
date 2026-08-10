@@ -61,11 +61,14 @@
     width:100%;
     z-index:9999;
   }
-  .brand{display:flex;align-items:center;gap:12px;}
+  .brand{display:flex;align-items:center;gap:1px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
 
   
-  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
+  /* width:190px dibuat tetap (bukan auto) supaya lebar kotak logo sama persis
+     antara mode light & dark — mencegah navbar "geser" saat ganti tema, karena
+     kedua file logo (persegi vs landscape) py rasio aspek yang beda jauh. */
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
     transform-origin:left center;}
 
   .nav-links{display:flex;align-items:center;gap:34px;}
@@ -268,10 +271,10 @@
     z-index:3;
     width:48px;height:48px;
     border-radius:50%;
-    border:1px solid rgba(255,255,255,.35);
-    background:rgba(11,49,74,.35);
-    backdrop-filter:blur(4px);
+    border:1px solid transparent;
+    background:transparent;
     color:#fff;
+    opacity:.5;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -279,7 +282,12 @@
     transition:.25s ease;
     padding:0;
   }
-  .hero-arrow:hover{background:rgba(11,49,74,.65);border-color:rgba(255,255,255,.65);}
+  .hero-arrow:hover{
+    background:rgba(11,49,74,.55);
+    border-color:rgba(255,255,255,.5);
+    backdrop-filter:blur(4px);
+    opacity:1;
+  }
   .hero-arrow svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
   .hero-arrow-prev{left:24px;}
   .hero-arrow-next{right:24px;}
@@ -459,7 +467,7 @@
 
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
 
     .burger{
     display:flex;

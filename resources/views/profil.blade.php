@@ -72,7 +72,7 @@
     transform:translateY(0);
     transition:transform .35s ease;
   }
-  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */transform-origin:left center;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */transform-origin:left center;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
   .nav-links{display:flex;align-items:center;gap:34px;}
@@ -146,7 +146,7 @@
     .nav-links{display:none;}
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
     .nav-actions{gap:6px;flex-shrink:0;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
