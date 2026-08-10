@@ -47,8 +47,8 @@
   ul{list-style:none;}
   h1,h2,.stat-num,.sorotan-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
 
-  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
-    transform-origin:left center;pointer-events:none;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;
+    pointer-events:none;}
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
@@ -302,7 +302,7 @@
 
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
-  .navbar-logo-dark{display:none;transform:scale(1);}
+  .navbar-logo-dark{display:none;}
   [data-theme="dark"] .navbar-logo-light{display:none;}
   [data-theme="dark"] .navbar-logo-dark{display:block;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}

@@ -66,10 +66,9 @@
 
   
   /* width:190px dibuat tetap (bukan auto) supaya lebar kotak logo sama persis
-     antara mode light & dark — mencegah navbar "geser" saat ganti tema, karena
-     kedua file logo (persegi vs landscape) py rasio aspek yang beda jauh. */
-  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
-    transform-origin:left center;pointer-events:none;}
+     antara mode light & dark — mencegah navbar "geser" saat ganti tema. */
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;
+    pointer-events:none;}
 
   .nav-links{display:flex;align-items:center;gap:34px;}
 
@@ -2149,7 +2148,7 @@
 [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
 
 [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
-.navbar-logo-dark{display:none;transform:scale(1);}
+.navbar-logo-dark{display:none;}
 [data-theme="dark"] .navbar-logo-light{display:none;}
 [data-theme="dark"] .navbar-logo-dark{display:block;}
 [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
