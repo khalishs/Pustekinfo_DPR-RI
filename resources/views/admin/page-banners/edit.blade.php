@@ -14,7 +14,7 @@
       <div class="form-group form-span-2">
         <label class="required">Gambar Banner Saat Ini</label>
         @if($banner->image)
-          <img src="{{ asset('storage/'.$banner->image) }}" style="width:100%;max-width:420px;aspect-ratio:16/6;object-fit:cover;border-radius:8px;margin-bottom:10px;display:block;">
+          <img src="{{ asset($banner->image) }}" style="width:100%;max-width:420px;aspect-ratio:16/6;object-fit:cover;border-radius:8px;margin-bottom:10px;display:block;">
         @else
           <p style="color:#8a97a0;font-size:13px;margin-bottom:10px;">Belum ada banner. Halaman akan memakai latar polos bawaan.</p>
         @endif

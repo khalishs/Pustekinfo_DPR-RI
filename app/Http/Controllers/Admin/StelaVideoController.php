@@ -28,13 +28,13 @@ class StelaVideoController extends Controller
         $setting = SiteSetting::first() ?? new SiteSetting();
 
         if ($request->boolean('hapus_stela_video') && $setting->stela_video) {
-            Storage::disk('public')->delete($setting->stela_video);
+            Storage::disk('assets')->delete($setting->stela_video);
             $data['stela_video'] = null;
         } elseif ($request->hasFile('stela_video')) {
             if ($setting->stela_video) {
-                Storage::disk('public')->delete($setting->stela_video);
+                Storage::disk('assets')->delete($setting->stela_video);
             }
-            $data['stela_video'] = $request->file('stela_video')->store('videos', 'public');
+            $data['stela_video'] = $request->file('stela_video')->store('videos', 'assets');
         }
 
         $setting->fill($data)->save();

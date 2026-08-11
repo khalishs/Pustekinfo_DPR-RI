@@ -13,7 +13,7 @@
     <tbody>
     @forelse($items as $item)
       <tr>
-        <td><img src="{{ asset('storage/'.$item->image) }}" style="width:70px;height:52px;object-fit:cover;border-radius:6px;"></td>
+        <td><img src="{{ asset($item->image) }}" style="width:70px;height:52px;object-fit:cover;border-radius:6px;"></td>
         <td>{{ $item->title ?? '-' }}</td>
         <td>{{ $item->category->name ?? '-' }}</td>
         <td><span class="badge cap">{{ $item->size }}</span></td>

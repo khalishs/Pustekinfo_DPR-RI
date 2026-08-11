@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\NewsItem;
+use App\Models\Media;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class NewsItemController extends Controller
 {
@@ -28,7 +28,7 @@ class NewsItemController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('berita', 'public');
+            $data['image'] = Media::storeUpload($request->file('image'));
         }
 
         NewsItem::create($data);
@@ -48,10 +48,8 @@ class NewsItemController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('image')) {
-            if ($news->image) {
-                Storage::disk('public')->delete($news->image);
-            }
-            $data['image'] = $request->file('image')->store('berita', 'public');
+            Media::deleteRef($news->image);
+            $data['image'] = Media::storeUpload($request->file('image'));
         }
 
         $news->update($data);
@@ -72,9 +70,7 @@ class NewsItemController extends Controller
 
     public function destroy(NewsItem $news)
     {
-        if ($news->image) {
-            Storage::disk('public')->delete($news->image);
-        }
+        Media::deleteRef($news->image);
         $news->delete();
 
         return redirect()->route('admin.news.index')->with('success', 'Berita dihapus.');

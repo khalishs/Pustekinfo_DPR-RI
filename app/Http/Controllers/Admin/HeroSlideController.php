@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\HeroSlide;
+use App\Models\Media;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class HeroSlideController extends Controller
 {
@@ -26,7 +26,7 @@ class HeroSlideController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request, true);
-        $data['image'] = $request->file('image')->store('hero', 'public');
+        $data['image'] = Media::storeUpload($request->file('image'));
         $data['is_active'] = $request->boolean('is_active');
 
         HeroSlide::create($data);
@@ -45,8 +45,8 @@ class HeroSlideController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($heroSlide->image);
-            $data['image'] = $request->file('image')->store('hero', 'public');
+            Media::deleteRef($heroSlide->image);
+            $data['image'] = Media::storeUpload($request->file('image'));
         }
 
         $heroSlide->update($data);
@@ -56,7 +56,7 @@ class HeroSlideController extends Controller
 
     public function destroy(HeroSlide $heroSlide)
     {
-        Storage::disk('public')->delete($heroSlide->image);
+        Media::deleteRef($heroSlide->image);
         $heroSlide->delete();
 
         return redirect()->route('admin.hero-slides.index')->with('success', 'Slide dihapus.');

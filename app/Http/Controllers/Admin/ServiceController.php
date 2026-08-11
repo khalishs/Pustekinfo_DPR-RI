@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Media;
 use App\Models\Service;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -26,7 +26,7 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request, true);
-        $data['icon_image'] = $request->file('icon_image')->store('layanan', 'public');
+        $data['icon_image'] = Media::storeUpload($request->file('icon_image'));
 
         Service::create($data);
 
@@ -43,10 +43,8 @@ class ServiceController extends Controller
         $data = $this->validated($request, false);
 
         if ($request->hasFile('icon_image')) {
-            if ($service->icon_image) {
-                Storage::disk('public')->delete($service->icon_image);
-            }
-            $data['icon_image'] = $request->file('icon_image')->store('layanan', 'public');
+            Media::deleteRef($service->icon_image);
+            $data['icon_image'] = Media::storeUpload($request->file('icon_image'));
         }
 
         $service->update($data);
@@ -56,9 +54,7 @@ class ServiceController extends Controller
 
     public function destroy(Service $service)
     {
-        if ($service->icon_image) {
-            Storage::disk('public')->delete($service->icon_image);
-        }
+        Media::deleteRef($service->icon_image);
         $service->delete();
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan dihapus.');

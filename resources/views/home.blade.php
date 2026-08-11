@@ -2307,7 +2307,7 @@
     <header class="hero">
       <div class="hero-slider">
         @forelse($heroSlides as $slide)
-          <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$slide->image) }}')"></div>
+          <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset($slide->image) }}')"></div>
         @empty
           <div class="hero-slide" style="background-image:url('{{ asset('images/hero-gedung-dpr.jpg') }}')"></div>
         @endforelse
@@ -2360,7 +2360,7 @@
             <div class="profil-media">
               <div class="profil-media-frame">
                 @foreach($profilPhotos as $photo)
-                  <div class="profil-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$photo->image) }}')"></div>
+                  <div class="profil-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset($photo->image) }}')"></div>
                 @endforeach
                 <span class="profil-badge" data-en="ABOUT US">TENTANG KAMI</span>
               </div>
@@ -2479,7 +2479,7 @@
       <div class="eyebrow" data-en="LEADERSHIP MESSAGE">SAMBUTAN PIMPINAN</div>
 
       <div class="sambutan-card">
-                <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
+                <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset($leadership->photo) }}');background-size:cover;background-position:center;" @endif>
           <div class="who">
             <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
           </div>
@@ -2512,7 +2512,7 @@
 
       <div class="berita-grid">
 
-        <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ asset('storage/'.$featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
+        <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ asset($featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
           <span class="badge" data-en="{{ ($featuredNews->category_en ?? null) ?: ($featuredNews->category ?? 'NEWS') }}">{{ $featuredNews->category ?? 'BERITA' }}</span>
 
           <div class="berita-featured-body">
@@ -2532,7 +2532,7 @@
         <div class="berita-list">
           @forelse($latestNews as $news)
             <a href="{{ route('berita.show', $news) }}" class="berita-item">
-              <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset('storage/'.$news->image) }}');background-size:cover;background-position:center;" @endif></div>
+              <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset($news->image) }}');background-size:cover;background-position:center;" @endif></div>
               <div class="berita-item-body">
                 <div class="cat" data-en="{{ $news->category_en ?: $news->category }}">{{ $news->category }}</div>
                 <div class="title" data-en="{{ $news->title_en ?: $news->title }}">{{ $news->title }}</div>
@@ -2665,7 +2665,7 @@
     <div class="galeri-grid" id="galeriGrid">
       @forelse($galleries as $item)
         <div class="galeri-card {{ $item->size }}" data-category="{{ $item->category->slug ?? '' }}">
-          <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
+          <img src="{{ asset($item->image) }}" alt="{{ $item->title }}">
         </div>
       @empty
         <p style="color:#8a97a0;" data-en="No gallery photos yet.">Belum ada foto galeri.</p>

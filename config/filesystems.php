@@ -47,6 +47,18 @@ return [
             'report' => false,
         ],
 
+        // File yang diunggah lewat admin panel disimpan langsung di /public, bukan
+        // storage/app/public — supaya ikut ter-commit ke git dan langsung muncul
+        // begitu repo di-clone, tanpa perlu `storage:link` atau transfer file terpisah.
+        'assets' => [
+            'driver' => 'local',
+            'root' => public_path(),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/'),
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

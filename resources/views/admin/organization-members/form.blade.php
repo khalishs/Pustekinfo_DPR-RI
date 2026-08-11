@@ -22,7 +22,7 @@
       <div class="form-group form-span-2">
         <label>Foto</label>
         @if($member->photo)
-          <img src="{{ asset('storage/'.$member->photo) }}" style="width:120px;border-radius:8px;margin-bottom:10px;display:block;">
+          <img src="{{ asset($member->photo) }}" style="width:120px;border-radius:8px;margin-bottom:10px;display:block;">
         @endif
         <input type="file" name="photo" accept="image/*" data-min-kb="2048" data-max-kb="10240">
         <small>Kosongkan jika tidak ingin mengganti foto.</small>

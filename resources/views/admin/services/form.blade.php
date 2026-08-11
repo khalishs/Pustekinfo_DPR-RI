@@ -50,7 +50,7 @@
       <div class="form-group form-span-2">
         <label class="{{ $service->exists ? '' : 'required' }}">Gambar Ikon</label>
         @if($service->icon_image)
-          <img src="{{ asset('storage/'.$service->icon_image) }}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;margin-bottom:10px;display:block;background:#f1f4f5;">
+          <img src="{{ asset($service->icon_image) }}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;margin-bottom:10px;display:block;background:#f1f4f5;">
         @endif
         <input type="file" name="icon_image" accept="image/*" data-min-kb="2048" data-max-kb="10240" {{ $service->exists ? '' : 'required' }}>
         @error('icon_image')<small class="error">{{ $message }}</small>@enderror

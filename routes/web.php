@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\ProfilPhotoController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\StelaVideoController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ServiceRequestController;
 use App\Http\Controllers\ProfilController;
@@ -33,6 +34,8 @@ use App\Http\Controllers\ProfilController;
 
 Route::view('/galeri', 'galeri')->name('galeri');
 Route::view('/kontak', 'kontak')->name('kontak');
+
+Route::get('/media/{media}', [MediaController::class, 'show'])->name('media.show');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
