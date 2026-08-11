@@ -229,7 +229,6 @@
   }
   .konten-batik::before{
     content:"";
-    opacity: .2;
     position:absolute;
     inset:0;
     z-index:-1;
@@ -239,10 +238,10 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikBoostLight);
-    opacity:.1;
+    opacity:.05;
   }
   [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
-  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.1;}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.05;}
   /* section putih/mist bergantian dimatikan di dalam area batik, supaya
      polanya tetap terlihat sampai bawah — sama seperti di beranda */
   .konten-batik section.page-section:nth-child(even){background:transparent;}

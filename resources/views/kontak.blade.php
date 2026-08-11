@@ -44,6 +44,7 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikTintTeal);
+    opacity:.05;
   }
   @media (max-width:900px){
     body{background-size:3000px auto;}
@@ -364,7 +365,6 @@
   .konten-batik::before{
     content:"";
     position:absolute;
-    opacity: .2;
     inset:0;
     z-index:-1;
     pointer-events:none;
@@ -373,10 +373,10 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikBoostLight);
-    opacity:.1;
+    opacity:.05;
   }
   [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
-  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.1;}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.05;}
   @media (max-width:900px){
     .konten-batik::before{background-size:3000px auto;}
   }
