@@ -54,6 +54,12 @@
         <small>Warna ini akan tampil sebagai titik penanda pada kalender agenda di halaman publik.</small>
         @error('color')<small class="error">{{ $message }}</small>@enderror
       </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_active" value="1" style="width:auto;display:inline-block;" {{ old('is_active', $event->exists ? $event->is_active : true) ? 'checked' : '' }}> Status aktif</label>
+        @error('is_active')<small class="error">{{ $message }}</small>@enderror
+        <small>Agenda nonaktif tidak akan tampil di halaman mana pun untuk pengunjung situs.</small>
+      </div>
     </div>
 
     <div class="form-actions">

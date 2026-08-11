@@ -10,7 +10,7 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Ikon</th><th>Label</th><th>Nilai</th><th class="text-center">Urutan</th><th></th></tr></thead>
+    <thead><tr><th>Ikon</th><th>Label</th><th>Nilai</th><th class="text-center">Urutan</th><th class="text-center">Aktif</th><th></th></tr></thead>
     <tbody>
     @forelse($statistics as $stat)
       <tr>
@@ -18,6 +18,15 @@
         <td class="cap">{{ $stat->label }}</td>
         <td><strong style="color:var(--teal);">{{ rtrim(rtrim(number_format($stat->value, $stat->decimals, ',', '.'), '0'), ',') }}{{ $stat->suffix }}</strong></td>
         <td class="text-center"><span class="badge-count">{{ $stat->sort_order }}</span></td>
+        <td class="text-center">
+          <form action="{{ route('admin.statistics.toggle-active', $stat) }}" method="POST">
+            @csrf @method('PATCH')
+            <label class="toggle-switch" title="{{ $stat->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
+              <input type="checkbox" onchange="this.form.submit()" {{ $stat->is_active ? 'checked' : '' }}>
+              <span class="slider"></span>
+            </label>
+          </form>
+        </td>
         <td class="row-actions">
           <a href="{{ route('admin.statistics.edit', $stat) }}" class="btn-icon btn-icon-edit" title="Edit" aria-label="Edit">
             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -31,7 +40,7 @@
         </td>
       </tr>
     @empty
-      <tr><td colspan="5">Belum ada data.</td></tr>
+      <tr><td colspan="6">Belum ada data.</td></tr>
     @endforelse
     </tbody>
   </table>

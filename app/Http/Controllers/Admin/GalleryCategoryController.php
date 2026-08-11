@@ -25,6 +25,7 @@ class GalleryCategoryController extends Controller
     {
         $data = $this->validated($request);
         $data['slug'] = Str::slug($data['name']);
+        $data['is_active'] = $request->boolean('is_active');
         GalleryCategory::create($data);
 
         return redirect()->route('admin.gallery-categories.index')->with('success', 'Kategori ditambahkan.');
@@ -39,9 +40,21 @@ class GalleryCategoryController extends Controller
     {
         $data = $this->validated($request);
         $data['slug'] = Str::slug($data['name']);
+        $data['is_active'] = $request->boolean('is_active');
         $galleryCategory->update($data);
 
         return redirect()->route('admin.gallery-categories.index')->with('success', 'Kategori diperbarui.');
+    }
+
+    public function toggleActive(GalleryCategory $galleryCategory)
+    {
+        $newState = ! $galleryCategory->is_active;
+        $galleryCategory->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.gallery-categories.index')->with(
+            'success',
+            $newState ? 'Kategori diaktifkan kembali dan akan tampil ke pengguna.' : 'Kategori dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
     }
 
     public function destroy(GalleryCategory $galleryCategory)
@@ -61,6 +74,7 @@ class GalleryCategoryController extends Controller
             'name'       => 'required|string|max:100',
             'name_en'    => 'nullable|string|max:100',
             'sort_order' => 'required|integer',
+            'is_active'  => 'sometimes|boolean',
         ]);
     }
 }

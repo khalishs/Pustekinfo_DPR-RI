@@ -9,13 +9,22 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Tahun</th><th>Judul</th><th class="text-center">Urutan</th><th></th></tr></thead>
+    <thead><tr><th>Tahun</th><th>Judul</th><th class="text-center">Urutan</th><th class="text-center">Aktif</th><th></th></tr></thead>
     <tbody>
     @forelse($items as $item)
       <tr>
         <td>{{ $item->year }}</td>
         <td>{{ $item->title }}</td>
         <td class="text-center"><span class="badge-count">{{ $item->sort_order }}</span></td>
+        <td class="text-center">
+          <form action="{{ route('admin.timeline.toggle-active', $item) }}" method="POST">
+            @csrf @method('PATCH')
+            <label class="toggle-switch" title="{{ $item->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
+              <input type="checkbox" onchange="this.form.submit()" {{ $item->is_active ? 'checked' : '' }}>
+              <span class="slider"></span>
+            </label>
+          </form>
+        </td>
         <td class="row-actions">
           <a href="{{ route('admin.timeline.edit', $item) }}" class="btn-icon btn-icon-edit" title="Edit" aria-label="Edit">
             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -29,7 +38,7 @@
         </td>
       </tr>
     @empty
-      <tr><td colspan="4">Belum ada data sejarah.</td></tr>
+      <tr><td colspan="5">Belum ada data sejarah.</td></tr>
     @endforelse
     </tbody>
   </table>

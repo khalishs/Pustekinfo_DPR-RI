@@ -19,7 +19,7 @@ class LayananController extends Controller
 
     public function index()
     {
-        $services = Service::orderBy('sort_order')->get()->map(fn (Service $service) => [
+        $services = Service::where('is_active', true)->orderBy('sort_order')->get()->map(fn (Service $service) => [
             'id'          => Str::slug($service->title),
             'title'       => $service->title,
             'title_en'    => $service->title_en,
@@ -44,7 +44,7 @@ class LayananController extends Controller
         return view('layanan-ajukan', [
             'setting'      => SiteSetting::first() ?? new SiteSetting(),
             'pageBanner'   => PageBanner::where('page', 'layanan')->first(),
-            'jenisOptions' => Service::orderBy('sort_order')->pluck('title'),
+            'jenisOptions' => Service::where('is_active', true)->orderBy('sort_order')->pluck('title'),
             'jenisSelected' => $request->query('jenis'),
         ]);
     }
@@ -81,7 +81,7 @@ class LayananController extends Controller
         return view('layanan-ajukan', [
             'setting'      => $setting,
             'pageBanner'   => PageBanner::where('page', 'layanan')->first(),
-            'jenisOptions' => Service::orderBy('sort_order')->pluck('title'),
+            'jenisOptions' => Service::where('is_active', true)->orderBy('sort_order')->pluck('title'),
             'jenisSelected' => null,
             'submitted'    => $serviceRequest,
             'waUrl'        => $waUrl,

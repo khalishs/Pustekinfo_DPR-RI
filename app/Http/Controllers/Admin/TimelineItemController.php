@@ -22,7 +22,10 @@ class TimelineItemController extends Controller
 
     public function store(Request $request)
     {
-        TimelineItem::create($this->validated($request));
+        $data = $this->validated($request);
+        $data['is_active'] = $request->boolean('is_active');
+
+        TimelineItem::create($data);
 
         return redirect()->route('admin.timeline.index')->with('success', 'Poin sejarah ditambahkan.');
     }
@@ -34,9 +37,23 @@ class TimelineItemController extends Controller
 
     public function update(Request $request, TimelineItem $timeline)
     {
-        $timeline->update($this->validated($request));
+        $data = $this->validated($request);
+        $data['is_active'] = $request->boolean('is_active');
+
+        $timeline->update($data);
 
         return redirect()->route('admin.timeline.index')->with('success', 'Poin sejarah diperbarui.');
+    }
+
+    public function toggleActive(TimelineItem $timeline)
+    {
+        $newState = ! $timeline->is_active;
+        $timeline->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.timeline.index')->with(
+            'success',
+            $newState ? 'Poin sejarah diaktifkan kembali dan akan tampil ke pengguna.' : 'Poin sejarah dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
     }
 
     public function destroy(TimelineItem $timeline)
@@ -55,6 +72,7 @@ class TimelineItemController extends Controller
             'description'    => 'required|string',
             'description_en' => 'nullable|string',
             'sort_order'     => 'required|integer',
+            'is_active'      => 'sometimes|boolean',
         ]);
     }
 }

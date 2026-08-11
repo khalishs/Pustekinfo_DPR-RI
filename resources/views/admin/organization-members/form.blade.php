@@ -51,6 +51,12 @@
         <label class="required">Urutan tampil</label>
         <input type="number" name="sort_order" value="{{ old('sort_order', $member->sort_order ?? 0) }}" required>
       </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_active" value="1" style="width:auto;display:inline-block;" {{ old('is_active', $member->exists ? $member->is_active : true) ? 'checked' : '' }}> Status aktif</label>
+        @error('is_active')<small class="error">{{ $message }}</small>@enderror
+        <small>Anggota nonaktif tidak akan tampil di halaman mana pun untuk pengunjung situs.</small>
+      </div>
     </div>
 
     <div class="form-actions">

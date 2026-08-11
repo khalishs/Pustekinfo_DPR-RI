@@ -27,6 +27,7 @@ class ServiceController extends Controller
     {
         $data = $this->validated($request, true);
         $data['icon_image'] = Media::storeUpload($request->file('icon_image'));
+        $data['is_active'] = $request->boolean('is_active');
 
         Service::create($data);
 
@@ -41,6 +42,7 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
         $data = $this->validated($request, false);
+        $data['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('icon_image')) {
             Media::deleteRef($service->icon_image);
@@ -50,6 +52,17 @@ class ServiceController extends Controller
         $service->update($data);
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan diperbarui.');
+    }
+
+    public function toggleActive(Service $service)
+    {
+        $newState = ! $service->is_active;
+        $service->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.services.index')->with(
+            'success',
+            $newState ? 'Layanan diaktifkan kembali dan akan tampil ke pengguna.' : 'Layanan dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
     }
 
     public function destroy(Service $service)
@@ -73,6 +86,7 @@ class ServiceController extends Controller
             'cta_text'       => 'required|string|max:255',
             'cta_text_en'    => 'nullable|string|max:255',
             'sort_order'     => 'required|integer',
+            'is_active'      => 'sometimes|boolean',
         ]);
 
         $data['features'] = collect(preg_split('/\r\n|\r|\n/', (string) $data['features']))

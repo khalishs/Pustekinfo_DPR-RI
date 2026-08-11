@@ -24,6 +24,12 @@
         <label class="required">Urutan tampil (di filter galeri)</label>
         <input type="number" name="sort_order" value="{{ old('sort_order', $category->sort_order ?? 0) }}" required>
       </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_active" value="1" style="width:auto;display:inline-block;" {{ old('is_active', $category->exists ? $category->is_active : true) ? 'checked' : '' }}> Status aktif</label>
+        @error('is_active')<small class="error">{{ $message }}</small>@enderror
+        <small>Kategori nonaktif tidak akan tampil di filter galeri untuk pengunjung situs.</small>
+      </div>
     </div>
 
     <div class="form-actions">

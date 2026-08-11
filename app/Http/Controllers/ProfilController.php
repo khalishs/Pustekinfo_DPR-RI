@@ -14,15 +14,15 @@ class ProfilController extends Controller
 {
     public function index()
     {
-        $members = OrganizationMember::orderBy('sort_order')->get();
+        $members = OrganizationMember::where('is_active', true)->orderBy('sort_order')->get();
 
         return view('profil', [
-            'timeline'      => TimelineItem::orderBy('sort_order')->get(),
+            'timeline'      => TimelineItem::where('is_active', true)->orderBy('sort_order')->get(),
             'leadership'    => Leadership::first(),
             'kepala'        => $members->firstWhere('level', 'kepala'),
             'bidangList'    => $members->where('level', 'bidang')->values(),
             'visionMission' => VisionMission::first(),
-            'coreValues'    => CoreValue::orderBy('sort_order')->get(),
+            'coreValues'    => CoreValue::where('is_active', true)->orderBy('sort_order')->get(),
             'setting'       => SiteSetting::first() ?? new SiteSetting(),
             'pageBanner'    => PageBanner::where('page', 'profil')->first(),
         ]);
