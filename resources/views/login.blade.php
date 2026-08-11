@@ -83,16 +83,15 @@
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            opacity: .2;
             background-image: url('{{ asset('images/group-batik.png') }}');
             background-repeat: no-repeat;
             background-position: center center;
             background-size: 10000px auto;
-            opacity: .1;
+            opacity: .05;
         }
         [data-theme="dark"] .login-batik-bg{
             filter: url(#batikTintTeal);
-            opacity: .1;
+            opacity: .05;
         }
         .icon-btn{
             width:36px;height:36px;border-radius:50%;

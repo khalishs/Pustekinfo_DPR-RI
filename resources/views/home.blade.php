@@ -735,7 +735,7 @@
   background-position:center var(--batik-offset-y, top);
   background-size:10000px auto;
   filter:url(#batikTintTeal);
-  opacity:.1;   /* 0 = tak terlihat, 1 = penuh — atur sesuai selera */
+  opacity:.05;   /* 0 = tak terlihat, 1 = penuh — atur sesuai selera */
   pointer-events:none;
   z-index:0;
   transform:translateY(var(--parallax-layanan, 0px));
@@ -1813,7 +1813,6 @@
   content:"";
   position:absolute;
   inset:0;
-  opacity: .2;
   z-index:-1;
   pointer-events:none;
   background-image:url('{{ asset('images/group-batik.png') }}');
@@ -1821,7 +1820,7 @@
   background-position:center top;
   background-size:10000px auto;
   filter:url(#batikBoostLight);
-  opacity:.1;
+  opacity:.05;
   transform:translateY(var(--parallax-batik, 0px));
   will-change:transform;
 }
@@ -1834,7 +1833,7 @@
 }
 [data-theme="dark"] .konten-batik::before{
   filter:url(#batikTintTeal);
-  opacity:.1;
+  opacity:.05;
 }
 
 @media (max-width:900px){
