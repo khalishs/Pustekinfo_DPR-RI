@@ -647,6 +647,20 @@
         }
       } catch(e){}
 
+      // Simpan & pulihkan posisi scroll menu sidebar, supaya nggak balik ke atas
+      // tiap kali pindah halaman (browser reset scroll begitu halaman baru dimuat).
+      var sidebarNav = sidebar.querySelector('nav');
+      var NAV_SCROLL_KEY = 'pustekinfo_sidebar_nav_scroll';
+      if (sidebarNav) {
+        try {
+          var savedNavScroll = sessionStorage.getItem(NAV_SCROLL_KEY);
+          if (savedNavScroll !== null) sidebarNav.scrollTop = parseInt(savedNavScroll, 10);
+        } catch(e){}
+        sidebarNav.addEventListener('scroll', function(){
+          try { sessionStorage.setItem(NAV_SCROLL_KEY, String(sidebarNav.scrollTop)); } catch(e){}
+        });
+      }
+
       // Satu tombol burger di topbar: desktop = collapse sidebar, mobile/tablet = drawer off-canvas
       toggle && toggle.addEventListener('click', function(){
         if (window.innerWidth > 1024) {
@@ -742,7 +756,7 @@
           errorEl.style.display = 'none';
           input.insertAdjacentElement('afterend', errorEl);
         }
-        // Kalau errorEl sudah ada dari server (@error blade), biarkan tampil apa adanya
+        // Kalau errorEl sudah ada dari server (@@error blade), biarkan tampil apa adanya
         // sampai user memilih file baru — jangan langsung disembunyikan saat load.
 
         function formatSize(kb) {
