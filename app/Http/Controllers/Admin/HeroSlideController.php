@@ -54,6 +54,17 @@ class HeroSlideController extends Controller
         return redirect()->route('admin.hero-slides.index')->with('success', 'Slide diperbarui.');
     }
 
+    public function toggleActive(HeroSlide $heroSlide)
+    {
+        $newState = ! $heroSlide->is_active;
+        $heroSlide->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.hero-slides.index')->with(
+            'success',
+            $newState ? 'Slide diaktifkan kembali dan akan tampil di halaman utama.' : 'Slide dinonaktifkan dan tidak akan tampil di halaman utama.'
+        );
+    }
+
     public function destroy(HeroSlide $heroSlide)
     {
         Media::deleteRef($heroSlide->image);

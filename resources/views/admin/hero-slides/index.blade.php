@@ -17,7 +17,15 @@
         <td>{{ $slide->title ?: '—' }}</td>
         <td>{{ $slide->subtitle ?: '—' }}</td>
         <td class="text-center"><span class="badge-count">{{ $slide->sort_order }}</span></td>
-        <td class="text-center">{!! $slide->is_active ? '<span class="badge-success">Aktif</span>' : '<span class="badge-muted">Nonaktif</span>' !!}</td>
+        <td class="text-center">
+          <form action="{{ route('admin.hero-slides.toggle-active', $slide) }}" method="POST">
+            @csrf @method('PATCH')
+            <label class="toggle-switch" title="{{ $slide->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
+              <input type="checkbox" onchange="this.form.submit()" {{ $slide->is_active ? 'checked' : '' }}>
+              <span class="slider"></span>
+            </label>
+          </form>
+        </td>
         <td class="row-actions">
           <a href="{{ route('admin.hero-slides.edit', $slide) }}" class="btn-icon btn-icon-edit" title="Edit" aria-label="Edit">
             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>

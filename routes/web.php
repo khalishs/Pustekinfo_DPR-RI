@@ -120,6 +120,7 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::resource('hero-slides', HeroSlideController::class)
         ->except('show')
         ->parameters(['hero-slides' => 'heroSlide']);
+    Route::patch('hero-slides/{heroSlide}/toggle-active', [HeroSlideController::class, 'toggleActive'])->name('hero-slides.toggle-active');
 
     Route::resource('profil-photos', ProfilPhotoController::class)
         ->except('show')

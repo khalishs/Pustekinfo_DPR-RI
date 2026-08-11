@@ -9,10 +9,17 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Judul</th><th>Ringkasan</th><th class="text-center">Jml. Fitur</th><th class="text-center">Urutan</th><th></th></tr></thead>
+    <thead><tr><th>Gambar</th><th>Judul</th><th>Ringkasan</th><th class="text-center">Jml. Fitur</th><th class="text-center">Urutan</th><th></th></tr></thead>
     <tbody>
     @forelse($services as $service)
       <tr>
+        <td>
+          @if($service->icon_image)
+            <img src="{{ asset($service->icon_image) }}" style="width:56px;height:56px;object-fit:contain;border-radius:8px;background:#f1f4f5;padding:4px;">
+          @else
+            <span style="color:#b7c2c7;font-size:12px;">Belum ada</span>
+          @endif
+        </td>
         <td>{{ $service->title }}</td>
         <td>{{ \Illuminate\Support\Str::limit($service->description, 70) }}</td>
         <td class="text-center"><span class="badge-count">{{ count($service->features) }}</span></td>
@@ -30,7 +37,7 @@
         </td>
       </tr>
     @empty
-      <tr><td colspan="5">Belum ada layanan.</td></tr>
+      <tr><td colspan="6">Belum ada layanan.</td></tr>
     @endforelse
     </tbody>
   </table>
