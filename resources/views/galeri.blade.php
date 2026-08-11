@@ -363,7 +363,7 @@
     </div>
   </nav>
 
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Gallery&lt;/span&gt;">Beranda / <span>Galeri</span></p>
       <h1 data-en-html="Documentation of <span class=&quot;accent&quot;>Our Activities</span>">Dokumentasi <span class="accent">Kegiatan Kami</span></h1>
@@ -404,7 +404,7 @@
 
     @if($featured)
       <div class="sorotan-card">
-        <img src="{{ asset('storage/'.$featured->image) }}" alt="{{ $featured->title }}">
+        <img src="{{ asset($featured->image) }}" alt="{{ $featured->title }}">
         <div class="inner">
           <span class="sorotan-badge" data-en="HIGHLIGHT">SOROTAN</span>
           <div class="sorotan-title" data-en="{{ $featured->title_en ?: $featured->title }}">{{ $featured->title }}</div>
@@ -429,7 +429,7 @@
     <div class="galeri-grid">
       @forelse($items as $item)
         <div class="galeri-card">
-          <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
+          <img src="{{ asset($item->image) }}" alt="{{ $item->title }}">
           @if($item->category)
             <span class="cat-badge" data-en="{{ $item->category->name_en ?: $item->category->name }}">{{ $item->category->name }}</span>
           @endif

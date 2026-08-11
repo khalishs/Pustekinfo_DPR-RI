@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\GalleryItem;
 use App\Models\GalleryCategory;
+use App\Models\Media;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class GalleryItemController extends Controller
 {
@@ -39,7 +39,7 @@ class GalleryItemController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request, true, null);
-        $data['image'] = $request->file('image')->store('galeri', 'public');
+        $data['image'] = Media::storeUpload($request->file('image'));
         $data['is_featured'] = $request->boolean('is_featured');
         $data['show_on_home'] = $request->boolean('show_on_home');
 
@@ -78,10 +78,8 @@ class GalleryItemController extends Controller
         $data['show_on_home'] = $request->boolean('show_on_home');
 
         if ($request->hasFile('image')) {
-            if ($gallery->image) {
-                Storage::disk('public')->delete($gallery->image);
-            }
-            $data['image'] = $request->file('image')->store('galeri', 'public');
+            Media::deleteRef($gallery->image);
+            $data['image'] = Media::storeUpload($request->file('image'));
         }
 
         $gallery->update($data);
@@ -107,9 +105,7 @@ class GalleryItemController extends Controller
 
     public function destroy(GalleryItem $gallery)
     {
-        if ($gallery->image) {
-            Storage::disk('public')->delete($gallery->image);
-        }
+        Media::deleteRef($gallery->image);
         $gallery->delete();
 
         return redirect()->route('admin.gallery.index')->with('success', 'Foto galeri dihapus.');

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\OrganizationMember;
+use App\Models\Media;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class OrganizationMemberController extends Controller
 {
@@ -26,7 +26,7 @@ class OrganizationMemberController extends Controller
         $data = $this->validated($request);
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('organisasi', 'public');
+            $data['photo'] = Media::storeUpload($request->file('photo'));
         }
 
         OrganizationMember::create($data);
@@ -44,10 +44,8 @@ class OrganizationMemberController extends Controller
         $data = $this->validated($request);
 
         if ($request->hasFile('photo')) {
-            if ($organizationMember->photo) {
-                Storage::disk('public')->delete($organizationMember->photo);
-            }
-            $data['photo'] = $request->file('photo')->store('organisasi', 'public');
+            Media::deleteRef($organizationMember->photo);
+            $data['photo'] = Media::storeUpload($request->file('photo'));
         }
 
         $organizationMember->update($data);
@@ -57,9 +55,7 @@ class OrganizationMemberController extends Controller
 
     public function destroy(OrganizationMember $organizationMember)
     {
-        if ($organizationMember->photo) {
-            Storage::disk('public')->delete($organizationMember->photo);
-        }
+        Media::deleteRef($organizationMember->photo);
         $organizationMember->delete();
 
         return redirect()->route('admin.organization-members.index')->with('success', 'Anggota organisasi dihapus.');

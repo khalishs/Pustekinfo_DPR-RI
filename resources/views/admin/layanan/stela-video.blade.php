@@ -26,7 +26,7 @@
       <div class="form-group form-span-2" id="fieldUpload">
         <label>Video (MP4/WebM/OGG)</label>
         @if($setting->stela_video)
-          <video src="{{ asset('storage/'.$setting->stela_video) }}" controls style="width:100%;max-width:420px;border-radius:8px;margin-bottom:10px;display:block;background:#000;"></video>
+          <video src="{{ asset($setting->stela_video) }}" controls style="width:100%;max-width:420px;border-radius:8px;margin-bottom:10px;display:block;background:#000;"></video>
           <label style="font-weight:400;"><input type="checkbox" name="hapus_stela_video" value="1" style="width:auto;display:inline-block;"> Hapus video saat ini</label>
         @else
           <p style="color:#8a97a0;font-size:13px;margin-bottom:10px;">Belum ada video diunggah.</p>

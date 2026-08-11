@@ -33,7 +33,7 @@
       <div class="form-group form-span-2">
         <label class="{{ $item->exists ? '' : 'required' }}">Foto</label>
         @if($item->image)
-          <img src="{{ asset('storage/'.$item->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
+          <img src="{{ asset($item->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
         @endif
         <input type="file" name="image" accept="image/*" data-min-kb="2048" data-max-kb="10240" {{ $item->exists ? '' : 'required' }}>
         @error('image')<small class="error">{{ $message }}</small>@enderror

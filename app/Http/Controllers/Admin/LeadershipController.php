@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Leadership;
+use App\Models\Media;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class LeadershipController extends Controller
 {
@@ -39,10 +39,8 @@ class LeadershipController extends Controller
     $leadership = Leadership::first() ?? new Leadership();
 
     if ($request->hasFile('photo')) {
-        if ($leadership->photo) {
-            Storage::disk('public')->delete($leadership->photo);
-        }
-        $data['photo'] = $request->file('photo')->store('sambutan', 'public');
+        Media::deleteRef($leadership->photo);
+        $data['photo'] = Media::storeUpload($request->file('photo'));
     }
 
     $leadership->fill($data)->save();

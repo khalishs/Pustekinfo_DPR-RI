@@ -361,7 +361,7 @@
     </a>
 
     @if($news->image)
-      <img src="{{ asset('storage/'.$news->image) }}" alt="{{ $news->title }}" class="article-image">
+      <img src="{{ asset($news->image) }}" alt="{{ $news->title }}" class="article-image">
     @endif
 
     <div class="article-body" data-en="{{ ($news->content_en ?: $news->excerpt_en) ?: ($news->content ?: $news->excerpt) }}">{{ $news->content ?: $news->excerpt }}</div>

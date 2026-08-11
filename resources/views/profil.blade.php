@@ -702,7 +702,7 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Profile&lt;/span&gt;">Beranda / <span>Profil</span></p>
       <h1 data-en="Getting to know Pustekinfo better">Mengenal lebih dekat Pustekinfo</h1>
@@ -769,7 +769,7 @@
       <h2 data-en="A Message from the Head of Pustekinfo">Kata Sambutan Kepala Pustekinfo</h2>
 
       <div class="sambutan-card">
-        <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
+        <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset($leadership->photo) }}');background-size:cover;background-position:center;" @endif>
         <div class="who">
           <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
         </div>
@@ -819,7 +819,7 @@
 
       <div class="org-chart">
         <div class="org-node top">
-          <div class="org-node-photo" @if($kepala?->photo) style="background-image:url('{{ asset('storage/'.$kepala->photo) }}');" @endif></div>
+          <div class="org-node-photo" @if($kepala?->photo) style="background-image:url('{{ asset($kepala->photo) }}');" @endif></div>
           <strong data-en="{{ ($kepala->position_en ?? null) ?: ($kepala->position ?? 'Unit Head') }}">{{ $kepala->position ?? 'Pimpinan Unit' }}</strong>
         </div>
 
@@ -827,7 +827,7 @@
         <div class="org-row">
           @forelse($bidangList as $b)
             <div class="org-node">
-              <div class="org-node-photo" @if($b->photo) style="background-image:url('{{ asset('storage/'.$b->photo) }}');" @endif></div>
+              <div class="org-node-photo" @if($b->photo) style="background-image:url('{{ asset($b->photo) }}');" @endif></div>
               <strong data-en="{{ $b->position_en ?: $b->position }}">{{ $b->position }}</strong>
             </div>
           @empty
