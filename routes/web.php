@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\ProfilPhotoController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\WorkItemController;
 use App\Http\Controllers\Admin\StelaVideoController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Admin\ContactMessageController;
@@ -125,6 +126,8 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::resource('profil-photos', ProfilPhotoController::class)
         ->except('show')
         ->parameters(['profil-photos' => 'profilPhoto']);
+
+    Route::resource('work-items', WorkItemController::class)->except('show')->parameters(['work-items' => 'workItem']);
 
     Route::resource('services', ServiceController::class)->except('show');
 

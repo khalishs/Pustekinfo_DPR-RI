@@ -989,6 +989,119 @@
     .sambutan-content .quote-mark{top:28px;right:28px;}
   }
 
+  /* ---------- Apa yang Kami Kerjakan (Kegiatan) ---------- */
+  .kerjakan{
+    position:relative;
+    overflow:hidden;
+    padding:20px 100px 110px;
+    opacity:0;
+    transform:translateY(60px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .kerjakan.show{opacity:1;transform:translateY(0);}
+
+  .kerjakan-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;}
+
+  .kerjakan .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--teal);
+    font-size:12px;
+    font-weight:600;
+    font-family: plus-jakarta-sans, system-ui, sans-serif;
+    letter-spacing:.12em;
+  }
+  .kerjakan .eyebrow::before{
+    content:"";
+    width:22px;height:2px;
+    background:var(--teal);
+    display:inline-block;
+  }
+  .kerjakan h2{
+    margin-top:16px;
+    font-size:32px;
+    font-weight:800;
+    color:var(--navy);
+    line-height:1.28;
+    letter-spacing:-.01em;
+    max-width:560px;
+  }
+
+  .kerjakan-row{margin-top:28px;}
+  .kerjakan-row:first-of-type{margin-top:44px;}
+
+  .kerjakan-track{
+    display:flex;
+    align-items:flex-start;
+    gap:20px;
+    overflow-x:auto;
+    padding:22px 6px 30px;
+    margin:-22px -6px -30px;
+    cursor:grab;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .kerjakan-track:active{cursor:grabbing;}
+  .kerjakan-track::-webkit-scrollbar{display:none;}
+
+  .kerjakan-card{
+    position:relative;
+    flex:0 0 auto;
+    width:max-content;
+    min-width:200px;
+    max-width:300px;
+    background:linear-gradient(155deg,#073D5F 40%,#057888 100%);
+    border:2px solid rgba(7,61,95,.12);
+    border-radius:15px;
+    padding:26px 24px;
+    transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+    will-change:transform;
+  }
+  /* variasi posisi & rotasi tiap kartu biar tampilannya nggak kaku sejajar (abstrak) */
+  .kerjakan-card:nth-child(3n+1){ margin-top:6px; animation:floatA 6.2s ease-in-out infinite; animation-delay:0s; }
+  .kerjakan-card:nth-child(3n+2){ margin-top:22px; animation:floatB 6.8s ease-in-out infinite; animation-delay:.7s; }
+  .kerjakan-card:nth-child(3n){ margin-top:0px; animation:floatC 5.9s ease-in-out infinite; animation-delay:1.4s; }
+
+  .kerjakan-card:hover{
+    border-color:#FFCE88;
+    box-shadow:0 20px 40px -14px rgba(0,0,0,.35);
+    animation-play-state:paused;
+    transform:translateY(-10px) rotate(0deg) scale(1.02);
+  }
+  .kerjakan-card .icon{
+    width:26px;height:26px;
+    color:var(--white);
+    margin-bottom:18px;
+  }
+  .kerjakan-card .icon svg{
+    width:100%;height:100%;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:1.6;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .kerjakan-card .title{
+    color:var(--white);
+    font-size:15px;
+    font-weight:700;
+    line-height:1.35;
+    white-space:normal;
+  }
+  .kerjakan-card .desc{
+    margin-top:8px;
+    color:rgba(255,255,255,.65);
+    font-size:13px;
+    line-height:1.6;
+    white-space:normal;
+  }
+
+  @media (max-width:900px){
+    .kerjakan{padding:0 20px 70px;}
+    .kerjakan-card{min-width:180px;max-width:240px;padding:22px 20px;}
+  }
+
   /* ---------- Berita & Kegiatan ---------- */
   .berita{
     position:relative;
@@ -2184,6 +2297,7 @@
 
 [data-theme="dark"] .profil .eyebrow,
 [data-theme="dark"] .sambutan .eyebrow,
+[data-theme="dark"] .kerjakan .eyebrow,
 [data-theme="dark"] .berita .eyebrow,
 [data-theme="dark"] .agenda .eyebrow,
 [data-theme="dark"] .galeri .eyebrow,
@@ -2193,6 +2307,7 @@
 
 [data-theme="dark"] .profil .eyebrow::before,
 [data-theme="dark"] .sambutan .eyebrow::before,
+[data-theme="dark"] .kerjakan .eyebrow::before,
 [data-theme="dark"] .berita .eyebrow::before,
 [data-theme="dark"] .agenda .eyebrow::before,
 [data-theme="dark"] .galeri .eyebrow::before,
@@ -2202,12 +2317,14 @@
 
 [data-theme="dark"] .profil-copy h2,
 [data-theme="dark"] .sambutan-content h2,
+[data-theme="dark"] .kerjakan h2,
 [data-theme="dark"] .berita-head h2,
 [data-theme="dark"] .agenda-inner > h2,
 [data-theme="dark"] .galeri-head h2,
 [data-theme="dark"] .akses-col h2{
   color:#eaf3f5;
 }
+[data-theme="dark"] .kerjakan-card{border-color:rgba(255,255,255,.14);}
 [data-theme="dark"] .profil-copy p{color:#8ea0a8;}
 [data-theme="dark"] .feature-row{border-top-color:rgba(255,255,255,.1);}
 [data-theme="dark"] .feature .title{color:#eaf3f5;}
@@ -2494,6 +2611,46 @@
           <div class="sign-role" data-en="{{ ($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center') }}">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  {{-- ================= APA YANG KAMI KERJAKAN (KEGIATAN) ================= --}}
+  <section id="kerjakan" class="kerjakan">
+    <div class="kerjakan-inner">
+      <div class="eyebrow" data-en="WHAT WE DO">APA YANG KAMI KERJAKAN</div>
+      <h2 data-en="What We Do">Apa yang Kami Kerjakan</h2>
+
+      @if($workItemsTop->isNotEmpty())
+        <div class="kerjakan-row">
+          <div class="kerjakan-track">
+            @foreach ($workItemsTop as $item)
+              <div class="kerjakan-card">
+                <div class="icon">{!! $item->iconSvg() !!}</div>
+                <div class="title" data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</div>
+                <div class="desc" data-en="{{ $item->description_en ?: $item->description }}">{{ $item->description }}</div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+      @endif
+
+      @if($workItemsBottom->isNotEmpty())
+        <div class="kerjakan-row">
+          <div class="kerjakan-track">
+            @foreach ($workItemsBottom as $item)
+              <div class="kerjakan-card">
+                <div class="icon">{!! $item->iconSvg() !!}</div>
+                <div class="title" data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</div>
+                <div class="desc" data-en="{{ $item->description_en ?: $item->description }}">{{ $item->description }}</div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+      @endif
+
+      @if($workItemsTop->isEmpty() && $workItemsBottom->isEmpty())
+        <p style="margin-top:40px;color:#7a8a92;font-size:14px;">Belum ada card yang diisi lewat panel admin.</p>
+      @endif
     </div>
   </section>
 
@@ -3096,6 +3253,75 @@ const sambutanObserver = new IntersectionObserver((entries) => {
 });
 
 sambutanObserver.observe(sambutanSection);
+
+const kerjakanSection = document.querySelector(".kerjakan");
+
+if (kerjakanSection) {
+    const kerjakanObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+                kerjakanObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    kerjakanObserver.observe(kerjakanSection);
+}
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+document.querySelectorAll(".kerjakan-track").forEach((track, trackIndex) => {
+    // baris genap auto-scroll ke kanan, baris ganjil ke kiri — biar nggak monoton
+    const direction = trackIndex % 2 === 0 ? 1 : -1;
+    const speed = 0.5;
+
+    const cards = Array.from(track.children);
+    if (cards.length > 0) {
+        cards.forEach(card => track.appendChild(card.cloneNode(true)));
+    }
+
+    let isDown = false;
+    let isHovered = false;
+    let startX = 0;
+    let scrollStart = 0;
+
+    track.addEventListener("mouseenter", () => { isHovered = true; });
+    track.addEventListener("mouseleave", () => { isHovered = false; isDown = false; });
+    track.addEventListener("touchstart", () => { isHovered = true; }, { passive: true });
+    track.addEventListener("touchend", () => { isHovered = false; }, { passive: true });
+
+    track.addEventListener("mousedown", e => {
+        isDown = true;
+        startX = e.pageX;
+        scrollStart = track.scrollLeft;
+    });
+
+    ["mouseleave", "mouseup"].forEach(evt => track.addEventListener(evt, () => { isDown = false; }));
+
+    track.addEventListener("mousemove", e => {
+        if (!isDown) return;
+        e.preventDefault();
+        track.scrollLeft = scrollStart - (e.pageX - startX);
+    });
+
+    if (!reduceMotion && cards.length > 0) {
+        (function autoScroll() {
+            if (!isDown && !isHovered) {
+                const half = track.scrollWidth / 2;
+                track.scrollLeft += speed * direction;
+                if (track.scrollLeft >= half) {
+                    track.scrollLeft -= half;
+                } else if (track.scrollLeft <= 0) {
+                    track.scrollLeft += half;
+                }
+            }
+            requestAnimationFrame(autoScroll);
+        })();
+    }
+});
 
 
 const beritaSection = document.querySelector(".berita");
