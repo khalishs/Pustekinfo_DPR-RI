@@ -3,42 +3,96 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\SiteSetting;
+use App\Models\StelaVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class StelaVideoController extends Controller
 {
-    public function edit()
-    {
-        $setting = SiteSetting::first() ?? new SiteSetting();
+    const MAX_ITEMS = 1;
 
-        return view('admin.layanan.stela-video', compact('setting'));
+    public function index()
+    {
+        return view('admin.stela-videos.index', [
+            'items' => StelaVideo::latest()->get(),
+            'maxItems' => self::MAX_ITEMS,
+        ]);
     }
 
-    public function update(Request $request)
+    public function create()
     {
-        $data = $request->validate([
-            'stela_video_type'  => 'required|in:upload,youtube',
-            'stela_youtube_url' => 'required_if:stela_video_type,youtube|nullable|url',
-            'stela_video'       => 'nullable|mimes:mp4,webm,ogg|max:51200',
-            'stela_url'         => 'nullable|url',
-        ]);
-
-        $setting = SiteSetting::first() ?? new SiteSetting();
-
-        if ($request->boolean('hapus_stela_video') && $setting->stela_video) {
-            Storage::disk('assets')->delete($setting->stela_video);
-            $data['stela_video'] = null;
-        } elseif ($request->hasFile('stela_video')) {
-            if ($setting->stela_video) {
-                Storage::disk('assets')->delete($setting->stela_video);
-            }
-            $data['stela_video'] = $request->file('stela_video')->store('videos', 'assets');
+        if (StelaVideo::count() >= self::MAX_ITEMS) {
+            return redirect()->route('admin.stela-videos.index')
+                ->with('error', 'Maksimal ' . self::MAX_ITEMS . ' video Sekilas STELA. Hapus video yang ada terlebih dahulu untuk menggantinya.');
         }
 
-        $setting->fill($data)->save();
+        return view('admin.stela-videos.form', [
+            'item' => new StelaVideo(),
+        ]);
+    }
 
-        return redirect()->route('admin.stela-video.edit')->with('success', 'Video Sekilas STELA diperbarui.');
+    public function store(Request $request)
+    {
+        if (StelaVideo::count() >= self::MAX_ITEMS) {
+            return redirect()->route('admin.stela-videos.index')
+                ->with('error', 'Maksimal ' . self::MAX_ITEMS . ' video Sekilas STELA. Hapus video yang ada terlebih dahulu untuk menggantinya.');
+        }
+
+        $data = $this->validated($request);
+
+        if ($request->hasFile('video')) {
+            $data['video'] = $request->file('video')->store('videos', 'assets');
+        }
+
+        StelaVideo::create($data);
+
+        return redirect()->route('admin.stela-videos.index')->with('success', 'Video Sekilas STELA ditambahkan.');
+    }
+
+    public function edit(StelaVideo $stelaVideo)
+    {
+        return view('admin.stela-videos.form', [
+            'item' => $stelaVideo,
+        ]);
+    }
+
+    public function update(Request $request, StelaVideo $stelaVideo)
+    {
+        $data = $this->validated($request);
+
+        if ($request->boolean('hapus_video') && $stelaVideo->video) {
+            Storage::disk('assets')->delete($stelaVideo->video);
+            $data['video'] = null;
+        } elseif ($request->hasFile('video')) {
+            if ($stelaVideo->video) {
+                Storage::disk('assets')->delete($stelaVideo->video);
+            }
+            $data['video'] = $request->file('video')->store('videos', 'assets');
+        }
+
+        $stelaVideo->update($data);
+
+        return redirect()->route('admin.stela-videos.index')->with('success', 'Video Sekilas STELA diperbarui.');
+    }
+
+    public function destroy(StelaVideo $stelaVideo)
+    {
+        if ($stelaVideo->video) {
+            Storage::disk('assets')->delete($stelaVideo->video);
+        }
+
+        $stelaVideo->delete();
+
+        return redirect()->route('admin.stela-videos.index')->with('success', 'Video Sekilas STELA dihapus.');
+    }
+
+    private function validated(Request $request): array
+    {
+        return $request->validate([
+            'video_type'  => 'required|in:upload,youtube',
+            'youtube_url' => 'required_if:video_type,youtube|nullable|url',
+            'video'       => 'nullable|mimes:mp4,webm,ogg|max:51200',
+            'link_url'    => 'nullable|url',
+        ]);
     }
 }

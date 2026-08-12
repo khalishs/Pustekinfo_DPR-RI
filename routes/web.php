@@ -131,8 +131,7 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
 
     Route::resource('services', ServiceController::class)->except('show');
 
-    Route::get('layanan-ajukan-video', [StelaVideoController::class, 'edit'])->name('stela-video.edit');
-    Route::put('layanan-ajukan-video', [StelaVideoController::class, 'update'])->name('stela-video.update');
+    Route::resource('stela-videos', StelaVideoController::class)->except('show')->parameters(['stela-videos' => 'stelaVideo']);
 
     Route::get('banner/{page}', [PageBannerController::class, 'edit'])->name('page-banners.edit');
     Route::put('banner/{page}', [PageBannerController::class, 'update'])->name('page-banners.update');
