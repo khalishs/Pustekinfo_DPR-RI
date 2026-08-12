@@ -504,7 +504,7 @@
             <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);">{{ $pendingLayananCount }}</span>
           @endif
         </a>
-        <a href="{{ route('admin.stela-video.edit') }}" class="{{ request()->routeIs('admin.stela-video.*') ? 'active' : '' }}">
+        <a href="{{ route('admin.stela-videos.index') }}" class="{{ request()->routeIs('admin.stela-videos.*') ? 'active' : '' }}">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
           Video Sekilas STELA
         </a>

@@ -1051,10 +1051,11 @@
     width:max-content;
     min-width:200px;
     max-width:300px;
-    background:linear-gradient(155deg,#073D5F 40%,#057888 100%);
-    border:2px solid rgba(7,61,95,.12);
+    background:var(--white);
+    border:2px solid rgba(20,131,140,.28);
     border-radius:15px;
     padding:26px 24px;
+    box-shadow:0 14px 30px -20px rgba(11,34,51,.22);
     transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
     will-change:transform;
   }
@@ -1064,14 +1065,14 @@
   .kerjakan-card:nth-child(3n){ margin-top:0px; animation:floatC 5.9s ease-in-out infinite; animation-delay:1.4s; }
 
   .kerjakan-card:hover{
-    border-color:#FFCE88;
-    box-shadow:0 20px 40px -14px rgba(0,0,0,.35);
+    border-color:var(--teal);
+    box-shadow:0 20px 40px -18px rgba(11,34,51,.32);
     animation-play-state:paused;
     transform:translateY(-10px) rotate(0deg) scale(1.02);
   }
   .kerjakan-card .icon{
     width:26px;height:26px;
-    color:var(--white);
+    color:var(--teal);
     margin-bottom:18px;
   }
   .kerjakan-card .icon svg{
@@ -1083,7 +1084,7 @@
     stroke-linejoin:round;
   }
   .kerjakan-card .title{
-    color:var(--white);
+    color:var(--navy);
     font-size:15px;
     font-weight:700;
     line-height:1.35;
@@ -1091,7 +1092,7 @@
   }
   .kerjakan-card .desc{
     margin-top:8px;
-    color:rgba(255,255,255,.65);
+    color:#5b6b73;
     font-size:13px;
     line-height:1.6;
     white-space:normal;
@@ -2324,7 +2325,11 @@
 [data-theme="dark"] .akses-col h2{
   color:#eaf3f5;
 }
-[data-theme="dark"] .kerjakan-card{border-color:rgba(255,255,255,.14);}
+[data-theme="dark"] .kerjakan-card{background:#122530;border-color:rgba(95,192,209,.3);box-shadow:0 14px 30px -20px rgba(0,0,0,.5);}
+[data-theme="dark"] .kerjakan-card:hover{border-color:#5FC0D1;box-shadow:0 20px 40px -18px rgba(0,0,0,.55);}
+[data-theme="dark"] .kerjakan-card .icon{color:#5FC0D1;}
+[data-theme="dark"] .kerjakan-card .title{color:#eaf3f5;}
+[data-theme="dark"] .kerjakan-card .desc{color:#8ea0a8;}
 [data-theme="dark"] .profil-copy p{color:#8ea0a8;}
 [data-theme="dark"] .feature-row{border-top-color:rgba(255,255,255,.1);}
 [data-theme="dark"] .feature .title{color:#eaf3f5;}
