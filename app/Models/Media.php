@@ -4,18 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
-    protected $fillable = ['original_name', 'mime_type', 'size', 'data'];
+    protected $fillable = ['original_name', 'mime_type', 'size', 'path', 'data'];
 
     public static function storeUpload(UploadedFile $file): string
     {
+        $path = $file->store('media', 'public');
+
         $media = self::create([
             'original_name' => $file->getClientOriginalName(),
             'mime_type'     => $file->getMimeType(),
             'size'          => $file->getSize(),
-            'data'          => file_get_contents($file->getRealPath()),
+            'path'          => $path,
         ]);
 
         return 'media/'.$media->id;
@@ -27,6 +30,15 @@ class Media extends Model
             return;
         }
 
-        self::whereKey(substr($ref, 6))->delete();
+        $media = self::find(substr($ref, 6));
+        if (! $media) {
+            return;
+        }
+
+        if ($media->path) {
+            Storage::disk('public')->delete($media->path);
+        }
+
+        $media->delete();
     }
 }
