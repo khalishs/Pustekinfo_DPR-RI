@@ -9,7 +9,7 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Gambar</th><th>Judul</th><th>Ringkasan</th><th class="text-center">Jml. Fitur</th><th class="text-center">Urutan</th><th></th></tr></thead>
+    <thead><tr><th>Gambar</th><th>Judul</th><th>Ringkasan</th><th class="text-center">Jml. Fitur</th><th class="text-center">Urutan</th><th class="text-center">Aktif</th><th></th></tr></thead>
     <tbody>
     @forelse($services as $service)
       <tr>
@@ -24,10 +24,25 @@
         <td>{{ \Illuminate\Support\Str::limit($service->description, 70) }}</td>
         <td class="text-center"><span class="badge-count">{{ count($service->features) }}</span></td>
         <td class="text-center"><span class="badge-count">{{ $service->sort_order }}</span></td>
+        <td class="text-center">
+          <form action="{{ route('admin.services.toggle-active', $service) }}" method="POST">
+            @csrf @method('PATCH')
+            <label class="toggle-switch" title="{{ $service->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
+              <input type="checkbox" onchange="this.form.submit()" {{ $service->is_active ? 'checked' : '' }}>
+              <span class="slider"></span>
+            </label>
+          </form>
+        </td>
         <td class="row-actions">
           <a href="{{ route('admin.services.edit', $service) }}" class="btn-icon btn-icon-edit" title="Edit" aria-label="Edit">
             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </a>
+          <form action="{{ route('admin.services.duplicate', $service) }}" method="POST">
+            @csrf
+            <button class="btn-icon btn-icon-copy" title="Salin" aria-label="Salin">
+              <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </form>
           <form action="{{ route('admin.services.destroy', $service) }}" method="POST" onsubmit="return confirm('Hapus layanan ini?')">
             @csrf @method('DELETE')
             <button class="btn-icon btn-icon-delete" title="Hapus" aria-label="Hapus">
@@ -37,7 +52,7 @@
         </td>
       </tr>
     @empty
-      <tr><td colspan="6">Belum ada layanan.</td></tr>
+      <tr><td colspan="7">Belum ada layanan.</td></tr>
     @endforelse
     </tbody>
   </table>

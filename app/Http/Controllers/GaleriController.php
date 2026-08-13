@@ -15,7 +15,7 @@ class GaleriController extends Controller
     {
         $categorySlug = $request->query('kategori');
 
-        $categories = GalleryCategory::withCount('items')->orderBy('sort_order')->get();
+        $categories = GalleryCategory::where('is_active', true)->withCount('items')->orderBy('sort_order')->get();
 
         $items = GalleryItem::with('category')
             ->when($categorySlug, fn ($q) => $q->whereHas('category', fn ($q2) => $q2->where('slug', $categorySlug)))
@@ -25,7 +25,7 @@ class GaleriController extends Controller
 
         $totalFoto = GalleryItem::count();
         $kegiatanTerdokumentasi = GalleryItem::whereNotNull('title')->distinct('title')->count('title');
-        $totalKategori = GalleryCategory::count();
+        $totalKategori = GalleryCategory::where('is_active', true)->count();
 
         $tahunAwal = GalleryItem::min('created_at');
         $tahunAkhir = GalleryItem::max('created_at');

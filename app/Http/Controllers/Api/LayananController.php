@@ -21,7 +21,7 @@ class LayananController extends Controller
     public function index(): JsonResponse
     {
         return response()->json([
-            'data' => Service::orderBy('sort_order')->get(),
+            'data' => Service::where('is_active', true)->orderBy('sort_order')->get(),
         ]);
     }
 

@@ -921,12 +921,20 @@
       radial-gradient(120% 120% at 25% 20%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 50%, var(--teal) 100%);
   }
+  .sambutan-photo .who .name{
+    color:#fff;
+    font-size:17px;
+    font-weight:700;
+    letter-spacing:-.005em;
+    text-shadow:0 2px 10px rgba(0,0,0,.65), 0 1px 3px rgba(0,0,0,.6);
+  }
   .sambutan-photo .who .role{
     margin-top:4px;
-    color:rgba(255,255,255,.7);
+    color:rgba(255,255,255,.85);
     font-size:11px;
     font-weight:700;
     letter-spacing:.1em;
+    text-shadow:0 2px 10px rgba(0,0,0,.65), 0 1px 3px rgba(0,0,0,.6);
   }
 
   .sambutan-content{
@@ -2539,7 +2547,7 @@
   {{-- ================= APA YANG KAMI KERJAKAN (LAYANAN) ================= --}}
   <section id="layanan" class="layanan">
     <div class="layanan-inner">
-      <div class="eyebrow" data-en="WHAT WE DO">APA YANG KAMI KERJAKAN</div>
+      <div class="eyebrow" data-en="WHAT WE DO">LAYANAN KAMI</div>
       <h2 data-en="Information Technology Services">Layanan Teknologi Informasi</h2>
 
       <div class="layanan-grid">
@@ -2602,6 +2610,9 @@
       <div class="sambutan-card">
                 <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset($leadership->photo) }}');background-size:cover;background-position:center;" @endif>
           <div class="who">
+            @if($leadership?->show_name && $leadership?->name)
+              <div class="name">{{ $leadership->name }}</div>
+            @endif
             <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
           </div>
         </div>
@@ -3284,9 +3295,21 @@ document.querySelectorAll(".kerjakan-track").forEach((track, trackIndex) => {
     const speed = 0.5;
 
     const cards = Array.from(track.children);
-    if (cards.length > 0) {
+    if (cards.length === 0) return;
+
+    // lebar satu set kartu (sebelum digandakan) — jadi patokan titik "wrap" loop
+    const setWidth = track.scrollWidth;
+
+    // gandakan cukup banyak set supaya titik wrap selalu bisa dicapai scrollLeft.
+    // kalau kartunya cuma sedikit, 1x gandakan sering nggak cukup lebar dari
+    // viewport, jadi scrollLeft ke-clamp browser sebelum sempat wrap — makanya
+    // auto-scroll keliatan "berhenti" di kartu terakhir.
+    const neededSets = Math.max(2, Math.ceil(track.clientWidth / setWidth) + 2);
+    for (let i = 1; i < neededSets; i++) {
         cards.forEach(card => track.appendChild(card.cloneNode(true)));
     }
+
+    if (direction === -1) track.scrollLeft = setWidth;
 
     let isDown = false;
     let isHovered = false;
@@ -3312,15 +3335,14 @@ document.querySelectorAll(".kerjakan-track").forEach((track, trackIndex) => {
         track.scrollLeft = scrollStart - (e.pageX - startX);
     });
 
-    if (!reduceMotion && cards.length > 0) {
+    if (!reduceMotion) {
         (function autoScroll() {
             if (!isDown && !isHovered) {
-                const half = track.scrollWidth / 2;
                 track.scrollLeft += speed * direction;
-                if (track.scrollLeft >= half) {
-                    track.scrollLeft -= half;
+                if (track.scrollLeft >= setWidth) {
+                    track.scrollLeft -= setWidth;
                 } else if (track.scrollLeft <= 0) {
-                    track.scrollLeft += half;
+                    track.scrollLeft += setWidth;
                 }
             }
             requestAnimationFrame(autoScroll);

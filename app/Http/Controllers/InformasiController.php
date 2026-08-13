@@ -22,7 +22,8 @@ class InformasiController extends Controller
         $gridStart = $monthStart->copy()->startOfWeek(Carbon::MONDAY);
         $gridEnd = $monthStart->copy()->endOfMonth()->endOfWeek(Carbon::MONDAY);
 
-        $eventsInRange = AgendaEvent::whereBetween('event_date', [$gridStart->format('Y-m-d'), $gridEnd->format('Y-m-d')])
+        $eventsInRange = AgendaEvent::where('is_active', true)
+            ->whereBetween('event_date', [$gridStart->format('Y-m-d'), $gridEnd->format('Y-m-d')])
             ->get()
             ->groupBy(fn ($e) => $e->event_date->format('Y-m-d'));
 
@@ -51,8 +52,8 @@ class InformasiController extends Controller
             'news'          => $news,
             'kategoriList'  => NewsItem::where('is_active', true)->select('category')->distinct()->pluck('category'),
             'kategoriAktif' => $kategori,
-            'todayEvents'   => AgendaEvent::whereDate('event_date', Carbon::today())->orderBy('event_time')->get(),
-            'upcomingEvents' => AgendaEvent::whereDate('event_date', '>', Carbon::today())
+            'todayEvents'   => AgendaEvent::where('is_active', true)->whereDate('event_date', Carbon::today())->orderBy('event_time')->get(),
+            'upcomingEvents' => AgendaEvent::where('is_active', true)->whereDate('event_date', '>', Carbon::today())
                 ->orderBy('event_date')
                 ->orderBy('event_time')
                 ->take(4)

@@ -24,6 +24,9 @@ class OrganizationMemberController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request);
+        $data['is_active'] = $request->boolean('is_active');
+        $data['show_name'] = $request->boolean('show_name');
+        $data['show_photo'] = $request->boolean('show_photo');
 
         if ($request->hasFile('photo')) {
             $data['photo'] = Media::storeUpload($request->file('photo'));
@@ -42,6 +45,9 @@ class OrganizationMemberController extends Controller
     public function update(Request $request, OrganizationMember $organizationMember)
     {
         $data = $this->validated($request);
+        $data['is_active'] = $request->boolean('is_active');
+        $data['show_name'] = $request->boolean('show_name');
+        $data['show_photo'] = $request->boolean('show_photo');
 
         if ($request->hasFile('photo')) {
             Media::deleteRef($organizationMember->photo);
@@ -51,6 +57,17 @@ class OrganizationMemberController extends Controller
         $organizationMember->update($data);
 
         return redirect()->route('admin.organization-members.index')->with('success', 'Anggota organisasi diperbarui.');
+    }
+
+    public function toggleActive(OrganizationMember $organizationMember)
+    {
+        $newState = ! $organizationMember->is_active;
+        $organizationMember->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.organization-members.index')->with(
+            'success',
+            $newState ? 'Anggota diaktifkan kembali dan akan tampil ke pengguna.' : 'Anggota dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
     }
 
     public function destroy(OrganizationMember $organizationMember)
@@ -64,6 +81,8 @@ class OrganizationMemberController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
+            'name'                => 'nullable|string|max:255',
+            'show_name'           => 'sometimes|boolean',
             'position'            => 'required|string|max:255',
             'position_en'         => 'nullable|string|max:255',
             'unit_description'    => 'nullable|string',
@@ -71,6 +90,8 @@ class OrganizationMemberController extends Controller
             'level'               => 'required|in:kepala,bidang',
             'sort_order'          => 'required|integer',
             'photo'               => 'nullable|image|min:2048|max:10240',
+            'show_photo'          => 'sometimes|boolean',
+            'is_active'           => 'sometimes|boolean',
         ]);
     }
 }

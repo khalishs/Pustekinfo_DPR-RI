@@ -37,7 +37,10 @@ class StatisticController extends Controller
                 ->with('error', 'Maksimal ' . self::MAX_STATS . ' statistik. Hapus salah satu dulu untuk menambah yang baru.');
         }
 
-        Statistic::create($this->validated($request));
+        $data = $this->validated($request);
+        $data['is_active'] = $request->boolean('is_active');
+
+        Statistic::create($data);
 
         return redirect()->route('admin.statistics.index')->with('success', 'Statistik ditambahkan.');
     }
@@ -49,9 +52,38 @@ class StatisticController extends Controller
 
     public function update(Request $request, Statistic $statistic)
     {
-        $statistic->update($this->validated($request));
+        $data = $this->validated($request);
+        $data['is_active'] = $request->boolean('is_active');
+
+        $statistic->update($data);
 
         return redirect()->route('admin.statistics.index')->with('success', 'Statistik diperbarui.');
+    }
+
+    public function toggleActive(Statistic $statistic)
+    {
+        $newState = ! $statistic->is_active;
+        $statistic->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.statistics.index')->with(
+            'success',
+            $newState ? 'Statistik diaktifkan kembali dan akan tampil ke pengguna.' : 'Statistik dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
+    }
+
+    public function duplicate(Statistic $statistic)
+    {
+        if (Statistic::count() >= self::MAX_STATS) {
+            return redirect()->route('admin.statistics.index')
+                ->with('error', 'Maksimal ' . self::MAX_STATS . ' statistik. Hapus salah satu dulu untuk menambah yang baru.');
+        }
+
+        $copy = $statistic->replicate();
+        $copy->label = $statistic->label . ' (Salinan)';
+        $copy->is_active = false;
+        $copy->save();
+
+        return redirect()->route('admin.statistics.edit', $copy)->with('success', 'Statistik berhasil disalin. Silakan sesuaikan datanya lalu aktifkan.');
     }
 
     public function destroy(Statistic $statistic)
@@ -84,6 +116,7 @@ class StatisticController extends Controller
             'suffix'     => 'nullable|string|max:10',
             'decimals'   => 'required|integer|min:0|max:2',
             'sort_order' => 'required|integer',
+            'is_active'  => 'sometimes|boolean',
         ]);
     }
 }

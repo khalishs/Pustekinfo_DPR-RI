@@ -75,6 +75,12 @@
         <input type="number" name="sort_order" value="{{ old('sort_order', $service->sort_order ?? 0) }}" required>
         @error('sort_order')<small class="error">{{ $message }}</small>@enderror
       </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_active" value="1" style="width:auto;display:inline-block;" {{ old('is_active', $service->exists ? $service->is_active : true) ? 'checked' : '' }}> Status aktif</label>
+        @error('is_active')<small class="error">{{ $message }}</small>@enderror
+        <small>Layanan nonaktif tidak akan tampil di halaman mana pun untuk pengunjung situs.</small>
+      </div>
     </div>
 
     <div class="form-actions">

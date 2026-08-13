@@ -54,6 +54,17 @@ class ProfilPhotoController extends Controller
         return redirect()->route('admin.profil-photos.index')->with('success', 'Foto diperbarui.');
     }
 
+    public function toggleActive(ProfilPhoto $profilPhoto)
+    {
+        $newState = ! $profilPhoto->is_active;
+        $profilPhoto->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.profil-photos.index')->with(
+            'success',
+            $newState ? 'Foto diaktifkan kembali dan akan tampil ke pengguna.' : 'Foto dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
+    }
+
     public function destroy(ProfilPhoto $profilPhoto)
     {
         Media::deleteRef($profilPhoto->image);

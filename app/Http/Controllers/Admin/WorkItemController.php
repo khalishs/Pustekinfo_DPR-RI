@@ -65,6 +65,21 @@ class WorkItemController extends Controller
         return redirect()->route('admin.work-items.index')->with('success', 'Card diperbarui.');
     }
 
+    public function duplicate(WorkItem $workItem)
+    {
+        if (WorkItem::count() >= self::MAX_ITEMS) {
+            return redirect()->route('admin.work-items.index')
+                ->with('error', 'Maksimal ' . self::MAX_ITEMS . ' card yang bisa ditampilkan di section "Apa yang Kami Kerjakan". Hapus salah satu card lama terlebih dahulu.');
+        }
+
+        $copy = $workItem->replicate();
+        $copy->title = $workItem->title . ' (Salinan)';
+        $copy->is_active = false;
+        $copy->save();
+
+        return redirect()->route('admin.work-items.edit', $copy)->with('success', 'Card berhasil disalin. Silakan sesuaikan datanya lalu aktifkan.');
+    }
+
     public function destroy(WorkItem $workItem)
     {
         $workItem->delete();

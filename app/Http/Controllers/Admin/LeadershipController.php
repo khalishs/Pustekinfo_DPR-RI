@@ -19,6 +19,8 @@ class LeadershipController extends Controller
     public function update(Request $request)
 {
     $data = $request->validate([
+        'name'              => 'nullable|string|max:255',
+        'show_name'         => 'sometimes|boolean',
         'position'          => 'required|string|max:255',
         'welcome_title'     => 'required|string|max:255',
         'welcome_title_en'  => 'nullable|string|max:255',
@@ -35,6 +37,8 @@ class LeadershipController extends Controller
         'email'             => 'nullable|email|max:255',
         'photo'             => 'nullable|image|min:2048|max:10240',
     ]);
+
+    $data['show_name'] = $request->boolean('show_name');
 
     $leadership = Leadership::first() ?? new Leadership();
 

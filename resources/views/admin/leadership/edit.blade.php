@@ -8,6 +8,18 @@
 
     <div class="form-grid">
       <div class="form-group">
+        <label>Nama Pimpinan</label>
+        <input type="text" name="name" value="{{ old('name', $leadership->name) }}" placeholder="Nama lengkap beserta gelar">
+        @error('name')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="show_name" value="1" style="width:auto;display:inline-block;" {{ old('show_name', $leadership->show_name ?? false) ? 'checked' : '' }}> Tampilkan nama</label>
+        @error('show_name')<small class="error">{{ $message }}</small>@enderror
+        <small>Nama cuma muncul di section Sambutan Pimpinan kalau kotak ini dicentang DAN kolom Nama di atas terisi.</small>
+      </div>
+
+      <div class="form-group">
         <label class="required">Jabatan (tampil di foto)</label>
         <input type="text" name="position" value="{{ old('position', $leadership->position ?? 'KEPALA PUSTEKINFO') }}" required>
       </div>

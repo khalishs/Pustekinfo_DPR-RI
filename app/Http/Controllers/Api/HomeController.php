@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function statistics(): JsonResponse
     {
         return response()->json([
-            'data' => Statistic::orderBy('sort_order')->get(),
+            'data' => Statistic::where('is_active', true)->orderBy('sort_order')->get(),
         ]);
     }
 

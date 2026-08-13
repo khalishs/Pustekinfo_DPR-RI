@@ -94,9 +94,13 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::get('akun', [AccountController::class, 'edit'])->name('account.edit');
     Route::put('akun', [AccountController::class, 'update'])->name('account.update');
     Route::resource('statistics', StatisticController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+    Route::patch('statistics/{statistic}/toggle-active', [StatisticController::class, 'toggleActive'])->name('statistics.toggle-active');
+    Route::post('statistics/{statistic}/duplicate', [StatisticController::class, 'duplicate'])->name('statistics.duplicate');
     Route::resource('news', NewsItemController::class)->except('show');
     Route::patch('news/{news}/toggle-active', [NewsItemController::class, 'toggleActive'])->name('news.toggle-active');
     Route::resource('agenda', AgendaEventController::class)->except('show')->parameters(['agenda' => 'agendum']);
+    Route::patch('agenda/{agendum}/toggle-active', [AgendaEventController::class, 'toggleActive'])->name('agenda.toggle-active');
+    Route::post('agenda/{agendum}/duplicate', [AgendaEventController::class, 'duplicate'])->name('agenda.duplicate');
     Route::resource('gallery', GalleryItemController::class)->except('show');
     Route::patch('gallery/{gallery}/toggle-featured', [GalleryItemController::class, 'toggleFeatured'])->name('gallery.toggle-featured');
     Route::get('sambutan', [LeadershipController::class, 'edit'])->name('leadership.edit');
@@ -104,12 +108,16 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::get('pengaturan', [SiteSettingController::class, 'edit'])->name('settings.edit');
     Route::put('pengaturan', [SiteSettingController::class, 'update'])->name('settings.update');
     Route::resource('gallery-categories', GalleryCategoryController::class)->except('show')->parameters(['gallery-categories' => 'galleryCategory']);
+    Route::patch('gallery-categories/{galleryCategory}/toggle-active', [GalleryCategoryController::class, 'toggleActive'])->name('gallery-categories.toggle-active');
 
     Route::resource('timeline', TimelineItemController::class)->except('show');
+    Route::patch('timeline/{timeline}/toggle-active', [TimelineItemController::class, 'toggleActive'])->name('timeline.toggle-active');
+    Route::post('timeline/{timeline}/duplicate', [TimelineItemController::class, 'duplicate'])->name('timeline.duplicate');
 
     Route::resource('organization-members', OrganizationMemberController::class)
         ->except('show')
         ->parameters(['organization-members' => 'organizationMember']);
+    Route::patch('organization-members/{organizationMember}/toggle-active', [OrganizationMemberController::class, 'toggleActive'])->name('organization-members.toggle-active');
 
     Route::get('visi-misi', [VisionMissionController::class, 'edit'])->name('vision-mission.edit');
     Route::put('visi-misi', [VisionMissionController::class, 'update'])->name('vision-mission.update');
@@ -117,6 +125,8 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::resource('core-values', CoreValueController::class)
         ->except('show')
         ->parameters(['core-values' => 'coreValue']);
+    Route::patch('core-values/{coreValue}/toggle-active', [CoreValueController::class, 'toggleActive'])->name('core-values.toggle-active');
+    Route::post('core-values/{coreValue}/duplicate', [CoreValueController::class, 'duplicate'])->name('core-values.duplicate');
 
     Route::resource('hero-slides', HeroSlideController::class)
         ->except('show')
@@ -126,10 +136,14 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::resource('profil-photos', ProfilPhotoController::class)
         ->except('show')
         ->parameters(['profil-photos' => 'profilPhoto']);
+    Route::patch('profil-photos/{profilPhoto}/toggle-active', [ProfilPhotoController::class, 'toggleActive'])->name('profil-photos.toggle-active');
 
     Route::resource('work-items', WorkItemController::class)->except('show')->parameters(['work-items' => 'workItem']);
+    Route::post('work-items/{workItem}/duplicate', [WorkItemController::class, 'duplicate'])->name('work-items.duplicate');
 
     Route::resource('services', ServiceController::class)->except('show');
+    Route::patch('services/{service}/toggle-active', [ServiceController::class, 'toggleActive'])->name('services.toggle-active');
+    Route::post('services/{service}/duplicate', [ServiceController::class, 'duplicate'])->name('services.duplicate');
 
     Route::resource('stela-videos', StelaVideoController::class)->except('show')->parameters(['stela-videos' => 'stelaVideo']);
 

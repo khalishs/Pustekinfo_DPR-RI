@@ -262,8 +262,8 @@
   .table-responsive{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
   .table-responsive table{min-width:620px;}
   table{width:100%;border-collapse:collapse;}
-  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle;}
-  th{color:#8a97a0;font-weight:800;text-transform:uppercase;font-size:10.5px;letter-spacing:.06em;}
+  th,td{text-align:left;padding:13px 14px;border-bottom:1.5px solid #d3dde1;font-size:13.5px;vertical-align:middle;}
+  th{color:#8a97a0;font-weight:800;text-transform:uppercase;font-size:10.5px;letter-spacing:.06em;border-bottom:2px solid #becad0;}
   tbody tr{transition:background .12s ease;}
   tbody tr:hover{background:#fafcfd;}
   tbody tr:last-child td{border-bottom:none;}
@@ -293,6 +293,7 @@
   .btn-icon:hover{transform:translateY(-2px);}
   .btn-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   .btn-icon-edit:hover{border-color:var(--teal);color:var(--teal);background:rgba(20,128,140,.08);}
+  .btn-icon-copy:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,163,78,.1);}
   .btn-icon-delete{border-color:#e3b8b8;color:var(--danger);}
   .btn-icon-delete:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
 
@@ -321,7 +322,15 @@
   small.error{color:var(--danger);display:block;margin-top:5px;font-weight:600;}
   small{color:#8a97a0;}
 
-  .row-actions{display:flex;gap:8px;}
+  /* .row-actions dipasang langsung di <td>. Sengaja BUKAN display:flex — sebuah <td>
+     yang di-flex-kan berhenti ikut aturan tinggi baris tabel normal (jadi cuma setinggi
+     kontennya sendiri, bukan setinggi baris), sehingga tombolnya nangkring di atas kalau
+     ada sel lain di baris yang sama yang lebih tinggi (judul 2 baris, dst). Dengan tetap
+     jadi table-cell biasa, vertical-align:middle bawaan th/td di atas otomatis berlaku. */
+  .row-actions{white-space:nowrap;}
+  .row-actions > a{vertical-align:middle;}
+  .row-actions > form{display:inline-block;vertical-align:middle;margin-left:8px;}
+  .row-actions > :first-child{margin-left:0;}
   .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(20,128,140,.1);color:var(--teal);border:1px solid rgba(20,128,140,.14);}
   .badge-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 8px;border-radius:20px;background:var(--mist);color:#5b6b73;font-size:12px;font-weight:800;border:1px solid var(--line);}
   .badge-success{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(31,157,124,.1);color:var(--success);border:1px solid rgba(31,157,124,.18);}
@@ -393,13 +402,15 @@
   [data-theme="dark"] .flash{background:rgba(31,157,124,.13);color:#6fd6b3;border-color:rgba(31,157,124,.26);}
   [data-theme="dark"] .flash-error{background:rgba(176,65,62,.15);color:#e79a97;border-color:rgba(176,65,62,.32);}
   [data-theme="dark"] .card{background:#24282d;border-color:rgba(255,255,255,.06);box-shadow:0 8px 28px -16px rgba(0,0,0,.4);}
-  [data-theme="dark"] th{color:#8b929a;}
+  [data-theme="dark"] th{color:#8b929a;border-bottom-color:rgba(255,255,255,.22);}
+  [data-theme="dark"] td{border-bottom-color:rgba(255,255,255,.13);}
   [data-theme="dark"] tbody tr:hover{background:rgba(255,255,255,.025);}
   [data-theme="dark"] .btn-danger{background:transparent;border-color:rgba(176,65,62,.38);}
   [data-theme="dark"] .btn-outline{background:transparent;border-color:rgba(255,255,255,.12);color:#b8bfc4;}
   [data-theme="dark"] .btn-outline:hover{border-color:var(--teal-light);color:var(--teal-light);}
   [data-theme="dark"] .btn-icon{background:transparent;border-color:rgba(255,255,255,.12);color:#b8bfc4;}
   [data-theme="dark"] .btn-icon-edit:hover{border-color:var(--teal-light);color:var(--teal-light);background:rgba(20,128,140,.15);}
+  [data-theme="dark"] .btn-icon-copy:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,163,78,.15);}
   [data-theme="dark"] .btn-icon-delete{border-color:rgba(176,65,62,.38);}
   [data-theme="dark"] .btn-icon-delete:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
   [data-theme="dark"] input,
@@ -442,7 +453,6 @@
     th,td{padding:11px 10px;font-size:12.5px;}
     .form-group{max-width:100%;}
     .form-grid{grid-template-columns:1fr;gap:0;}
-    .row-actions{flex-wrap:wrap;}
   }
 </style>
 </head>
