@@ -46,14 +46,19 @@
       </div>
 
       <div class="form-group">
-        <label class="required">Kategori Warna</label>
-        <select name="color_tag" required>
-          <option value="c1" {{ old('color_tag', $event->color_tag) == 'c1' ? 'selected' : '' }}>Kuning — Tujuan Agenda 1</option>
-          <option value="c2" {{ old('color_tag', $event->color_tag) == 'c2' ? 'selected' : '' }}>Merah — Tujuan Agenda 2</option>
-          <option value="c3" {{ old('color_tag', $event->color_tag) == 'c3' ? 'selected' : '' }}>Hijau — Tujuan Agenda 3</option>
-          <option value="c4" {{ old('color_tag', $event->color_tag) == 'c4' ? 'selected' : '' }}>Biru — Tujuan Agenda 4</option>
-          <option value="c5" {{ old('color_tag', $event->color_tag) == 'c5' ? 'selected' : '' }}>Ungu — Tujuan Agenda 5</option>
-        </select>
+        <label class="required">Warna Titik Penanda</label>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <input type="color" name="color" id="colorInput" value="{{ old('color', $event->color ?? '#14839C') }}" style="width:48px;height:40px;padding:2px;border:1px solid #dfe4e7;border-radius:8px;cursor:pointer;" required>
+          <span id="colorHexPreview" style="font-family:monospace;font-size:13px;color:#5b6b73;">{{ old('color', $event->color ?? '#14839C') }}</span>
+        </div>
+        <small>Warna ini akan tampil sebagai titik penanda pada kalender agenda di halaman publik.</small>
+        @error('color')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_active" value="1" style="width:auto;display:inline-block;" {{ old('is_active', $event->exists ? $event->is_active : true) ? 'checked' : '' }}> Status aktif</label>
+        @error('is_active')<small class="error">{{ $message }}</small>@enderror
+        <small>Agenda nonaktif tidak akan tampil di halaman mana pun untuk pengunjung situs.</small>
       </div>
     </div>
 
@@ -63,4 +68,10 @@
     </div>
   </form>
 </div>
+
+<script>
+  document.getElementById('colorInput').addEventListener('input', function () {
+    document.getElementById('colorHexPreview').textContent = this.value;
+  });
+</script>
 @endsection

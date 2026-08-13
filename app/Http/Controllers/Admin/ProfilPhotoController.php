@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Media;
 use App\Models\ProfilPhoto;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProfilPhotoController extends Controller
 {
@@ -26,7 +26,7 @@ class ProfilPhotoController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request, true);
-        $data['image'] = $request->file('image')->store('profil', 'public');
+        $data['image'] = Media::storeUpload($request->file('image'));
         $data['is_active'] = $request->boolean('is_active');
 
         ProfilPhoto::create($data);
@@ -45,8 +45,8 @@ class ProfilPhotoController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($profilPhoto->image);
-            $data['image'] = $request->file('image')->store('profil', 'public');
+            Media::deleteRef($profilPhoto->image);
+            $data['image'] = Media::storeUpload($request->file('image'));
         }
 
         $profilPhoto->update($data);
@@ -54,9 +54,20 @@ class ProfilPhotoController extends Controller
         return redirect()->route('admin.profil-photos.index')->with('success', 'Foto diperbarui.');
     }
 
+    public function toggleActive(ProfilPhoto $profilPhoto)
+    {
+        $newState = ! $profilPhoto->is_active;
+        $profilPhoto->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.profil-photos.index')->with(
+            'success',
+            $newState ? 'Foto diaktifkan kembali dan akan tampil ke pengguna.' : 'Foto dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
+    }
+
     public function destroy(ProfilPhoto $profilPhoto)
     {
-        Storage::disk('public')->delete($profilPhoto->image);
+        Media::deleteRef($profilPhoto->image);
         $profilPhoto->delete();
 
         return redirect()->route('admin.profil-photos.index')->with('success', 'Foto dihapus.');

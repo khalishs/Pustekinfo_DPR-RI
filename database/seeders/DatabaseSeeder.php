@@ -31,5 +31,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(StatisticSeeder::class);
         $this->call(ServiceSeeder::class);
+        $this->call(WorkItemSeeder::class);
     }
  }

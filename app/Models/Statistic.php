@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Statistic extends Model
 {
-    protected $fillable = ['key', 'label', 'label_en', 'value', 'suffix', 'decimals', 'sort_order'];
+    protected $fillable = ['icon_svg', 'label', 'label_en', 'value', 'suffix', 'decimals', 'sort_order', 'is_active'];
+
+    protected $casts = ['is_active' => 'boolean'];
 }

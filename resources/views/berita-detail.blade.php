@@ -36,10 +36,11 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikBoostLight);
+    opacity:.05;
   }
   [data-theme="dark"] body::before{
     filter:url(#batikTintTeal);
-    opacity:.4;
+    opacity:.05;
   }
   @media (max-width:900px){
     body::before{background-size:3000px auto;}
@@ -64,8 +65,8 @@
     border-bottom:1px solid #eaeaea;
     position:fixed;top:0;left:0;width:100%;z-index:9999;
   }
-  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
-    transform-origin:left center;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;
+    pointer-events:none;}
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
@@ -116,7 +117,7 @@
     .nav-links{display:none;}
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
     .nav-actions{gap:6px;flex-shrink:0;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
@@ -215,6 +216,9 @@
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
 
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  .navbar-logo-dark{display:none;}
+  [data-theme="dark"] .navbar-logo-light{display:none;}
+  [data-theme="dark"] .navbar-logo-dark{display:block;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -286,17 +290,19 @@
         0 0 0 4.5 0"/>
     </filter>
     <filter id="batikBoostLight">
-      <feColorMatrix type="saturate" values="2.2"/>
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="2.6" intercept="0"/>
-      </feComponentTransfer>
+      <feColorMatrix type="matrix" values="
+        0 0 0 0 0.0784
+        0 0 0 0 0.5137
+        0 0 0 0 0.6118
+        0 0 0 2.6 0"/>
     </filter>
   </svg>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
@@ -350,7 +356,7 @@
     </a>
 
     @if($news->image)
-      <img src="{{ asset('storage/'.$news->image) }}" alt="{{ $news->title }}" class="article-image">
+      <img src="{{ asset($news->image) }}" alt="{{ $news->title }}" class="article-image">
     @endif
 
     <div class="article-body" data-en="{{ ($news->content_en ?: $news->excerpt_en) ?: ($news->content ?: $news->excerpt) }}">{{ $news->content ?: $news->excerpt }}</div>

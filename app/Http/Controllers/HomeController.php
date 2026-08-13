@@ -10,6 +10,7 @@ use App\Models\GalleryItem;
 use App\Models\SiteSetting;
 use App\Models\HeroSlide;
 use App\Models\ProfilPhoto;
+use App\Models\WorkItem;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -23,9 +24,12 @@ class HomeController extends Controller
         $gridStart = $monthStart->copy()->startOfWeek(Carbon::MONDAY);
         $gridEnd = $monthStart->copy()->endOfMonth()->endOfWeek(Carbon::MONDAY);
 
-        $eventsInRange = AgendaEvent::whereBetween('event_date', [$gridStart->format('Y-m-d'), $gridEnd->format('Y-m-d')])
+        $eventsInRange = AgendaEvent::where('is_active', true)
+            ->whereBetween('event_date', [$gridStart->format('Y-m-d'), $gridEnd->format('Y-m-d')])
             ->get()
             ->groupBy(fn ($e) => $e->event_date->format('Y-m-d'));
+
+        $workItems = WorkItem::where('is_active', true)->orderBy('sort_order')->take(20)->get();
 
         $calendarDays = [];
         $cursor = $gridStart->copy();
@@ -43,17 +47,19 @@ class HomeController extends Controller
         return view('home', [
             'heroSlides'    => HeroSlide::where('is_active', true)->orderBy('sort_order')->get(),
             'profilPhotos'  => ProfilPhoto::where('is_active', true)->orderBy('sort_order')->get(),
-            'stats'         => Statistic::orderBy('sort_order')->take(5)->get(),
+            'stats'         => Statistic::where('is_active', true)->orderBy('sort_order')->get(),
             'leadership'    => Leadership::first(),
-            'featuredNews'  => NewsItem::where('is_featured', true)->latest('published_at')->first(),
-            'latestNews'    => NewsItem::where('is_featured', false)->latest('published_at')->take(4)->get(),
-            'todayEvents'   => AgendaEvent::whereDate('event_date', $today)->orderBy('event_time')->get(),
-            'upcomingEvents' => AgendaEvent::whereDate('event_date', '>', $today)
+            'featuredNews'  => NewsItem::where('is_featured', true)->where('is_active', true)->latest('published_at')->first(),
+            'latestNews'    => NewsItem::where('is_featured', false)->where('is_active', true)->latest('published_at')->take(4)->get(),
+            'todayEvents'   => AgendaEvent::where('is_active', true)->whereDate('event_date', $today)->orderBy('event_time')->get(),
+            'upcomingEvents' => AgendaEvent::where('is_active', true)->whereDate('event_date', '>', $today)
                 ->orderBy('event_date')
                 ->orderBy('event_time')
                 ->take(4)
                 ->get(),
             'galleries' => GalleryItem::with('category')->where('show_on_home', true)->orderBy('sort_order')->take(8)->get(),
+            'workItemsTop' => $workItems->where('row_position', 1)->values(),
+            'workItemsBottom' => $workItems->where('row_position', 2)->values(),
             'setting'       => SiteSetting::first() ?? new SiteSetting(),
             'calendarDays'  => $calendarDays,
             'monthLabel'    => $bulanIndo[$monthStart->month - 1] . ' ' . $monthStart->year,

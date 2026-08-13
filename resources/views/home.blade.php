@@ -41,7 +41,6 @@
   .berita-featured-body h3,
   .berita-item-body .title,
   .sambutan-content h2,
-  .sambutan-photo .who .name,
   .agenda-cal-head .month,
   .agenda-event-top .title {
     font-family:'Plus Jakarta Sans', system-ui, sans-serif;
@@ -62,12 +61,14 @@
     width:100%;
     z-index:9999;
   }
-  .brand{display:flex;align-items:center;gap:12px;}
+  .brand{display:flex;align-items:center;gap:1px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
 
   
-  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
-    transform-origin:left center;}
+  /* width:190px dibuat tetap (bukan auto) supaya lebar kotak logo sama persis
+     antara mode light & dark — mencegah navbar "geser" saat ganti tema. */
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;
+    pointer-events:none;}
 
   .nav-links{display:flex;align-items:center;gap:34px;}
 
@@ -269,10 +270,10 @@
     z-index:3;
     width:48px;height:48px;
     border-radius:50%;
-    border:1px solid rgba(255,255,255,.35);
-    background:rgba(11,49,74,.35);
-    backdrop-filter:blur(4px);
+    border:1px solid transparent;
+    background:transparent;
     color:#fff;
+    opacity:.5;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -280,7 +281,12 @@
     transition:.25s ease;
     padding:0;
   }
-  .hero-arrow:hover{background:rgba(11,49,74,.65);border-color:rgba(255,255,255,.65);}
+  .hero-arrow:hover{
+    background:rgba(11,49,74,.55);
+    border-color:rgba(255,255,255,.5);
+    backdrop-filter:blur(4px);
+    opacity:1;
+  }
   .hero-arrow svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
   .hero-arrow-prev{left:24px;}
   .hero-arrow-next{right:24px;}
@@ -419,6 +425,7 @@
     border-right:1px solid var(--line);
     transition:all .3s ease;
     cursor:pointer;
+    flex:0 1 auto;
   }
 
 .stat:hover .stat-icon{
@@ -459,7 +466,7 @@
 
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
 
     .burger{
     display:flex;
@@ -527,7 +534,8 @@
     .hero-arrow-next{right:10px;}
 
     .stats-bar{
-      grid-template-columns:repeat(2,1fr);
+      flex-wrap:wrap;
+      justify-content:center;
       margin:24px 16px 0;
       border-radius:12px;
     }
@@ -535,8 +543,10 @@
       border-right:none;
       border-bottom:1px solid var(--line);
       gap:12px;
+      flex:1 1 45%;
+      justify-content:center;
     }
-    .stat:nth-last-child(-n+2){border-bottom:none;}
+    .stat:last-child{border-bottom:none;}
     .stat-icon{width:38px;height:38px;border-radius:10px;}
     .stat-icon svg{width:18px;height:18px;}
     .stat-num{font-size:19px;}
@@ -725,7 +735,7 @@
   background-position:center var(--batik-offset-y, top);
   background-size:10000px auto;
   filter:url(#batikTintTeal);
-  opacity:.1;   /* 0 = tak terlihat, 1 = penuh — atur sesuai selera */
+  opacity:.05;   /* 0 = tak terlihat, 1 = penuh — atur sesuai selera */
   pointer-events:none;
   z-index:0;
   transform:translateY(var(--parallax-layanan, 0px));
@@ -912,16 +922,19 @@
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 50%, var(--teal) 100%);
   }
   .sambutan-photo .who .name{
-    color:var(--white);
-    font-size:16px;
+    color:#fff;
+    font-size:17px;
     font-weight:700;
+    letter-spacing:-.005em;
+    text-shadow:0 2px 10px rgba(0,0,0,.65), 0 1px 3px rgba(0,0,0,.6);
   }
   .sambutan-photo .who .role{
     margin-top:4px;
-    color:rgba(255,255,255,.7);
+    color:rgba(255,255,255,.85);
     font-size:11px;
     font-weight:700;
     letter-spacing:.1em;
+    text-shadow:0 2px 10px rgba(0,0,0,.65), 0 1px 3px rgba(0,0,0,.6);
   }
 
   .sambutan-content{
@@ -969,13 +982,6 @@
     line-height:1.75;
     max-width:440px;
   }
-  .sambutan-content .signature{
-    margin-top:30px;
-    font-family:'Dancing Script', cursive;
-    font-weight:700;
-    font-size:30px;
-    color:var(--navy);
-  }
   .sambutan-content .sign-role{
     margin-top:4px;
     color:#7a8a92;
@@ -991,11 +997,126 @@
     .sambutan-content .quote-mark{top:28px;right:28px;}
   }
 
+  /* ---------- Apa yang Kami Kerjakan (Kegiatan) ---------- */
+  .kerjakan{
+    position:relative;
+    overflow:hidden;
+    padding:20px 100px 110px;
+    opacity:0;
+    transform:translateY(60px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .kerjakan.show{opacity:1;transform:translateY(0);}
+
+  .kerjakan-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;}
+
+  .kerjakan .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--teal);
+    font-size:12px;
+    font-weight:600;
+    font-family: plus-jakarta-sans, system-ui, sans-serif;
+    letter-spacing:.12em;
+  }
+  .kerjakan .eyebrow::before{
+    content:"";
+    width:22px;height:2px;
+    background:var(--teal);
+    display:inline-block;
+  }
+  .kerjakan h2{
+    margin-top:16px;
+    font-size:32px;
+    font-weight:800;
+    color:var(--navy);
+    line-height:1.28;
+    letter-spacing:-.01em;
+    max-width:560px;
+  }
+
+  .kerjakan-row{margin-top:28px;}
+  .kerjakan-row:first-of-type{margin-top:44px;}
+
+  .kerjakan-track{
+    display:flex;
+    align-items:flex-start;
+    gap:20px;
+    overflow-x:auto;
+    padding:22px 6px 30px;
+    margin:-22px -6px -30px;
+    cursor:grab;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .kerjakan-track:active{cursor:grabbing;}
+  .kerjakan-track::-webkit-scrollbar{display:none;}
+
+  .kerjakan-card{
+    position:relative;
+    flex:0 0 auto;
+    width:max-content;
+    min-width:200px;
+    max-width:300px;
+    background:var(--white);
+    border:2px solid rgba(20,131,140,.28);
+    border-radius:15px;
+    padding:26px 24px;
+    box-shadow:0 14px 30px -20px rgba(11,34,51,.22);
+    transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+    will-change:transform;
+  }
+  /* variasi posisi & rotasi tiap kartu biar tampilannya nggak kaku sejajar (abstrak) */
+  .kerjakan-card:nth-child(3n+1){ margin-top:6px; animation:floatA 6.2s ease-in-out infinite; animation-delay:0s; }
+  .kerjakan-card:nth-child(3n+2){ margin-top:22px; animation:floatB 6.8s ease-in-out infinite; animation-delay:.7s; }
+  .kerjakan-card:nth-child(3n){ margin-top:0px; animation:floatC 5.9s ease-in-out infinite; animation-delay:1.4s; }
+
+  .kerjakan-card:hover{
+    border-color:var(--teal);
+    box-shadow:0 20px 40px -18px rgba(11,34,51,.32);
+    animation-play-state:paused;
+    transform:translateY(-10px) rotate(0deg) scale(1.02);
+  }
+  .kerjakan-card .icon{
+    width:26px;height:26px;
+    color:var(--teal);
+    margin-bottom:18px;
+  }
+  .kerjakan-card .icon svg{
+    width:100%;height:100%;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:1.6;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .kerjakan-card .title{
+    color:var(--navy);
+    font-size:15px;
+    font-weight:700;
+    line-height:1.35;
+    white-space:normal;
+  }
+  .kerjakan-card .desc{
+    margin-top:8px;
+    color:#5b6b73;
+    font-size:13px;
+    line-height:1.6;
+    white-space:normal;
+  }
+
+  @media (max-width:900px){
+    .kerjakan{padding:0 20px 70px;}
+    .kerjakan-card{min-width:180px;max-width:240px;padding:22px 20px;}
+  }
+
   /* ---------- Berita & Kegiatan ---------- */
   .berita{
     position:relative;
     overflow:hidden;
     padding:90px 100px 120px;
+    background:var(--white);
     opacity:0;
     transform:translateY(60px);
     transition:opacity .9s ease, transform .9s ease;
@@ -1328,6 +1449,7 @@
   .agenda-day:hover{background:rgba(20,128,140,.1);color:var(--teal);}
   .agenda-day.muted{color:#c7d0d4;font-weight:500;}
   .agenda-day.muted:hover{background:rgba(20,128,140,.06);color:#9aa8af;}
+  .agenda-day.has-event:not(.today){border:1.5px solid rgba(20,128,140,.3);}
   .agenda-day.today{
     background:rgba(20,128,140,.05);
     border:none;
@@ -1336,43 +1458,29 @@
     color:var(--teal);
     font-weight:800;
   }
-  .agenda-day .dot{
-    width:6px;height:6px;
-    border-radius:50%;
-    margin-top:3px;
+  .agenda-day .dots{
+    display:flex;align-items:center;justify-content:center;gap:3px;margin-top:4px;flex-wrap:wrap;max-width:90%;
   }
-  .agenda-day .dot.c1{background:#e0a340;}
-  .agenda-day .dot.c2{background:#b0413e;}
-  .agenda-day .dot.c3{background:#1f9d7c;}
-  .agenda-day .dot.c4{background:#3d7dd6;}
-  .agenda-day .dot.c5{background:#8e5fc9;}
+  .agenda-day .dot{
+    width:7px;height:7px;
+    border-radius:50%;
+    flex-shrink:0;
+    box-shadow:0 0 0 1px rgba(255,255,255,.6);
+  }
+  .agenda-day .dot-more{font-size:9px;font-weight:800;color:#9aa8af;line-height:1;}
 
   .agenda-legend{
     margin-top:20px;
     padding-top:18px;
     border-top:1px solid #eef1f3;
     display:flex;
-    gap:22px;
-    flex-wrap:wrap;
-  }
-  .agenda-legend span{
-    display:flex;
     align-items:center;
-    gap:7px;
+    gap:8px;
+    color:#9aa8af;
     font-size:12px;
     font-weight:600;
-    color:#7a8a92;
   }
-  .agenda-legend i{
-    width:7px;height:7px;
-    border-radius:50%;
-    display:inline-block;
-  }
-  .agenda-legend i.c1{background:#e0a340;}
-  .agenda-legend i.c2{background:#b0413e;}
-  .agenda-legend i.c3{background:#1f9d7c;}
-  .agenda-legend i.c4{background:#3d7dd6;}
-  .agenda-legend i.c5{background:#8e5fc9;}
+  .agenda-legend svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
 
   /* --- Panel Hari Ini --- */
   .agenda-today{
@@ -1493,6 +1601,7 @@
   position:relative;
   overflow:hidden;
   padding:90px 100px 120px;
+  background:var(--white);
   opacity:0;
   transform:translateY(60px);
   transition:opacity .9s ease, transform .9s ease;
@@ -1835,6 +1944,7 @@
   background-position:center top;
   background-size:10000px auto;
   filter:url(#batikBoostLight);
+  opacity:.05;
   transform:translateY(var(--parallax-batik, 0px));
   will-change:transform;
 }
@@ -1847,7 +1957,7 @@
 }
 [data-theme="dark"] .konten-batik::before{
   filter:url(#batikTintTeal);
-  opacity:.4;
+  opacity:.05;
 }
 
 @media (max-width:900px){
@@ -2137,6 +2247,9 @@
 [data-theme="dark"] body{background:#0b1720;color:#c3cdd2;}
 
 [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+.navbar-logo-dark{display:none;}
+[data-theme="dark"] .navbar-logo-light{display:none;}
+[data-theme="dark"] .navbar-logo-dark{display:block;}
 [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
 [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
 [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -2171,6 +2284,7 @@
 
 [data-theme="dark"] .profil .eyebrow,
 [data-theme="dark"] .sambutan .eyebrow,
+[data-theme="dark"] .kerjakan .eyebrow,
 [data-theme="dark"] .berita .eyebrow,
 [data-theme="dark"] .agenda .eyebrow,
 [data-theme="dark"] .galeri .eyebrow,
@@ -2180,6 +2294,7 @@
 
 [data-theme="dark"] .profil .eyebrow::before,
 [data-theme="dark"] .sambutan .eyebrow::before,
+[data-theme="dark"] .kerjakan .eyebrow::before,
 [data-theme="dark"] .berita .eyebrow::before,
 [data-theme="dark"] .agenda .eyebrow::before,
 [data-theme="dark"] .galeri .eyebrow::before,
@@ -2189,12 +2304,18 @@
 
 [data-theme="dark"] .profil-copy h2,
 [data-theme="dark"] .sambutan-content h2,
+[data-theme="dark"] .kerjakan h2,
 [data-theme="dark"] .berita-head h2,
 [data-theme="dark"] .agenda-inner > h2,
 [data-theme="dark"] .galeri-head h2,
 [data-theme="dark"] .akses-col h2{
   color:#eaf3f5;
 }
+[data-theme="dark"] .kerjakan-card{background:#122530;border-color:rgba(95,192,209,.3);box-shadow:0 14px 30px -20px rgba(0,0,0,.5);}
+[data-theme="dark"] .kerjakan-card:hover{border-color:#5FC0D1;box-shadow:0 20px 40px -18px rgba(0,0,0,.55);}
+[data-theme="dark"] .kerjakan-card .icon{color:#5FC0D1;}
+[data-theme="dark"] .kerjakan-card .title{color:#eaf3f5;}
+[data-theme="dark"] .kerjakan-card .desc{color:#8ea0a8;}
 [data-theme="dark"] .profil-copy p{color:#8ea0a8;}
 [data-theme="dark"] .feature-row{border-top-color:rgba(255,255,255,.1);}
 [data-theme="dark"] .feature .title{color:#eaf3f5;}
@@ -2204,7 +2325,6 @@
 
 [data-theme="dark"] .sambutan-card{background:#122530;}
 [data-theme="dark"] .sambutan-content .desc{color:#8ea0a8;}
-[data-theme="dark"] .sambutan-content .signature{color:#eaf3f5;}
 [data-theme="dark"] .sambutan-content .sign-role{color:#8ea0a8;}
 
 [data-theme="dark"] .berita{background-color: rgba(0, 0, 0, 0.8);}
@@ -2219,10 +2339,10 @@
 [data-theme="dark"] .agenda-day{color:#eaf3f5;}
 [data-theme="dark"] .agenda-day:hover{background:rgba(95,192,209,.12);color:#5FC0D1;}
 [data-theme="dark"] .agenda-day.muted{color:#3d4d54;}
-[data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.08);border-top-color:#5FC0D1;}
-[data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);}
-[data-theme="dark"] .agenda-legend span{color:#8ea0a8;}
-[data-theme="dark"] .agenda-day .dot{box-shadow:0 0 0 1px rgba(255,255,255,.35);}
+[data-theme="dark"] .agenda-day.has-event:not(.today){border-color:rgba(95,192,209,.3);}
+[data-theme="dark"] .agenda-day.today{background:rgba(95,192,209,.12);}
+[data-theme="dark"] .agenda-day .dot{box-shadow:0 0 0 1px rgba(18,37,48,.8);}
+[data-theme="dark"] .agenda-legend{border-top-color:rgba(255,255,255,.08);color:#6d8189;}
 
 [data-theme="dark"] .galeri{background-color: rgba(0, 0, 0, 0.8);}
 [data-theme="dark"] .galeri-link{color:#5FC0D1;border-bottom-color:#5FC0D1;}
@@ -2250,20 +2370,22 @@
         0 0 0 5.5 0"/>   
     </filter>  
       <filter id="batikBoostLight">
-        <feColorMatrix type="saturate" values="2.8"/>
-        <feComponentTransfer>
-          <feFuncA type="linear" slope="3.4" intercept="0"/>
-        </feComponentTransfer>
+        <feColorMatrix type="matrix" values="
+          0 0 0 0 0.0784
+          0 0 0 0 0.5137
+          0 0 0 0 0.6118
+          0 0 0 3.4 0"/>
       </filter>
     </svg>
 
     <nav class="navbar">
       <div class="brand">
-        <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
+        <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+        <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
       </div>
 
       <ul class="nav-links">
-        <li class="active"><a href="#" data-en="Home">Beranda</a></li>
+        <li class="active"><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
         <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
         <li><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
         <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
@@ -2292,7 +2414,7 @@
     <header class="hero">
       <div class="hero-slider">
         @forelse($heroSlides as $slide)
-          <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$slide->image) }}')"></div>
+          <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset($slide->image) }}')"></div>
         @empty
           <div class="hero-slide" style="background-image:url('{{ asset('images/hero-gedung-dpr.jpg') }}')"></div>
         @endforelse
@@ -2321,25 +2443,19 @@
       </a>
     </header>
 
-    <section class="stats-bar" style="--stat-cols:{{ max($stats->count(), 1) }};">
-        @php $icons = [
-          'apps' => '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
-          'karyawan' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg>',
-          'pengguna' => '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-          'spbe' => '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>',
-        ]; @endphp
-        @forelse($stats as $stat)
+    @if($stats->count())
+      <section class="stats-bar" style="--stat-cols:{{ $stats->count() }};">
+        @foreach($stats as $stat)
           <div class="stat">
-            <div class="stat-icon">{!! $icons[$stat->key] ?? $icons['apps'] !!}</div>
+            <div class="stat-icon"><svg viewBox="0 0 24 24">{!! $stat->icon_svg !!}</svg></div>
             <div>
               <div class="stat-num" data-target="{{ $stat->value }}" data-suffix="{{ $stat->suffix }}" data-decimals="{{ $stat->decimals }}">0</div>
               <div class="stat-label" data-en="{{ $stat->label_en ?: $stat->label }}">{{ $stat->label }}</div>
             </div>
           </div>
-        @empty
-          <div class="stat"><div><div class="stat-label" data-en="No statistics data yet">Belum ada data statistik</div></div></div>
-        @endforelse
+        @endforeach
       </section>
+    @endif
         <div class="spacer"></div>
 
         {{-- Pembungkus: satu pola batik menyatu untuk seluruh section di bawah ini (Profil s/d Akses & Dokumen) --}}
@@ -2351,7 +2467,7 @@
             <div class="profil-media">
               <div class="profil-media-frame">
                 @foreach($profilPhotos as $photo)
-                  <div class="profil-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset('storage/'.$photo->image) }}')"></div>
+                  <div class="profil-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset($photo->image) }}')"></div>
                 @endforeach
                 <span class="profil-badge" data-en="ABOUT US">TENTANG KAMI</span>
               </div>
@@ -2409,7 +2525,7 @@
   {{-- ================= APA YANG KAMI KERJAKAN (LAYANAN) ================= --}}
   <section id="layanan" class="layanan">
     <div class="layanan-inner">
-      <div class="eyebrow" data-en="WHAT WE DO">APA YANG KAMI KERJAKAN</div>
+      <div class="eyebrow" data-en="WHAT WE DO">LAYANAN KAMI</div>
       <h2 data-en="Information Technology Services">Layanan Teknologi Informasi</h2>
 
       <div class="layanan-grid">
@@ -2470,9 +2586,11 @@
       <div class="eyebrow" data-en="LEADERSHIP MESSAGE">SAMBUTAN PIMPINAN</div>
 
       <div class="sambutan-card">
-                <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset('storage/'.$leadership->photo) }}');background-size:cover;background-position:center;" @endif>
+                <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset($leadership->photo) }}');background-size:cover;background-position:center;" @endif>
           <div class="who">
-            <div class="name">{{ $leadership->name ?? 'Nama Kepala Unit' }}</div>
+            @if($leadership?->show_name && $leadership?->name)
+              <div class="name">{{ $leadership->name }}</div>
+            @endif
             <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
           </div>
         </div>
@@ -2484,10 +2602,49 @@
           <h2 data-en="{{ ($leadership->welcome_title_en ?? null) ?: ($leadership->welcome_title ?? 'Technology for better service') }}">{{ $leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik' }}</h2>
           <p class="desc" data-en="{{ ($leadership->description_en ?? null) ?: ($leadership->description ?? 'The leadership message has not been filled in via the admin panel.') }}">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
 
-          <div class="signature">{{ $leadership->name ?? 'Nama Kepala Unit' }}</div>
           <div class="sign-role" data-en="{{ ($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center') }}">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  {{-- ================= APA YANG KAMI KERJAKAN (KEGIATAN) ================= --}}
+  <section id="kerjakan" class="kerjakan">
+    <div class="kerjakan-inner">
+      <div class="eyebrow" data-en="WHAT WE DO">APA YANG KAMI KERJAKAN</div>
+      <h2 data-en="What We Do">Apa yang Kami Kerjakan</h2>
+
+      @if($workItemsTop->isNotEmpty())
+        <div class="kerjakan-row">
+          <div class="kerjakan-track">
+            @foreach ($workItemsTop as $item)
+              <div class="kerjakan-card">
+                <div class="icon">{!! $item->iconSvg() !!}</div>
+                <div class="title" data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</div>
+                <div class="desc" data-en="{{ $item->description_en ?: $item->description }}">{{ $item->description }}</div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+      @endif
+
+      @if($workItemsBottom->isNotEmpty())
+        <div class="kerjakan-row">
+          <div class="kerjakan-track">
+            @foreach ($workItemsBottom as $item)
+              <div class="kerjakan-card">
+                <div class="icon">{!! $item->iconSvg() !!}</div>
+                <div class="title" data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</div>
+                <div class="desc" data-en="{{ $item->description_en ?: $item->description }}">{{ $item->description }}</div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+      @endif
+
+      @if($workItemsTop->isEmpty() && $workItemsBottom->isEmpty())
+        <p style="margin-top:40px;color:#7a8a92;font-size:14px;">Belum ada card yang diisi lewat panel admin.</p>
+      @endif
     </div>
   </section>
 
@@ -2505,7 +2662,7 @@
 
       <div class="berita-grid">
 
-        <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ asset('storage/'.$featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
+        <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ asset($featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
           <span class="badge" data-en="{{ ($featuredNews->category_en ?? null) ?: ($featuredNews->category ?? 'NEWS') }}">{{ $featuredNews->category ?? 'BERITA' }}</span>
 
           <div class="berita-featured-body">
@@ -2525,7 +2682,7 @@
         <div class="berita-list">
           @forelse($latestNews as $news)
             <a href="{{ route('berita.show', $news) }}" class="berita-item">
-              <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset('storage/'.$news->image) }}');background-size:cover;background-position:center;" @endif></div>
+              <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset($news->image) }}');background-size:cover;background-position:center;" @endif></div>
               <div class="berita-item-body">
                 <div class="cat" data-en="{{ $news->category_en ?: $news->category }}">{{ $news->category }}</div>
                 <div class="title" data-en="{{ $news->title_en ?: $news->title }}">{{ $news->title }}</div>
@@ -2569,20 +2726,24 @@
 
           <div class="agenda-cal-days">
             @foreach($calendarDays as $day)
-              <div class="agenda-day {{ $day['muted'] ? 'muted' : '' }} {{ $day['today'] ? 'today' : '' }}">
+              <div class="agenda-day {{ $day['muted'] ? 'muted' : '' }} {{ $day['today'] ? 'today' : '' }} {{ $day['events']->isNotEmpty() ? 'has-event' : '' }}">
                 {{ $day['day'] }}
-                @foreach($day['events'] as $ev)
-                  <span class="dot {{ $ev->color_tag }}"></span>
-                @endforeach
+                @if($day['events']->isNotEmpty())
+                  <span class="dots">
+                    @foreach($day['events']->take(5) as $ev)
+                      <span class="dot" style="background:{{ $ev->color }};" title="{{ $ev->title }}"></span>
+                    @endforeach
+                    @if($day['events']->count() > 5)
+                      <span class="dot-more">+{{ $day['events']->count() - 5 }}</span>
+                    @endif
+                  </span>
+                @endif
               </div>
             @endforeach
           </div>
           <div class="agenda-legend">
-            <span><i class="c1"></i><span data-en="Agenda Purpose 1">Tujuan Agenda 1</span></span>
-            <span><i class="c2"></i><span data-en="Agenda Purpose 2">Tujuan Agenda 2</span></span>
-            <span><i class="c3"></i><span data-en="Agenda Purpose 3">Tujuan Agenda 3</span></span>
-            <span><i class="c4"></i><span data-en="Agenda Purpose 4">Tujuan Agenda 4</span></span>
-            <span><i class="c5"></i><span data-en="Agenda Purpose 5">Tujuan Agenda 5</span></span>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span data-en="Dot color marks the event category set by the admin">Warna titik menandakan kategori kegiatan yang diatur admin</span>
           </div>
         </div>
 
@@ -2654,7 +2815,7 @@
     <div class="galeri-grid" id="galeriGrid">
       @forelse($galleries as $item)
         <div class="galeri-card {{ $item->size }}" data-category="{{ $item->category->slug ?? '' }}">
-          <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
+          <img src="{{ asset($item->image) }}" alt="{{ $item->title }}">
         </div>
       @empty
         <p style="color:#8a97a0;" data-en="No gallery photos yet.">Belum ada foto galeri.</p>
@@ -3087,6 +3248,86 @@ const sambutanObserver = new IntersectionObserver((entries) => {
 
 sambutanObserver.observe(sambutanSection);
 
+const kerjakanSection = document.querySelector(".kerjakan");
+
+if (kerjakanSection) {
+    const kerjakanObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+                kerjakanObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    kerjakanObserver.observe(kerjakanSection);
+}
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+document.querySelectorAll(".kerjakan-track").forEach((track, trackIndex) => {
+    // baris genap auto-scroll ke kanan, baris ganjil ke kiri — biar nggak monoton
+    const direction = trackIndex % 2 === 0 ? 1 : -1;
+    const speed = 0.5;
+
+    const cards = Array.from(track.children);
+    if (cards.length === 0) return;
+
+    // lebar satu set kartu (sebelum digandakan) — jadi patokan titik "wrap" loop
+    const setWidth = track.scrollWidth;
+
+    // gandakan cukup banyak set supaya titik wrap selalu bisa dicapai scrollLeft.
+    // kalau kartunya cuma sedikit, 1x gandakan sering nggak cukup lebar dari
+    // viewport, jadi scrollLeft ke-clamp browser sebelum sempat wrap — makanya
+    // auto-scroll keliatan "berhenti" di kartu terakhir.
+    const neededSets = Math.max(2, Math.ceil(track.clientWidth / setWidth) + 2);
+    for (let i = 1; i < neededSets; i++) {
+        cards.forEach(card => track.appendChild(card.cloneNode(true)));
+    }
+
+    if (direction === -1) track.scrollLeft = setWidth;
+
+    let isDown = false;
+    let isHovered = false;
+    let startX = 0;
+    let scrollStart = 0;
+
+    track.addEventListener("mouseenter", () => { isHovered = true; });
+    track.addEventListener("mouseleave", () => { isHovered = false; isDown = false; });
+    track.addEventListener("touchstart", () => { isHovered = true; }, { passive: true });
+    track.addEventListener("touchend", () => { isHovered = false; }, { passive: true });
+
+    track.addEventListener("mousedown", e => {
+        isDown = true;
+        startX = e.pageX;
+        scrollStart = track.scrollLeft;
+    });
+
+    ["mouseleave", "mouseup"].forEach(evt => track.addEventListener(evt, () => { isDown = false; }));
+
+    track.addEventListener("mousemove", e => {
+        if (!isDown) return;
+        e.preventDefault();
+        track.scrollLeft = scrollStart - (e.pageX - startX);
+    });
+
+    if (!reduceMotion) {
+        (function autoScroll() {
+            if (!isDown && !isHovered) {
+                track.scrollLeft += speed * direction;
+                if (track.scrollLeft >= setWidth) {
+                    track.scrollLeft -= setWidth;
+                } else if (track.scrollLeft <= 0) {
+                    track.scrollLeft += setWidth;
+                }
+            }
+            requestAnimationFrame(autoScroll);
+        })();
+    }
+});
+
 
 const beritaSection = document.querySelector(".berita");
 
@@ -3229,6 +3470,21 @@ aksesObserver.observe(aksesSection);
     syncBatikOffset();
     window.addEventListener("resize", syncBatikOffset);
     window.addEventListener("load", syncBatikOffset);
+
+    // .layanan masih punya animasi reveal (translateY 60px -> 0) yang baru jalan belakangan
+    // saat section-nya discroll ke viewport — posisi di atas dihitung sebelum animasi itu selesai,
+    // jadi begitu section-nya bergeser naik, pola batiknya jadi tidak nyambung lagi. Resync tiap
+    // frame selama animasi reveal berlangsung supaya polanya tetap menyambung sampai posisi akhir.
+    const revealObserver = new MutationObserver(() => {
+        if (!layanan.classList.contains("show")) return;
+        revealObserver.disconnect();
+        const start = performance.now();
+        (function tick(now) {
+            syncBatikOffset();
+            if (now - start < 950) requestAnimationFrame(tick);
+        })(start);
+    });
+    revealObserver.observe(layanan, { attributes: true, attributeFilter: ["class"] });
 })();
 
 // ---- Parallax: dari hero sampai galeri, dengan easing supaya gerakannya halus & natural ----

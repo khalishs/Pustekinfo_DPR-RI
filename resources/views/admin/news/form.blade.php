@@ -56,9 +56,9 @@
       <div class="form-group form-span-2">
         <label>Gambar</label>
         @if($newsItem->image)
-          <img src="{{ asset('storage/'.$newsItem->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
+          <img src="{{ asset($newsItem->image) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
         @endif
-        <input type="file" name="image" accept="image/png">
+        <input type="file" name="image" accept="image/png" data-min-kb="2048" data-max-kb="10240">
         <small>Format PNG, ukuran 2–10 MB.</small>
         @error('image')<small class="error">{{ $message }}</small>@enderror
         <small>Kosongkan jika tidak ingin mengganti gambar.</small>
@@ -83,6 +83,12 @@
         <label><input type="checkbox" name="is_featured" value="1" style="width:auto;display:inline-block;" {{ old('is_featured', $newsItem->is_featured) ? 'checked' : '' }}> Jadikan berita utama (featured)</label>
         @error('is_featured')<small class="error">{{ $message }}</small>@enderror
         <small>Cuma satu berita yang bisa jadi berita utama. Batalkan berita utama yang aktif dulu untuk memindahkannya.</small>
+      </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_active" value="1" style="width:auto;display:inline-block;" {{ old('is_active', $newsItem->exists ? $newsItem->is_active : true) ? 'checked' : '' }}> Status aktif</label>
+        @error('is_active')<small class="error">{{ $message }}</small>@enderror
+        <small>Berita nonaktif tidak akan tampil di halaman mana pun untuk pengunjung situs.</small>
       </div>
     </div>
 

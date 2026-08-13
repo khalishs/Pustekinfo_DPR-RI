@@ -8,9 +8,15 @@
 
     <div class="form-grid">
       <div class="form-group">
-        <label class="required">Nama Pimpinan</label>
-        <input type="text" name="name" value="{{ old('name', $leadership->name) }}" required>
+        <label>Nama Pimpinan</label>
+        <input type="text" name="name" value="{{ old('name', $leadership->name) }}" placeholder="Nama lengkap beserta gelar">
         @error('name')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="show_name" value="1" style="width:auto;display:inline-block;" {{ old('show_name', $leadership->show_name ?? false) ? 'checked' : '' }}> Tampilkan nama</label>
+        @error('show_name')<small class="error">{{ $message }}</small>@enderror
+        <small>Nama cuma muncul di section Sambutan Pimpinan kalau kotak ini dicentang DAN kolom Nama di atas terisi.</small>
       </div>
 
       <div class="form-group">
@@ -21,9 +27,9 @@
       <div class="form-group form-span-2">
         <label>Foto Pimpinan</label>
         @if($leadership->photo)
-          <img src="{{ asset('storage/'.$leadership->photo) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
+          <img src="{{ asset($leadership->photo) }}" style="width:160px;border-radius:8px;margin-bottom:10px;display:block;">
         @endif
-        <input type="file" name="photo" accept="image/png">
+        <input type="file" name="photo" accept="image/png" data-min-kb="2048" data-max-kb="10240">
         <small>Format PNG, ukuran 2–10 MB.</small>
         @error('photo')<small class="error">{{ $message }}</small>@enderror
         <small>Kosongkan jika tidak ingin mengganti foto.</small>

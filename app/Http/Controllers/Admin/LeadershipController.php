@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Leadership;
+use App\Models\Media;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class LeadershipController extends Controller
 {
@@ -19,7 +19,8 @@ class LeadershipController extends Controller
     public function update(Request $request)
 {
     $data = $request->validate([
-        'name'              => 'required|string|max:255',
+        'name'              => 'nullable|string|max:255',
+        'show_name'         => 'sometimes|boolean',
         'position'          => 'required|string|max:255',
         'welcome_title'     => 'required|string|max:255',
         'welcome_title_en'  => 'nullable|string|max:255',
@@ -37,13 +38,13 @@ class LeadershipController extends Controller
         'photo'             => 'nullable|image|mimes:png|min:2048|max:10240',
     ]);
 
+    $data['show_name'] = $request->boolean('show_name');
+
     $leadership = Leadership::first() ?? new Leadership();
 
     if ($request->hasFile('photo')) {
-        if ($leadership->photo) {
-            Storage::disk('public')->delete($leadership->photo);
-        }
-        $data['photo'] = $request->file('photo')->store('sambutan', 'public');
+        Media::deleteRef($leadership->photo);
+        $data['photo'] = Media::storeUpload($request->file('photo'));
     }
 
     $leadership->fill($data)->save();

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Media;
 use App\Models\Service;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -27,7 +27,8 @@ class ServiceController extends Controller
     {
         $data = $this->validated($request, true);
         $data['title'] = ucfirst($data['title']);
-        $data['icon_image'] = $request->file('icon_image')->store('layanan', 'public');
+        $data['icon_image'] = Media::storeUpload($request->file('icon_image'));
+        $data['is_active'] = $request->boolean('is_active');
 
         Service::create($data);
 
@@ -43,12 +44,11 @@ class ServiceController extends Controller
     {
         $data = $this->validated($request, false);
         $data['title'] = ucfirst($data['title']);
+        $data['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('icon_image')) {
-            if ($service->icon_image) {
-                Storage::disk('public')->delete($service->icon_image);
-            }
-            $data['icon_image'] = $request->file('icon_image')->store('layanan', 'public');
+            Media::deleteRef($service->icon_image);
+            $data['icon_image'] = Media::storeUpload($request->file('icon_image'));
         }
 
         $service->update($data);
@@ -56,11 +56,31 @@ class ServiceController extends Controller
         return redirect()->route('admin.services.index')->with('success', 'Layanan diperbarui.');
     }
 
+    public function toggleActive(Service $service)
+    {
+        $newState = ! $service->is_active;
+        $service->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.services.index')->with(
+            'success',
+            $newState ? 'Layanan diaktifkan kembali dan akan tampil ke pengguna.' : 'Layanan dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
+    }
+
+    public function duplicate(Service $service)
+    {
+        $copy = $service->replicate();
+        $copy->title = $service->title . ' (Salinan)';
+        $copy->icon_image = null;
+        $copy->is_active = false;
+        $copy->save();
+
+        return redirect()->route('admin.services.edit', $copy)->with('success', 'Layanan berhasil disalin. Unggah ikon baru, sesuaikan datanya, lalu aktifkan.');
+    }
+
     public function destroy(Service $service)
     {
-        if ($service->icon_image) {
-            Storage::disk('public')->delete($service->icon_image);
-        }
+        Media::deleteRef($service->icon_image);
         $service->delete();
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan dihapus.');
@@ -79,6 +99,7 @@ class ServiceController extends Controller
             'cta_text'       => 'required|string|max:255',
             'cta_text_en'    => 'nullable|string|max:255',
             'sort_order'     => 'required|integer',
+            'is_active'      => 'sometimes|boolean',
         ]);
 
         $data['features'] = collect(preg_split('/\r\n|\r|\n/', (string) $data['features']))

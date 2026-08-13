@@ -25,7 +25,7 @@ class GaleriController extends Controller
     public function categories(): JsonResponse
     {
         return response()->json([
-            'data' => GalleryCategory::withCount('items')->orderBy('sort_order')->get(),
+            'data' => GalleryCategory::where('is_active', true)->withCount('items')->orderBy('sort_order')->get(),
         ]);
     }
 }

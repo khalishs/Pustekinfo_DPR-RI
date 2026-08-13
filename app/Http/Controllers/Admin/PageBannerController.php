@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Media;
 use App\Models\PageBanner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageBannerController extends Controller
@@ -31,11 +31,9 @@ class PageBannerController extends Controller
 
         $banner = PageBanner::firstOrNew(['page' => $page]);
 
-        if ($banner->image) {
-            Storage::disk('public')->delete($banner->image);
-        }
+        Media::deleteRef($banner->image);
 
-        $banner->image = $request->file('image')->store('banners', 'public');
+        $banner->image = Media::storeUpload($request->file('image'));
         $banner->save();
 
         return redirect()->route('admin.page-banners.edit', $page)
@@ -49,9 +47,7 @@ class PageBannerController extends Controller
         $banner = PageBanner::where('page', $page)->first();
 
         if ($banner) {
-            if ($banner->image) {
-                Storage::disk('public')->delete($banner->image);
-            }
+            Media::deleteRef($banner->image);
             $banner->delete();
         }
 

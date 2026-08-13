@@ -44,6 +44,7 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikTintTeal);
+    opacity:.05;
   }
   @media (max-width:900px){
     body{background-size:3000px auto;}
@@ -102,8 +103,8 @@
     height:50px;
     object-fit:contain;
   }
-  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
-    transform-origin:left center;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;
+    pointer-events:none;}
   .nav-links{display:flex;align-items:center;gap:34px;}
 
   .nav-links li a{
@@ -252,7 +253,7 @@
 
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
 
     .burger{
       display:none;
@@ -372,9 +373,10 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikBoostLight);
+    opacity:.05;
   }
   [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
-  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.4;}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.05;}
   @media (max-width:900px){
     .konten-batik::before{background-size:3000px auto;}
   }
@@ -562,6 +564,8 @@
     font-family:inherit;
   }
   .form-field.full{grid-column:1/-1;}
+  .form-field small.error{display:block;margin-top:6px;color:#c0392b;font-size:12px;font-weight:600;}
+  [data-theme="dark"] .form-field small.error{color:#ff8f8a;}
 
   .kontak-form-footer{
     margin-top:26px;
@@ -706,6 +710,9 @@
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
 
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  .navbar-logo-dark{display:none;}
+  [data-theme="dark"] .navbar-logo-light{display:none;}
+  [data-theme="dark"] .navbar-logo-dark{display:block;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -766,7 +773,7 @@
   [data-theme="dark"] .form-field input,
   [data-theme="dark"] .form-field select,
   [data-theme="dark"] .form-field textarea{
-    background:#0b1720;
+    background-color:#0b1720;
     border-color:rgba(255,255,255,.14);
     color:#c3cdd2;
   }
@@ -826,17 +833,19 @@
         0 0 0 4.5 0"/>
     </filter>
     <filter id="batikBoostLight">
-      <feColorMatrix type="saturate" values="2.2"/>
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="2.6" intercept="0"/>
-      </feComponentTransfer>
+      <feColorMatrix type="matrix" values="
+        0 0 0 0 0.0784
+        0 0 0 0 0.5137
+        0 0 0 0 0.6118
+        0 0 0 2.6 0"/>
     </filter>
   </svg>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
@@ -865,7 +874,7 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Contact&lt;/span&gt;">Beranda / <span>Kontak</span></p>
       <h1 data-en-html="We're ready to <span class=&quot;accent&quot;>help you</span>">Kami siap <span class="accent">membantu Anda</span></h1>
@@ -940,34 +949,39 @@
           <div class="form-row">
             <div class="form-field">
               <label for="nama" class="required" data-en="Full name">Nama lengkap</label>
-              <input type="text" id="nama" name="nama" placeholder="Nama Anda" data-en-placeholder="Your name" required>
+              <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s]+" title="Nama hanya boleh berisi huruf" required>
+              @error('nama')<small class="error">{{ $message }}</small>@enderror
             </div>
             <div class="form-field">
               <label for="email" class="required">Email</label>
-              <input type="email" id="email" name="email" placeholder="nama@email.com" required>
+              <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="nama@email.com" required>
+              @error('email')<small class="error">{{ $message }}</small>@enderror
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-field">
               <label for="instansi" data-en="Work unit / Institution">Unit kerja / Instansi</label>
-              <input type="text" id="instansi" name="instansi" placeholder="Opsional" data-en-placeholder="Optional">
+              <input type="text" id="instansi" name="instansi" value="{{ old('instansi') }}" placeholder="Opsional" data-en-placeholder="Optional">
+              @error('instansi')<small class="error">{{ $message }}</small>@enderror
             </div>
             <div class="form-field">
               <label for="kategori" data-en="Category">Kategori</label>
               <select id="kategori" name="kategori">
-                <option value="umum" data-en="General question">Pertanyaan umum</option>
-                <option value="teknis" data-en="Technical support">Bantuan teknis</option>
-                <option value="kerjasama" data-en="Partnership">Kerja sama</option>
-                <option value="pengaduan" data-en="Complaint">Pengaduan</option>
+                <option value="umum" data-en="General question" @selected(old('kategori', 'umum') === 'umum')>Pertanyaan umum</option>
+                <option value="teknis" data-en="Technical support" @selected(old('kategori') === 'teknis')>Bantuan teknis</option>
+                <option value="kerjasama" data-en="Partnership" @selected(old('kategori') === 'kerjasama')>Kerja sama</option>
+                <option value="pengaduan" data-en="Complaint" @selected(old('kategori') === 'pengaduan')>Pengaduan</option>
               </select>
+              @error('kategori')<small class="error">{{ $message }}</small>@enderror
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-field full">
               <label for="pesan" class="required" data-en="Message">Pesan</label>
-              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." required></textarea>
+              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." required>{{ old('pesan') }}</textarea>
+              @error('pesan')<small class="error">{{ $message }}</small>@enderror
             </div>
           </div>
 
@@ -1170,6 +1184,13 @@
     }
     observeSection(".kontak-page", 0.1);
     observeSection(".lokasi", 0.15);
+
+    const namaInput = document.getElementById("nama");
+    if (namaInput) {
+        namaInput.addEventListener("input", () => {
+            namaInput.value = namaInput.value.replace(/[^A-Za-z\s]/g, "");
+        });
+    }
 
   </script>
 

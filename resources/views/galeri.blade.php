@@ -32,10 +32,11 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikBoostLight);
+    opacity:.05;
   }
   [data-theme="dark"] body::before{
     filter:url(#batikTintTeal);
-    opacity:.4;
+    opacity:.05;
   }
   @media (max-width:900px){
     body::before{background-size:3000px auto;}
@@ -45,8 +46,8 @@
   ul{list-style:none;}
   h1,h2,.stat-num,.sorotan-title{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
 
-  .navbar-logo{height:50px;width:auto;object-fit:contain; transform:scale(4.9); /* 1.2 - 1.8 sesuaikan */
-    transform-origin:left center;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;
+    pointer-events:none;}
   .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
@@ -113,7 +114,7 @@
     .nav-links li.active::after{display:none;}
     .burger{display:flex;}
     .brand-logo{width:36px;height:36px;}
-    .navbar-logo{height:32px;width:auto;}
+    .navbar-logo{height:32px;width:122px;}
   }
 
   /* ---------- Hero / Page Banner (sama seperti Profil, Layanan, Informasi) ---------- */
@@ -302,6 +303,9 @@
 
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  .navbar-logo-dark{display:none;}
+  [data-theme="dark"] .navbar-logo-light{display:none;}
+  [data-theme="dark"] .navbar-logo-dark{display:block;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .lang-btn,[data-theme="dark"] .galeri-filter,[data-theme="dark"] .load-more a{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
@@ -322,17 +326,19 @@
         0 0 0 4.5 0"/>
     </filter>
     <filter id="batikBoostLight">
-      <feColorMatrix type="saturate" values="2.2"/>
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="2.6" intercept="0"/>
-      </feComponentTransfer>
+      <feColorMatrix type="matrix" values="
+        0 0 0 0 0.0784
+        0 0 0 0 0.5137
+        0 0 0 0 0.6118
+        0 0 0 2.6 0"/>
     </filter>
   </svg>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
@@ -358,7 +364,7 @@
     </div>
   </nav>
 
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Gallery&lt;/span&gt;">Beranda / <span>Galeri</span></p>
       <h1 data-en-html="Documentation of <span class=&quot;accent&quot;>Our Activities</span>">Dokumentasi <span class="accent">Kegiatan Kami</span></h1>
@@ -415,7 +421,7 @@
       <div class="galeri-main">
         @if($featured)
           <div class="sorotan-card">
-            <img src="{{ asset('storage/'.$featured->image) }}" alt="{{ $featured->title }}">
+            <img src="{{ asset($featured->image) }}" alt="{{ $featured->title }}">
             <div class="inner">
               <span class="sorotan-badge" data-en="HIGHLIGHT">SOROTAN</span>
               <div class="sorotan-title" data-en="{{ $featured->title_en ?: $featured->title }}">{{ $featured->title }}</div>
@@ -429,7 +435,7 @@
         <div class="galeri-grid">
           @forelse($items as $item)
             <div class="galeri-card">
-              <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}">
+              <img src="{{ asset($item->image) }}" alt="{{ $item->title }}">
               @if($item->category)
                 <span class="cat-badge" data-en="{{ $item->category->name_en ?: $item->category->name }}">{{ $item->category->name }}</span>
               @endif

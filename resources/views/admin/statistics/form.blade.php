@@ -5,18 +5,16 @@
   <form action="{{ $statistic->exists ? route('admin.statistics.update', $statistic) : route('admin.statistics.store') }}" method="POST">
     @csrf
     @if($statistic->exists) @method('PUT') @endif
+
     <div class="form-grid">
-      <div class="form-group">
-        <label class="required">Kategori</label>
-        <select name="key" required>
-          <option value="">— Pilih kategori —</option>
-          <option value="apps" {{ old('key', $statistic->key) == 'apps' ? 'selected' : '' }}>Aplikasi Terkelola</option>
-          <option value="karyawan" {{ old('key', $statistic->key) == 'karyawan' ? 'selected' : '' }}>Karyawan Pustekinfo</option>
-          <option value="pengguna" {{ old('key', $statistic->key) == 'pengguna' ? 'selected' : '' }}>Pengguna Terlayani</option>
-          <option value="spbe" {{ old('key', $statistic->key) == 'spbe' ? 'selected' : '' }}>Indeks SPBE</option>
-        </select>
-        @error('key')<small class="error">{{ $message }}</small>@enderror
-        <small>Menentukan ikon yang tampil di beranda. Idealnya cuma 1 data per kategori.</small>
+      <div class="form-group form-span-2">
+        <label class="required">Kode SVG ikon</label>
+        <textarea name="icon_svg" id="iconSvgInput" rows="3" style="font-family:monospace;font-size:12.5px;" required>{{ old('icon_svg', $statistic->icon_svg) }}</textarea>
+        @error('icon_svg')<small class="error">{{ $message }}</small>@enderror
+        <small>Isi elemen SVG-nya saja (tanpa tag &lt;svg&gt; pembungkus), contoh: <code>&lt;circle cx="12" cy="12" r="9"/&gt;</code>. Tag yang diizinkan: path, rect, circle, ellipse, line, polygon, polyline, g. Viewbox mengikuti "0 0 24 24".</small>
+        <div style="margin-top:10px;width:48px;height:48px;border-radius:12px;background:rgba(20,128,140,.1);display:flex;align-items:center;justify-content:center;">
+          <svg id="iconSvgPreview" viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--teal);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;">{!! old('icon_svg', $statistic->icon_svg) !!}</svg>
+        </div>
       </div>
 
       <div class="form-group">
@@ -45,6 +43,12 @@
         <label class="required">Urutan tampil</label>
         <input type="number" name="sort_order" value="{{ old('sort_order', $statistic->sort_order ?? 0) }}" required>
       </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_active" value="1" style="width:auto;display:inline-block;" {{ old('is_active', $statistic->exists ? $statistic->is_active : true) ? 'checked' : '' }}> Status aktif</label>
+        @error('is_active')<small class="error">{{ $message }}</small>@enderror
+        <small>Statistik nonaktif tidak akan tampil di halaman mana pun untuk pengunjung situs.</small>
+      </div>
     </div>
 
     <div class="form-actions">
@@ -53,4 +57,10 @@
     </div>
   </form>
 </div>
+
+<script>
+  document.getElementById('iconSvgInput').addEventListener('input', function () {
+    document.getElementById('iconSvgPreview').innerHTML = this.value;
+  });
+</script>
 @endsection

@@ -252,8 +252,8 @@
   .table-responsive{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
   .table-responsive table{min-width:620px;}
   table{width:100%;border-collapse:collapse;}
-  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle;}
-  th{color:#8a97a0;font-weight:800;text-transform:uppercase;font-size:10.5px;letter-spacing:.06em;}
+  th,td{text-align:left;padding:13px 14px;border-bottom:1.5px solid #d3dde1;font-size:13.5px;vertical-align:middle;}
+  th{color:#8a97a0;font-weight:800;text-transform:uppercase;font-size:10.5px;letter-spacing:.06em;border-bottom:2px solid #becad0;}
   tbody tr{transition:background .12s ease;}
   tbody tr:hover{background:#fafcfd;}
   tbody tr:last-child td{border-bottom:none;}
@@ -273,6 +273,19 @@
   .btn-danger:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
   .btn-outline{background:#fff;border-color:var(--line);color:#5b6b73;}
   .btn-outline:hover{border-color:var(--teal);color:var(--teal);}
+
+  .btn-icon{
+    display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+    width:34px;height:34px;border-radius:9px;padding:0;
+    border:1.5px solid var(--line);background:#fff;color:#5b6b73;
+    cursor:pointer;transition:transform .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn-icon:hover{transform:translateY(-2px);}
+  .btn-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .btn-icon-edit:hover{border-color:var(--teal);color:var(--teal);background:rgba(20,128,140,.08);}
+  .btn-icon-copy:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,163,78,.1);}
+  .btn-icon-delete{border-color:#e3b8b8;color:var(--danger);}
+  .btn-icon-delete:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
 
   .form-group{margin-bottom:18px;max-width:560px;}
 
@@ -299,13 +312,30 @@
   small.error{color:var(--danger);display:block;margin-top:5px;font-weight:600;}
   small{color:#8a97a0;}
 
-  .row-actions{display:flex;gap:8px;}
+  /* .row-actions dipasang langsung di <td>. Sengaja BUKAN display:flex — sebuah <td>
+     yang di-flex-kan berhenti ikut aturan tinggi baris tabel normal (jadi cuma setinggi
+     kontennya sendiri, bukan setinggi baris), sehingga tombolnya nangkring di atas kalau
+     ada sel lain di baris yang sama yang lebih tinggi (judul 2 baris, dst). Dengan tetap
+     jadi table-cell biasa, vertical-align:middle bawaan th/td di atas otomatis berlaku. */
+  .row-actions{white-space:nowrap;}
+  .row-actions > a{vertical-align:middle;}
+  .row-actions > form{display:inline-block;vertical-align:middle;margin-left:8px;}
+  .row-actions > :first-child{margin-left:0;}
   .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(20,128,140,.1);color:var(--teal);border:1px solid rgba(20,128,140,.14);}
   .badge-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 8px;border-radius:20px;background:var(--mist);color:#5b6b73;font-size:12px;font-weight:800;border:1px solid var(--line);}
   .badge-success{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(31,157,124,.1);color:var(--success);border:1px solid rgba(31,157,124,.18);}
   .badge-muted{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:var(--mist);color:#8a97a0;border:1px solid var(--line);}
   .cap{text-transform:capitalize;}
   th.text-center,td.text-center{text-align:center;}
+
+  .toggle-switch{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0;margin:0;}
+  .toggle-switch input[type="checkbox"]{position:absolute;opacity:0;width:100%;height:100%;margin:0;padding:0;border:none;cursor:pointer;}
+  .toggle-switch .slider{position:absolute;inset:0;background:#d7dde0;border-radius:24px;transition:background .2s ease;pointer-events:none;}
+  .toggle-switch .slider::before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s ease;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  .toggle-switch input:checked + .slider{background:var(--teal);}
+  .toggle-switch input:checked + .slider::before{transform:translateX(18px);}
+  .toggle-switch input:focus-visible + .slider{box-shadow:0 0 0 3px rgba(20,128,140,.25);}
+  [data-theme="dark"] .toggle-switch .slider{background:rgba(255,255,255,.15);}
 
   /* ---------- Dashboard stats ---------- */
   .stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-bottom:20px;}
@@ -361,11 +391,17 @@
   [data-theme="dark"] .flash{background:rgba(31,157,124,.13);color:#6fd6b3;border-color:rgba(31,157,124,.26);}
   [data-theme="dark"] .flash-error{background:rgba(176,65,62,.15);color:#e79a97;border-color:rgba(176,65,62,.32);}
   [data-theme="dark"] .card{background:#24282d;border-color:rgba(255,255,255,.06);box-shadow:0 8px 28px -16px rgba(0,0,0,.4);}
-  [data-theme="dark"] th{color:#8b929a;}
+  [data-theme="dark"] th{color:#8b929a;border-bottom-color:rgba(255,255,255,.22);}
+  [data-theme="dark"] td{border-bottom-color:rgba(255,255,255,.13);}
   [data-theme="dark"] tbody tr:hover{background:rgba(255,255,255,.025);}
   [data-theme="dark"] .btn-danger{background:transparent;border-color:rgba(176,65,62,.38);}
   [data-theme="dark"] .btn-outline{background:transparent;border-color:rgba(255,255,255,.12);color:#b8bfc4;}
   [data-theme="dark"] .btn-outline:hover{border-color:var(--teal-light);color:var(--teal-light);}
+  [data-theme="dark"] .btn-icon{background:transparent;border-color:rgba(255,255,255,.12);color:#b8bfc4;}
+  [data-theme="dark"] .btn-icon-edit:hover{border-color:var(--teal-light);color:var(--teal-light);background:rgba(20,128,140,.15);}
+  [data-theme="dark"] .btn-icon-copy:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,163,78,.15);}
+  [data-theme="dark"] .btn-icon-delete{border-color:rgba(176,65,62,.38);}
+  [data-theme="dark"] .btn-icon-delete:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
   [data-theme="dark"] input,
   [data-theme="dark"] textarea,
   [data-theme="dark"] select{background:#202429;border-color:rgba(255,255,255,.1);color:var(--ink);}
@@ -405,7 +441,6 @@
     th,td{padding:11px 10px;font-size:12.5px;}
     .form-group{max-width:100%;}
     .form-grid{grid-template-columns:1fr;gap:0;}
-    .row-actions{flex-wrap:wrap;}
   }
 </style>
 </head>
@@ -448,6 +483,10 @@
           <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
           Foto Profil Singkat
         </a>
+        <a href="{{ route('admin.work-items.index') }}" class="{{ request()->routeIs('admin.work-items.*') ? 'active' : '' }}">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          Apa yang Kami Kerjakan
+        </a>
       </details>
 
       <details class="nav-group" open>
@@ -462,6 +501,10 @@
           @if(($pendingLayananCount ?? 0) > 0)
             <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);">{{ $pendingLayananCount }}</span>
           @endif
+        </a>
+        <a href="{{ route('admin.stela-videos.index') }}" class="{{ request()->routeIs('admin.stela-videos.*') ? 'active' : '' }}">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
+          Video Sekilas STELA
         </a>
       </details>
 
@@ -602,6 +645,20 @@
         }
       } catch(e){}
 
+      // Simpan & pulihkan posisi scroll menu sidebar, supaya nggak balik ke atas
+      // tiap kali pindah halaman (browser reset scroll begitu halaman baru dimuat).
+      var sidebarNav = sidebar.querySelector('nav');
+      var NAV_SCROLL_KEY = 'pustekinfo_sidebar_nav_scroll';
+      if (sidebarNav) {
+        try {
+          var savedNavScroll = sessionStorage.getItem(NAV_SCROLL_KEY);
+          if (savedNavScroll !== null) sidebarNav.scrollTop = parseInt(savedNavScroll, 10);
+        } catch(e){}
+        sidebarNav.addEventListener('scroll', function(){
+          try { sessionStorage.setItem(NAV_SCROLL_KEY, String(sidebarNav.scrollTop)); } catch(e){}
+        });
+      }
+
       // Satu tombol burger di topbar: desktop = collapse sidebar, mobile/tablet = drawer off-canvas
       toggle && toggle.addEventListener('click', function(){
         if (window.innerWidth > 1024) {
@@ -681,6 +738,58 @@
         var isDark = document.documentElement.getAttribute('data-theme') !== 'dark';
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
         applyTheme(isDark);
+      });
+
+      // Validasi ukuran & tipe file (foto/video) begitu dipilih, supaya user tahu
+      // dari awal kalau filenya kurang/lebih dari limit — bukan setelah klik Simpan.
+      document.querySelectorAll('input[type="file"][data-max-kb]').forEach(function (input) {
+        var minKb = parseInt(input.dataset.minKb || '0', 10);
+        var maxKb = parseInt(input.dataset.maxKb, 10);
+        var allowedExt = input.dataset.ext ? input.dataset.ext.split(',') : null;
+
+        var errorEl = input.nextElementSibling;
+        if (!errorEl || errorEl.tagName !== 'SMALL' || !errorEl.classList.contains('error')) {
+          errorEl = document.createElement('small');
+          errorEl.className = 'error';
+          errorEl.style.display = 'none';
+          input.insertAdjacentElement('afterend', errorEl);
+        }
+        // Kalau errorEl sudah ada dari server (@@error blade), biarkan tampil apa adanya
+        // sampai user memilih file baru — jangan langsung disembunyikan saat load.
+
+        function formatSize(kb) {
+          return kb >= 1024 ? (Math.round((kb / 1024) * 10) / 10) + 'MB' : kb + 'KB';
+        }
+
+        function showError(msg) {
+          errorEl.textContent = msg;
+          errorEl.style.display = 'block';
+          input.value = '';
+        }
+
+        input.addEventListener('change', function () {
+          errorEl.style.display = 'none';
+          var file = input.files && input.files[0];
+          if (!file) return;
+
+          if (allowedExt) {
+            var ext = file.name.split('.').pop().toLowerCase();
+            if (allowedExt.indexOf(ext) === -1) {
+              showError('Format file tidak didukung. Gunakan: ' + allowedExt.join(', ').toUpperCase() + '.');
+              return;
+            }
+          }
+
+          var sizeKb = file.size / 1024;
+          if (sizeKb > maxKb) {
+            showError('Ukuran file terlalu besar (maks ' + formatSize(maxKb) + '). File Anda: ' + formatSize(Math.round(sizeKb)) + '.');
+            return;
+          }
+          if (minKb > 0 && sizeKb < minKb) {
+            showError('Ukuran file terlalu kecil (min ' + formatSize(minKb) + '). File Anda: ' + formatSize(Math.round(sizeKb)) + '.');
+            return;
+          }
+        });
       });
     })();
   </script>

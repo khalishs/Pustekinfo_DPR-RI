@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\OrganizationMember;
+use App\Models\Media;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class OrganizationMemberController extends Controller
 {
@@ -24,9 +24,12 @@ class OrganizationMemberController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request);
+        $data['is_active'] = $request->boolean('is_active');
+        $data['show_name'] = $request->boolean('show_name');
+        $data['show_photo'] = $request->boolean('show_photo');
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('organisasi', 'public');
+            $data['photo'] = Media::storeUpload($request->file('photo'));
         }
 
         OrganizationMember::create($data);
@@ -42,12 +45,13 @@ class OrganizationMemberController extends Controller
     public function update(Request $request, OrganizationMember $organizationMember)
     {
         $data = $this->validated($request);
+        $data['is_active'] = $request->boolean('is_active');
+        $data['show_name'] = $request->boolean('show_name');
+        $data['show_photo'] = $request->boolean('show_photo');
 
         if ($request->hasFile('photo')) {
-            if ($organizationMember->photo) {
-                Storage::disk('public')->delete($organizationMember->photo);
-            }
-            $data['photo'] = $request->file('photo')->store('organisasi', 'public');
+            Media::deleteRef($organizationMember->photo);
+            $data['photo'] = Media::storeUpload($request->file('photo'));
         }
 
         $organizationMember->update($data);
@@ -55,11 +59,20 @@ class OrganizationMemberController extends Controller
         return redirect()->route('admin.organization-members.index')->with('success', 'Anggota organisasi diperbarui.');
     }
 
+    public function toggleActive(OrganizationMember $organizationMember)
+    {
+        $newState = ! $organizationMember->is_active;
+        $organizationMember->update(['is_active' => $newState]);
+
+        return redirect()->route('admin.organization-members.index')->with(
+            'success',
+            $newState ? 'Anggota diaktifkan kembali dan akan tampil ke pengguna.' : 'Anggota dinonaktifkan dan tidak akan tampil ke pengguna.'
+        );
+    }
+
     public function destroy(OrganizationMember $organizationMember)
     {
-        if ($organizationMember->photo) {
-            Storage::disk('public')->delete($organizationMember->photo);
-        }
+        Media::deleteRef($organizationMember->photo);
         $organizationMember->delete();
 
         return redirect()->route('admin.organization-members.index')->with('success', 'Anggota organisasi dihapus.');
@@ -68,14 +81,17 @@ class OrganizationMemberController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
-            'name'                => 'required|string|max:255',
+            'name'                => 'nullable|string|max:255',
+            'show_name'           => 'sometimes|boolean',
             'position'            => 'required|string|max:255',
             'position_en'         => 'nullable|string|max:255',
             'unit_description'    => 'nullable|string',
             'unit_description_en' => 'nullable|string',
-            'level'               => 'required|in:kepala,sekretariat,bidang',
+            'level'               => 'required|in:kepala,bidang',
             'sort_order'          => 'required|integer',
             'photo'               => 'nullable|image|mimes:png|min:2048|max:10240',
+            'show_photo'          => 'sometimes|boolean',
+            'is_active'           => 'sometimes|boolean',
         ]);
     }
 }

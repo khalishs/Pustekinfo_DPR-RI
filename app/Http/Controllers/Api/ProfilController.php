@@ -22,7 +22,7 @@ class ProfilController extends Controller
     public function organizationMembers(): JsonResponse
     {
         return response()->json([
-            'data' => OrganizationMember::orderBy('sort_order')->get(),
+            'data' => OrganizationMember::where('is_active', true)->orderBy('sort_order')->get(),
         ]);
     }
 
@@ -43,14 +43,14 @@ class ProfilController extends Controller
     public function coreValues(): JsonResponse
     {
         return response()->json([
-            'data' => CoreValue::orderBy('sort_order')->get(),
+            'data' => CoreValue::where('is_active', true)->orderBy('sort_order')->get(),
         ]);
     }
 
     public function timeline(): JsonResponse
     {
         return response()->json([
-            'data' => TimelineItem::orderBy('sort_order')->get(),
+            'data' => TimelineItem::where('is_active', true)->orderBy('sort_order')->get(),
         ]);
     }
 }

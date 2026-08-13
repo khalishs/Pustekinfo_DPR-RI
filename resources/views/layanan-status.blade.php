@@ -41,6 +41,7 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikTintTeal);
+    opacity:.05;
   }
   @media (max-width:900px){
     body{background-size:3000px auto;}
@@ -69,7 +70,7 @@
   }
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .navbar-logo{height:50px;width:auto;object-fit:contain;transform:scale(4.9);transform-origin:left center;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;pointer-events:none;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
   .nav-links li.active a{color:var(--teal);}
@@ -104,7 +105,7 @@
     .nav-links{display:none;}
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
     .burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;background:var(--white);cursor:pointer;align-items:center;}
     .burger span{width:16px;height:2px;background:#3c4a52;border-radius:2px;transition:.25s ease;}
     .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
@@ -182,9 +183,10 @@
     background-image:url('{{ asset('images/group-batik.png') }}');
     background-repeat:no-repeat;background-position:center top;background-size:10000px auto;
     filter:url(#batikBoostLight);
+    opacity:.05;
   }
   [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
-  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.4;}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.05;}
   @media (max-width:900px){.konten-batik::before{background-size:3000px auto;}}
 
   /* ---------- Cek status ---------- */
@@ -284,6 +286,9 @@
   [data-theme="dark"] html{background:#0b1720;}
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  .navbar-logo-dark{display:none;}
+  [data-theme="dark"] .navbar-logo-light{display:none;}
+  [data-theme="dark"] .navbar-logo-dark{display:block;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -335,13 +340,14 @@
 
   <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
     <filter id="batikTintTeal"><feColorMatrix type="matrix" values="0 0 0 0 0.0784 0 0 0 0 0.5137 0 0 0 0 0.6118 0 0 0 4.5 0"/></filter>
-    <filter id="batikBoostLight"><feColorMatrix type="saturate" values="2.2"/><feComponentTransfer><feFuncA type="linear" slope="2.6" intercept="0"/></feComponentTransfer></filter>
+    <filter id="batikBoostLight"><feColorMatrix type="matrix" values="0 0 0 0 0.0784 0 0 0 0 0.5137 0 0 0 0 0.6118 0 0 0 2.6 0"/></filter>
   </svg>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
@@ -364,7 +370,7 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt; / &lt;span&gt;Check Status&lt;/span&gt;">Beranda / <span>Layanan</span> / <span>Cek Status</span></p>
       <h1 data-en-html="Check your <span class=&quot;accent&quot;>request status</span>">Cek status <span class="accent">pengajuan Anda</span></h1>

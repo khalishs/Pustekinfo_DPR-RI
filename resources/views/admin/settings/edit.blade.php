@@ -56,6 +56,7 @@
         <small>Buka Google Maps &rarr; Bagikan &rarr; Sematkan peta &rarr; salin kode iframe &rarr; ambil hanya nilai atribut <code>src="..."</code>-nya, lalu tempel di sini. Kosongkan untuk memakai peta default.</small>
         @error('maps_embed_url')<small class="error">{{ $message }}</small>@enderror
       </div>
+
     </div>
 
     <div class="form-actions">

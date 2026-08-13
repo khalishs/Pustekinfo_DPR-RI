@@ -50,9 +50,9 @@
       <div class="form-group form-span-2">
         <label class="{{ $service->exists ? '' : 'required' }}">Gambar Ikon</label>
         @if($service->icon_image)
-          <img src="{{ asset('storage/'.$service->icon_image) }}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;margin-bottom:10px;display:block;background:#f1f4f5;">
+          <img src="{{ asset($service->icon_image) }}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;margin-bottom:10px;display:block;background:#f1f4f5;">
         @endif
-        <input type="file" name="icon_image" accept="image/png" {{ $service->exists ? '' : 'required' }}>
+        <input type="file" name="icon_image" accept="image/png" data-min-kb="2048" data-max-kb="10240" {{ $service->exists ? '' : 'required' }}>
         <small>Format PNG, ukuran 2–10 MB.</small>
         @error('icon_image')<small class="error">{{ $message }}</small>@enderror
         @if($service->exists)<small>Kosongkan jika tidak ingin mengganti gambar.</small>@endif
@@ -75,6 +75,12 @@
         <label class="required">Urutan tampil</label>
         <input type="number" name="sort_order" value="{{ old('sort_order', $service->sort_order ?? 0) }}" required>
         @error('sort_order')<small class="error">{{ $message }}</small>@enderror
+      </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="is_active" value="1" style="width:auto;display:inline-block;" {{ old('is_active', $service->exists ? $service->is_active : true) ? 'checked' : '' }}> Status aktif</label>
+        @error('is_active')<small class="error">{{ $message }}</small>@enderror
+        <small>Layanan nonaktif tidak akan tampil di halaman mana pun untuk pengunjung situs.</small>
       </div>
     </div>
 

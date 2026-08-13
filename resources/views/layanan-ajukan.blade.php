@@ -41,6 +41,7 @@
     background-position:center top;
     background-size:10000px auto;
     filter:url(#batikTintTeal);
+    opacity:.05;
   }
   @media (max-width:900px){
     body{background-size:3000px auto;}
@@ -74,7 +75,7 @@
   }
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
-  .navbar-logo{height:50px;width:auto;object-fit:contain;transform:scale(4.9);transform-origin:left center;}
+  .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;pointer-events:none;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links li a{font-family: 'Plus Jakarta Sans', system-ui, sans-serif;font-size:14.5px;font-weight:600;color:#3c4a52;display:flex;align-items:center;gap:4px;}
   .nav-links li.active a{color:var(--teal);}
@@ -109,7 +110,7 @@
     .nav-links{display:none;}
     .brand{gap:8px;min-width:0;}
     .brand-logo{width:36px;height:36px;flex-shrink:0;}
-    .navbar-logo{height:32px;width:auto;flex-shrink:0;}
+    .navbar-logo{height:32px;width:122px;flex-shrink:0;}
     .burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;background:var(--white);cursor:pointer;align-items:center;}
     .burger span{width:16px;height:2px;background:#3c4a52;border-radius:2px;transition:.25s ease;}
     .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
@@ -187,10 +188,90 @@
     background-image:url('{{ asset('images/group-batik.png') }}');
     background-repeat:no-repeat;background-position:center top;background-size:10000px auto;
     filter:url(#batikBoostLight);
+    opacity:.05;
   }
   [data-theme="dark"] .konten-batik{background-color:#0e1b23;}
-  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.4;}
+  [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.05;}
   @media (max-width:900px){.konten-batik::before{background-size:3000px auto;}}
+
+  /* ---------- Sekilas STELA ---------- */
+  .stela-section{
+    position:relative;
+    max-width:960px;
+    margin:0 auto;
+    padding:70px 24px 70px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(50px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .stela-section.show{opacity:1;transform:translateY(0);}
+  .stela-section .eyebrow{justify-content:center;}
+  .stela-section h2{margin-top:16px;font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.01em;}
+  .stela-section > p{margin:14px auto 0;max-width:560px;color:#5b6b73;font-size:14.5px;line-height:1.75;}
+
+  .stela-card{
+    position:relative;
+    margin-top:44px;
+    padding:14px;
+    border-radius:24px;
+    background:linear-gradient(155deg,var(--navy) 0%,var(--teal) 100%);
+    border:2px solid rgba(255,255,255,.12);
+    box-shadow:0 40px 70px -34px rgba(11,34,51,.4);
+  }
+  .stela-badge{
+    position:absolute;
+    top:-15px;
+    left:32px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 14px;
+    border-radius:999px;
+    background:#FFCE88;
+    color:var(--navy);
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.04em;
+    box-shadow:0 10px 20px -8px rgba(0,0,0,.35);
+    z-index:2;
+  }
+  .stela-badge svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+
+  .stela-video-wrap{
+    position:relative;
+    border-radius:16px;
+    overflow:hidden;
+    background:#000;
+    transition:transform .35s ease;
+  }
+  .stela-video-wrap:hover{transform:scale(1.008);}
+  .stela-video-wrap video{display:block;width:100%;max-height:520px;background:#000;}
+  .stela-video-wrap iframe{display:block;width:100%;aspect-ratio:16/9;border:none;background:#000;}
+
+  .stela-link{
+    margin-top:34px;
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 30px;
+    border-radius:999px;
+    background:linear-gradient(120deg,var(--navy),var(--teal));
+    color:var(--white);
+    font-size:13px;font-weight:700;letter-spacing:.03em;
+    box-shadow:0 16px 30px -14px rgba(7,61,95,.55);
+    transition:transform .25s ease, box-shadow .25s ease, gap .25s ease;
+  }
+  .stela-link:hover{transform:translateY(-3px);box-shadow:0 20px 36px -14px rgba(7,61,95,.65);gap:12px;}
+  .stela-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease;}
+  .stela-link:hover svg{transform:translateX(3px);}
+  @media (max-width:900px){
+    .stela-section{padding:50px 20px 50px;}
+    .stela-section h2{font-size:22px;}
+    .stela-card{padding:10px;border-radius:18px;}
+    .stela-badge{left:16px;top:-13px;padding:6px 12px;font-size:10.5px;}
+  }
+  [data-theme="dark"] .stela-section h2{color:#eaf3f5;}
+  [data-theme="dark"] .stela-section > p{color:#8ea0a8;}
+  [data-theme="dark"] .stela-card{box-shadow:0 40px 70px -34px rgba(0,0,0,.75);}
 
   /* ---------- Ajukan: Info & Form ---------- */
   .ajukan-page{background:rgba(255, 255, 255, 0.2);padding:70px 100px 90px;opacity:0;transform:translateY(60px);transition:opacity .9s ease, transform .9s ease;}
@@ -330,6 +411,9 @@
   [data-theme="dark"] html{background:#0b1720;}
   [data-theme="dark"] body{background-color:#0e1b23;background-image:none;color:#c3cdd2;}
   [data-theme="dark"] .navbar{background:rgba(11,23,32,.92);border-bottom-color:rgba(255,255,255,.08);}
+  .navbar-logo-dark{display:none;}
+  [data-theme="dark"] .navbar-logo-light{display:none;}
+  [data-theme="dark"] .navbar-logo-dark{display:block;}
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .nav-links li a:hover{color:#5FC0D1;}
   [data-theme="dark"] .nav-links li.active a{color:#5FC0D1;}
@@ -357,7 +441,7 @@
   [data-theme="dark"] .ajukan-form-card > p{color:#8ea0a8;}
   [data-theme="dark"] .form-field label{color:#eaf3f5;}
   [data-theme="dark"] .form-field input, [data-theme="dark"] .form-field select, [data-theme="dark"] .form-field textarea{
-    background:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;
+    background-color:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;
   }
   [data-theme="dark"] .form-field input::placeholder, [data-theme="dark"] .form-field textarea::placeholder{color:#8ea0a8;}
   [data-theme="dark"] .form-field input:focus, [data-theme="dark"] .form-field select:focus, [data-theme="dark"] .form-field textarea:focus{
@@ -394,13 +478,14 @@
 
   <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
     <filter id="batikTintTeal"><feColorMatrix type="matrix" values="0 0 0 0 0.0784 0 0 0 0 0.5137 0 0 0 0 0.6118 0 0 0 4.5 0"/></filter>
-    <filter id="batikBoostLight"><feColorMatrix type="saturate" values="2.2"/><feComponentTransfer><feFuncA type="linear" slope="2.6" intercept="0"/></feComponentTransfer></filter>
+    <filter id="batikBoostLight"><feColorMatrix type="matrix" values="0 0 0 0 0.0784 0 0 0 0 0.5137 0 0 0 0 0.6118 0 0 0 2.6 0"/></filter>
   </svg>
 
   {{-- ================= NAVBAR ================= --}}
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo">
+      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
@@ -423,7 +508,7 @@
   </nav>
 
   {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset('storage/'.$pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt; / &lt;span&gt;Apply&lt;/span&gt;">Beranda / <span>Layanan</span> / <span>Ajukan</span></p>
       <h1 data-en-html="Apply for a <span class=&quot;accent&quot;>service</span>">Ajukan <span class="accent">layanan</span></h1>
@@ -460,6 +545,34 @@
   </div>
 
   <div class="konten-batik">
+
+  @if($stelaVideo && (($stelaVideo->video_type === 'youtube' && $stelaVideo->youtube_url) || ($stelaVideo->video_type !== 'youtube' && $stelaVideo->video)))
+  {{-- ================= SEKILAS STELA ================= --}}
+  <section class="stela-section">
+    <div class="eyebrow" data-en="WATCH THE VIDEO">TONTON VIDEONYA</div>
+    <h2 data-en="Get to Know STELA">Sekilas STELA</h2>
+    <p data-en="STELA is the DPR RI Service Ticketing and Escalation System.">STELA merupakan Sistem Tiket dan Eskalasi Layanan.</p>
+
+    <div class="stela-card">
+      <span class="stela-badge">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span data-en="Introduction Video">Video Perkenalan</span>
+      </span>
+      <div class="stela-video-wrap">
+        @if($stelaVideo->video_type === 'youtube')
+          <iframe src="{{ $stelaVideo->youtube_embed_url }}" title="Sekilas STELA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        @else
+          <video controls preload="metadata" src="{{ asset($stelaVideo->video) }}"></video>
+        @endif
+      </div>
+    </div>
+
+    <a href="{{ $stelaVideo->link_url ?: 'https://stela.dpr.go.id' }}" target="_blank" rel="noopener" class="stela-link">
+      <span data-en="Visit STELA DPR RI">Kunjungi STELA DPR RI</span>
+      <svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+    </a>
+  </section>
+  @endif
 
   {{-- ================= INFORMASI & FORM ================= --}}
   <section class="ajukan-page">
@@ -529,7 +642,7 @@
             <div class="form-row">
               <div class="form-field">
                 <label for="nama" class="required" data-en="Full name">Nama lengkap</label>
-                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama Anda" data-en-placeholder="Your name" required>
+                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s]+" title="Nama hanya boleh berisi huruf" required>
                 @error('nama')<small class="error">{{ $message }}</small>@enderror
               </div>
               <div class="form-field">
@@ -542,7 +655,7 @@
             <div class="form-row">
               <div class="form-field">
                 <label for="no_tlpn" class="required" data-en="WhatsApp / phone number">Nomor WhatsApp / Telepon</label>
-                <input type="text" id="no_tlpn" name="no_tlpn" value="{{ old('no_tlpn') }}" placeholder="08xxxxxxxxxx" required>
+                <input type="tel" id="no_tlpn" name="no_tlpn" value="{{ old('no_tlpn') }}" placeholder="08xxxxxxxxxx" inputmode="numeric" pattern="0[0-9]{9,13}" minlength="10" maxlength="14" title="Masukkan nomor HP/WhatsApp yang valid, contoh: 08123456789" required>
                 @error('no_tlpn')<small class="error">{{ $message }}</small>@enderror
               </div>
               <div class="form-field">
@@ -560,7 +673,6 @@
                   @foreach($jenisOptions as $jenis)
                     <option value="{{ $jenis }}" @selected(old('jenis_layanan', $jenisSelected) === $jenis)>{{ $jenis }}</option>
                   @endforeach
-                  <option value="Lainnya" @selected(old('jenis_layanan', $jenisSelected) === 'Lainnya')>Lainnya</option>
                 </select>
                 @error('jenis_layanan')<small class="error">{{ $message }}</small>@enderror
               </div>
@@ -735,6 +847,21 @@
         observer.observe(section);
     }
     observeSection(".ajukan-page", 0.1);
+    observeSection(".stela-section", 0.15);
+
+    const noTlpnInput = document.getElementById("no_tlpn");
+    if (noTlpnInput) {
+        noTlpnInput.addEventListener("input", () => {
+            noTlpnInput.value = noTlpnInput.value.replace(/[^0-9]/g, "").slice(0, 14);
+        });
+    }
+
+    const namaInput = document.getElementById("nama");
+    if (namaInput) {
+        namaInput.addEventListener("input", () => {
+            namaInput.value = namaInput.value.replace(/[^A-Za-z\s]/g, "");
+        });
+    }
   </script>
 
 @include('partials.interactive-cursor')
