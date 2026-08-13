@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\ProfilPhotoController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\WorkItemController;
 use App\Http\Controllers\Admin\StelaVideoController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Admin\ContactMessageController;
@@ -133,11 +134,12 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
         ->parameters(['profil-photos' => 'profilPhoto']);
     Route::patch('profil-photos/{profilPhoto}/toggle-active', [ProfilPhotoController::class, 'toggleActive'])->name('profil-photos.toggle-active');
 
+    Route::resource('work-items', WorkItemController::class)->except('show')->parameters(['work-items' => 'workItem']);
+
     Route::resource('services', ServiceController::class)->except('show');
     Route::patch('services/{service}/toggle-active', [ServiceController::class, 'toggleActive'])->name('services.toggle-active');
 
-    Route::get('layanan-ajukan-video', [StelaVideoController::class, 'edit'])->name('stela-video.edit');
-    Route::put('layanan-ajukan-video', [StelaVideoController::class, 'update'])->name('stela-video.update');
+    Route::resource('stela-videos', StelaVideoController::class)->except('show')->parameters(['stela-videos' => 'stelaVideo']);
 
     Route::get('banner/{page}', [PageBannerController::class, 'edit'])->name('page-banners.edit');
     Route::put('banner/{page}', [PageBannerController::class, 'update'])->name('page-banners.update');

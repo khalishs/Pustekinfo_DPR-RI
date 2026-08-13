@@ -10,6 +10,7 @@ use App\Models\GalleryItem;
 use App\Models\SiteSetting;
 use App\Models\HeroSlide;
 use App\Models\ProfilPhoto;
+use App\Models\WorkItem;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -27,6 +28,8 @@ class HomeController extends Controller
             ->whereBetween('event_date', [$gridStart->format('Y-m-d'), $gridEnd->format('Y-m-d')])
             ->get()
             ->groupBy(fn ($e) => $e->event_date->format('Y-m-d'));
+
+        $workItems = WorkItem::where('is_active', true)->orderBy('sort_order')->take(20)->get();
 
         $calendarDays = [];
         $cursor = $gridStart->copy();
@@ -55,6 +58,8 @@ class HomeController extends Controller
                 ->take(4)
                 ->get(),
             'galleries' => GalleryItem::with('category')->where('show_on_home', true)->orderBy('sort_order')->take(8)->get(),
+            'workItemsTop' => $workItems->where('row_position', 1)->values(),
+            'workItemsBottom' => $workItems->where('row_position', 2)->values(),
             'setting'       => SiteSetting::first() ?? new SiteSetting(),
             'calendarDays'  => $calendarDays,
             'monthLabel'    => $bulanIndo[$monthStart->month - 1] . ' ' . $monthStart->year,

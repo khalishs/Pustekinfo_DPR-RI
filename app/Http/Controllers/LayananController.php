@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Models\ServiceRequest;
 use App\Models\SiteSetting;
+use App\Models\StelaVideo;
 use App\Models\PageBanner;
 use App\Support\NormalizesPhoneNumbers;
 use Illuminate\Http\Request;
@@ -43,6 +44,7 @@ class LayananController extends Controller
     {
         return view('layanan-ajukan', [
             'setting'      => SiteSetting::first() ?? new SiteSetting(),
+            'stelaVideo'   => StelaVideo::first(),
             'pageBanner'   => PageBanner::where('page', 'layanan')->first(),
             'jenisOptions' => Service::where('is_active', true)->orderBy('sort_order')->pluck('title'),
             'jenisSelected' => $request->query('jenis'),
@@ -80,6 +82,7 @@ class LayananController extends Controller
 
         return view('layanan-ajukan', [
             'setting'      => $setting,
+            'stelaVideo'   => StelaVideo::first(),
             'pageBanner'   => PageBanner::where('page', 'layanan')->first(),
             'jenisOptions' => Service::where('is_active', true)->orderBy('sort_order')->pluck('title'),
             'jenisSelected' => null,
