@@ -71,6 +71,21 @@ class StatisticController extends Controller
         );
     }
 
+    public function duplicate(Statistic $statistic)
+    {
+        if (Statistic::count() >= self::MAX_STATS) {
+            return redirect()->route('admin.statistics.index')
+                ->with('error', 'Maksimal ' . self::MAX_STATS . ' statistik. Hapus salah satu dulu untuk menambah yang baru.');
+        }
+
+        $copy = $statistic->replicate();
+        $copy->label = $statistic->label . ' (Salinan)';
+        $copy->is_active = false;
+        $copy->save();
+
+        return redirect()->route('admin.statistics.edit', $copy)->with('success', 'Statistik berhasil disalin. Silakan sesuaikan datanya lalu aktifkan.');
+    }
+
     public function destroy(Statistic $statistic)
     {
         $statistic->delete();

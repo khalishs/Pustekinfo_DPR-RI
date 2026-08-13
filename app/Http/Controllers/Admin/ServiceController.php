@@ -65,6 +65,17 @@ class ServiceController extends Controller
         );
     }
 
+    public function duplicate(Service $service)
+    {
+        $copy = $service->replicate();
+        $copy->title = $service->title . ' (Salinan)';
+        $copy->icon_image = null;
+        $copy->is_active = false;
+        $copy->save();
+
+        return redirect()->route('admin.services.edit', $copy)->with('success', 'Layanan berhasil disalin. Unggah ikon baru, sesuaikan datanya, lalu aktifkan.');
+    }
+
     public function destroy(Service $service)
     {
         Media::deleteRef($service->icon_image);

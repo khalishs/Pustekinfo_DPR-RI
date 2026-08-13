@@ -18,6 +18,9 @@ class LayananController extends Controller
     // Sementara, dipakai kalau nomor WA belum diisi lewat Pengaturan Kontak di admin.
     private const FALLBACK_WA_NUMBER = '08159646281';
 
+    // Form Ajukan Layanan cuma menerima pengajuan untuk jenis ini.
+    private const JENIS_LAYANAN_OPTIONS = ['Helpdesk & Aduan'];
+
     public function index()
     {
         $services = Service::where('is_active', true)->orderBy('sort_order')->get()->map(fn (Service $service) => [
@@ -46,7 +49,7 @@ class LayananController extends Controller
             'setting'      => SiteSetting::first() ?? new SiteSetting(),
             'stelaVideo'   => StelaVideo::first(),
             'pageBanner'   => PageBanner::where('page', 'layanan')->first(),
-            'jenisOptions' => Service::where('is_active', true)->orderBy('sort_order')->pluck('title'),
+            'jenisOptions' => self::JENIS_LAYANAN_OPTIONS,
             'jenisSelected' => $request->query('jenis'),
         ]);
     }
@@ -84,7 +87,7 @@ class LayananController extends Controller
             'setting'      => $setting,
             'stelaVideo'   => StelaVideo::first(),
             'pageBanner'   => PageBanner::where('page', 'layanan')->first(),
-            'jenisOptions' => Service::where('is_active', true)->orderBy('sort_order')->pluck('title'),
+            'jenisOptions' => self::JENIS_LAYANAN_OPTIONS,
             'jenisSelected' => null,
             'submitted'    => $serviceRequest,
             'waUrl'        => $waUrl,

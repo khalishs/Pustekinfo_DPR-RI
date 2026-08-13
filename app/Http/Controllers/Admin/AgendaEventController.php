@@ -56,6 +56,16 @@ class AgendaEventController extends Controller
         );
     }
 
+    public function duplicate(AgendaEvent $agendum)
+    {
+        $copy = $agendum->replicate();
+        $copy->title = $agendum->title . ' (Salinan)';
+        $copy->is_active = false;
+        $copy->save();
+
+        return redirect()->route('admin.agenda.edit', $copy)->with('success', 'Agenda berhasil disalin. Silakan sesuaikan datanya lalu aktifkan.');
+    }
+
     public function destroy(AgendaEvent $agendum)
     {
         $agendum->delete();

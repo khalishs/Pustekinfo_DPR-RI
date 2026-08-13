@@ -293,6 +293,7 @@
   .btn-icon:hover{transform:translateY(-2px);}
   .btn-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   .btn-icon-edit:hover{border-color:var(--teal);color:var(--teal);background:rgba(20,128,140,.08);}
+  .btn-icon-copy:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,163,78,.1);}
   .btn-icon-delete{border-color:#e3b8b8;color:var(--danger);}
   .btn-icon-delete:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
 
@@ -409,6 +410,7 @@
   [data-theme="dark"] .btn-outline:hover{border-color:var(--teal-light);color:var(--teal-light);}
   [data-theme="dark"] .btn-icon{background:transparent;border-color:rgba(255,255,255,.12);color:#b8bfc4;}
   [data-theme="dark"] .btn-icon-edit:hover{border-color:var(--teal-light);color:var(--teal-light);background:rgba(20,128,140,.15);}
+  [data-theme="dark"] .btn-icon-copy:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,163,78,.15);}
   [data-theme="dark"] .btn-icon-delete{border-color:rgba(176,65,62,.38);}
   [data-theme="dark"] .btn-icon-delete:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
   [data-theme="dark"] input,

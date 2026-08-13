@@ -56,6 +56,16 @@ class CoreValueController extends Controller
         );
     }
 
+    public function duplicate(CoreValue $coreValue)
+    {
+        $copy = $coreValue->replicate();
+        $copy->title = $coreValue->title . ' (Salinan)';
+        $copy->is_active = false;
+        $copy->save();
+
+        return redirect()->route('admin.core-values.edit', $copy)->with('success', 'Nilai organisasi berhasil disalin. Silakan sesuaikan datanya lalu aktifkan.');
+    }
+
     public function destroy(CoreValue $coreValue)
     {
         $coreValue->delete();

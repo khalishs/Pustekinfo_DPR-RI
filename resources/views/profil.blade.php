@@ -334,7 +334,8 @@
     background:radial-gradient(120% 120% at 25% 20%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 50%, var(--teal) 100%);
   }
-  .sambutan-photo .who .role{margin-top:4px;color:rgba(255,255,255,.7);font-size:11px;font-weight:700;letter-spacing:.1em;}
+  .sambutan-photo .who .name{color:#fff;font-size:17px;font-weight:700;letter-spacing:-.005em;text-shadow:0 2px 10px rgba(0,0,0,.65), 0 1px 3px rgba(0,0,0,.6);}
+  .sambutan-photo .who .role{margin-top:4px;color:rgba(255,255,255,.85);font-size:11px;font-weight:700;letter-spacing:.1em;text-shadow:0 2px 10px rgba(0,0,0,.65), 0 1px 3px rgba(0,0,0,.6);}
   .sambutan-content{flex:1;position:relative;padding:50px 56px;display:flex;flex-direction:column;justify-content:center;}
   .sambutan-content .quote-mark{position:absolute;top:40px;right:48px;display:flex;gap:5px;}
   .sambutan-content .eyebrow{color:var(--teal);}
@@ -808,6 +809,9 @@
       <div class="sambutan-card">
         <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset($leadership->photo) }}');background-size:cover;background-position:center;" @endif>
         <div class="who">
+          @if($leadership?->show_name && $leadership?->name)
+            <div class="name">{{ $leadership->name }}</div>
+          @endif
           <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
         </div>
       </div>

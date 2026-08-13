@@ -56,6 +56,16 @@ class TimelineItemController extends Controller
         );
     }
 
+    public function duplicate(TimelineItem $timeline)
+    {
+        $copy = $timeline->replicate();
+        $copy->title = $timeline->title . ' (Salinan)';
+        $copy->is_active = false;
+        $copy->save();
+
+        return redirect()->route('admin.timeline.edit', $copy)->with('success', 'Poin sejarah berhasil disalin. Silakan sesuaikan datanya lalu aktifkan.');
+    }
+
     public function destroy(TimelineItem $timeline)
     {
         $timeline->delete();

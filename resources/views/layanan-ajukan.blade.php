@@ -677,7 +677,6 @@
                   @foreach($jenisOptions as $jenis)
                     <option value="{{ $jenis }}" @selected(old('jenis_layanan', $jenisSelected) === $jenis)>{{ $jenis }}</option>
                   @endforeach
-                  <option value="Lainnya" @selected(old('jenis_layanan', $jenisSelected) === 'Lainnya')>Lainnya</option>
                 </select>
                 @error('jenis_layanan')<small class="error">{{ $message }}</small>@enderror
               </div>
