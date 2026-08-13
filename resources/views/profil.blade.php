@@ -440,24 +440,56 @@
   }
 
   /* ================= BAGAN ORGANISASI ================= */
-  .org-chart{margin-top:44px;display:flex;flex-direction:column;align-items:center;}
+  .org-chart{margin-top:48px;display:flex;flex-direction:column;align-items:center;}
   .org-node{
-    background:var(--white);border-radius:12px;padding:16px 28px;text-align:center;
-    box-shadow:0 16px 32px -20px rgba(11,34,51,.25);min-width:210px;max-width:280px;
+    background:var(--white);border-radius:16px;padding:22px 26px;text-align:center;
+    box-shadow:0 16px 32px -20px rgba(11,34,51,.2);min-width:220px;max-width:280px;
+    border:1.5px solid rgba(20,131,156,.22);
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
   }
+  .org-row .org-node{position:relative;}
+  .org-row .org-node:hover{transform:translateY(-5px);box-shadow:0 22px 40px -18px rgba(11,34,51,.28);border-color:rgba(20,131,156,.45);}
   .org-node-photo{
-    width:56px;height:56px;border-radius:50%;margin:0 auto 12px;
+    width:60px;height:60px;border-radius:50%;margin:0 auto 14px;
     background:radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
     background-size:cover;background-position:center;
     border:3px solid rgba(20,131,156,.3);
+    box-shadow:0 6px 16px -6px rgba(11,34,51,.35);
   }
-  .org-node strong{display:block;font-size:14.5px;color:var(--navy);}
-  .org-node.top{background:linear-gradient(150deg,var(--navy) 40%,var(--teal) 100%);}
-  .org-node.top strong{color:#fff;}
-  .org-node.top .org-node-photo{border-color:rgba(255,255,255,.5);}
-  .org-connector{width:2px;height:30px;background:#d7e6e8;}
-  .org-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;}
+  .org-node strong{display:block;font-size:15px;font-weight:800;color:var(--navy);letter-spacing:-.005em;}
+  .org-node .org-node-name{display:block;margin-top:5px;font-size:12.5px;font-weight:700;color:var(--teal);}
+  .org-node .org-node-desc{display:block;margin-top:8px;font-size:12px;line-height:1.55;color:#8a97a0;}
+  .org-node.top{
+    background:linear-gradient(150deg,var(--navy) 40%,var(--teal) 100%);
+    border-color:transparent;
+    padding:26px 32px;
+    box-shadow:0 22px 44px -18px rgba(11,34,51,.4);
+  }
+  .org-node.top strong{color:#fff;font-size:16px;}
+  .org-node.top .org-node-name{color:#bfe9f1;}
+  .org-node.top .org-node-desc{color:rgba(255,255,255,.68);}
+  .org-node.top .org-node-photo{border-color:rgba(255,255,255,.55);}
+
+  .org-connector{width:2px;height:32px;background:linear-gradient(180deg, rgba(20,131,156,.55), rgba(20,131,156,.15));}
+
+  .org-row{
+    position:relative;display:flex;gap:30px;flex-wrap:wrap;justify-content:center;
+    margin-top:0;padding-top:26px;
+  }
+  .org-row::before{
+    content:"";position:absolute;top:0;left:10%;right:10%;height:2px;
+    background:rgba(20,131,156,.28);
+  }
+  .org-row .org-node::before{
+    content:"";position:absolute;top:-26px;left:50%;width:2px;height:26px;
+    background:rgba(20,131,156,.28);transform:translateX(-50%);
+  }
+  @media (max-width:640px){
+    .org-row{flex-direction:column;align-items:center;padding-top:0;}
+    .org-row::before{display:none;}
+    .org-row .org-node::before{content:"";position:static;display:block;width:2px;height:26px;margin:0 auto;background:rgba(20,131,156,.28);transform:none;}
+  }
 
   .unit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px;}
   .unit-card{
@@ -634,10 +666,15 @@
   [data-theme="dark"] .sambutan-content .sign-role{color:#8ea0a8;}
 
   /* Bagan organisasi */
-  [data-theme="dark"] .org-node{background:#122530;box-shadow:0 16px 32px -20px rgba(0,0,0,.5);}
+  [data-theme="dark"] .org-node{background:#122530;box-shadow:0 16px 32px -20px rgba(0,0,0,.5);border-color:rgba(255,255,255,.1);}
+  [data-theme="dark"] .org-row .org-node:hover{border-color:rgba(95,192,209,.4);}
   [data-theme="dark"] .org-node strong{color:#eaf3f5;}
+  [data-theme="dark"] .org-node .org-node-name{color:#5FC0D1;}
+  [data-theme="dark"] .org-node .org-node-desc{color:#8ea0a8;}
   [data-theme="dark"] .org-node-photo{border-color:rgba(255,255,255,.14);}
   [data-theme="dark"] .org-connector{background:rgba(255,255,255,.14);}
+  [data-theme="dark"] .org-row::before,
+  [data-theme="dark"] .org-row .org-node::before{background:rgba(255,255,255,.14);}
 
   /* Visi & Misi (kartu MISI, versi terang) */
   [data-theme="dark"] .vm-card:not(.dark){background:#122530;box-shadow:0 20px 40px -24px rgba(0,0,0,.5);}
@@ -819,16 +856,32 @@
 
       <div class="org-chart">
         <div class="org-node top">
-          <div class="org-node-photo" @if($kepala?->photo) style="background-image:url('{{ asset($kepala->photo) }}');" @endif></div>
+          @if($kepala?->show_photo && $kepala->photo)
+            <div class="org-node-photo" style="background-image:url('{{ asset($kepala->photo) }}');"></div>
+          @endif
           <strong data-en="{{ ($kepala->position_en ?? null) ?: ($kepala->position ?? 'Unit Head') }}">{{ $kepala->position ?? 'Pimpinan Unit' }}</strong>
+          @if($kepala?->show_name && $kepala->name)
+            <span class="org-node-name">{{ $kepala->name }}</span>
+          @endif
+          @if($kepala?->unit_description)
+            <span class="org-node-desc" data-en="{{ $kepala->unit_description_en ?: $kepala->unit_description }}">{{ $kepala->unit_description }}</span>
+          @endif
         </div>
 
         <div class="org-connector"></div>
         <div class="org-row">
           @forelse($bidangList as $b)
             <div class="org-node">
-              <div class="org-node-photo" @if($b->photo) style="background-image:url('{{ asset($b->photo) }}');" @endif></div>
+              @if($b->show_photo && $b->photo)
+                <div class="org-node-photo" style="background-image:url('{{ asset($b->photo) }}');"></div>
+              @endif
               <strong data-en="{{ $b->position_en ?: $b->position }}">{{ $b->position }}</strong>
+              @if($b->show_name && $b->name)
+                <span class="org-node-name">{{ $b->name }}</span>
+              @endif
+              @if($b->unit_description)
+                <span class="org-node-desc" data-en="{{ $b->unit_description_en ?: $b->unit_description }}">{{ $b->unit_description }}</span>
+              @endif
             </div>
           @empty
             <p style="color:#8a97a0;" data-en="No division data yet.">Belum ada data bidang.</p>

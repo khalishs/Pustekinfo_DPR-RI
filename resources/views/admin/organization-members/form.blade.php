@@ -9,6 +9,19 @@
 
     <div class="form-grid">
       <div class="form-group">
+        <label>Nama (opsional)</label>
+        <input type="text" name="name" value="{{ old('name', $member->name) }}">
+        @error('name')<small class="error">{{ $message }}</small>@enderror
+        <small>Kosongkan kalau cuma mau tampilkan jabatannya saja.</small>
+      </div>
+
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="show_name" value="1" style="width:auto;display:inline-block;" {{ old('show_name', $member->exists ? $member->show_name : false) ? 'checked' : '' }}> Tampilkan nama</label>
+        @error('show_name')<small class="error">{{ $message }}</small>@enderror
+        <small>Nama cuma muncul di bagan kalau kotak ini dicentang DAN kolom Nama di atas terisi.</small>
+      </div>
+
+      <div class="form-group">
         <label class="required">Jabatan</label>
         <input type="text" name="position" value="{{ old('position', $member->position) }}" required>
       </div>
@@ -28,6 +41,12 @@
         <small>Kosongkan jika tidak ingin mengganti foto.</small>
       </div>
 
+      <div class="form-group" style="align-self:end;">
+        <label><input type="checkbox" name="show_photo" value="1" style="width:auto;display:inline-block;" {{ old('show_photo', $member->exists ? $member->show_photo : false) ? 'checked' : '' }}> Tampilkan foto</label>
+        @error('show_photo')<small class="error">{{ $message }}</small>@enderror
+        <small>Foto cuma muncul di bagan kalau kotak ini dicentang DAN foto sudah diunggah.</small>
+      </div>
+
       <div class="form-group">
         <label class="required">Level</label>
         <select name="level" required>
@@ -38,8 +57,9 @@
       </div>
 
       <div class="form-group form-span-2">
-        <label>Deskripsi Unit (khusus level Bidang, opsional)</label>
+        <label>Deskripsi Unit (opsional)</label>
         <textarea name="unit_description" placeholder="Mengelola jaringan, pusat data, dll.">{{ old('unit_description', $member->unit_description) }}</textarea>
+        <small>Tampil sebagai teks kecil di bawah jabatan pada bagan organisasi, kalau diisi.</small>
       </div>
 
       <div class="form-group form-span-2">

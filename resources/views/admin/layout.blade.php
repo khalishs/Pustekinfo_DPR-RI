@@ -321,7 +321,15 @@
   small.error{color:var(--danger);display:block;margin-top:5px;font-weight:600;}
   small{color:#8a97a0;}
 
-  .row-actions{display:flex;gap:8px;}
+  /* .row-actions dipasang langsung di <td>. Sengaja BUKAN display:flex — sebuah <td>
+     yang di-flex-kan berhenti ikut aturan tinggi baris tabel normal (jadi cuma setinggi
+     kontennya sendiri, bukan setinggi baris), sehingga tombolnya nangkring di atas kalau
+     ada sel lain di baris yang sama yang lebih tinggi (judul 2 baris, dst). Dengan tetap
+     jadi table-cell biasa, vertical-align:middle bawaan th/td di atas otomatis berlaku. */
+  .row-actions{white-space:nowrap;}
+  .row-actions > a{vertical-align:middle;}
+  .row-actions > form{display:inline-block;vertical-align:middle;margin-left:8px;}
+  .row-actions > :first-child{margin-left:0;}
   .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(20,128,140,.1);color:var(--teal);border:1px solid rgba(20,128,140,.14);}
   .badge-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 8px;border-radius:20px;background:var(--mist);color:#5b6b73;font-size:12px;font-weight:800;border:1px solid var(--line);}
   .badge-success{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(31,157,124,.1);color:var(--success);border:1px solid rgba(31,157,124,.18);}
@@ -443,7 +451,6 @@
     th,td{padding:11px 10px;font-size:12.5px;}
     .form-group{max-width:100%;}
     .form-grid{grid-template-columns:1fr;gap:0;}
-    .row-actions{flex-wrap:wrap;}
   }
 </style>
 </head>

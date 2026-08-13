@@ -9,15 +9,22 @@
 <div class="card">
   <div class="table-responsive">
   <table>
-    <thead><tr><th>Foto</th><th>Jabatan</th><th>Level</th><th class="text-center">Urutan</th><th class="text-center">Aktif</th><th></th></tr></thead>
+    <thead><tr><th>Foto</th><th>Nama</th><th>Jabatan</th><th>Level</th><th class="text-center">Urutan</th><th class="text-center">Aktif</th><th></th></tr></thead>
     <tbody>
     @forelse($members as $m)
       <tr>
         <td>
           @if($m->photo)
-            <img src="{{ asset($m->photo) }}" style="width:44px;height:44px;object-fit:cover;border-radius:50%;">
+            <img src="{{ asset($m->photo) }}" style="width:44px;height:44px;object-fit:cover;border-radius:50%;{{ $m->show_photo ? '' : 'opacity:.35;' }}">
+            <div>{!! $m->show_photo ? '<span class="badge-success" style="margin-top:4px;">Tampil</span>' : '<span class="badge-muted" style="margin-top:4px;">Sembunyi</span>' !!}</div>
           @else
             <span style="color:#b7c2c7;font-size:12px;">Belum ada</span>
+          @endif
+        </td>
+        <td>
+          {{ $m->name ?: '-' }}
+          @if($m->name)
+            <div>{!! $m->show_name ? '<span class="badge-success">Tampil</span>' : '<span class="badge-muted">Sembunyi</span>' !!}</div>
           @endif
         </td>
         <td>{{ $m->position }}</td>
@@ -45,7 +52,7 @@
         </td>
       </tr>
     @empty
-      <tr><td colspan="6">Belum ada data struktur organisasi.</td></tr>
+      <tr><td colspan="7">Belum ada data struktur organisasi.</td></tr>
     @endforelse
     </tbody>
   </table>

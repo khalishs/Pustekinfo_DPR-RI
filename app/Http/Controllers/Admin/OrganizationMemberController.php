@@ -25,6 +25,8 @@ class OrganizationMemberController extends Controller
     {
         $data = $this->validated($request);
         $data['is_active'] = $request->boolean('is_active');
+        $data['show_name'] = $request->boolean('show_name');
+        $data['show_photo'] = $request->boolean('show_photo');
 
         if ($request->hasFile('photo')) {
             $data['photo'] = Media::storeUpload($request->file('photo'));
@@ -44,6 +46,8 @@ class OrganizationMemberController extends Controller
     {
         $data = $this->validated($request);
         $data['is_active'] = $request->boolean('is_active');
+        $data['show_name'] = $request->boolean('show_name');
+        $data['show_photo'] = $request->boolean('show_photo');
 
         if ($request->hasFile('photo')) {
             Media::deleteRef($organizationMember->photo);
@@ -77,6 +81,8 @@ class OrganizationMemberController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
+            'name'                => 'nullable|string|max:255',
+            'show_name'           => 'sometimes|boolean',
             'position'            => 'required|string|max:255',
             'position_en'         => 'nullable|string|max:255',
             'unit_description'    => 'nullable|string',
@@ -84,6 +90,7 @@ class OrganizationMemberController extends Controller
             'level'               => 'required|in:kepala,bidang',
             'sort_order'          => 'required|integer',
             'photo'               => 'nullable|image|min:2048|max:10240',
+            'show_photo'          => 'sometimes|boolean',
             'is_active'           => 'sometimes|boolean',
         ]);
     }
