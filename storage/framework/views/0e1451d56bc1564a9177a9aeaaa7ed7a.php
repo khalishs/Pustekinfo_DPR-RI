@@ -80,4 +80,4 @@
   });
 })();
 </script>
-<?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/partials/interactive-cursor.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/partials/interactive-cursor.blade.php ENDPATH**/ ?>
