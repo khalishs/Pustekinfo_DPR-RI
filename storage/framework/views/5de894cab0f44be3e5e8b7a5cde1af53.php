@@ -1,4 +1,4 @@
-{{-- resources/views/layanan-status.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
+<link rel="icon" type="image/png" href="<?php echo e(asset('images/favicon-bg.png')); ?>">
 <style>
   :root{
     --navy:#12242E;
@@ -36,7 +36,7 @@
     inset:0;
     z-index:-1;
     pointer-events:none;
-    background-image:url('{{ asset('images/group-batik.png') }}');
+    background-image:url('<?php echo e(asset('images/group-batik.png')); ?>');
     background-repeat:no-repeat;
     background-position:center top;
     background-size:10000px auto;
@@ -180,7 +180,7 @@
   .konten-batik{position:relative;z-index:0;background-color:#14839C1A;}
   .konten-batik::before{
     content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-    background-image:url('{{ asset('images/group-batik.png') }}');
+    background-image:url('<?php echo e(asset('images/group-batik.png')); ?>');
     background-repeat:no-repeat;background-position:center top;background-size:10000px auto;
     filter:url(#batikBoostLight);
     opacity:.05;
@@ -250,10 +250,12 @@
   .footer-divider{margin-top:-1px;height:3px;background:linear-gradient(10deg, #057888 0%, #052D46 55%, #052D46 100%);}
   .footer{position:relative;background:#052D46;padding:64px 100px 0;overflow:hidden;}
   .footer::before{
-    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background-image:url('{{ asset('images/batik_footer.png') }}');
-    background-repeat:no-repeat;background-position:center center;background-size:cover;
-    opacity:.08;filter:brightness(0) invert(1);
+    content:"";position:absolute;inset:-40px 0 -80px;
+    background-repeat:no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+    background-image:url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>');
+    background-position:left -100px bottom -30px,right -80px top -40px,30% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
+    background-size:480px auto,320px auto,150px auto,130px auto,170px auto,140px auto,220px auto;
+    filter:brightness(0) invert(1);opacity:.5;pointer-events:none;z-index:0;
   }
   .footer-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
   .footer-brand{display:flex;align-items:center;gap:12px;}
@@ -276,7 +278,9 @@
   @media (max-width:900px){
     .footer{padding:50px 20px 0;}
     .footer::before{
-      background-size:180% auto;
+      background-size:170px auto,140px auto,65px auto,55px auto,70px auto,60px auto,90px auto;
+      background-position:left -40px bottom -10px,right -40px top -20px,38% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
+      opacity:.1;
     }
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
     .footer-brand-logo{width:150px;}
@@ -345,20 +349,20 @@
     <filter id="batikBoostLight"><feColorMatrix type="matrix" values="0 0 0 0 0.0784 0 0 0 0 0.5137 0 0 0 0 0.6118 0 0 0 2.6 0"/></filter>
   </svg>
 
-  {{-- ================= NAVBAR ================= --}}
+  
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
-      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
+      <img src="<?php echo e(asset('images/logo_pustekinfo_landscape.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
-      <li><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
-      <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
-      <li class="active"><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
-      <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
-      <li><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
-      <li><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
+      <li><a href="<?php echo e(route('home')); ?>" data-en="Home">Beranda</a></li>
+      <li><a href="<?php echo e(route('profil')); ?>" data-en="Profile">Profil </a></li>
+      <li class="active"><a href="<?php echo e(route('layanan')); ?>" data-en="Services">Layanan</a></li>
+      <li><a href="<?php echo e(route('informasi')); ?>" data-en="Information">Informasi</a></li>
+      <li><a href="<?php echo e(route('galeri')); ?>" data-en="Gallery">Galeri</a></li>
+      <li><a href="<?php echo e(route('kontak')); ?>" data-en="Contact">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
@@ -371,8 +375,8 @@
     </div>
   </nav>
 
-  {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  
+  <header class="hero-profil" <?php if($pageBanner?->image): ?> style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('<?php echo e(asset($pageBanner->image)); ?>');background-size:cover;background-position:center;" <?php endif; ?>>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt; / &lt;span&gt;Check Status&lt;/span&gt;">Beranda / <span>Layanan</span> / <span>Cek Status</span></p>
       <h1 data-en-html="Check your <span class=&quot;accent&quot;>request status</span>">Cek status <span class="accent">pengajuan Anda</span></h1>
@@ -381,13 +385,13 @@
 
     <div class="tabs-nav">
       <div class="tabs-scroll">
-        <a href="{{ route('layanan') }}" class="tab-link">
+        <a href="<?php echo e(route('layanan')); ?>" class="tab-link">
           <span data-en="Services">Layanan</span>
         </a>
-        <a href="{{ route('layanan.ajukan') }}" class="tab-link">
+        <a href="<?php echo e(route('layanan.ajukan')); ?>" class="tab-link">
           <span data-en="Apply for a Service">Ajukan Layanan</span>
         </a>
-        <a href="{{ route('layanan.status') }}" class="tab-link active">
+        <a href="<?php echo e(route('layanan.status')); ?>" class="tab-link active">
           <span data-en="Check Status">Lihat Status</span>
         </a>
       </div>
@@ -396,13 +400,13 @@
 
   <div class="tabs-nav-sticky" id="tabsSticky">
     <div class="tabs-scroll">
-      <a href="{{ route('layanan') }}" class="tab-link">
+      <a href="<?php echo e(route('layanan')); ?>" class="tab-link">
         <span data-en="Services">Layanan</span>
       </a>
-      <a href="{{ route('layanan.ajukan') }}" class="tab-link">
+      <a href="<?php echo e(route('layanan.ajukan')); ?>" class="tab-link">
         <span data-en="Apply for a Service">Ajukan Layanan</span>
       </a>
-      <a href="{{ route('layanan.status') }}" class="tab-link active">
+      <a href="<?php echo e(route('layanan.status')); ?>" class="tab-link active">
         <span data-en="Check Status">Lihat Status</span>
       </a>
     </div>
@@ -410,7 +414,7 @@
 
   <div class="konten-batik">
 
-  {{-- ================= CEK STATUS ================= --}}
+  
   <section class="status-page">
     <div class="status-inner">
 
@@ -419,12 +423,19 @@
         <h3 data-en="Find Your Request">Temukan Pengajuan Anda</h3>
         <p data-en="Enter the ticket code you received when submitting your request.">Masukkan kode tiket yang Anda terima saat mengajukan layanan.</p>
 
-        <form class="status-form" method="POST" action="{{ route('layanan.status.check') }}">
-          @csrf
+        <form class="status-form" method="POST" action="<?php echo e(route('layanan.status.check')); ?>">
+          <?php echo csrf_field(); ?>
           <div class="form-field">
             <label for="kode" data-en="Ticket code">Kode Tiket</label>
-            <input type="text" id="kode" name="kode" value="{{ old('kode') }}" placeholder="LYN-XXXXXXXX" required>
-            @error('kode')<small class="error">{{ $message }}</small>@enderror
+            <input type="text" id="kode" name="kode" value="<?php echo e(old('kode')); ?>" placeholder="LYN-XXXXXXXX" required>
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['kode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
           </div>
           <button type="submit" class="btn-cari">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -432,57 +443,57 @@
           </button>
         </form>
 
-        @if($searched)
-          @if($results->isEmpty())
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($searched): ?>
+          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($results->isEmpty()): ?>
             <div class="status-empty" data-en="No request found for this ticket code.">Tidak ditemukan pengajuan untuk kode tiket ini.</div>
-          @else
+          <?php else: ?>
             <div class="status-results">
-              @foreach($results as $result)
+              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $results; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
                 <div class="status-result-card">
                   <div class="status-result-head">
-                    <span class="status-result-kode">{{ $result->kode }}</span>
-                    @php
+                    <span class="status-result-kode"><?php echo e($result->kode); ?></span>
+                    <?php
                       $badgeStyle = match($result->status) {
                         'selesai' => 'background:rgba(31,157,124,.1);color:#1f9d7c;',
                         'diproses' => 'background:rgba(201,163,78,.14);color:#a8843a;',
                         'ditolak' => 'background:rgba(176,65,62,.1);color:#b0413e;',
                         default => 'background:rgba(20,128,140,.1);color:var(--teal);',
                       };
-                    @endphp
-                    <span class="status-badge" style="{{ $badgeStyle }}">{{ \App\Models\ServiceRequest::STATUSES[$result->status] ?? $result->status }}</span>
+                    ?>
+                    <span class="status-badge" style="<?php echo e($badgeStyle); ?>"><?php echo e(\App\Models\ServiceRequest::STATUSES[$result->status] ?? $result->status); ?></span>
                   </div>
-                  <div class="status-result-jenis">{{ $result->jenis_layanan }}</div>
-                  <div class="status-result-tanggal">{{ $result->created_at->format('d M Y H:i') }}</div>
-                  @if($result->catatan_admin)
-                    <div class="status-result-catatan">{{ $result->catatan_admin }}</div>
-                  @endif
+                  <div class="status-result-jenis"><?php echo e($result->jenis_layanan); ?></div>
+                  <div class="status-result-tanggal"><?php echo e($result->created_at->format('d M Y H:i')); ?></div>
+                  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($result->catatan_admin): ?>
+                    <div class="status-result-catatan"><?php echo e($result->catatan_admin); ?></div>
+                  <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 </div>
-              @endforeach
+              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
             </div>
-          @endif
-        @endif
+          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
       </div>
 
     </div>
   </section>
 
   </div>
-  {{-- /.konten-batik --}}
+  
 
   <div class="footer-divider"></div>
 
-  {{-- ================= FOOTER ================= --}}
+  
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-col">
         <div class="footer-brand">
-          <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
+          <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="footer-brand-logo">
         </div>
         <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
         <div class="footer-social">
-          <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
-          <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
-          <a href="{{ $setting->x_url ?? '#' }}" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
+          <a href="<?php echo e($setting->instagram_url ?? '#'); ?>" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+          <a href="<?php echo e($setting->youtube_url ?? '#'); ?>" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
+          <a href="<?php echo e($setting->x_url ?? '#'); ?>" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
         </div>
       </div>
 
@@ -511,22 +522,24 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
+            <span data-en="<?php echo e($setting->address_en ?: ($setting->address ?? 'Address not set')); ?>"><?php echo e($setting->address ?? 'Alamat belum diatur'); ?></span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            {{ $setting->phone ?? '-' }}
+            <?php echo e($setting->phone ?? '-'); ?>
+
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
-            {{ $setting->email ?? '-' }}
+            <?php echo e($setting->email ?? '-'); ?>
+
           </div>
         </div>
       </div>
     </div>
 
     <div class="footer-inner footer-bottom">
-      <p data-en="© {{ date('Y') }} Pustekinfo. All rights reserved.">© {{ date('Y') }} Pustekinfo. Seluruh hak dilindungi.</p>
+      <p data-en="© <?php echo e(date('Y')); ?> Pustekinfo. All rights reserved.">© <?php echo e(date('Y')); ?> Pustekinfo. Seluruh hak dilindungi.</p>
       <p data-en="Mockup reference — not an official site">Referensi mockup — bukan situs resmi</p>
     </div>
   </footer>
@@ -615,7 +628,8 @@
     observeSection(".status-page", 0.1);
   </script>
 
-@include('partials.interactive-cursor')
-@include('partials.form-validation')
+<?php echo $__env->make('partials.interactive-cursor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.form-validation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
 </html>
+<?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/layanan-status.blade.php ENDPATH**/ ?>
