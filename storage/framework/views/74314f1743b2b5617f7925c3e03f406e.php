@@ -1,4 +1,4 @@
-{{-- resources/views/home.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,7 +7,7 @@
 <title>Pustekinfo DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
+<link rel="icon" type="image/png" href="<?php echo e(asset('images/favicon-bg.png')); ?>">
 <style>
   :root{
     --navy:#12242E;
@@ -413,9 +413,9 @@
     margin:40px 100px 0;
     background: linear-gradient(150deg,#073D5F 40%,#057888 100%);
     border-radius:14px;
-    display:grid;
-    grid-template-columns:repeat(var(--stat-cols, 4),1fr);
-    box-shadow:0 20px 40px -12px rgba(11,34,51,.35);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
   }
   .stat{
     display:flex;
@@ -728,7 +728,7 @@
   content:"";
   position:absolute;
   inset:0;
-  background-image:url('{{ asset('images/group-batik.png') }}');
+  background-image:url('<?php echo e(asset('images/group-batik.png')); ?>');
   background-repeat:repeat-y;
   /* Posisi disamakan (lewat JS) dengan pola batik .konten-batik di belakangnya,
      supaya motifnya menyambung utuh, bukan mengulang dari awal lagi di section ini. */
@@ -1451,10 +1451,8 @@
   .agenda-day.muted:hover{background:rgba(20,128,140,.06);color:#9aa8af;}
   .agenda-day.has-event:not(.today){border:1.5px solid rgba(20,128,140,.3);}
   .agenda-day.today{
-    background:rgba(20,128,140,.05);
-    border:none;
-    border-top:2.5px solid var(--teal);
-    border-radius:4px 4px 10px 10px;
+    background:rgba(20,128,140,.08);
+    border:1.5px solid var(--teal);
     color:var(--teal);
     font-weight:800;
   }
@@ -1939,7 +1937,7 @@
   inset:0;
   z-index:-1;
   pointer-events:none;
-  background-image:url('{{ asset('images/group-batik.png') }}');
+  background-image:url('<?php echo e(asset('images/group-batik.png')); ?>');
   background-repeat:repeat-y;
   background-position:center top;
   background-size:10000px auto;
@@ -2085,20 +2083,42 @@
   overflow:hidden;
 }
 
+/* Motif batik dekoratif di footer — beberapa salinan ukuran acak (aspect ratio tetap terjaga,
+   background-size cuma pakai lebar + "auto" biar gak gepeng), diinvert ke putih supaya kontras
+   dengan navy, sama seperti trik di section Layanan */
 .footer::before{
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-
-    background-image: url('{{ asset("images/batik_footer.png") }}');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-
-    opacity: .08;
-    filter: brightness(0) invert(1);
+  content:"";
+  position:absolute;
+  inset:-40px 0 -80px;
+  background-repeat:no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-image:
+    url('<?php echo e(asset('images/motif-batik.png')); ?>'),
+    url('<?php echo e(asset('images/motif-batik.png')); ?>'),
+    url('<?php echo e(asset('images/motif-batik.png')); ?>'),
+    url('<?php echo e(asset('images/motif-batik.png')); ?>'),
+    url('<?php echo e(asset('images/motif-batik.png')); ?>'),
+    url('<?php echo e(asset('images/motif-batik.png')); ?>'),
+    url('<?php echo e(asset('images/motif-batik.png')); ?>');
+  background-position:
+    left -100px bottom -30px,
+    right -80px top -40px,
+    30% 68%,
+    35% 15%,
+    55% 82%,
+    75% 20%,
+    90% 75%;
+  background-size:
+    480px auto,
+    320px auto,
+    150px auto,
+    130px auto,
+    170px auto,
+    140px auto,
+    220px auto;
+  filter:brightness(0) invert(1);
+  opacity:.5;
+  pointer-events:none;
+  z-index:0;
 }
 
 .footer-inner{
@@ -2232,7 +2252,9 @@
 @media (max-width:900px){
   .footer{padding:50px 20px 0;}
   .footer::before{
-    background-size:180% auto;
+    background-size:170px auto, 140px auto, 65px auto, 55px auto, 70px auto, 60px auto, 90px auto;
+    background-position:left -40px bottom -10px, right -40px top -20px, 38% 68%, 35% 15%, 55% 82%, 75% 20%, 90% 75%;
+    opacity:.1;
   }
   .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
   .footer-brand-logo{width:150px;}
@@ -2380,17 +2402,17 @@
 
     <nav class="navbar">
       <div class="brand">
-        <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
-        <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
+        <img src="<?php echo e(asset('images/logo_pustekinfo_landscape.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+        <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
       </div>
 
       <ul class="nav-links">
-        <li class="active"><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
-        <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
-        <li><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
-        <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
-        <li><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
-        <li><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
+        <li class="active"><a href="<?php echo e(route('home')); ?>" data-en="Home">Beranda</a></li>
+        <li><a href="<?php echo e(route('profil')); ?>" data-en="Profile">Profil </a></li>
+        <li><a href="<?php echo e(route('layanan')); ?>" data-en="Services">Layanan</a></li>
+        <li><a href="<?php echo e(route('informasi')); ?>" data-en="Information">Informasi</a></li>
+        <li><a href="<?php echo e(route('galeri')); ?>" data-en="Gallery">Galeri</a></li>
+        <li><a href="<?php echo e(route('kontak')); ?>" data-en="Contact">Kontak</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -2413,27 +2435,27 @@
 
     <header class="hero">
       <div class="hero-slider">
-        @forelse($heroSlides as $slide)
-          <div class="hero-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset($slide->image) }}')"></div>
-        @empty
-          <div class="hero-slide" style="background-image:url('{{ asset('images/hero-gedung-dpr.jpg') }}')"></div>
-        @endforelse
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $heroSlides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $slide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+          <div class="hero-slide <?php echo e($loop->first ? 'active' : ''); ?>" style="background-image:url('<?php echo e(asset($slide->image)); ?>')"></div>
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+          <div class="hero-slide" style="background-image:url('<?php echo e(asset('images/hero-gedung-dpr.jpg')); ?>')"></div>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
       </div>
-      @if($heroSlides->count() > 1)
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($heroSlides->count() > 1): ?>
         <button type="button" class="hero-arrow hero-arrow-prev" aria-label="Gambar sebelumnya">
           <svg viewBox="0 0 24 24"><polyline points="15 6 9 12 15 18"/></svg>
         </button>
         <button type="button" class="hero-arrow hero-arrow-next" aria-label="Gambar berikutnya">
           <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
         </button>
-      @endif
+      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
       <div class="hero-content">
         <div class="eyebrow" data-en="Center for Information &amp; Communication Technology">Pusat Teknologi Informasi dan Komunikasi</div>
         <h1 data-en-html="Supporting DPR RI's Performance Through Integrated <br> Information Technology <br> Services.">Mendukung Kinerja DPR RI Melalui Layanan <br> Teknologi Informasi Yang <br> Terintegrasi.</h1>
         <p data-en="Pustekinfo provides information technology services, infrastructure management, applications, networks, and information security to support the operations of all work units effectively, securely, and sustainably.">Pustekinfo menyediakan layanan teknologi informasi, pengelolaan infrastruktur, aplikasi, jaringan, dan keamanan informasi untuk mendukung operasional seluruh unit kerja secara efektif, aman, dan berkelanjutan.</p>
         <div class="hero-actions">
-          <a href="{{ route('layanan.ajukan') }}" class="btn btn-primary" data-en="Request IT Service">Ajukan Layanan IT</a>
-          <a href="{{ route('layanan.status') }}" class="btn btn-ghost" data-en="View Service Status">Lihat Status Layanan</a>
+          <a href="<?php echo e(route('layanan.ajukan')); ?>" class="btn btn-primary" data-en="Request IT Service">Ajukan Layanan IT</a>
+          <a href="<?php echo e(route('layanan.status')); ?>" class="btn btn-ghost" data-en="View Service Status">Lihat Status Layanan</a>
         </div>
       </div>
 
@@ -2443,32 +2465,32 @@
       </a>
     </header>
 
-    @if($stats->count())
-      <section class="stats-bar" style="--stat-cols:{{ $stats->count() }};">
-        @foreach($stats as $stat)
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($stats->count()): ?>
+      <section class="stats-bar">
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $stats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
           <div class="stat">
-            <div class="stat-icon"><svg viewBox="0 0 24 24">{!! $stat->icon_svg !!}</svg></div>
+            <div class="stat-icon"><svg viewBox="0 0 24 24"><?php echo $stat->icon_svg; ?></svg></div>
             <div>
-              <div class="stat-num" data-target="{{ $stat->value }}" data-suffix="{{ $stat->suffix }}" data-decimals="{{ $stat->decimals }}">0</div>
-              <div class="stat-label" data-en="{{ $stat->label_en ?: $stat->label }}">{{ $stat->label }}</div>
+              <div class="stat-num" data-target="<?php echo e($stat->value); ?>" data-suffix="<?php echo e($stat->suffix); ?>" data-decimals="<?php echo e($stat->decimals); ?>">0</div>
+              <div class="stat-label" data-en="<?php echo e($stat->label_en ?: $stat->label); ?>"><?php echo e($stat->label); ?></div>
             </div>
           </div>
-        @endforeach
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
       </section>
-    @endif
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         <div class="spacer"></div>
 
-        {{-- Pembungkus: satu pola batik menyatu untuk seluruh section di bawah ini (Profil s/d Akses & Dokumen) --}}
+        
 
-        {{-- ================= PROFIL SINGKAT ================= --}}
+        
         <section id="profil" class="profil">
           <div class="profil-grid">
 
             <div class="profil-media">
               <div class="profil-media-frame">
-                @foreach($profilPhotos as $photo)
-                  <div class="profil-slide {{ $loop->first ? 'active' : '' }}" style="background-image:url('{{ asset($photo->image) }}')"></div>
-                @endforeach
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $profilPhotos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $photo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+                  <div class="profil-slide <?php echo e($loop->first ? 'active' : ''); ?>" style="background-image:url('<?php echo e(asset($photo->image)); ?>')"></div>
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                 <span class="profil-badge" data-en="ABOUT US">TENTANG KAMI</span>
               </div>
             </div>
@@ -2522,7 +2544,7 @@
         </div>
       </section>
 
-  {{-- ================= APA YANG KAMI KERJAKAN (LAYANAN) ================= --}}
+  
   <section id="layanan" class="layanan">
     <div class="layanan-inner">
       <div class="eyebrow" data-en="WHAT WE DO">LAYANAN KAMI</div>
@@ -2580,18 +2602,18 @@
     </div>
   </section>
 
-  {{-- ================= SAMBUTAN PIMPINAN ================= --}}
+  
   <section id="sambutan" class="sambutan">
     <div class="sambutan-inner">
       <div class="eyebrow" data-en="LEADERSHIP MESSAGE">SAMBUTAN PIMPINAN</div>
 
       <div class="sambutan-card">
-                <div class="sambutan-photo" @if($leadership?->photo) style="background-image:url('{{ asset($leadership->photo) }}');background-size:cover;background-position:center;" @endif>
+                <div class="sambutan-photo" <?php if($leadership?->photo): ?> style="background-image:url('<?php echo e(asset($leadership->photo)); ?>');background-size:cover;background-position:center;" <?php endif; ?>>
           <div class="who">
-            @if($leadership?->show_name && $leadership?->name)
-              <div class="name">{{ $leadership->name }}</div>
-            @endif
-            <div class="role">{{ $leadership->position ?? 'KEPALA PUSTEKINFO' }}</div>
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($leadership?->show_name && $leadership?->name): ?>
+              <div class="name"><?php echo e($leadership->name); ?></div>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+            <div class="role"><?php echo e($leadership->position ?? 'KEPALA PUSTEKINFO'); ?></div>
           </div>
         </div>
 
@@ -2599,56 +2621,56 @@
           <div class="quote-mark"><span></span><span></span></div>
 
           <div class="eyebrow" data-en="WELCOME">SELAMAT DATANG</div>
-          <h2 data-en="{{ ($leadership->welcome_title_en ?? null) ?: ($leadership->welcome_title ?? 'Technology for better service') }}">{{ $leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik' }}</h2>
-          <p class="desc" data-en="{{ ($leadership->description_en ?? null) ?: ($leadership->description ?? 'The leadership message has not been filled in via the admin panel.') }}">{{ $leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.' }}</p>
+          <h2 data-en="<?php echo e(($leadership->welcome_title_en ?? null) ?: ($leadership->welcome_title ?? 'Technology for better service')); ?>"><?php echo e($leadership->welcome_title ?? 'Teknologi untuk pelayanan yang lebih baik'); ?></h2>
+          <p class="desc" data-en="<?php echo e(($leadership->description_en ?? null) ?: ($leadership->description ?? 'The leadership message has not been filled in via the admin panel.')); ?>"><?php echo e($leadership->description ?? 'Sambutan pimpinan belum diisi lewat panel admin.'); ?></p>
 
-          <div class="sign-role" data-en="{{ ($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center') }}">{{ $leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi' }}</div>
+          <div class="sign-role" data-en="<?php echo e(($leadership->signature_role_en ?? null) ?: ($leadership->signature_role ?? 'Head of Information Technology Center')); ?>"><?php echo e($leadership->signature_role ?? 'Kepala Pusat Teknologi Informasi'); ?></div>
         </div>
       </div>
     </div>
   </section>
 
-  {{-- ================= APA YANG KAMI KERJAKAN (KEGIATAN) ================= --}}
+  
   <section id="kerjakan" class="kerjakan">
     <div class="kerjakan-inner">
       <div class="eyebrow" data-en="WHAT WE DO">APA YANG KAMI KERJAKAN</div>
       <h2 data-en="What We Do">Apa yang Kami Kerjakan</h2>
 
-      @if($workItemsTop->isNotEmpty())
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($workItemsTop->isNotEmpty()): ?>
         <div class="kerjakan-row">
           <div class="kerjakan-track">
-            @foreach ($workItemsTop as $item)
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $workItemsTop; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
               <div class="kerjakan-card">
-                <div class="icon">{!! $item->iconSvg() !!}</div>
-                <div class="title" data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</div>
-                <div class="desc" data-en="{{ $item->description_en ?: $item->description }}">{{ $item->description }}</div>
+                <div class="icon"><?php echo $item->iconSvg(); ?></div>
+                <div class="title" data-en="<?php echo e($item->title_en ?: $item->title); ?>"><?php echo e($item->title); ?></div>
+                <div class="desc" data-en="<?php echo e($item->description_en ?: $item->description); ?>"><?php echo e($item->description); ?></div>
               </div>
-            @endforeach
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
           </div>
         </div>
-      @endif
+      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-      @if($workItemsBottom->isNotEmpty())
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($workItemsBottom->isNotEmpty()): ?>
         <div class="kerjakan-row">
           <div class="kerjakan-track">
-            @foreach ($workItemsBottom as $item)
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $workItemsBottom; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
               <div class="kerjakan-card">
-                <div class="icon">{!! $item->iconSvg() !!}</div>
-                <div class="title" data-en="{{ $item->title_en ?: $item->title }}">{{ $item->title }}</div>
-                <div class="desc" data-en="{{ $item->description_en ?: $item->description }}">{{ $item->description }}</div>
+                <div class="icon"><?php echo $item->iconSvg(); ?></div>
+                <div class="title" data-en="<?php echo e($item->title_en ?: $item->title); ?>"><?php echo e($item->title); ?></div>
+                <div class="desc" data-en="<?php echo e($item->description_en ?: $item->description); ?>"><?php echo e($item->description); ?></div>
               </div>
-            @endforeach
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
           </div>
         </div>
-      @endif
+      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-      @if($workItemsTop->isEmpty() && $workItemsBottom->isEmpty())
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($workItemsTop->isEmpty() && $workItemsBottom->isEmpty()): ?>
         <p style="margin-top:40px;color:#7a8a92;font-size:14px;">Belum ada card yang diisi lewat panel admin.</p>
-      @endif
+      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
     </div>
   </section>
 
-  {{-- ================= BERITA & KEGIATAN ================= --}}
+  
   <section id="berita" class="berita">
     <div class="berita-inner">
 
@@ -2657,50 +2679,50 @@
           <div class="eyebrow" data-en="LATEST NEWS">KABAR TERBARU</div>
           <h2 data-en="News &amp; Activities">Berita &amp; Kegiatan</h2>
         </div>
-        <a href="{{ route('informasi') }}" class="berita-link"><span data-en="ALL NEWS">SEMUA BERITA</span> <span>→</span></a>
+        <a href="<?php echo e(route('informasi')); ?>" class="berita-link"><span data-en="ALL NEWS">SEMUA BERITA</span> <span>→</span></a>
       </div>
 
       <div class="berita-grid">
 
-        <div class="berita-featured" @if($featuredNews?->image) style="background-image:url('{{ asset($featuredNews->image) }}');background-size:cover;background-position:center;" @endif>
-          <span class="badge" data-en="{{ ($featuredNews->category_en ?? null) ?: ($featuredNews->category ?? 'NEWS') }}">{{ $featuredNews->category ?? 'BERITA' }}</span>
+        <div class="berita-featured" <?php if($featuredNews?->image): ?> style="background-image:url('<?php echo e(asset($featuredNews->image)); ?>');background-size:cover;background-position:center;" <?php endif; ?>>
+          <span class="badge" data-en="<?php echo e(($featuredNews->category_en ?? null) ?: ($featuredNews->category ?? 'NEWS')); ?>"><?php echo e($featuredNews->category ?? 'BERITA'); ?></span>
 
           <div class="berita-featured-body">
-            <h3 data-en="{{ ($featuredNews->title_en ?? null) ?: ($featuredNews->title ?? 'No featured news yet') }}">{{ $featuredNews->title ?? 'Belum ada berita utama' }}</h3>
-            @if($featuredNews)
-              <p data-en="{{ $featuredNews->excerpt_en ?: $featuredNews->excerpt }}">{{ $featuredNews->excerpt }}</p>
+            <h3 data-en="<?php echo e(($featuredNews->title_en ?? null) ?: ($featuredNews->title ?? 'No featured news yet')); ?>"><?php echo e($featuredNews->title ?? 'Belum ada berita utama'); ?></h3>
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($featuredNews): ?>
+              <p data-en="<?php echo e($featuredNews->excerpt_en ?: $featuredNews->excerpt); ?>"><?php echo e($featuredNews->excerpt); ?></p>
               <div class="meta">
-                <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $featuredNews->published_at?->format('d M Y') }}</span>
-                <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {{ $featuredNews->author }}</span>
-                <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $featuredNews->reading_minutes }} <span data-en="min read">menit baca</span></span>
+                <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <?php echo e($featuredNews->published_at?->format('d M Y')); ?></span>
+                <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <?php echo e($featuredNews->author); ?></span>
+                <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <?php echo e($featuredNews->reading_minutes); ?> <span data-en="min read">menit baca</span></span>
               </div>
-              <a href="{{ route('berita.show', $featuredNews) }}" class="read-more" data-en="READ MORE">BACA SELENGKAPNYA</a>
-            @endif
+              <a href="<?php echo e(route('berita.show', $featuredNews)); ?>" class="read-more" data-en="READ MORE">BACA SELENGKAPNYA</a>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
           </div>
         </div>
 
         <div class="berita-list">
-          @forelse($latestNews as $news)
-            <a href="{{ route('berita.show', $news) }}" class="berita-item">
-              <div class="berita-thumb" @if($news->image) style="background-image:url('{{ asset($news->image) }}');background-size:cover;background-position:center;" @endif></div>
+          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $latestNews; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $news): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+            <a href="<?php echo e(route('berita.show', $news)); ?>" class="berita-item">
+              <div class="berita-thumb" <?php if($news->image): ?> style="background-image:url('<?php echo e(asset($news->image)); ?>');background-size:cover;background-position:center;" <?php endif; ?>></div>
               <div class="berita-item-body">
-                <div class="cat" data-en="{{ $news->category_en ?: $news->category }}">{{ $news->category }}</div>
-                <div class="title" data-en="{{ $news->title_en ?: $news->title }}">{{ $news->title }}</div>
+                <div class="cat" data-en="<?php echo e($news->category_en ?: $news->category); ?>"><?php echo e($news->category); ?></div>
+                <div class="title" data-en="<?php echo e($news->title_en ?: $news->title); ?>"><?php echo e($news->title); ?></div>
                 <div class="meta">
-                  <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $news->published_at?->format('d M Y') }}</span>
-                  <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ $news->reading_minutes }} mnt</span>
+                  <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <?php echo e($news->published_at?->format('d M Y')); ?></span>
+                  <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <?php echo e($news->reading_minutes); ?> mnt</span>
                 </div>
               </div>
             </a>
-          @empty
+          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
             <p style="color:#8a97a0;font-size:13.5px;" data-en="No other news yet.">Belum ada berita lain.</p>
-          @endforelse
+          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </div>
         </div>
       </div>
   </section>
 
-  {{-- ================= AGENDA KEGIATAN ================= --}}
+  
   <section id="agenda" class="agenda">
     <div class="agenda-inner">
 
@@ -2709,10 +2731,10 @@
 
       <div class="agenda-grid">
 
-        {{-- Kalender --}}
+        
         <div class="agenda-cal">
           <div class="agenda-cal-head">
-            <div class="month">{{ $monthLabel }}</div>
+            <div class="month"><?php echo e($monthLabel); ?></div>
             <div class="agenda-cal-nav">
               <button aria-label="Bulan sebelumnya">‹</button>
               <button aria-label="Bulan berikutnya">›</button>
@@ -2725,21 +2747,22 @@
           </div>
 
           <div class="agenda-cal-days">
-            @foreach($calendarDays as $day)
-              <div class="agenda-day {{ $day['muted'] ? 'muted' : '' }} {{ $day['today'] ? 'today' : '' }} {{ $day['events']->isNotEmpty() ? 'has-event' : '' }}">
-                {{ $day['day'] }}
-                @if($day['events']->isNotEmpty())
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $calendarDays; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $day): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+              <div class="agenda-day <?php echo e($day['muted'] ? 'muted' : ''); ?> <?php echo e($day['today'] ? 'today' : ''); ?> <?php echo e($day['events']->isNotEmpty() ? 'has-event' : ''); ?>">
+                <?php echo e($day['day']); ?>
+
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($day['events']->isNotEmpty()): ?>
                   <span class="dots">
-                    @foreach($day['events']->take(5) as $ev)
-                      <span class="dot" style="background:{{ $ev->color }};" title="{{ $ev->title }}"></span>
-                    @endforeach
-                    @if($day['events']->count() > 5)
-                      <span class="dot-more">+{{ $day['events']->count() - 5 }}</span>
-                    @endif
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $day['events']->take(5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ev): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+                      <span class="dot" style="background:<?php echo e($ev->color); ?>;" title="<?php echo e($ev->title); ?>"></span>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($day['events']->count() > 5): ?>
+                      <span class="dot-more">+<?php echo e($day['events']->count() - 5); ?></span>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                   </span>
-                @endif
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
               </div>
-            @endforeach
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
           </div>
           <div class="agenda-legend">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
@@ -2747,59 +2770,59 @@
           </div>
         </div>
 
-        {{-- Panel Hari Ini --}}
+        
         <div class="agenda-today">
           <div class="agenda-today-head">
               <div class="label" data-en="Today">Hari Ini</div>
-              <div class="date">{{ now()->format('d M Y') }}</div>
+              <div class="date"><?php echo e(now()->format('d M Y')); ?></div>
             </div>
 
-            @forelse($todayEvents as $event)
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $todayEvents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
               <div class="agenda-event">
                 <div class="agenda-event-top">
                   <span class="bullet"></span>
-                  <div class="title" data-en="{{ $event->title_en ?: $event->title }}">{{ $event->title }}</div>
+                  <div class="title" data-en="<?php echo e($event->title_en ?: $event->title); ?>"><?php echo e($event->title); ?></div>
                 </div>
                 <div class="agenda-event-meta">
-                  @if($event->event_time)
-                    <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ \Carbon\Carbon::parse($event->event_time)->format('H.i') }} WIB</span>
-                  @endif
-                  @if($event->location)
-                    <span><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> {{ $event->location }}</span>
-                  @endif
+                  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->event_time): ?>
+                    <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <?php echo e(\Carbon\Carbon::parse($event->event_time)->format('H.i')); ?> WIB</span>
+                  <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->location): ?>
+                    <span><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> <?php echo e($event->location); ?></span>
+                  <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 </div>
               </div>
-            @empty
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
               <div class="agenda-today-empty" data-en="No agenda today">Tidak ada agenda hari ini</div>
-            @endforelse
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-            @if($upcomingEvents->isNotEmpty())
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($upcomingEvents->isNotEmpty()): ?>
               <div class="agenda-upcoming-head" data-en="Upcoming Agenda">Agenda Berikutnya</div>
-              @foreach($upcomingEvents as $event)
+              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $upcomingEvents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
                 <div class="agenda-event upcoming">
                   <div class="agenda-event-top">
                     <span class="bullet"></span>
-                    <div class="title" data-en="{{ $event->title_en ?: $event->title }}">{{ $event->title }}</div>
+                    <div class="title" data-en="<?php echo e($event->title_en ?: $event->title); ?>"><?php echo e($event->title); ?></div>
                   </div>
                   <div class="agenda-event-meta">
-                    <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> {{ $event->event_date->format('d M Y') }}</span>
-                    @if($event->event_time)
-                      <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {{ \Carbon\Carbon::parse($event->event_time)->format('H.i') }} WIB</span>
-                    @endif
-                    @if($event->location)
-                      <span><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> {{ $event->location }}</span>
-                    @endif
+                    <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <?php echo e($event->event_date->format('d M Y')); ?></span>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->event_time): ?>
+                      <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <?php echo e(\Carbon\Carbon::parse($event->event_time)->format('H.i')); ?> WIB</span>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->location): ?>
+                      <span><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> <?php echo e($event->location); ?></span>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                   </div>
                 </div>
-              @endforeach
-            @endif
+              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </div>
 
       </div>
     </div>
   </section>
 
- {{-- ================= GALERI KEGIATAN ================= --}}
+ 
 <section id="galeri" class="galeri">
   <div class="galeri-inner">
 
@@ -2808,27 +2831,27 @@
         <div class="eyebrow" data-en="DOCUMENTATION">DOKUMENTASI</div>
         <h2 data-en="Activity Gallery">Galeri Kegiatan</h2>
       </div>
-      <a href="{{ route('galeri') }}" class="galeri-link"><span data-en="VIEW ALL GALLERY">LIHAT SEMUA GALERI</span> <span>→</span></a>
+      <a href="<?php echo e(route('galeri')); ?>" class="galeri-link"><span data-en="VIEW ALL GALLERY">LIHAT SEMUA GALERI</span> <span>→</span></a>
     </div>
 
 
     <div class="galeri-grid" id="galeriGrid">
-      @forelse($galleries as $item)
-        <div class="galeri-card {{ $item->size }}" data-category="{{ $item->category->slug ?? '' }}">
-          <img src="{{ asset($item->image) }}" alt="{{ $item->title }}">
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $galleries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+        <div class="galeri-card <?php echo e($item->size); ?>" data-category="<?php echo e($item->category->slug ?? ''); ?>">
+          <img src="<?php echo e(asset($item->image)); ?>" alt="<?php echo e($item->title); ?>">
         </div>
-      @empty
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
         <p style="color:#8a97a0;" data-en="No gallery photos yet.">Belum ada foto galeri.</p>
-      @endforelse
+      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
     </div>
   </div>
 </section>
 
-{{-- ================= AKSES CEPAT & DOKUMEN ================= --}}
+
 <section id="akses" class="akses-dokumen">
   <div class="akses-dokumen-inner">
 
-    {{-- Kolom kiri: Layanan populer --}}
+    
     <div class="akses-col">
       <div class="eyebrow" data-en="QUICK ACCESS">AKSES CEPAT</div>
       <h2>
@@ -2875,7 +2898,7 @@
       </div>
     </div>
 
-    {{-- Kolom kanan: Publikasi & unduhan --}}
+    
     <div class="akses-col">
       <div class="eyebrow">DOKUMEN</div>
       <h2>
@@ -2924,9 +2947,9 @@
   </div>
   </section>
   </div>
-  {{-- /.konten-batik --}}
+  
 
-{{-- ================= CTA BANTUAN TEKNIS ================= --}}
+
 <section class="cta-bantuan">
   <div class="cta-bantuan-top">
     <div>
@@ -2940,28 +2963,28 @@
     </button>
   </div>
 
-  <img src="{{ asset('images/dpr-footer.png') }}" alt="Gedung DPR RI" class="cta-footer-img">
+  <img src="<?php echo e(asset('images/dpr-footer.png')); ?>" alt="Gedung DPR RI" class="cta-footer-img">
 </section>
 
-{{-- ================= FOOTER ================= --}}
+
 <footer class="footer">
   <div class="footer-inner">
 
-    {{-- Kolom brand --}}
+    
     <div class="footer-col">
       <div class="footer-brand">
-        <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
+        <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="footer-brand-logo">
       </div>
       <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
 
       <div class="footer-social">
-        <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
-        <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
-        <a href="{{ $setting->x_url ?? '#' }}" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
+        <a href="<?php echo e($setting->instagram_url ?? '#'); ?>" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+        <a href="<?php echo e($setting->youtube_url ?? '#'); ?>" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
+        <a href="<?php echo e($setting->x_url ?? '#'); ?>" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
       </div>
     </div>
 
-    {{-- Kolom tautan --}}
+    
     <div class="footer-col">
       <span class="head" data-en="LINKS">TAUTAN</span>
       <div class="footer-links">
@@ -2972,7 +2995,7 @@
       </div>
     </div>
 
-    {{-- Kolom bantuan --}}
+    
     <div class="footer-col">
       <span class="head" data-en="HELP">BANTUAN</span>
       <div class="footer-links">
@@ -2983,21 +3006,23 @@
       </div>
     </div>
 
-    {{-- Kolom kontak --}}
+    
     <div class="footer-col">
       <span class="head" data-en="CONTACT">KONTAK</span>
       <div class="footer-contact">
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
+          <span data-en="<?php echo e($setting->address_en ?: ($setting->address ?? 'Address not set')); ?>"><?php echo e($setting->address ?? 'Alamat belum diatur'); ?></span>
         </div>
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          {{ $setting->phone ?? '-' }}
+          <?php echo e($setting->phone ?? '-'); ?>
+
         </div>
         <div class="item">
           <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
-          {{ $setting->email ?? '-' }}
+          <?php echo e($setting->email ?? '-'); ?>
+
         </div>
       </div>
     </div>
@@ -3504,8 +3529,8 @@ aksesObserver.observe(aksesSection);
 
 </script>
 
-@include('partials.interactive-cursor')
-@include('partials.page-loading')
-@include('partials.batik-sync')
+<?php echo $__env->make('partials.interactive-cursor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.batik-sync', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
-</html>
+</html><?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/home.blade.php ENDPATH**/ ?>
