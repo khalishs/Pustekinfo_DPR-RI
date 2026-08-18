@@ -24,7 +24,7 @@
           <form action="{{ route('admin.gallery-categories.toggle-active', $cat) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $cat->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $cat->is_active ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $cat->is_active ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>

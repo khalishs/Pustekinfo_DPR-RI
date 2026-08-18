@@ -25,7 +25,7 @@
           <form action="{{ route('admin.statistics.toggle-active', $stat) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $stat->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $stat->is_active ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $stat->is_active ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>

@@ -19,7 +19,7 @@
           <form action="{{ route('admin.profil-photos.toggle-active', $photo) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $photo->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $photo->is_active ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $photo->is_active ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>

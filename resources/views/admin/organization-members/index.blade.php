@@ -34,7 +34,7 @@
           <form action="{{ route('admin.organization-members.toggle-active', $m) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $m->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $m->is_active ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $m->is_active ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>

@@ -1,5 +1,5 @@
-{{-- resources/views/admin/layout.blade.php --}}
-@php
+
+<?php
   // Halaman list (admin.{resource}.index) auto-terdeteksi dari nama route,
   // supaya tiap index view tidak perlu diubah satu-satu untuk ikut polling.
   $__routeName = request()->route()?->getName();
@@ -10,19 +10,19 @@
       $__syncResource = $__candidate;
     }
   }
-@endphp
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>@yield('title', 'Dashboard') - Admin Pustekinfo</title>
+<title><?php echo $__env->yieldContent('title', 'Dashboard'); ?> - Admin Pustekinfo</title>
 <script>
   if (localStorage.getItem('theme') === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
   }
 </script>
-<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}?v=2">
+<link rel="icon" type="image/png" href="<?php echo e(asset('images/favicon-bg.png')); ?>?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -141,7 +141,7 @@
     padding:16px 18px 20px;
     border-top:1px solid rgba(255,255,255,.1);
     display:flex;flex-direction:column;gap:8px;
-    background-image:url('{{ asset('images/pola-batik.png') }}');
+    background-image:url('<?php echo e(asset('images/pola-batik.png')); ?>');
     background-repeat:no-repeat;
     background-position:right -40px bottom -30px;
     background-size:220px auto;
@@ -237,6 +237,16 @@
   .topbar-left{display:flex;align-items:center;gap:14px;min-width:0;}
   .topbar-titles h1{font-size:21px;font-weight:800;color:var(--navy);letter-spacing:-.01em;}
   .topbar-titles p{margin-top:3px;font-size:12.5px;color:#8a97a0;font-weight:500;}
+  .topbar-chip{
+    display:flex;align-items:center;gap:7px;
+    padding:8px 14px;border-radius:20px;
+    background:rgba(20,128,140,.08);
+    border:1px solid rgba(20,128,140,.16);
+    color:var(--teal);
+    font-size:12px;font-weight:700;
+    white-space:nowrap;
+  }
+  .topbar-chip .pulse{width:6px;height:6px;border-radius:50%;background:var(--success);flex-shrink:0;box-shadow:0 0 0 3px rgba(31,157,124,.18);}
 
   .content{padding:30px 36px 64px;width:100%;}
 
@@ -503,6 +513,7 @@
   [data-theme="dark"] .theme-toggle:hover{border-color:var(--teal-light);color:var(--teal-light);}
   [data-theme="dark"] .topbar{background:rgba(27,30,34,.85);border-color:rgba(255,255,255,.06);}
   [data-theme="dark"] .topbar-titles p{color:#8b929a;}
+  [data-theme="dark"] .topbar-chip{background:rgba(20,128,140,.15);border-color:rgba(20,128,140,.28);}
   [data-theme="dark"] .flash{background:rgba(31,157,124,.13);color:#6fd6b3;border-color:rgba(31,157,124,.26);}
   [data-theme="dark"] .flash-error{background:rgba(176,65,62,.15);color:#e79a97;border-color:rgba(176,65,62,.32);}
   [data-theme="dark"] .card{background:#24282d;border-color:rgba(255,255,255,.06);box-shadow:0 8px 28px -16px rgba(0,0,0,.4);}
@@ -540,6 +551,7 @@
     .sidebar.open{transform:translateX(0);}
     .main{margin-left:0;}
     .topbar{padding:16px 20px;}
+    .topbar-chip{display:none;}
     .content{padding:24px 20px 50px;}
   }
 
@@ -559,11 +571,11 @@
   }
 </style>
 </head>
-<body @if($__syncResource) data-sync-resource="{{ $__syncResource }}" @endif>
+<body <?php if($__syncResource): ?> data-sync-resource="<?php echo e($__syncResource); ?>" <?php endif; ?>>
   <aside class="sidebar">
     <div class="sidebar-resize-handle" id="sidebarResizeHandle" title="Tarik untuk mengubah lebar sidebar"></div>
     <div class="brand">
-      <div class="brand-logo"><img src="{{ asset('images/Logo.png') }}" alt="Logo"></div>
+      <div class="brand-logo"><img src="<?php echo e(asset('images/Logo.png')); ?>" alt="Logo"></div>
       <div>
         <div class="name">PUSTEKINFO</div>
         <div class="sub">Admin Panel</div>
@@ -571,34 +583,34 @@
     </div>
 
     <nav>
-      <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+      <a href="<?php echo e(route('admin.dashboard')); ?>" class="<?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
         <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
         Dashboard
       </a>
 
       <details class="nav-group" open>
         <summary>Beranda</summary>
-        <a href="{{ route('admin.statistics.index') }}" class="{{ request()->routeIs('admin.statistics.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.statistics.index')); ?>" class="<?php echo e(request()->routeIs('admin.statistics.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
           Statistik
         </a>
-        <a href="{{ route('admin.news.index') }}" class="{{ request()->routeIs('admin.news.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.news.index')); ?>" class="<?php echo e(request()->routeIs('admin.news.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h13a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H4z"/><path d="M4 4v16a2 2 0 0 0 2 2h13"/><line x1="8" y1="9" x2="15" y2="9"/><line x1="8" y1="13" x2="15" y2="13"/></svg></span>
           Berita
         </a>
-        <a href="{{ route('admin.agenda.index') }}" class="{{ request()->routeIs('admin.agenda.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.agenda.index')); ?>" class="<?php echo e(request()->routeIs('admin.agenda.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
           Agenda
         </a>
-        <a href="{{ route('admin.hero-slides.index') }}" class="{{ request()->routeIs('admin.hero-slides.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.hero-slides.index')); ?>" class="<?php echo e(request()->routeIs('admin.hero-slides.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/></svg></span>
           Hero Slider
         </a>
-        <a href="{{ route('admin.profil-photos.index') }}" class="{{ request()->routeIs('admin.profil-photos.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.profil-photos.index')); ?>" class="<?php echo e(request()->routeIs('admin.profil-photos.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
           Foto Profil Singkat
         </a>
-        <a href="{{ route('admin.work-items.index') }}" class="{{ request()->routeIs('admin.work-items.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.work-items.index')); ?>" class="<?php echo e(request()->routeIs('admin.work-items.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
           Apa yang Kami Kerjakan
         </a>
@@ -606,18 +618,18 @@
 
       <details class="nav-group" open>
         <summary>Layanan</summary>
-        <a href="{{ route('admin.services.index') }}" class="{{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.services.index')); ?>" class="<?php echo e(request()->routeIs('admin.services.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
           Kartu Layanan
         </a>
-        <a href="{{ route('admin.layanan-pengajuan.index') }}" class="{{ request()->routeIs('admin.layanan-pengajuan.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.layanan-pengajuan.index')); ?>" class="<?php echo e(request()->routeIs('admin.layanan-pengajuan.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span>
           Pengajuan Layanan
-          @if(($pendingLayananCount ?? 0) > 0)
-            <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);">{{ $pendingLayananCount }}</span>
-          @endif
+          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(($pendingLayananCount ?? 0) > 0): ?>
+            <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);"><?php echo e($pendingLayananCount); ?></span>
+          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </a>
-        <a href="{{ route('admin.stela-videos.index') }}" class="{{ request()->routeIs('admin.stela-videos.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.stela-videos.index')); ?>" class="<?php echo e(request()->routeIs('admin.stela-videos.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
           Video Sekilas STELA
         </a>
@@ -625,23 +637,23 @@
 
       <details class="nav-group" open>
         <summary>Profil</summary>
-        <a href="{{ route('admin.timeline.index') }}" class="{{ request()->routeIs('admin.timeline.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.timeline.index')); ?>" class="<?php echo e(request()->routeIs('admin.timeline.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span>
           Sejarah Instansi
         </a>
-        <a href="{{ route('admin.leadership.edit') }}" class="{{ request()->routeIs('admin.leadership.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.leadership.edit')); ?>" class="<?php echo e(request()->routeIs('admin.leadership.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
           Sambutan Pimpinan
         </a>
-        <a href="{{ route('admin.organization-members.index') }}" class="{{ request()->routeIs('admin.organization-members.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.organization-members.index')); ?>" class="<?php echo e(request()->routeIs('admin.organization-members.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="19" r="2"/></svg></span>
           Struktur Organisasi
         </a>
-        <a href="{{ route('admin.vision-mission.edit') }}" class="{{ request()->routeIs('admin.vision-mission.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.vision-mission.edit')); ?>" class="<?php echo e(request()->routeIs('admin.vision-mission.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
           Visi &amp; Misi
         </a>
-        <a href="{{ route('admin.core-values.index') }}" class="{{ request()->routeIs('admin.core-values.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.core-values.index')); ?>" class="<?php echo e(request()->routeIs('admin.core-values.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></span>
           Nilai Organisasi
         </a>
@@ -649,21 +661,22 @@
 
       <details class="nav-group" open>
         <summary>Banner</summary>
-        @foreach(\App\Models\PageBanner::PAGES as $bannerPage => $bannerLabel)
-          <a href="{{ route('admin.page-banners.edit', $bannerPage) }}" class="{{ request()->routeIs('admin.page-banners.*') && request()->route('page') === $bannerPage ? 'active' : '' }}">
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = \App\Models\PageBanner::PAGES; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bannerPage => $bannerLabel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+          <a href="<?php echo e(route('admin.page-banners.edit', $bannerPage)); ?>" class="<?php echo e(request()->routeIs('admin.page-banners.*') && request()->route('page') === $bannerPage ? 'active' : ''); ?>">
             <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/></svg></span>
-            Banner {{ $bannerLabel }}
+            Banner <?php echo e($bannerLabel); ?>
+
           </a>
-        @endforeach
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
       </details>
 
       <details class="nav-group" open>
         <summary>Galeri</summary>
-        <a href="{{ route('admin.gallery.index') }}" class="{{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.gallery.index')); ?>" class="<?php echo e(request()->routeIs('admin.gallery.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
           Foto Galeri
         </a>
-        <a href="{{ route('admin.gallery-categories.index') }}" class="{{ request()->routeIs('admin.gallery-categories.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.gallery-categories.index')); ?>" class="<?php echo e(request()->routeIs('admin.gallery-categories.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2.5 12.5V2.5h10l8.09 8.08a2 2 0 0 1 0 2.83z"/><circle cx="7" cy="7" r="1"/></svg></span>
           Kategori Galeri
         </a>
@@ -671,31 +684,31 @@
 
       <details class="nav-group" open>
         <summary>Kontak &amp; Footer</summary>
-        <a href="{{ route('admin.settings.edit') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.settings.edit')); ?>" class="<?php echo e(request()->routeIs('admin.settings.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
           Pengaturan Kontak
         </a>
-        <a href="{{ route('admin.messages.index') }}" class="{{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.messages.index')); ?>" class="<?php echo e(request()->routeIs('admin.messages.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span>
           Pesan Masuk
-          @if(($unreadMessagesCount ?? 0) > 0)
-            <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);">{{ $unreadMessagesCount }}</span>
-          @endif
+          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(($unreadMessagesCount ?? 0) > 0): ?>
+            <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);"><?php echo e($unreadMessagesCount); ?></span>
+          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </a>
       </details>
     </nav>
 
     <div class="bottom">
-      <a href="{{ route('admin.account.edit') }}">
+      <a href="<?php echo e(route('admin.account.edit')); ?>">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6"/></svg>
         Akun Saya
       </a>
-      <a href="{{ route('home') }}">
+      <a href="<?php echo e(route('home')); ?>">
         <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         Lihat Website
       </a>
-      <form action="{{ route('logout') }}" method="POST">
-        @csrf
+      <form action="<?php echo e(route('logout')); ?>" method="POST">
+        <?php echo csrf_field(); ?>
         <button type="submit">
           <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           Logout
@@ -713,22 +726,26 @@
           <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <div class="topbar-titles">
-          <h1>@yield('title', 'Dashboard')</h1>
+          <h1><?php echo $__env->yieldContent('title', 'Dashboard'); ?></h1>
           <p>Kelola konten yang tampil di website Pustekinfo</p>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
+        <div class="topbar-chip">
+          <span class="pulse"></span>
+          Situs aktif
+        </div>
         <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema" aria-pressed="false">◐</button>
       </div>
     </div>
     <div class="content">
-      @if(session('success'))
-        <div class="flash">{{ session('success') }}</div>
-      @endif
-      @if(session('error'))
-        <div class="flash flash-error">{{ session('error') }}</div>
-      @endif
-      @yield('content')
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('success')): ?>
+        <div class="flash"><?php echo e(session('success')); ?></div>
+      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('error')): ?>
+        <div class="flash flash-error"><?php echo e(session('error')); ?></div>
+      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+      <?php echo $__env->yieldContent('content'); ?>
     </div>
   </div>
 
@@ -869,7 +886,7 @@
           errorEl.style.display = 'none';
           input.insertAdjacentElement('afterend', errorEl);
         }
-        // Kalau errorEl sudah ada dari server (@@error blade), biarkan tampil apa adanya
+        // Kalau errorEl sudah ada dari server (@error blade), biarkan tampil apa adanya
         // sampai user memilih file baru — jangan langsung disembunyikan saat load.
 
         function formatSize(kb) {
@@ -952,7 +969,7 @@
       }
 
       // Cuma pegang elemen error yang dibuat sendiri (penanda field-error-msg),
-      // supaya tidak ganggu pesan @@error dari server atau validator ukuran
+      // supaya tidak ganggu pesan @error dari server atau validator ukuran
       // file yang sudah ada (lihat IIFE validasi file di atas).
       function clearFieldError(field){
         field.classList.remove('field-invalid');
@@ -1013,7 +1030,7 @@
       overlay.innerHTML =
         '<div class="admin-loading-box">' +
           '<div class="admin-loading-orbit">' +
-            '<img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="admin-loading-logo">' +
+            '<img src="<?php echo e(asset('images/Logo.png')); ?>" alt="Logo Pustekinfo" class="admin-loading-logo">' +
           '</div>' +
           '<div class="admin-loading-copy">' +
             '<span class="admin-loading-heading">Tolong menunggu sesaat<span class="admin-loading-dots"><i>.</i><i>.</i><i>.</i></span></span>' +
@@ -1159,7 +1176,7 @@
       var resource = document.body.getAttribute('data-sync-resource');
       if (!resource) return;
 
-      var checkUrl = '{{ route('admin.sync-check') }}?resource=' + encodeURIComponent(resource);
+      var checkUrl = '<?php echo e(route('admin.sync-check')); ?>?resource=' + encodeURIComponent(resource);
       var POLL_MS = 8000;
       var baseline = null;
       var notified = false;
@@ -1210,4 +1227,4 @@
     })();
   </script>
 </body>
-</html>
+</html><?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/admin/layout.blade.php ENDPATH**/ ?>
