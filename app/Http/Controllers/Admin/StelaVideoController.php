@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\StelaVideo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class StelaVideoController extends Controller
 {
@@ -38,13 +37,7 @@ class StelaVideoController extends Controller
                 ->with('error', 'Maksimal ' . self::MAX_ITEMS . ' video Sekilas STELA. Hapus video yang ada terlebih dahulu untuk menggantinya.');
         }
 
-        $data = $this->validated($request);
-
-        if ($request->hasFile('video')) {
-            $data['video'] = $request->file('video')->store('videos', 'assets');
-        }
-
-        StelaVideo::create($data);
+        StelaVideo::create($this->validated($request));
 
         return redirect()->route('admin.stela-videos.index')->with('success', 'Video Sekilas STELA ditambahkan.');
     }
@@ -58,29 +51,13 @@ class StelaVideoController extends Controller
 
     public function update(Request $request, StelaVideo $stelaVideo)
     {
-        $data = $this->validated($request);
-
-        if ($request->boolean('hapus_video') && $stelaVideo->video) {
-            Storage::disk('assets')->delete($stelaVideo->video);
-            $data['video'] = null;
-        } elseif ($request->hasFile('video')) {
-            if ($stelaVideo->video) {
-                Storage::disk('assets')->delete($stelaVideo->video);
-            }
-            $data['video'] = $request->file('video')->store('videos', 'assets');
-        }
-
-        $stelaVideo->update($data);
+        $stelaVideo->update($this->validated($request));
 
         return redirect()->route('admin.stela-videos.index')->with('success', 'Video Sekilas STELA diperbarui.');
     }
 
     public function destroy(StelaVideo $stelaVideo)
     {
-        if ($stelaVideo->video) {
-            Storage::disk('assets')->delete($stelaVideo->video);
-        }
-
         $stelaVideo->delete();
 
         return redirect()->route('admin.stela-videos.index')->with('success', 'Video Sekilas STELA dihapus.');
@@ -89,10 +66,8 @@ class StelaVideoController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
-            'video_type'  => 'required|in:upload,youtube',
-            'youtube_url' => 'required_if:video_type,youtube|nullable|url',
-            'video'       => 'nullable|mimes:mp4,webm,ogg|max:51200',
-            'link_url'    => 'nullable|url',
+            'video_url' => 'nullable|url',
+            'link_url'  => 'nullable|url',
         ]);
     }
 }
