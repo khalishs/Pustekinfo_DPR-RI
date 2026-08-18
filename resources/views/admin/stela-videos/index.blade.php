@@ -19,15 +19,13 @@
     @forelse($items as $item)
       <tr>
         <td>
-          @if($item->video_type === 'youtube')
-            <span style="color:#8a97a0;font-size:12px;">YouTube: {{ \Illuminate\Support\Str::limit($item->youtube_url, 40) }}</span>
-          @elseif($item->video)
-            <video src="{{ asset($item->video) }}" style="width:120px;height:68px;object-fit:cover;border-radius:8px;background:#000;" muted></video>
+          @if($item->video_url)
+            <span style="color:#8a97a0;font-size:12px;">{{ \Illuminate\Support\Str::limit($item->video_url, 40) }}</span>
           @else
             <span style="color:#b7c2c7;font-size:12px;">Belum ada</span>
           @endif
         </td>
-        <td>{{ $item->video_type === 'youtube' ? 'Link YouTube' : 'Upload MP4' }}</td>
+        <td>{{ $item->video_source_label }}</td>
         <td>{{ $item->link_url ?: 'https://stela.dpr.go.id (default)' }}</td>
         <td class="row-actions">
           <a href="{{ route('admin.stela-videos.edit', $item) }}" class="btn-icon btn-icon-edit" title="Edit" aria-label="Edit">

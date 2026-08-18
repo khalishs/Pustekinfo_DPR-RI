@@ -249,6 +249,22 @@
   .stela-video-wrap video{display:block;width:100%;max-height:520px;background:#000;}
   .stela-video-wrap iframe{display:block;width:100%;aspect-ratio:16/9;border:none;background:#000;}
 
+  .stela-video-fallback{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+    width:100%;aspect-ratio:16/9;
+    background:linear-gradient(155deg,var(--navy) 0%,var(--teal) 100%);
+    color:var(--white);text-decoration:none;
+  }
+  .stela-play-icon{
+    width:62px;height:62px;border-radius:50%;flex-shrink:0;
+    background:rgba(255,255,255,.16);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .25s ease, background .25s ease;
+  }
+  .stela-video-fallback:hover .stela-play-icon{transform:scale(1.1);background:rgba(255,255,255,.26);}
+  .stela-play-icon svg{width:24px;height:24px;fill:currentColor;stroke:currentColor;margin-left:3px;}
+  .stela-video-fallback > span:last-child{font-size:13.5px;font-weight:700;letter-spacing:.03em;}
+
   .stela-link{
     margin-top:34px;
     display:inline-flex;align-items:center;gap:8px;
@@ -556,7 +572,7 @@
 
   <div class="konten-batik">
 
-  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($stelaVideo && (($stelaVideo->video_type === 'youtube' && $stelaVideo->youtube_url) || ($stelaVideo->video_type !== 'youtube' && $stelaVideo->video))): ?>
+  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($stelaVideo && $stelaVideo->video_url): ?>
   
   <section class="stela-section">
     <div class="eyebrow" data-en="WATCH THE VIDEO">TONTON VIDEONYA</div>
@@ -569,10 +585,15 @@
         <span data-en="Introduction Video">Video Perkenalan</span>
       </span>
       <div class="stela-video-wrap">
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($stelaVideo->video_type === 'youtube'): ?>
-          <iframe src="<?php echo e($stelaVideo->youtube_embed_url); ?>" title="Sekilas STELA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($stelaVideo->embed_url): ?>
+          <iframe src="<?php echo e($stelaVideo->embed_url); ?>" title="Sekilas STELA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <?php else: ?>
-          <video controls preload="metadata" src="<?php echo e(asset($stelaVideo->video)); ?>"></video>
+          <a href="<?php echo e($stelaVideo->video_url); ?>" target="_blank" rel="noopener" class="stela-video-fallback">
+            <span class="stela-play-icon">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </span>
+            <span data-en="Watch Video">Tonton Video</span>
+          </a>
         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
       </div>
     </div>
@@ -920,6 +941,7 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
 
 <?php echo $__env->make('partials.interactive-cursor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 <?php echo $__env->make('partials.form-validation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
 </html>
 <?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/layanan-ajukan.blade.php ENDPATH**/ ?>

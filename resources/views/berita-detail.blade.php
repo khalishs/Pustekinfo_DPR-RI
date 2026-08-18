@@ -492,5 +492,6 @@
 </script>
 
 @include('partials.interactive-cursor')
+@include('partials.page-loading')
 </body>
 </html>

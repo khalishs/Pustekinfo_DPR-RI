@@ -1,4 +1,4 @@
-{{-- resources/views/layanan.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,7 +7,7 @@
 <title>Layanan - Pustekinfo | Pusat Teknologi Informasi DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
+<link rel="icon" type="image/png" href="<?php echo e(asset('images/favicon-bg.png')); ?>">
 <style>
   :root{
     --navy:#12242E;
@@ -31,7 +31,7 @@
     inset:0;
     z-index:-1;
     pointer-events:none;
-    background-image:url('{{ asset('images/group-batik.png') }}');
+    background-image:url('<?php echo e(asset('images/group-batik.png')); ?>');
     background-repeat:no-repeat;
     background-position:center top;
     background-size:10000px auto;
@@ -311,7 +311,7 @@
   .footer::before{
     content:"";position:absolute;inset:-40px 0 -80px;
     background-repeat:no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-    background-image:url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}');
+    background-image:url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>');
     background-position:left -100px bottom -30px,right -80px top -40px,30% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
     background-size:480px auto,320px auto,150px auto,130px auto,170px auto,140px auto,220px auto;
     filter:brightness(0) invert(1);opacity:.5;pointer-events:none;z-index:0;
@@ -453,20 +453,20 @@
     </filter>
   </svg>
 
-  {{-- ================= NAVBAR ================= --}}
+  
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
-      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
+      <img src="<?php echo e(asset('images/logo_pustekinfo_landscape.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
-      <li><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
-      <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
-      <li class="active"><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
-      <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
-      <li><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
-      <li><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
+      <li><a href="<?php echo e(route('home')); ?>" data-en="Home">Beranda</a></li>
+      <li><a href="<?php echo e(route('profil')); ?>" data-en="Profile">Profil </a></li>
+      <li class="active"><a href="<?php echo e(route('layanan')); ?>" data-en="Services">Layanan</a></li>
+      <li><a href="<?php echo e(route('informasi')); ?>" data-en="Information">Informasi</a></li>
+      <li><a href="<?php echo e(route('galeri')); ?>" data-en="Gallery">Galeri</a></li>
+      <li><a href="<?php echo e(route('kontak')); ?>" data-en="Contact">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
@@ -485,8 +485,8 @@
     </div>
   </nav>
 
-  {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  
+  <header class="hero-profil" <?php if($pageBanner?->image): ?> style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('<?php echo e(asset($pageBanner->image)); ?>');background-size:cover;background-position:center;" <?php endif; ?>>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt;">Beranda / <span>Layanan</span></p>
       <h1 data-en-html="Information Technology <span class=&quot;accent&quot;>Services</span>">Layanan <span class="accent">Teknologi Informasi</span></h1>
@@ -498,10 +498,10 @@
         <a href="#layanan-list" class="tab-link active" data-target="layanan-list">
           <span data-en="Services">Layanan</span>
         </a>
-        <a href="{{ route('layanan.ajukan') }}" class="tab-link">
+        <a href="<?php echo e(route('layanan.ajukan')); ?>" class="tab-link">
           <span data-en="Apply for a Service">Ajukan Layanan</span>
         </a>
-        <a href="{{ route('layanan.status') }}" class="tab-link">
+        <a href="<?php echo e(route('layanan.status')); ?>" class="tab-link">
           <span data-en="Check Status">Lihat Status</span>
         </a>
       </div>
@@ -513,64 +513,64 @@
       <a href="#layanan-list" class="tab-link active" data-target="layanan-list">
         <span data-en="Services">Layanan</span>
       </a>
-      <a href="{{ route('layanan.ajukan') }}" class="tab-link">
+      <a href="<?php echo e(route('layanan.ajukan')); ?>" class="tab-link">
         <span data-en="Apply for a Service">Ajukan Layanan</span>
       </a>
-      <a href="{{ route('layanan.status') }}" class="tab-link">
+      <a href="<?php echo e(route('layanan.status')); ?>" class="tab-link">
         <span data-en="Check Status">Lihat Status</span>
       </a>
     </div>
   </div>
 
-  {{-- ================= PILAR LAYANAN ================= --}}
+  
   <div id="layanan-list">
-  @foreach($services as $s)
-    <section id="{{ $s['id'] }}" class="page-section">
+  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+    <section id="<?php echo e($s['id']); ?>" class="page-section">
       <div class="section-inner">
         <div class="eyebrow eyebrow-dash" data-en="INFORMATION TECHNOLOGY SERVICES">LAYANAN TEKNOLOGI INFORMASI</div>
-        <h2 data-en="{{ $s['title_en'] ?: $s['title'] }}">{{ $s['title'] }}</h2>
+        <h2 data-en="<?php echo e($s['title_en'] ?: $s['title']); ?>"><?php echo e($s['title']); ?></h2>
 
         <div class="svc-grid">
           <div class="svc-icon-box">
-            <img src="{{ asset($s['icon']) }}" alt="{{ $s['title'] }}">
+            <img src="<?php echo e(asset($s['icon'])); ?>" alt="<?php echo e($s['title']); ?>">
           </div>
           <div class="svc-content">
-            <p class="desc" data-en="{{ $s['desc_en'] ?: $s['desc'] }}">{{ $s['desc'] }}</p>
+            <p class="desc" data-en="<?php echo e($s['desc_en'] ?: $s['desc']); ?>"><?php echo e($s['desc']); ?></p>
 
             <div class="svc-features">
-              @foreach($s['features'] as $i => $f)
+              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $s['features']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $f): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
                 <div class="svc-feature">
                   <span class="svc-feature-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
-                  <span data-en="{{ ($s['features_en'][$i] ?? null) ?: $f }}">{{ $f }}</span>
+                  <span data-en="<?php echo e(($s['features_en'][$i] ?? null) ?: $f); ?>"><?php echo e($f); ?></span>
                 </div>
-              @endforeach
+              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
             </div>
 
             <div class="svc-cta">
               <svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-              <span data-en="{{ $s['cta_en'] ?: $s['cta'] }}">{{ $s['cta'] }}</span>
+              <span data-en="<?php echo e($s['cta_en'] ?: $s['cta']); ?>"><?php echo e($s['cta']); ?></span>
             </div>
           </div>
         </div>
       </div>
     </section>
-  @endforeach
+  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
   </div>
 
   <div class="footer-divider"></div>
 
-  {{-- ================= FOOTER ================= --}}
+  
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-col">
         <div class="footer-brand">
-          <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
+          <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="footer-brand-logo">
         </div>
         <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
         <div class="footer-social">
-          <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
-          <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
-          <a href="{{ $setting->x_url ?? '#' }}" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
+          <a href="<?php echo e($setting->instagram_url ?? '#'); ?>" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+          <a href="<?php echo e($setting->youtube_url ?? '#'); ?>" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
+          <a href="<?php echo e($setting->x_url ?? '#'); ?>" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
         </div>
       </div>
 
@@ -599,22 +599,24 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
+            <span data-en="<?php echo e($setting->address_en ?: ($setting->address ?? 'Address not set')); ?>"><?php echo e($setting->address ?? 'Alamat belum diatur'); ?></span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            {{ $setting->phone ?? '-' }}
+            <?php echo e($setting->phone ?? '-'); ?>
+
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
-            {{ $setting->email ?? '-' }}
+            <?php echo e($setting->email ?? '-'); ?>
+
           </div>
         </div>
       </div>
     </div>
 
     <div class="footer-inner footer-bottom">
-      <p data-en="© {{ date('Y') }} Pustekinfo. All rights reserved.">© {{ date('Y') }} Pustekinfo. Seluruh hak dilindungi.</p>
+      <p data-en="© <?php echo e(date('Y')); ?> Pustekinfo. All rights reserved.">© <?php echo e(date('Y')); ?> Pustekinfo. Seluruh hak dilindungi.</p>
       <p data-en="Mockup reference — not an official site">Referensi mockup — bukan situs resmi</p>
     </div>
   </footer>
@@ -739,7 +741,8 @@
   });
 </script>
 
-@include('partials.interactive-cursor')
-@include('partials.page-loading')
+<?php echo $__env->make('partials.interactive-cursor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
 </html>
+<?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/layanan.blade.php ENDPATH**/ ?>
