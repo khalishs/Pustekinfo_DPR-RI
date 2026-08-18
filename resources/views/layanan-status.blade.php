@@ -621,5 +621,6 @@
 
 @include('partials.interactive-cursor')
 @include('partials.form-validation')
+@include('partials.page-loading')
 </body>
 </html>
