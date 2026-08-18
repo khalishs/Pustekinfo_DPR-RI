@@ -924,96 +924,14 @@
       });
     })();
 
-    // Validasi "wajib diisi" & format field pakai tampilan sendiri (bukan
-    // balon bawaan Chrome/browser). Semua form dimatikan validasi bawaannya
-    // (novalidate), lalu tiap submit dicek manual lewat Constraint Validation
-    // API bawaan browser (field.checkValidity()) — jadi aturan required/type/
-    // min/max/pattern di HTML tetap dipakai apa adanya, cuma tampilannya diganti.
-    (function(){
-      document.querySelectorAll('form').forEach(function(form){
-        form.setAttribute('novalidate', 'novalidate');
-      });
+  </script>
 
-      function fieldLabel(field){
-        var group = field.closest('.form-group');
-        var labelEl = group ? group.querySelector('label') : null;
-        if (!labelEl && field.id) labelEl = document.querySelector('label[for="' + field.id + '"]');
-        var text = labelEl ? labelEl.textContent.trim() : (field.name || 'Kolom ini');
-        return text.replace(/\s+/g, ' ');
-      }
+  {{-- Validasi "wajib diisi" & format field pakai tampilan sendiri (bukan balon
+       bawaan Chrome/browser) — dipakai bareng dengan halaman publik, lihat
+       resources/views/partials/form-validation.blade.php --}}
+  @include('partials.form-validation')
 
-      function messageFor(field){
-        var v = field.validity;
-        var label = fieldLabel(field);
-
-        if (v.valueMissing) {
-          if (field.type === 'file') return 'Anda harus memilih berkas untuk ' + label + '.';
-          if (field.tagName === 'SELECT') return 'Pilih ' + label.toLowerCase() + '.';
-          if (field.type === 'checkbox' || field.type === 'radio') return label + ' harus dicentang.';
-          return label + ' wajib diisi.';
-        }
-        if (v.typeMismatch) {
-          if (field.type === 'email') return 'Format email tidak valid.';
-          if (field.type === 'url') return 'Format URL tidak valid.';
-          return 'Format ' + label.toLowerCase() + ' tidak valid.';
-        }
-        if (v.tooShort) return label + ' minimal ' + field.minLength + ' karakter.';
-        if (v.tooLong) return label + ' maksimal ' + field.maxLength + ' karakter.';
-        if (v.rangeUnderflow) return label + ' minimal ' + field.min + '.';
-        if (v.rangeOverflow) return label + ' maksimal ' + field.max + '.';
-        if (v.stepMismatch) return 'Nilai ' + label.toLowerCase() + ' tidak sesuai kelipatan yang diizinkan.';
-        if (v.patternMismatch) return 'Format ' + label.toLowerCase() + ' tidak sesuai.';
-        if (v.badInput) return 'Isian ' + label.toLowerCase() + ' tidak valid.';
-        return field.validationMessage || (label + ' tidak valid.');
-      }
-
-      // Cuma pegang elemen error yang dibuat sendiri (penanda field-error-msg),
-      // supaya tidak ganggu pesan @@error dari server atau validator ukuran
-      // file yang sudah ada (lihat IIFE validasi file di atas).
-      function clearFieldError(field){
-        field.classList.remove('field-invalid');
-        var next = field.nextElementSibling;
-        if (next && next.classList.contains('field-error-msg')) next.remove();
-      }
-
-      function showFieldError(field, msg){
-        field.classList.add('field-invalid');
-        var err = document.createElement('small');
-        err.className = 'error field-error-msg';
-        err.textContent = msg;
-        field.insertAdjacentElement('afterend', err);
-      }
-
-      // Bersihkan error begitu user mulai memperbaiki isian.
-      document.addEventListener('input', function(e){
-        if (e.target.matches('input, textarea')) clearFieldError(e.target);
-      });
-      document.addEventListener('change', function(e){
-        if (e.target.matches('select, input[type="checkbox"], input[type="radio"], input[type="file"]')) clearFieldError(e.target);
-      });
-
-      // Capture phase supaya jalan lebih dulu daripada listener submit lain
-      // (indikator loading), jadi kalau tidak valid, loading tidak ikut muncul.
-      document.addEventListener('submit', function(e){
-        var form = e.target;
-        if (!(form instanceof HTMLFormElement)) return;
-
-        var invalids = [];
-        form.querySelectorAll('input, select, textarea').forEach(function(field){
-          clearFieldError(field);
-          if (field.disabled) return;
-          if (!field.checkValidity()) invalids.push(field);
-        });
-
-        if (invalids.length) {
-          e.preventDefault();
-          invalids.forEach(function(field){ showFieldError(field, messageFor(field)); });
-          invalids[0].focus();
-          invalids[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, true);
-    })();
-
+  <script>
     // Indikator loading global: progress bar tipis di atas untuk navigasi
     // (klik link) + overlay spinner untuk submit form (dipakai buat kasih
     // tahu proses simpan/hapus/upload sedang berjalan, dan mencegah klik
