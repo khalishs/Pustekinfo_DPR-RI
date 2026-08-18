@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\StelaVideoController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ServiceRequestController;
+use App\Http\Controllers\Admin\SyncStatusController;
 use App\Http\Controllers\ProfilController;
 
 
@@ -91,6 +92,7 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
     Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('sync-check', [SyncStatusController::class, 'check'])->name('sync-check');
     Route::get('akun', [AccountController::class, 'edit'])->name('account.edit');
     Route::put('akun', [AccountController::class, 'update'])->name('account.update');
     Route::resource('statistics', StatisticController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);

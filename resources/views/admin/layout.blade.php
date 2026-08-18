@@ -1,4 +1,16 @@
 {{-- resources/views/admin/layout.blade.php --}}
+@php
+  // Halaman list (admin.{resource}.index) auto-terdeteksi dari nama route,
+  // supaya tiap index view tidak perlu diubah satu-satu untuk ikut polling.
+  $__routeName = request()->route()?->getName();
+  $__syncResource = null;
+  if ($__routeName && str_starts_with($__routeName, 'admin.') && str_ends_with($__routeName, '.index')) {
+    $__candidate = substr($__routeName, strlen('admin.'), -strlen('.index'));
+    if (array_key_exists($__candidate, \App\Http\Controllers\Admin\SyncStatusController::RESOURCES)) {
+      $__syncResource = $__candidate;
+    }
+  }
+@endphp
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -239,6 +251,21 @@
   .flash-error{background:#fbeaea;color:var(--danger);border-color:#f2cfcf;}
   .flash-error::before{content:"✕";background:var(--danger);}
 
+  .sync-banner{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    margin-bottom:18px;padding:12px 18px;border-radius:12px;
+    font-size:13.5px;font-weight:700;
+    background:rgba(20,128,140,.08);color:var(--teal);
+    border:1px solid rgba(20,128,140,.18);
+  }
+  .sync-banner-btn{
+    flex-shrink:0;padding:8px 16px;border-radius:20px;border:1.5px solid var(--teal);
+    background:var(--teal);color:#fff;font-size:12.5px;font-weight:800;cursor:pointer;
+    font-family:inherit;transition:.15s ease;
+  }
+  .sync-banner-btn:hover{background:#0f6b7f;border-color:#0f6b7f;}
+  [data-theme="dark"] .sync-banner{background:rgba(20,128,140,.16);border-color:rgba(20,128,140,.32);color:var(--teal-light);}
+
   .card{
     background:#fff;border-radius:16px;padding:26px;
     box-shadow:0 8px 28px -16px rgba(11,34,51,.18);
@@ -444,7 +471,7 @@
   }
 </style>
 </head>
-<body>
+<body @if($__syncResource) data-sync-resource="{{ $__syncResource }}" @endif>
   <aside class="sidebar">
     <div class="sidebar-resize-handle" id="sidebarResizeHandle" title="Tarik untuk mengubah lebar sidebar"></div>
     <div class="brand">
@@ -790,6 +817,60 @@
             return;
           }
         });
+      });
+    })();
+
+    // Sinkronisasi lintas perangkat: polling ringan tiap beberapa detik untuk
+    // memberi tahu kalau data di halaman list ini sudah diubah dari device/tab
+    // lain, tanpa perlu server websocket. Reload tetap manual (tombol) supaya
+    // tidak mengganggu admin yang sedang mengisi form/konfirmasi hapus.
+    (function(){
+      var resource = document.body.getAttribute('data-sync-resource');
+      if (!resource) return;
+
+      var checkUrl = '{{ route('admin.sync-check') }}?resource=' + encodeURIComponent(resource);
+      var POLL_MS = 8000;
+      var baseline = null;
+      var notified = false;
+      var timer = null;
+
+      function showBanner(){
+        if (notified) return;
+        notified = true;
+        var content = document.querySelector('.content');
+        if (!content) return;
+        var el = document.createElement('div');
+        el.className = 'sync-banner';
+        el.innerHTML = '<span>Data pada halaman ini telah diperbarui dari perangkat/pengguna lain.</span>';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'sync-banner-btn';
+        btn.textContent = 'Muat ulang';
+        btn.addEventListener('click', function(){ window.location.reload(); });
+        el.appendChild(btn);
+        content.insertBefore(el, content.firstChild);
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      function poll(){
+        if (notified || document.hidden) return;
+        fetch(checkUrl, { headers: { 'Accept': 'application/json' } })
+          .then(function(res){ return res.ok ? res.json() : null; })
+          .then(function(data){
+            if (!data || !data.version) return;
+            if (baseline === null) {
+              baseline = data.version;
+              return;
+            }
+            if (data.version !== baseline) showBanner();
+          })
+          .catch(function(){});
+      }
+
+      poll();
+      timer = setInterval(poll, POLL_MS);
+      document.addEventListener('visibilitychange', function(){
+        if (!document.hidden) poll();
       });
     })();
   </script>
