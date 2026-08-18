@@ -28,7 +28,7 @@
           <form action="{{ route('admin.services.toggle-active', $service) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $service->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $service->is_active ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $service->is_active ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>

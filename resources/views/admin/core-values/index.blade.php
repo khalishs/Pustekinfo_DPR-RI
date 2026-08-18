@@ -20,7 +20,7 @@
           <form action="{{ route('admin.core-values.toggle-active', $v) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $v->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $v->is_active ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $v->is_active ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>

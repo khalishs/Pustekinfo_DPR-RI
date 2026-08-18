@@ -1,4 +1,16 @@
 {{-- resources/views/admin/layout.blade.php --}}
+@php
+  // Halaman list (admin.{resource}.index) auto-terdeteksi dari nama route,
+  // supaya tiap index view tidak perlu diubah satu-satu untuk ikut polling.
+  $__routeName = request()->route()?->getName();
+  $__syncResource = null;
+  if ($__routeName && str_starts_with($__routeName, 'admin.') && str_ends_with($__routeName, '.index')) {
+    $__candidate = substr($__routeName, strlen('admin.'), -strlen('.index'));
+    if (array_key_exists($__candidate, \App\Http\Controllers\Admin\SyncStatusController::RESOURCES)) {
+      $__syncResource = $__candidate;
+    }
+  }
+@endphp
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -249,6 +261,96 @@
   .flash-error{background:#fbeaea;color:var(--danger);border-color:#f2cfcf;}
   .flash-error::before{content:"✕";background:var(--danger);}
 
+  .sync-banner{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    margin-bottom:18px;padding:12px 18px;border-radius:12px;
+    font-size:13.5px;font-weight:700;
+    background:rgba(20,128,140,.08);color:var(--teal);
+    border:1px solid rgba(20,128,140,.18);
+  }
+  .sync-banner-btn{
+    flex-shrink:0;padding:8px 16px;border-radius:20px;border:1.5px solid var(--teal);
+    background:var(--teal);color:#fff;font-size:12.5px;font-weight:800;cursor:pointer;
+    font-family:inherit;transition:.15s ease;
+  }
+  .sync-banner-btn:hover{background:#0f6b7f;border-color:#0f6b7f;}
+  [data-theme="dark"] .sync-banner{background:rgba(20,128,140,.16);border-color:rgba(20,128,140,.32);color:var(--teal-light);}
+
+  /* ---------- Loading indicators ---------- */
+  .admin-loading-bar{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--teal),var(--teal-light),var(--gold));
+    box-shadow:0 0 10px rgba(20,128,140,.65);
+    z-index:10000;transition:width .35s ease,opacity .25s ease .1s;
+    opacity:0;pointer-events:none;
+  }
+  .admin-loading-bar.is-active{opacity:1;transition:width .35s ease;}
+
+  .admin-loading-overlay{
+    position:fixed;inset:0;z-index:9999;
+    background:rgba(6,18,26,.6);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .22s ease;
+  }
+  .admin-loading-overlay.is-visible{opacity:1;pointer-events:auto;}
+
+  .admin-loading-box{
+    display:flex;flex-direction:column;align-items:center;gap:24px;
+    background:#fff;border-radius:28px;padding:46px 50px 40px;
+    box-shadow:0 32px 80px -18px rgba(20,128,140,.3),0 16px 40px -14px rgba(11,34,51,.4);
+    text-align:center;width:min(90vw,400px);
+    transform:scale(.82) translateY(14px);
+    opacity:0;
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .25s ease;
+  }
+  .admin-loading-overlay.is-visible .admin-loading-box{
+    transform:scale(1) translateY(0);
+    opacity:1;
+  }
+  [data-theme="dark"] .admin-loading-box{background:#23272c;box-shadow:0 32px 80px -18px rgba(20,128,140,.22),0 16px 40px -14px rgba(0,0,0,.5);}
+
+  .admin-loading-orbit{position:relative;width:100px;height:100px;display:flex;align-items:center;justify-content:center;}
+  .admin-loading-orbit::before{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(from 0deg,transparent 0deg,var(--teal) 100deg,var(--teal-light) 190deg,var(--gold) 270deg,transparent 320deg);
+    -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 4px));
+    mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 4px));
+    animation:admin-orbit-spin 1.3s linear infinite;
+  }
+  .admin-loading-orbit::after{
+    content:"";position:absolute;inset:12px;border-radius:50%;
+    background:radial-gradient(circle,rgba(20,128,140,.2),transparent 72%);
+    animation:admin-pulse-glow 2s ease-in-out infinite;
+  }
+  .admin-loading-logo{
+    position:relative;z-index:1;width:60px;height:60px;border-radius:50%;
+    background:#fff;padding:11px;object-fit:contain;
+    box-shadow:0 8px 20px -6px rgba(11,34,51,.35);
+    animation:admin-logo-breathe 2s ease-in-out infinite;
+  }
+  [data-theme="dark"] .admin-loading-logo{background:#2b3036;}
+  @keyframes admin-orbit-spin{to{transform:rotate(360deg);}}
+  @keyframes admin-pulse-glow{0%,100%{transform:scale(.85);opacity:.5;}50%{transform:scale(1.3);opacity:1;}}
+  @keyframes admin-logo-breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
+
+  .admin-loading-copy{display:flex;flex-direction:column;gap:7px;}
+  .admin-loading-heading{
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    font-size:21px;font-weight:800;color:var(--navy);letter-spacing:-.01em;
+    display:flex;align-items:baseline;justify-content:center;gap:2px;
+  }
+  [data-theme="dark"] .admin-loading-heading{color:var(--ink);}
+  .admin-loading-dots i{font-style:normal;opacity:.25;animation:admin-dot-pulse 1.3s ease-in-out infinite;}
+  .admin-loading-dots i:nth-child(2){animation-delay:.15s;}
+  .admin-loading-dots i:nth-child(3){animation-delay:.3s;}
+  @keyframes admin-dot-pulse{0%,60%,100%{opacity:.25;}30%{opacity:1;}}
+
+  .admin-loading-text{font-size:15px;font-weight:700;color:var(--teal);}
+  [data-theme="dark"] .admin-loading-text{color:var(--teal-light);}
+  .admin-loading-sub{display:block;font-size:13px;font-weight:600;color:#8a97a0;}
+
+  .btn.is-loading,.btn-icon.is-loading{opacity:.55;pointer-events:none;}
+
   .card{
     background:#fff;border-radius:16px;padding:26px;
     box-shadow:0 8px 28px -16px rgba(11,34,51,.18);
@@ -321,6 +423,19 @@
   textarea{min-height:100px;resize:vertical;}
   small.error{color:var(--danger);display:block;margin-top:5px;font-weight:600;}
   small{color:#8a97a0;}
+
+  input.field-invalid,textarea.field-invalid,select.field-invalid{border-color:var(--danger);}
+  input.field-invalid:focus,textarea.field-invalid:focus,select.field-invalid:focus{
+    border-color:var(--danger);box-shadow:0 0 0 3px rgba(176,65,62,.14);
+  }
+  small.error.field-error-msg{
+    display:flex;align-items:center;gap:5px;
+  }
+  small.error.field-error-msg::before{
+    content:"!";display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    width:14px;height:14px;border-radius:50%;background:var(--danger);color:#fff;
+    font-size:9.5px;font-weight:800;font-style:normal;
+  }
 
   /* .row-actions dipasang langsung di <td>. Sengaja BUKAN display:flex — sebuah <td>
      yang di-flex-kan berhenti ikut aturan tinggi baris tabel normal (jadi cuma setinggi
@@ -456,7 +571,7 @@
   }
 </style>
 </head>
-<body>
+<body @if($__syncResource) data-sync-resource="{{ $__syncResource }}" @endif>
   <aside class="sidebar">
     <div class="sidebar-resize-handle" id="sidebarResizeHandle" title="Tarik untuk mengubah lebar sidebar"></div>
     <div class="brand">
@@ -806,6 +921,307 @@
             return;
           }
         });
+      });
+    })();
+
+    // Validasi "wajib diisi" & format field pakai tampilan sendiri (bukan
+    // balon bawaan Chrome/browser). Semua form dimatikan validasi bawaannya
+    // (novalidate), lalu tiap submit dicek manual lewat Constraint Validation
+    // API bawaan browser (field.checkValidity()) — jadi aturan required/type/
+    // min/max/pattern di HTML tetap dipakai apa adanya, cuma tampilannya diganti.
+    (function(){
+      document.querySelectorAll('form').forEach(function(form){
+        form.setAttribute('novalidate', 'novalidate');
+      });
+
+      function fieldLabel(field){
+        var group = field.closest('.form-group');
+        var labelEl = group ? group.querySelector('label') : null;
+        if (!labelEl && field.id) labelEl = document.querySelector('label[for="' + field.id + '"]');
+        var text = labelEl ? labelEl.textContent.trim() : (field.name || 'Kolom ini');
+        return text.replace(/\s+/g, ' ');
+      }
+
+      function messageFor(field){
+        var v = field.validity;
+        var label = fieldLabel(field);
+
+        if (v.valueMissing) {
+          if (field.type === 'file') return 'Anda harus memilih berkas untuk ' + label + '.';
+          if (field.tagName === 'SELECT') return 'Pilih ' + label.toLowerCase() + '.';
+          if (field.type === 'checkbox' || field.type === 'radio') return label + ' harus dicentang.';
+          return label + ' wajib diisi.';
+        }
+        if (v.typeMismatch) {
+          if (field.type === 'email') return 'Format email tidak valid.';
+          if (field.type === 'url') return 'Format URL tidak valid.';
+          return 'Format ' + label.toLowerCase() + ' tidak valid.';
+        }
+        if (v.tooShort) return label + ' minimal ' + field.minLength + ' karakter.';
+        if (v.tooLong) return label + ' maksimal ' + field.maxLength + ' karakter.';
+        if (v.rangeUnderflow) return label + ' minimal ' + field.min + '.';
+        if (v.rangeOverflow) return label + ' maksimal ' + field.max + '.';
+        if (v.stepMismatch) return 'Nilai ' + label.toLowerCase() + ' tidak sesuai kelipatan yang diizinkan.';
+        if (v.patternMismatch) return 'Format ' + label.toLowerCase() + ' tidak sesuai.';
+        if (v.badInput) return 'Isian ' + label.toLowerCase() + ' tidak valid.';
+        return field.validationMessage || (label + ' tidak valid.');
+      }
+
+      // Cuma pegang elemen error yang dibuat sendiri (penanda field-error-msg),
+      // supaya tidak ganggu pesan @@error dari server atau validator ukuran
+      // file yang sudah ada (lihat IIFE validasi file di atas).
+      function clearFieldError(field){
+        field.classList.remove('field-invalid');
+        var next = field.nextElementSibling;
+        if (next && next.classList.contains('field-error-msg')) next.remove();
+      }
+
+      function showFieldError(field, msg){
+        field.classList.add('field-invalid');
+        var err = document.createElement('small');
+        err.className = 'error field-error-msg';
+        err.textContent = msg;
+        field.insertAdjacentElement('afterend', err);
+      }
+
+      // Bersihkan error begitu user mulai memperbaiki isian.
+      document.addEventListener('input', function(e){
+        if (e.target.matches('input, textarea')) clearFieldError(e.target);
+      });
+      document.addEventListener('change', function(e){
+        if (e.target.matches('select, input[type="checkbox"], input[type="radio"], input[type="file"]')) clearFieldError(e.target);
+      });
+
+      // Capture phase supaya jalan lebih dulu daripada listener submit lain
+      // (indikator loading), jadi kalau tidak valid, loading tidak ikut muncul.
+      document.addEventListener('submit', function(e){
+        var form = e.target;
+        if (!(form instanceof HTMLFormElement)) return;
+
+        var invalids = [];
+        form.querySelectorAll('input, select, textarea').forEach(function(field){
+          clearFieldError(field);
+          if (field.disabled) return;
+          if (!field.checkValidity()) invalids.push(field);
+        });
+
+        if (invalids.length) {
+          e.preventDefault();
+          invalids.forEach(function(field){ showFieldError(field, messageFor(field)); });
+          invalids[0].focus();
+          invalids[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, true);
+    })();
+
+    // Indikator loading global: progress bar tipis di atas untuk navigasi
+    // (klik link) + overlay spinner untuk submit form (dipakai buat kasih
+    // tahu proses simpan/hapus/upload sedang berjalan, dan mencegah klik
+    // ganda saat upload gambar/video yang makan waktu).
+    (function(){
+      var bar = document.createElement('div');
+      bar.className = 'admin-loading-bar';
+      document.body.appendChild(bar);
+
+      var overlay = document.createElement('div');
+      overlay.className = 'admin-loading-overlay';
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.innerHTML =
+        '<div class="admin-loading-box">' +
+          '<div class="admin-loading-orbit">' +
+            '<img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="admin-loading-logo">' +
+          '</div>' +
+          '<div class="admin-loading-copy">' +
+            '<span class="admin-loading-heading">Tolong menunggu sesaat<span class="admin-loading-dots"><i>.</i><i>.</i><i>.</i></span></span>' +
+            '<span class="admin-loading-text">Memproses...</span>' +
+            '<span class="admin-loading-sub">Mohon tunggu sebentar</span>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(overlay);
+      var overlayText = overlay.querySelector('.admin-loading-text');
+      var overlaySub = overlay.querySelector('.admin-loading-sub');
+      var pageLabelEl = document.querySelector('.topbar-titles h1');
+      var pageLabel = pageLabelEl ? pageLabelEl.textContent.trim() : 'halaman ini';
+
+      var progress = 0, progressTimer = null, active = false;
+
+      function startBar(){
+        active = true;
+        clearInterval(progressTimer);
+        progress = 20;
+        bar.classList.add('is-active');
+        bar.style.width = progress + '%';
+        progressTimer = setInterval(function(){
+          progress += (90 - progress) * 0.1;
+          bar.style.width = Math.min(progress, 90) + '%';
+        }, 200);
+      }
+
+      function showOverlay(text, sub){
+        overlayText.textContent = text;
+        overlaySub.textContent = sub || 'Mohon tunggu sebentar';
+        overlay.classList.add('is-visible');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+
+      function resetLoading(){
+        active = false;
+        clearInterval(progressTimer);
+        bar.classList.remove('is-active');
+        bar.style.width = '0%';
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.querySelectorAll('.is-loading').forEach(function(el){
+          el.classList.remove('is-loading');
+          el.disabled = false;
+        });
+      }
+
+      // Rapikan label dari teks tombol/link: buang simbol "+", spasi ganda,
+      // dan angka badge notifikasi yang ikut kebawa (mis. "Pengajuan Layanan 3").
+      function cleanLabel(str){
+        return (str || '')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .replace(/^\+\s*/, '')
+          .replace(/\s*\d+\s*$/, '')
+          .trim();
+      }
+
+      function formLoadingCopy(form){
+        var action = form.getAttribute('action') || '';
+        if (action.indexOf('logout') !== -1) {
+          return { text: 'Keluar dari akun...', sub: 'Mengakhiri sesi Anda dengan aman' };
+        }
+        var methodField = form.querySelector('input[name="_method"]');
+        var method = (methodField ? methodField.value : (form.method || 'POST')).toUpperCase();
+        var hasFile = Array.prototype.some.call(form.querySelectorAll('input[type="file"]'), function(input){
+          return input.files && input.files.length > 0;
+        });
+
+        if (method === 'DELETE') {
+          return { text: 'Menghapus data...', sub: 'Menghapus data ' + pageLabel + ' secara permanen' };
+        }
+        if (/toggle/.test(action)) {
+          return { text: 'Memperbarui status...', sub: 'Menyimpan perubahan status pada ' + pageLabel };
+        }
+        if (/duplicate/.test(action)) {
+          return { text: 'Menduplikasi data...', sub: 'Membuat salinan data ' + pageLabel };
+        }
+        if (hasFile) {
+          return { text: 'Mengunggah berkas...', sub: 'Mengunggah & menyimpan data ' + pageLabel };
+        }
+        return { text: 'Menyimpan data...', sub: 'Menyimpan perubahan pada ' + pageLabel };
+      }
+
+      function navLoadingCopy(link){
+        var label = cleanLabel(link.getAttribute('aria-label') || link.getAttribute('title') || link.textContent);
+        if (!label) return { text: 'Membuka halaman...', sub: 'Mohon tunggu sebentar' };
+        if (/^edit$/i.test(label)) {
+          return { text: 'Membuka formulir edit...', sub: 'Menyiapkan data ' + pageLabel + ' yang dipilih' };
+        }
+        if (/^tambah/i.test(label)) {
+          return { text: 'Menyiapkan formulir baru...', sub: 'Menambah ' + label.replace(/^tambah\s*/i, '').trim() || pageLabel };
+        }
+        if (/^lihat website$/i.test(label)) {
+          return { text: 'Membuka situs...', sub: 'Menampilkan tampilan publik website' };
+        }
+        return { text: 'Membuka ' + label + '...', sub: 'Memuat data terbaru dari server' };
+      }
+
+      // Navigasi lewat klik link internal (bukan tab baru/anchor/aksi lain)
+      document.addEventListener('click', function(e){
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var link = e.target.closest('a[href]');
+        if (!link || (link.target && link.target !== '_self') || link.hasAttribute('download')) return;
+        var href = link.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#' || /^(javascript:|mailto:|tel:)/.test(href)) return;
+        startBar();
+        var copy = navLoadingCopy(link);
+        showOverlay(copy.text, copy.sub);
+      });
+
+      // Submit form (simpan/hapus/update-status/dsb)
+      document.addEventListener('submit', function(e){
+        if (e.defaultPrevented) return; // dibatalkan, mis. confirm() hapus di-Cancel
+        var form = e.target;
+        startBar();
+        var copy = formLoadingCopy(form);
+        showOverlay(copy.text, copy.sub);
+        setTimeout(function(){
+          form.querySelectorAll('button[type="submit"], button:not([type]), input[type="submit"]').forEach(function(btn){
+            btn.classList.add('is-loading');
+            btn.disabled = true;
+          });
+        }, 0);
+      });
+
+      // Fallback untuk reload/refresh/navigasi lain yang tidak lewat klik/submit
+      window.addEventListener('beforeunload', function(){
+        if (!active) startBar();
+      });
+
+      // Pulihkan tampilan kalau halaman diambil dari bfcache (tombol back/forward)
+      window.addEventListener('pageshow', function(e){
+        if (e.persisted) resetLoading();
+      });
+    })();
+
+    // Sinkronisasi lintas perangkat: polling ringan tiap beberapa detik untuk
+    // memberi tahu kalau data di halaman list ini sudah diubah dari device/tab
+    // lain, tanpa perlu server websocket. Reload tetap manual (tombol) supaya
+    // tidak mengganggu admin yang sedang mengisi form/konfirmasi hapus.
+    (function(){
+      var resource = document.body.getAttribute('data-sync-resource');
+      if (!resource) return;
+
+      var checkUrl = '{{ route('admin.sync-check') }}?resource=' + encodeURIComponent(resource);
+      var POLL_MS = 8000;
+      var baseline = null;
+      var notified = false;
+      var timer = null;
+
+      function showBanner(){
+        if (notified) return;
+        notified = true;
+        var content = document.querySelector('.content');
+        if (!content) return;
+        var el = document.createElement('div');
+        el.className = 'sync-banner';
+        el.innerHTML = '<span>Data pada halaman ini telah diperbarui dari perangkat/pengguna lain.</span>';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'sync-banner-btn';
+        btn.textContent = 'Muat ulang';
+        btn.addEventListener('click', function(){
+          btn.disabled = true;
+          btn.textContent = 'Memuat ulang...';
+          window.location.reload();
+        });
+        el.appendChild(btn);
+        content.insertBefore(el, content.firstChild);
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      function poll(){
+        if (notified || document.hidden) return;
+        fetch(checkUrl, { headers: { 'Accept': 'application/json' } })
+          .then(function(res){ return res.ok ? res.json() : null; })
+          .then(function(data){
+            if (!data || !data.version) return;
+            if (baseline === null) {
+              baseline = data.version;
+              return;
+            }
+            if (data.version !== baseline) showBanner();
+          })
+          .catch(function(){});
+      }
+
+      poll();
+      timer = setInterval(poll, POLL_MS);
+      document.addEventListener('visibilitychange', function(){
+        if (!document.hidden) poll();
       });
     })();
   </script>
