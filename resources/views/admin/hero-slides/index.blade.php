@@ -21,7 +21,7 @@
           <form action="{{ route('admin.hero-slides.toggle-active', $slide) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $slide->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $slide->is_active ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $slide->is_active ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>

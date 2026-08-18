@@ -20,7 +20,7 @@
           <form action="{{ route('admin.timeline.toggle-active', $item) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $item->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $item->is_active ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $item->is_active ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>

@@ -24,7 +24,7 @@
           <form action="{{ route('admin.agenda.toggle-active', $event) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $event->is_active ? 'Aktif — klik untuk nonaktifkan' : 'Nonaktif — klik untuk aktifkan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $event->is_active ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $event->is_active ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>

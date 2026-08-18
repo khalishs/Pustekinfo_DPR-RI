@@ -22,7 +22,7 @@
           <form action="{{ route('admin.gallery.toggle-featured', $item) }}" method="POST">
             @csrf @method('PATCH')
             <label class="toggle-switch" title="{{ $item->is_featured ? 'Sorotan aktif — klik untuk nonaktifkan' : 'Jadikan sorotan' }}">
-              <input type="checkbox" onchange="this.form.submit()" {{ $item->is_featured ? 'checked' : '' }}>
+              <input type="checkbox" onchange="this.form.requestSubmit()" {{ $item->is_featured ? 'checked' : '' }}>
               <span class="slider"></span>
             </label>
           </form>
