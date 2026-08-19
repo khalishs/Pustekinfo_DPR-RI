@@ -219,6 +219,7 @@
             <form action="<?php echo e(route('login.post')); ?>" method="POST" class="space-y-5">
                 <?php echo csrf_field(); ?>
 
+<<<<<<< HEAD
                 <!-- Input Username / Email -->
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-teal-600">
@@ -227,6 +228,16 @@
                     <input type="text" name="login" id="login" 
                         class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm transition-all mobile-input"
                         placeholder="Username" required value="<?php echo e(old('login')); ?>">
+=======
+                <!-- Input Email -->
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-teal-600">
+                        <i class="fa-solid fa-envelope text-lg"></i>
+                    </span>
+                    <input type="email" name="login" id="login" autocomplete="username"
+                        class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm transition-all mobile-input"
+                        placeholder="Email" required value="<?php echo e(old('login')); ?>">
+>>>>>>> 8629818 (Update Minor - Menambahkan Gambar)
                 </div>
                 <?php $__errorArgs = ['login'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -244,7 +255,11 @@ unset($__errorArgs, $__bag); ?>
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-teal-600">
                         <i class="fa-solid fa-lock text-lg"></i>
                     </span>
+<<<<<<< HEAD
                     <input type="password" name="password" id="password" 
+=======
+                    <input type="password" name="password" id="password" autocomplete="current-password"
+>>>>>>> 8629818 (Update Minor - Menambahkan Gambar)
                         class="w-full pl-12 pr-12 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm transition-all mobile-input"
                         placeholder="Password" required>
                     <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-gray-600">

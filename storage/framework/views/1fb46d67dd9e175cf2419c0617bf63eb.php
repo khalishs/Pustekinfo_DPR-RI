@@ -2437,7 +2437,11 @@
           </span>
         </button>
         <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
+<<<<<<< HEAD
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
+=======
+        <?php if(auth()->guard()->check()): ?>
+>>>>>>> 8629818 (Update Minor - Menambahkan Gambar)
           <div class="profile-menu">
             <button type="button" class="profile-avatar-btn" id="profileMenuBtn" aria-haspopup="true" aria-expanded="false" aria-label="Menu akun">
               <span class="profile-avatar" aria-hidden="true"><?php echo e(strtoupper(substr(auth()->user()->name, 0, 1))); ?></span>
@@ -2459,7 +2463,11 @@
               </form>
             </div>
           </div>
+<<<<<<< HEAD
         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+=======
+        <?php endif; ?>
+>>>>>>> 8629818 (Update Minor - Menambahkan Gambar)
         <button class="burger" id="burgerBtn" aria-label="Buka menu">
           <span></span><span></span><span></span>
         </button>
