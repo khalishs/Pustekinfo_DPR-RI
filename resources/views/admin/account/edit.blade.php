@@ -23,6 +23,13 @@
         <input type="text" name="name" value="{{ old('name', $user->name) }}" required>
         @error('name')<small class="error">{{ $message }}</small>@enderror
       </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" value="{{ old('email', $user->email) }}" placeholder="nama@pustekinfo.dpr.go.id">
+        <small style="display:block;margin-top:4px;color:#8a97a0;font-size:12px;">Dipakai untuk masuk lewat halaman login publik.</small>
+        @error('email')<small class="error">{{ $message }}</small>@enderror
+      </div>
     </div>
 
     <hr style="border:none;border-top:1px solid var(--line);margin:24px 0;">

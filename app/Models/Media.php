@@ -26,7 +26,14 @@ class Media extends Model
 
     public static function deleteRef(?string $ref): void
     {
-        if (! $ref || ! str_starts_with($ref, 'media/')) {
+        if (! $ref) {
+            return;
+        }
+
+        if (! str_starts_with($ref, 'media/')) {
+            // Path lama dari sebelum tabel Media dibuat (mis. "hero/xxx.jpg") — hapus langsung dari disk.
+            Storage::disk('public')->delete($ref);
+
             return;
         }
 

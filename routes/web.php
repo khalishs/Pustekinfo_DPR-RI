@@ -43,7 +43,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
 Route::get('/layanan', [LayananController::class, 'index'])->name('layanan');
 Route::get('/layanan/ajukan', [LayananController::class, 'ajukan'])->name('layanan.ajukan');
-Route::post('/layanan/ajukan', [LayananController::class, 'ajukanStore'])->name('layanan.ajukan.store');
+Route::post('/layanan/ajukan', [LayananController::class, 'ajukanStore'])->middleware('auth')->name('layanan.ajukan.store');
 Route::get('/layanan/status', [LayananController::class, 'status'])->name('layanan.status');
 Route::post('/layanan/status', [LayananController::class, 'statusCheck'])->name('layanan.status.check');
 Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi');
@@ -54,19 +54,15 @@ Route::get('/login', function () {
 
 Route::post('/login', function (Request $request) {
     $request->validate([
-        'login' => ['required'],
+        'login' => ['required', 'email'],
         'password' => ['required'],
     ]);
 
     if (Auth::attempt([
-        'name' => $request->input('login'),
+        'email' => $request->input('login'),
         'password' => $request->input('password'),
     ], $request->boolean('remember'))) {
         $request->session()->regenerate();
-
-        if (Auth::user()->is_admin) {
-            return redirect('/admin')->with('status', 'Login berhasil.');
-        }
 
         return redirect()->intended('/')->with('status', 'Login berhasil.');
     }
@@ -75,6 +71,44 @@ Route::post('/login', function (Request $request) {
         'login' => 'Data tidak valid.',
     ])->onlyInput('login');
 })->name('login.post');
+
+Route::get('/admin/login', function () {
+    if (Auth::check() && Auth::user()->is_admin) {
+        return redirect('/admin');
+    }
+
+    return view('admin.login');
+})->name('admin.login');
+
+Route::post('/admin/login', function (Request $request) {
+    $request->validate([
+        'login' => ['required'],
+        'password' => ['required'],
+    ]);
+
+    if (Auth::attempt([
+        'name' => $request->input('login'),
+        'password' => $request->input('password'),
+    ], $request->boolean('remember'))) {
+        if (! Auth::user()->is_admin) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return back()->withErrors([
+                'login' => 'Akun ini tidak memiliki akses admin.',
+            ])->onlyInput('login');
+        }
+
+        $request->session()->regenerate();
+
+        return redirect()->intended('/admin')->with('status', 'Login berhasil.');
+    }
+
+    return back()->withErrors([
+        'login' => 'Data tidak valid.',
+    ])->onlyInput('login');
+})->name('admin.login.post');
 
 Route::post('/logout', function (Request $request) {
     Auth::logout();
