@@ -218,14 +218,14 @@
             <form action="{{ route('login.post') }}" method="POST" class="space-y-5">
                 @csrf
 
-                <!-- Input Username / Email -->
+                <!-- Input Email -->
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-teal-600">
-                        <i class="fa-solid fa-user text-lg"></i>
+                        <i class="fa-solid fa-envelope text-lg"></i>
                     </span>
-                    <input type="text" name="login" id="login" 
+                    <input type="email" name="login" id="login" autocomplete="username"
                         class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm transition-all mobile-input"
-                        placeholder="Username" required value="{{ old('login') }}">
+                        placeholder="Email" required value="{{ old('login') }}">
                 </div>
                 @error('login')
                     <span class="text-xs text-red-500 block -mt-3 pl-1">{{ $message }}</span>
@@ -236,7 +236,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-teal-600">
                         <i class="fa-solid fa-lock text-lg"></i>
                     </span>
-                    <input type="password" name="password" id="password" 
+                    <input type="password" name="password" id="password" autocomplete="current-password"
                         class="w-full pl-12 pr-12 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm transition-all mobile-input"
                         placeholder="Password" required>
                     <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-gray-600">

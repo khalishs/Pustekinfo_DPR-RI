@@ -99,6 +99,21 @@
   .lang-btn:hover{background:var(--mist);border-color:var(--teal);color:var(--teal);}
   .btn-login{padding:10px 22px;border-radius:20px;border:none;background:var(--navy);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;transition:.2s ease;}
   .btn-login:hover{background:var(--teal);transform:translateY(-2px);box-shadow:0 10px 22px -10px rgba(20,128,140,.55);}
+  .profile-menu{position:relative;}
+  .profile-avatar-btn{width:34px;height:34px;border-radius:50%;border:none;padding:0;cursor:pointer;background:transparent;flex-shrink:0;transition:box-shadow .2s ease;}
+  .profile-avatar-btn:hover{box-shadow:0 0 0 3px rgba(20,128,140,.15);}
+  .profile-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--navy);color:var(--white);font-weight:700;font-size:13px;text-transform:uppercase;flex-shrink:0;}
+  .profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;min-width:220px;background:var(--white);border:1px solid #e7ecee;border-radius:14px;padding:8px;box-shadow:0 24px 50px -20px rgba(11,34,51,.28);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s ease, transform .2s ease, visibility .2s ease;z-index:30;}
+  .profile-dropdown.open{opacity:1;visibility:visible;transform:translateY(0);}
+  .profile-dropdown-user{display:flex;align-items:center;gap:10px;padding:8px 10px 12px;border-bottom:1px solid #f1f4f5;margin-bottom:6px;}
+  .profile-dropdown-user .profile-avatar{width:34px;height:34px;font-size:13px;}
+  .profile-dropdown-name{font-size:13.5px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
+  .profile-dropdown-user-info{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .profile-dropdown-email{font-size:11.5px;font-weight:500;color:#7a8a92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
+  #logout-form{display:block;}
+  .profile-dropdown-logout{width:100%;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:none;background:none;color:#b0413e;font-size:13.5px;font-weight:700;cursor:pointer;text-align:left;transition:background .15s ease;}
+  .profile-dropdown-logout:hover{background:rgba(176,65,62,.08);}
+  .profile-dropdown-logout svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
   .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;border-radius:50%;border:1px solid #dfe4e7;background:var(--white);cursor:pointer;align-items:center;}
   .burger span{width:16px;height:2px;background:#3c4a52;border-radius:2px;transition:.25s ease;}
   .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
@@ -112,6 +127,10 @@
     .nav-links li{width:100%;}
     .nav-links li a{padding:14px 4px;width:100%;justify-content:space-between;border-bottom:1px solid #f1f4f5;}
     .nav-links li.active::after{display:none;}
+    .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
+    .profile-avatar-btn{width:28px;height:28px;}
+    .profile-avatar-btn .profile-avatar{width:28px;height:28px;font-size:11px;}
+    .profile-dropdown{right:-8px;min-width:200px;}
     .burger{display:flex;}
     .brand-logo{width:36px;height:36px;}
     .navbar-logo{height:32px;width:122px;}
@@ -307,6 +326,14 @@
   [data-theme="dark"] .nav-links li a{color:#c3cdd2;}
   [data-theme="dark"] .lang-btn,[data-theme="dark"] .galeri-filter,[data-theme="dark"] .load-more a{background:#122530;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .profile-avatar{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .profile-avatar-btn:hover{box-shadow:0 0 0 3px rgba(95,192,209,.18);}
+  [data-theme="dark"] .profile-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
+  [data-theme="dark"] .profile-dropdown-user{border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .profile-dropdown-name{color:#eaf3f5;}
+  [data-theme="dark"] .profile-dropdown-email{color:#8ea0a8;}
+  [data-theme="dark"] .profile-dropdown-logout{color:#ff8f8a;}
+  [data-theme="dark"] .profile-dropdown-logout:hover{background:rgba(255,143,138,.12);}
   [data-theme="dark"] .stat-card{background:#122530; border-right-color:black;}
   [data-theme="dark"] .stats-bar-inner{background-color:var(--navy);border: 1px solid var(--navy);}
   [data-theme="dark"] .stat-num{color:#eaf3f5;}
@@ -358,6 +385,29 @@
         </span>
       </button>
       <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
+      @auth
+        <div class="profile-menu">
+          <button type="button" class="profile-avatar-btn" id="profileMenuBtn" aria-haspopup="true" aria-expanded="false" aria-label="Menu akun">
+            <span class="profile-avatar" aria-hidden="true">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-dropdown-user">
+              <span class="profile-avatar" aria-hidden="true">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+              <div class="profile-dropdown-user-info">
+                <span class="profile-dropdown-name">{{ auth()->user()->name }}</span>
+                <span class="profile-dropdown-email">{{ auth()->user()->email }}</span>
+              </div>
+            </div>
+            <form id="logout-form" method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button type="submit" class="profile-dropdown-logout" data-en="Log out">
+                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>Keluar</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      @endauth
       <button class="burger" id="burgerBtn" aria-label="Buka menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -511,6 +561,23 @@
     burgerBtn.classList.toggle("open");
     navLinks.classList.toggle("open");
   });
+
+  // ---- Dropdown menu akun ----
+  const profileMenuBtn = document.getElementById("profileMenuBtn");
+  const profileDropdown = document.getElementById("profileDropdown");
+  if (profileMenuBtn && profileDropdown) {
+    profileMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = profileDropdown.classList.toggle("open");
+      profileMenuBtn.setAttribute("aria-expanded", String(isOpen));
+    });
+    document.addEventListener("click", (e) => {
+      if (!profileDropdown.contains(e.target) && !profileMenuBtn.contains(e.target)) {
+        profileDropdown.classList.remove("open");
+        profileMenuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
 
   const themeToggle = document.getElementById("themeToggle");
   function applyTheme(isDark) {
