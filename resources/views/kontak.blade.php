@@ -225,27 +225,21 @@
     .burger{display: none;}
 
 
-  .profile-box{
-    display:flex;align-items:center;gap:10px;
-    padding:6px 16px 6px 6px;border-radius:24px;
-    border:1px solid #dfe4e7;background:var(--white);
-  }
-  .profile-avatar{
-    width:32px;height:32px;border-radius:50%;
-    object-fit:cover;flex-shrink:0;
-  }
-  .profile-name{
-    font-size:13.5px;font-weight:700;color:var(--navy);
-    white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis;
-  }
-  #logout-form{display:flex;align-items:center;}
-  .logout-btn{
-    padding:9px 18px;border-radius:20px;
-    border:1px solid #e3b8b8;background:var(--white);
-    color:#b0413e;font-size:13px;font-weight:700;
-    cursor:pointer;transition:.2s ease;
-  }
-  .logout-btn:hover{background:#b0413e;color:var(--white);border-color:#b0413e;}
+  .profile-menu{position:relative;}
+  .profile-avatar-btn{width:34px;height:34px;border-radius:50%;border:none;padding:0;cursor:pointer;background:transparent;flex-shrink:0;transition:box-shadow .2s ease;}
+  .profile-avatar-btn:hover{box-shadow:0 0 0 3px rgba(20,128,140,.15);}
+  .profile-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--navy);color:var(--white);font-weight:700;font-size:13px;text-transform:uppercase;flex-shrink:0;}
+  .profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;min-width:220px;background:var(--white);border:1px solid #e7ecee;border-radius:14px;padding:8px;box-shadow:0 24px 50px -20px rgba(11,34,51,.28);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s ease, transform .2s ease, visibility .2s ease;z-index:30;}
+  .profile-dropdown.open{opacity:1;visibility:visible;transform:translateY(0);}
+  .profile-dropdown-user{display:flex;align-items:center;gap:10px;padding:8px 10px 12px;border-bottom:1px solid #f1f4f5;margin-bottom:6px;}
+  .profile-dropdown-user .profile-avatar{width:34px;height:34px;font-size:13px;}
+  .profile-dropdown-name{font-size:13.5px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
+  .profile-dropdown-user-info{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .profile-dropdown-email{font-size:11.5px;font-weight:500;color:#7a8a92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
+  #logout-form{display:block;}
+  .profile-dropdown-logout{width:100%;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:none;background:none;color:#b0413e;font-size:13.5px;font-weight:700;cursor:pointer;text-align:left;transition:background .15s ease;}
+  .profile-dropdown-logout:hover{background:rgba(176,65,62,.08);}
+  .profile-dropdown-logout svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
 
   @media (max-width:900px){
     .navbar{padding:10px 16px;gap:8px;}
@@ -279,10 +273,9 @@
     .nav-actions{gap:6px;flex-shrink:0;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
-    .profile-box{padding:4px 10px 4px 4px;gap:6px;}
-    .profile-avatar{width:26px;height:26px;}
-    .profile-name{font-size:11.5px;max-width:80px;}
-    .logout-btn{padding:6px 12px;font-size:11px;white-space:nowrap;}
+    .profile-avatar-btn{width:28px;height:28px;}
+    .profile-avatar-btn .profile-avatar{width:28px;height:28px;font-size:11px;}
+    .profile-dropdown{right:-8px;min-width:200px;}
 
     .burger{display:flex;}
     .nav-links{
@@ -322,8 +315,6 @@
 
   @media (max-width:420px){
     .btn-login{padding:8px 10px;}
-    .profile-name{display:none;}
-    .profile-box{padding:4px;}
   }
 
   /* ---------- Hero / Page Banner (sama seperti Profil, Layanan, Informasi) ---------- */
@@ -845,8 +836,6 @@
   [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
 
   [data-theme="dark"] .lang-btn,
-  [data-theme="dark"] .profile-box,
-  [data-theme="dark"] .logout-btn,
   [data-theme="dark"] .dl-btn,
   [data-theme="dark"] .galeri-filter,
   [data-theme="dark"] .agenda-cal-nav button{
@@ -855,9 +844,14 @@
   [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
   [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
-  [data-theme="dark"] .profile-name{color:#eaf3f5;}
-  [data-theme="dark"] .logout-btn{color:#ff8f8a;border-color:rgba(255,143,138,.35);}
-  [data-theme="dark"] .logout-btn:hover{background:#b0413e;color:#fff;border-color:#b0413e;}
+  [data-theme="dark"] .profile-avatar{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .profile-avatar-btn:hover{box-shadow:0 0 0 3px rgba(95,192,209,.18);}
+  [data-theme="dark"] .profile-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
+  [data-theme="dark"] .profile-dropdown-user{border-bottom-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .profile-dropdown-name{color:#eaf3f5;}
+  [data-theme="dark"] .profile-dropdown-email{color:#8ea0a8;}
+  [data-theme="dark"] .profile-dropdown-logout{color:#ff8f8a;}
+  [data-theme="dark"] .profile-dropdown-logout:hover{background:rgba(255,143,138,.12);}
 
   @media (max-width:900px){
     [data-theme="dark"] .nav-links{background:#0f1e28;border-bottom-color:rgba(255,255,255,.08);}
@@ -990,6 +984,29 @@
         </span>
       </button>
       <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
+      @auth
+        <div class="profile-menu">
+          <button type="button" class="profile-avatar-btn" id="profileMenuBtn" aria-haspopup="true" aria-expanded="false" aria-label="Menu akun">
+            <span class="profile-avatar" aria-hidden="true">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-dropdown-user">
+              <span class="profile-avatar" aria-hidden="true">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+              <div class="profile-dropdown-user-info">
+                <span class="profile-dropdown-name">{{ auth()->user()->name }}</span>
+                <span class="profile-dropdown-email">{{ auth()->user()->email }}</span>
+              </div>
+            </div>
+            <form id="logout-form" method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button type="submit" class="profile-dropdown-logout" data-en="Log out">
+                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>Keluar</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      @endauth
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
@@ -1284,6 +1301,22 @@
             navLinks.classList.remove("open");
         });
     });
+
+    const profileMenuBtn = document.getElementById("profileMenuBtn");
+    const profileDropdown = document.getElementById("profileDropdown");
+    if (profileMenuBtn && profileDropdown) {
+        profileMenuBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const isOpen = profileDropdown.classList.toggle("open");
+            profileMenuBtn.setAttribute("aria-expanded", String(isOpen));
+        });
+        document.addEventListener("click", (e) => {
+            if (!profileDropdown.contains(e.target) && !profileMenuBtn.contains(e.target)) {
+                profileDropdown.classList.remove("open");
+                profileMenuBtn.setAttribute("aria-expanded", "false");
+            }
+        });
+    }
 
     // Fade-in saat scroll
     function observeSection(selector, threshold = 0.15) {

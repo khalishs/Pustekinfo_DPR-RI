@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             User::updateOrCreate(
                 ['name' => $name],
                 [
+                    'email' => $name . '@pustekinfo.dpr.go.id',
                     'password' => Hash::make($name . '123'),
                     'role' => 'pegawai',
                     'is_admin' => true,

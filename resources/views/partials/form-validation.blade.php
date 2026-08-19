@@ -53,12 +53,22 @@
       return field.validationMessage || (label + ' tidak valid.');
     }
 
+    // Untuk field yang dibungkus wrapper "relative" (ikon di dalam input,
+    // gaya form login) taruh pesan error setelah wrapper-nya, bukan setelah
+    // input itu sendiri — supaya ikon (posisinya absolute, inset-y-0) tetap
+    // center terhadap tinggi input dan tidak ikut turun waktu ada teks error.
+    function errorAnchor(field){
+      var parent = field.parentElement;
+      if (parent && parent.classList.contains('relative')) return parent;
+      return field;
+    }
+
     // Cuma pegang elemen error yang dibuat sendiri (penanda field-error-msg),
     // supaya tidak ganggu pesan error dari server (@ error Blade) atau
     // validator lain yang sudah ada (mis. validasi ukuran file di admin).
     function clearFieldError(field){
       field.classList.remove('field-invalid');
-      var next = field.nextElementSibling;
+      var next = errorAnchor(field).nextElementSibling;
       if (next && next.classList.contains('field-error-msg')) next.remove();
     }
 
@@ -67,7 +77,7 @@
       var err = document.createElement('small');
       err.className = 'error field-error-msg';
       err.textContent = msg;
-      field.insertAdjacentElement('afterend', err);
+      errorAnchor(field).insertAdjacentElement('afterend', err);
     }
 
     document.addEventListener('input', function(e){
