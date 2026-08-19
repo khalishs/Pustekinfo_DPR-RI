@@ -1039,7 +1039,8 @@
           return { text: 'Membuka formulir edit...', sub: 'Menyiapkan data ' + pageLabel + ' yang dipilih' };
         }
         if (/^tambah/i.test(label)) {
-          return { text: 'Menyiapkan formulir baru...', sub: 'Menambah ' + label.replace(/^tambah\s*/i, '').trim() || pageLabel };
+          var addSuffix = label.replace(/^tambah\s*/i, '').trim() || pageLabel;
+          return { text: 'Menyiapkan formulir baru...', sub: 'Menambah ' + addSuffix };
         }
         if (/^lihat website$/i.test(label)) {
           return { text: 'Membuka situs...', sub: 'Menampilkan tampilan publik website' };

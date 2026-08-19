@@ -19,11 +19,13 @@ class AccountController extends Controller
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255', Rule::unique('users', 'name')->ignore($user->id)],
+            'email' => ['nullable', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
             'current_password' => ['nullable', 'required_with:password', 'current_password'],
             'password' => ['nullable', 'confirmed', 'min:8'],
         ]);
 
         $user->name = $data['name'];
+        $user->email = $data['email'];
 
         if (! empty($data['password'])) {
             $user->password = $data['password'];

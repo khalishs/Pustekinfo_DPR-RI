@@ -72,7 +72,7 @@
       <div class="form-group" style="align-self:end;">
         <label><input type="checkbox" name="is_featured" value="1" style="width:auto;display:inline-block;" {{ old('is_featured', $item->is_featured) ? 'checked' : '' }}> Jadikan sorotan di halaman galeri</label>
         @error('is_featured')<small class="error">{{ $message }}</small>@enderror
-        <small>Cuma satu foto yang bisa jadi sorotan. Centang foto lain akan menggantikan sorotan yang sedang aktif harus dibatalkan dulu.</small>
+        <small>Cuma satu foto yang bisa jadi sorotan. Kalau sudah ada foto lain yang jadi sorotan, batalkan dulu sorotannya sebelum mencentang ini.</small>
       </div>
 
       <div class="form-group" style="align-self:end;">
