@@ -441,7 +441,10 @@
   }
 
   /* ================= BAGAN ORGANISASI ================= */
-  .org-chart{margin-top:48px;display:flex;flex-direction:column;align-items:center;}
+  .org-chart{position:relative;margin-top:48px;display:flex;flex-direction:column;align-items:center;}
+  .org-chart .org-node{position:relative;z-index:1;}
+  .org-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible;}
+  .org-lines line{stroke:rgba(20,131,156,.28);stroke-width:2;}
   .org-node{
     background:var(--white);border-radius:16px;padding:22px 26px;text-align:center;
     box-shadow:0 16px 32px -20px rgba(11,34,51,.2);min-width:220px;max-width:280px;
@@ -472,24 +475,12 @@
   .org-node.top .org-node-desc{color:rgba(255,255,255,.68);}
   .org-node.top .org-node-photo{border-color:rgba(255,255,255,.55);}
 
-  .org-connector{width:2px;height:32px;background:linear-gradient(180deg, rgba(20,131,156,.55), rgba(20,131,156,.15));}
-
   .org-row{
-    position:relative;display:flex;gap:30px;flex-wrap:wrap;justify-content:center;
-    margin-top:0;padding-top:26px;
-  }
-  .org-row::before{
-    content:"";position:absolute;top:0;left:10%;right:10%;height:2px;
-    background:rgba(20,131,156,.28);
-  }
-  .org-row .org-node::before{
-    content:"";position:absolute;top:-26px;left:50%;width:2px;height:26px;
-    background:rgba(20,131,156,.28);transform:translateX(-50%);
+    display:flex;gap:56px 30px;flex-wrap:wrap;justify-content:center;
+    margin-top:58px;
   }
   @media (max-width:640px){
-    .org-row{flex-direction:column;align-items:center;padding-top:0;}
-    .org-row::before{display:none;}
-    .org-row .org-node::before{content:"";position:static;display:block;width:2px;height:26px;margin:0 auto;background:rgba(20,131,156,.28);transform:none;}
+    .org-row{flex-direction:column;align-items:center;gap:56px;}
   }
 
   .unit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px;}
@@ -673,9 +664,7 @@
   [data-theme="dark"] .org-node .org-node-name{color:#5FC0D1;}
   [data-theme="dark"] .org-node .org-node-desc{color:#8ea0a8;}
   [data-theme="dark"] .org-node-photo{border-color:rgba(255,255,255,.14);}
-  [data-theme="dark"] .org-connector{background:rgba(255,255,255,.14);}
-  [data-theme="dark"] .org-row::before,
-  [data-theme="dark"] .org-row .org-node::before{background:rgba(255,255,255,.14);}
+  [data-theme="dark"] .org-lines line{stroke:rgba(255,255,255,.14);}
 
   /* Visi & Misi (kartu MISI, versi terang) */
   [data-theme="dark"] .vm-card:not(.dark){background:#122530;box-shadow:0 20px 40px -24px rgba(0,0,0,.5);}
@@ -785,16 +774,16 @@
       </p>
 
       <div class="timeline">
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $timeline; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+        <?php $__empty_1 = true; $__currentLoopData = $timeline; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
           <div class="timeline-item">
             <span class="timeline-dot"></span>
             <span class="timeline-year"><?php echo e($t->year); ?></span>
             <h4 data-en="<?php echo e($t->title_en ?: $t->title); ?>"><?php echo e($t->title); ?></h4>
             <p data-en="<?php echo e($t->description_en ?: $t->description); ?>"><?php echo e($t->description); ?></p>
           </div>
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
           <p style="color:#8a97a0;" data-en="No agency history data yet.">Belum ada data sejarah instansi.</p>
-        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+        <?php endif; ?>
       </div>
   </div>
   </section>
@@ -809,9 +798,9 @@
       <div class="sambutan-card">
         <div class="sambutan-photo" <?php if($leadership?->photo): ?> style="background-image:url('<?php echo e(asset($leadership->photo)); ?>');background-size:cover;background-position:center;" <?php endif; ?>>
         <div class="who">
-          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($leadership?->show_name && $leadership?->name): ?>
+          <?php if($leadership?->show_name && $leadership?->name): ?>
             <div class="name"><?php echo e($leadership->name); ?></div>
-          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+          <?php endif; ?>
           <div class="role"><?php echo e($leadership->position ?? 'KEPALA PUSTEKINFO'); ?></div>
         </div>
       </div>
@@ -858,38 +847,38 @@
       </div>
       <h2 data-en="Pustekinfo's Organizational Structure">Struktur Organisasi Pustekinfo</h2>
 
-      <div class="org-chart">
-        <div class="org-node top">
-          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($kepala?->show_photo && $kepala->photo): ?>
+      <div class="org-chart" id="orgChart">
+        <svg class="org-lines" aria-hidden="true"></svg>
+        <div class="org-node top" id="orgKepala">
+          <?php if($kepala?->show_photo && $kepala->photo): ?>
             <div class="org-node-photo" style="background-image:url('<?php echo e(asset($kepala->photo)); ?>');"></div>
-          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+          <?php endif; ?>
           <strong data-en="<?php echo e(($kepala->position_en ?? null) ?: ($kepala->position ?? 'Unit Head')); ?>"><?php echo e($kepala->position ?? 'Pimpinan Unit'); ?></strong>
-          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($kepala?->show_name && $kepala->name): ?>
+          <?php if($kepala?->show_name && $kepala->name): ?>
             <span class="org-node-name"><?php echo e($kepala->name); ?></span>
-          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($kepala?->unit_description): ?>
+          <?php endif; ?>
+          <?php if($kepala?->unit_description): ?>
             <span class="org-node-desc" data-en="<?php echo e($kepala->unit_description_en ?: $kepala->unit_description); ?>"><?php echo e($kepala->unit_description); ?></span>
-          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+          <?php endif; ?>
         </div>
 
-        <div class="org-connector"></div>
-        <div class="org-row">
-          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $bidangList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $b): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+        <div class="org-row" id="orgRow">
+          <?php $__empty_1 = true; $__currentLoopData = $bidangList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $b): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="org-node">
-              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($b->show_photo && $b->photo): ?>
+              <?php if($b->show_photo && $b->photo): ?>
                 <div class="org-node-photo" style="background-image:url('<?php echo e(asset($b->photo)); ?>');"></div>
-              <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+              <?php endif; ?>
               <strong data-en="<?php echo e($b->position_en ?: $b->position); ?>"><?php echo e($b->position); ?></strong>
-              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($b->show_name && $b->name): ?>
+              <?php if($b->show_name && $b->name): ?>
                 <span class="org-node-name"><?php echo e($b->name); ?></span>
-              <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($b->unit_description): ?>
+              <?php endif; ?>
+              <?php if($b->unit_description): ?>
                 <span class="org-node-desc" data-en="<?php echo e($b->unit_description_en ?: $b->unit_description); ?>"><?php echo e($b->unit_description); ?></span>
-              <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+              <?php endif; ?>
             </div>
-          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <p style="color:#8a97a0;" data-en="No division data yet.">Belum ada data bidang.</p>
-          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -956,11 +945,11 @@
           <h3 data-en="Our Strategic Steps">Langkah Strategis Kami</h3>
           <?php $misiEn = $visionMission?->missionListEn() ?? []; ?>
           <ol>
-            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $visionMission?->missionList() ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $poin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+            <?php $__empty_1 = true; $__currentLoopData = $visionMission?->missionList() ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $poin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
               <li data-en="<?php echo e(($misiEn[$i] ?? null) ?: $poin); ?>"><?php echo e($poin); ?></li>
-            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
               <li data-en="Mission has not been filled in via the admin panel.">Misi belum diisi lewat panel admin.</li>
-            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+            <?php endif; ?>
           </ol>
         </div>
       </div>
@@ -985,15 +974,15 @@
         ];
       ?>
       <div class="values-grid">
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $coreValues; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+        <?php $__empty_1 = true; $__currentLoopData = $coreValues; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
           <div class="value-card">
             <div class="value-icon"><svg viewBox="0 0 24 24"><?php echo $valueIcons[$v->icon] ?? $valueIcons['integrity']; ?></svg></div>
             <h4 data-en="<?php echo e($v->title_en ?: $v->title); ?>"><?php echo e($v->title); ?></h4>
             <p data-en="<?php echo e($v->description_en ?: $v->description); ?>"><?php echo e($v->description); ?></p>
           </div>
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
           <p style="color:white;grid-column:1/-1;" data-en="No organizational values data yet.">Belum ada data nilai organisasi.</p>
-        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+        <?php endif; ?>
       </div>
     </div>
   </section>
@@ -1141,7 +1130,65 @@
     });
   });
 
+  // ---- Garis penghubung bagan struktur organisasi (dihitung dari posisi
+  // asli tiap kotak, bukan persentase tebakan, supaya nggak pernah kelewat
+  // dan tetap nyambung walau kotaknya wrap ke baris baru) ----
+  function drawOrgLines(){
+    const chart = document.getElementById('orgChart');
+    const svg = chart ? chart.querySelector('.org-lines') : null;
+    const kepala = document.getElementById('orgKepala');
+    const row = document.getElementById('orgRow');
+    if (!chart || !svg || !kepala || !row) return;
+
+    const nodes = Array.from(row.querySelectorAll('.org-node'));
+    const chartRect = chart.getBoundingClientRect();
+    const relRect = (el) => {
+      const r = el.getBoundingClientRect();
+      return { left: r.left - chartRect.left, top: r.top - chartRect.top, right: r.right - chartRect.left, bottom: r.bottom - chartRect.top, width: r.width };
+    };
+
+    svg.setAttribute('viewBox', `0 0 ${chartRect.width} ${chartRect.height}`);
+
+    if (!nodes.length) { svg.innerHTML = ''; return; }
+
+    const kRect = relRect(kepala);
+    const axisX = kRect.left + kRect.width / 2;
+
+    // Kelompokkan node per baris (posisi top yang sama = satu baris, hasil dari flex-wrap)
+    const groups = [];
+    nodes.forEach((n) => {
+      const r = relRect(n);
+      let g = groups.find((g) => Math.abs(g.top - r.top) < 2);
+      if (!g) { g = { top: r.top, bottom: r.bottom, rects: [] }; groups.push(g); }
+      g.rects.push(r);
+      g.bottom = Math.max(g.bottom, r.bottom);
+    });
+    groups.sort((a, b) => a.top - b.top);
+
+    const segments = [];
+    let anchorY = kRect.bottom;
+    groups.forEach((g) => {
+      const spineY = anchorY + (g.top - anchorY) / 2;
+      segments.push([axisX, anchorY, axisX, spineY]);
+      const xs = g.rects.map((r) => r.left + r.width / 2);
+      if (xs.length > 1) segments.push([Math.min(...xs), spineY, Math.max(...xs), spineY]);
+      xs.forEach((x, i) => segments.push([x, spineY, x, g.rects[i].top]));
+      anchorY = g.bottom;
+    });
+
+    svg.innerHTML = segments.map(([x1, y1, x2, y2]) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />`).join('');
+  }
+
+  let orgLinesResizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(orgLinesResizeTimer);
+    orgLinesResizeTimer = setTimeout(drawOrgLines, 150);
+  });
+  window.addEventListener('load', drawOrgLines);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawOrgLines);
+
   document.addEventListener('DOMContentLoaded', () => {
+    drawOrgLines();
 
     // ---- Reveal animasi tiap section ----
     const sections = document.querySelectorAll('section.page-section');
@@ -1150,6 +1197,7 @@
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
           revealObserver.unobserve(entry.target);
+          if (entry.target.id === 'struktur-organisasi') setTimeout(drawOrgLines, 850);
         }
       });
     }, { threshold: 0.15 });
@@ -1198,4 +1246,4 @@ window.addEventListener("scroll", () => {
 <?php echo $__env->make('partials.interactive-cursor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 <?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
-</html><?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/profil.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/profil.blade.php ENDPATH**/ ?>

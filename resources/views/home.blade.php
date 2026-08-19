@@ -265,12 +265,12 @@
 
   .hero-arrow{
     position:absolute;
-    top:50%;
-    transform:translateY(-50%);
+    top:0;
+    height:100%;
+    width:160px;
     z-index:3;
-    width:48px;height:48px;
-    border-radius:50%;
-    border:1px solid transparent;
+    border-radius:0;
+    border:none;
     background:transparent;
     color:#fff;
     opacity:.5;
@@ -278,18 +278,33 @@
     align-items:center;
     justify-content:center;
     cursor:pointer;
-    transition:.25s ease;
+    transition:opacity .25s ease;
     padding:0;
   }
-  .hero-arrow:hover{
-    background:rgba(11,49,74,.55);
-    border-color:rgba(255,255,255,.5);
-    backdrop-filter:blur(4px);
-    opacity:1;
+  .hero-arrow::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    opacity:0;
+    transition:opacity .25s ease;
+    pointer-events:none;
   }
-  .hero-arrow svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
-  .hero-arrow-prev{left:24px;}
-  .hero-arrow-next{right:24px;}
+  .hero-arrow-prev::before{
+    -webkit-mask-image:linear-gradient(to right, #000 0%, transparent 100%);
+    mask-image:linear-gradient(to right, #000 0%, transparent 100%);
+  }
+  .hero-arrow-next::before{
+    -webkit-mask-image:linear-gradient(to left, #000 0%, transparent 100%);
+    mask-image:linear-gradient(to left, #000 0%, transparent 100%);
+  }
+  .hero-arrow:hover{opacity:1;}
+  .hero-arrow:hover::before{opacity:1;}
+  .hero-arrow svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;position:relative;}
+  .hero-arrow-prev{left:0;justify-content:flex-start;padding-left:24px;}
+  .hero-arrow-next{right:0;justify-content:flex-end;padding-right:24px;}
 
   .hero::after{
     content:"";
@@ -528,10 +543,10 @@
     }
     .hero-content{margin-top:16px;}
     .hero-content h1{font-size:26px;}
-    .hero-arrow{width:36px;height:36px;}
+    .hero-arrow{width:90px;}
     .hero-arrow svg{width:16px;height:16px;}
-    .hero-arrow-prev{left:10px;}
-    .hero-arrow-next{right:10px;}
+    .hero-arrow-prev{padding-left:10px;}
+    .hero-arrow-next{padding-right:10px;}
 
     .stats-bar{
       flex-wrap:wrap;

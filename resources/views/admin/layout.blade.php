@@ -322,13 +322,20 @@
     background:radial-gradient(circle,rgba(20,128,140,.2),transparent 72%);
     animation:admin-pulse-glow 2s ease-in-out infinite;
   }
-  .admin-loading-logo{
-    position:relative;z-index:1;width:60px;height:60px;border-radius:50%;
-    background:#fff;padding:11px;object-fit:contain;
-    box-shadow:0 8px 20px -6px rgba(11,34,51,.35);
+  .admin-loading-logo-wrap{
+    position:relative;z-index:1;width:60px;height:60px;
     animation:admin-logo-breathe 2s ease-in-out infinite;
   }
-  [data-theme="dark"] .admin-loading-logo{background:#2b3036;}
+  .admin-loading-logo-frame{
+    position:absolute;inset:0;border-radius:50%;
+    background:#fff;
+    box-shadow:0 8px 20px -6px rgba(11,34,51,.35);
+  }
+  [data-theme="dark"] .admin-loading-logo-frame{background:#2b3036;}
+  .admin-loading-logo{
+    position:relative;display:block;width:100%;height:100%;
+    padding:11px;object-fit:contain;
+  }
   @keyframes admin-orbit-spin{to{transform:rotate(360deg);}}
   @keyframes admin-pulse-glow{0%,100%{transform:scale(.85);opacity:.5;}50%{transform:scale(1.3);opacity:1;}}
   @keyframes admin-logo-breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
@@ -947,7 +954,10 @@
       overlay.innerHTML =
         '<div class="admin-loading-box">' +
           '<div class="admin-loading-orbit">' +
-            '<img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="admin-loading-logo">' +
+            '<div class="admin-loading-logo-wrap">' +
+              '<span class="admin-loading-logo-frame"></span>' +
+              '<img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="admin-loading-logo">' +
+            '</div>' +
           '</div>' +
           '<div class="admin-loading-copy">' +
             '<span class="admin-loading-heading">Tolong menunggu sesaat<span class="admin-loading-dots"><i>.</i><i>.</i><i>.</i></span></span>' +

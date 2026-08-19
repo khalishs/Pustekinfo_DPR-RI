@@ -92,4 +92,4 @@
     }, true);
   })();
 </script>
-<?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/partials/form-validation.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/partials/form-validation.blade.php ENDPATH**/ ?>

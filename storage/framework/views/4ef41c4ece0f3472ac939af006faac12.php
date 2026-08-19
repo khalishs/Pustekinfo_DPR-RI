@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ajukan Layanan - Pustekinfo DPR RI</title>
+<title>Cek Status Pengajuan - Pustekinfo DPR RI</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -53,12 +53,7 @@
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
 
-  h1, h2, h3,
-  .ajukan-info h2,
-  .ajukan-form-card h3,
-  .ajukan-info-body .title {
-    font-family:'Plus Jakarta Sans', system-ui, sans-serif;
-  }
+  h1, h2, h3, .status-card h3 { font-family:'Plus Jakarta Sans', system-ui, sans-serif; }
 
   .eyebrow{
     display:flex;align-items:center;
@@ -67,7 +62,7 @@
   }
   .eyebrow::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block;}
 
-  /* ---------- Navbar (sama seperti halaman lain) ---------- */
+  /* ---------- Navbar ---------- */
   .navbar{
     display:flex;align-items:center;justify-content:space-between;
     padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);
@@ -194,202 +189,62 @@
   [data-theme="dark"] .konten-batik::before{filter:url(#batikTintTeal);opacity:.05;}
   @media (max-width:900px){.konten-batik::before{background-size:3000px auto;}}
 
-  /* ---------- Sekilas STELA ---------- */
-  .stela-section{
-    position:relative;
-    max-width:960px;
-    margin:0 auto;
-    padding:70px 24px 70px;
-    text-align:center;
-    opacity:0;
-    transform:translateY(50px);
-    transition:opacity .9s ease, transform .9s ease;
-  }
-  .stela-section.show{opacity:1;transform:translateY(0);}
-  .stela-section .eyebrow{justify-content:center;}
-  .stela-section h2{margin-top:16px;font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.01em;}
-  .stela-section > p{margin:14px auto 0;max-width:560px;color:#5b6b73;font-size:14.5px;line-height:1.75;}
+  /* ---------- Cek status ---------- */
+  .status-page{background:rgba(255, 255, 255, 0.2);padding:70px 100px 90px;opacity:0;transform:translateY(60px);transition:opacity .9s ease, transform .9s ease;}
+  .status-page.show{opacity:1;transform:translateY(0);}
+  .status-inner{max-width:760px;margin:0 auto;}
 
-  .stela-card{
-    position:relative;
-    margin-top:44px;
-    padding:14px;
-    border-radius:24px;
-    background:linear-gradient(155deg,var(--navy) 0%,var(--teal) 100%);
-    border:2px solid rgba(255,255,255,.12);
-    box-shadow:0 40px 70px -34px rgba(11,34,51,.4);
-  }
-  .stela-badge{
-    position:absolute;
-    top:-15px;
-    left:32px;
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:7px 14px;
-    border-radius:999px;
-    background:#FFCE88;
-    color:var(--navy);
-    font-size:11.5px;
-    font-weight:800;
-    letter-spacing:.04em;
-    box-shadow:0 10px 20px -8px rgba(0,0,0,.35);
-    z-index:2;
-  }
-  .stela-badge svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
-
-  .stela-video-wrap{
-    position:relative;
-    border-radius:16px;
-    overflow:hidden;
-    background:#000;
-    transition:transform .35s ease;
-  }
-  .stela-video-wrap:hover{transform:scale(1.008);}
-  .stela-video-wrap video{display:block;width:100%;max-height:520px;background:#000;}
-  .stela-video-wrap iframe{display:block;width:100%;aspect-ratio:16/9;border:none;background:#000;}
-
-  .stela-video-fallback{
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-    width:100%;aspect-ratio:16/9;
-    background:linear-gradient(155deg,var(--navy) 0%,var(--teal) 100%);
-    color:var(--white);text-decoration:none;
-  }
-  .stela-play-icon{
-    width:62px;height:62px;border-radius:50%;flex-shrink:0;
-    background:rgba(255,255,255,.16);
-    display:flex;align-items:center;justify-content:center;
-    transition:transform .25s ease, background .25s ease;
-  }
-  .stela-video-fallback:hover .stela-play-icon{transform:scale(1.1);background:rgba(255,255,255,.26);}
-  .stela-play-icon svg{width:24px;height:24px;fill:currentColor;stroke:currentColor;margin-left:3px;}
-  .stela-video-fallback > span:last-child{font-size:13.5px;font-weight:700;letter-spacing:.03em;}
-
-  .stela-link{
-    margin-top:34px;
-    display:inline-flex;align-items:center;gap:8px;
-    padding:14px 30px;
-    border-radius:999px;
-    background:linear-gradient(120deg,var(--navy),var(--teal));
-    color:var(--white);
-    font-size:13px;font-weight:700;letter-spacing:.03em;
-    box-shadow:0 16px 30px -14px rgba(7,61,95,.55);
-    transition:transform .25s ease, box-shadow .25s ease, gap .25s ease;
-  }
-  .stela-link:hover{transform:translateY(-3px);box-shadow:0 20px 36px -14px rgba(7,61,95,.65);gap:12px;}
-  .stela-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease;}
-  .stela-link:hover svg{transform:translateX(3px);}
-  @media (max-width:900px){
-    .stela-section{padding:50px 20px 50px;}
-    .stela-section h2{font-size:22px;}
-    .stela-card{padding:10px;border-radius:18px;}
-    .stela-badge{left:16px;top:-13px;padding:6px 12px;font-size:10.5px;}
-  }
-  [data-theme="dark"] .stela-section h2{color:#eaf3f5;}
-  [data-theme="dark"] .stela-section > p{color:#8ea0a8;}
-  [data-theme="dark"] .stela-card{box-shadow:0 40px 70px -34px rgba(0,0,0,.75);}
-
-  /* ---------- Ajukan: Info & Form ---------- */
-  .ajukan-page{background:rgba(255, 255, 255, 0.2);padding:70px 100px 90px;opacity:0;transform:translateY(60px);transition:opacity .9s ease, transform .9s ease;}
-  .ajukan-page.show{opacity:1;transform:translateY(0);}
-  .ajukan-grid{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:0.82fr 1fr;gap:70px;align-items:start;}
-
-  .ajukan-info{background-color: rgba(255, 255, 255, 0.5);border-radius: 10px;padding:30px;max-width: 500px;}
-  .ajukan-info h2{margin-top:14px;font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-.01em;}
-  .ajukan-info-list{margin-top:28px;display:flex;flex-direction:column;}
-  .ajukan-info-item{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid #eef1f3;}
-  .ajukan-info-item:first-child{padding-top:0;}
-  .ajukan-info-item:last-child{border-bottom:none;padding-bottom:0;}
-  .ajukan-info-num{
-    width:28px;height:28px;border-radius:50%;flex-shrink:0;margin-top:2px;
-    background:rgba(20,128,140,.1);color:var(--teal);font-weight:800;font-size:13px;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .ajukan-info-body .title{font-size:14.5px;font-weight:700;color:var(--navy);}
-  .ajukan-info-body .desc{margin-top:4px;font-size:13.5px;color:#7a8a92;line-height:1.65;}
-
-  .ajukan-status-link{
-    margin-top:26px;display:flex;align-items:center;gap:10px;
-    padding:14px 18px;border-radius:12px;
-    background:rgba(20,128,140,.08);border:1px solid rgba(20,128,140,.16);
-    color:var(--teal);font-size:13.5px;font-weight:700;
-  }
-  .ajukan-status-link svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
-
-  .ajukan-form-card{
+  .status-card{
     background-color: rgba(255, 255, 255, 0.5);border-radius:1px 20px 1px 20px;
     padding:40px 44px;box-shadow:0 30px 60px -28px rgba(11,34,51,.22);border:1px solid #eef1f3;
   }
-  .ajukan-form-card h3{font-size:20px;font-weight:800;color:var(--navy);}
-  .ajukan-form-card > p{margin-top:8px;color:#7a8a92;font-size:13.5px;line-height:1.65;}
+  .status-card h3{font-size:20px;font-weight:800;color:var(--navy);}
+  .status-card > p{margin-top:8px;color:#7a8a92;font-size:13.5px;line-height:1.65;}
 
-  form.ajukan-form{margin-top:24px;}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;}
-  .form-row:first-of-type{margin-top:0;}
+  form.status-form{margin-top:24px;display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;}
+  .form-field{flex:1;min-width:220px;}
   .form-field label{display:block;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px;}
-  .form-field label.required::after{content:" *";color:#c0392b;}
-  [data-theme="dark"] .form-field label.required::after{color:#ff8f8a;}
-  .form-field input, .form-field select, .form-field textarea{
+  .form-field input{
     width:100%;border:1px solid #dfe4e7;border-radius:8px;padding:12px 14px;
     font-size:13.5px;font-family:inherit;color:var(--ink);background:var(--white);transition:.2s ease;
   }
-  .form-field input::placeholder, .form-field textarea::placeholder{color:#a7b3b8;}
-  .form-field input:focus, .form-field select:focus, .form-field textarea:focus{
-    outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(20,128,140,.12);
-  }
-  .form-field select{
-    appearance:none;-webkit-appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235b6b73' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer;
-  }
-  .form-field textarea{resize:vertical;min-height:120px;font-family:inherit;}
-  .form-field.full{grid-column:1/-1;}
+  .form-field input::placeholder{color:#a7b3b8;}
+  .form-field input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(20,128,140,.12);}
   .form-field small.error{display:block;margin-top:6px;color:#c0392b;font-size:12px;font-weight:600;}
   [data-theme="dark"] .form-field small.error{color:#ff8f8a;}
-  .form-field input.field-invalid,
-  .form-field select.field-invalid,
-  .form-field textarea.field-invalid{border-color:#c0392b;}
-  [data-theme="dark"] .form-field input.field-invalid,
-  [data-theme="dark"] .form-field select.field-invalid,
-  [data-theme="dark"] .form-field textarea.field-invalid{border-color:#ff8f8a;}
+  .form-field input.field-invalid{border-color:#c0392b;}
+  [data-theme="dark"] .form-field input.field-invalid{border-color:#ff8f8a;}
 
-  .ajukan-form-footer{margin-top:26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
-  .btn-kirim{
+  .btn-cari{
     display:flex;align-items:center;gap:10px;background:var(--navy);color:var(--white);border:none;
-    padding:14px 26px;border-radius:8px;font-size:13px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:.2s ease;
+    padding:13px 24px;border-radius:8px;font-size:13px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:.2s ease;
   }
-  .btn-kirim:hover{background:var(--teal);transform:translateY(-2px);}
-  .btn-kirim svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-  .ajukan-form-footer .note{font-size:12px;color:#9aa8af;font-weight:500;}
+  .btn-cari:hover{background:var(--teal);transform:translateY(-2px);}
+  .btn-cari svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* ---------- Hasil ---------- */
+  .status-results{margin-top:26px;display:flex;flex-direction:column;gap:16px;}
+  .status-result-card{
+    background-color: rgba(255, 255, 255, 0.6);border-radius:12px;padding:22px 24px;
+    border:1px solid #eef1f3;box-shadow:0 16px 30px -22px rgba(11,34,51,.18);
+  }
+  .status-result-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .status-result-kode{font-size:15px;font-weight:800;color:var(--navy);letter-spacing:.02em;}
+  .status-result-jenis{margin-top:10px;font-size:14px;font-weight:700;color:var(--navy);}
+  .status-result-tanggal{margin-top:4px;font-size:12.5px;color:#7a8a92;}
+  .status-result-catatan{
+    margin-top:14px;padding:12px 14px;border-radius:8px;background:rgba(20,128,140,.06);
+    font-size:13px;color:#3c4a52;line-height:1.6;white-space:pre-line;
+  }
+  .status-empty{margin-top:26px;padding:24px;text-align:center;color:#7a8a92;font-size:13.5px;border:1px dashed #dfe4e7;border-radius:12px;}
+
+  .status-badge{display:inline-block;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:800;}
 
   @media (max-width:900px){
-    .ajukan-page{padding:50px 20px 60px;}
-    .ajukan-grid{grid-template-columns:1fr;gap:50px;}
-    .ajukan-form-card{padding:28px 24px;}
-    .form-row{grid-template-columns:1fr;gap:16px;}
+    .status-page{padding:50px 20px 60px;}
+    .status-card{padding:28px 24px;}
+    form.status-form{flex-direction:column;align-items:stretch;}
   }
-
-  /* ---------- Kartu sukses ---------- */
-  .sukses-card{text-align:center;padding:20px 0 10px;}
-  .sukses-icon{
-    width:64px;height:64px;border-radius:50%;margin:0 auto 22px;
-    background:rgba(31,157,124,.12);color:#1f9d7c;display:flex;align-items:center;justify-content:center;
-  }
-  .sukses-icon svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
-  .sukses-kode{
-    display:inline-block;margin:16px 0 4px;padding:10px 22px;border-radius:10px;
-    background:rgba(20,128,140,.08);border:1px dashed rgba(20,128,140,.35);
-    color:var(--navy);font-size:20px;font-weight:800;letter-spacing:.04em;
-  }
-  .sukses-hint{margin-top:6px;color:#7a8a92;font-size:13px;}
-  .sukses-actions{margin-top:26px;display:flex;flex-direction:column;gap:12px;align-items:center;}
-  .btn-wa{
-    display:inline-flex;align-items:center;gap:10px;background:#1f9d7c;color:#fff;
-    padding:14px 26px;border-radius:8px;font-size:13.5px;font-weight:700;transition:.2s ease;
-  }
-  .btn-wa:hover{background:#188066;transform:translateY(-2px);}
-  .btn-wa svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-  .link-ulang{color:var(--teal);font-size:13px;font-weight:700;}
 
   /* ---------- Footer ---------- */
   .footer-divider{margin-top:-1px;height:3px;background:linear-gradient(10deg, #057888 0%, #052D46 55%, #052D46 100%);}
@@ -453,34 +308,21 @@
 
   [data-theme="dark"] .eyebrow{color:#5FC0D1;}
   [data-theme="dark"] .eyebrow::before{background:#5FC0D1;}
-  [data-theme="dark"] .ajukan-page{background:rgba(0, 0, 0, 0.2);}
-  [data-theme="dark"] .ajukan-info{background-color:rgba(0, 0, 0, 0.8);}
-  [data-theme="dark"] .ajukan-info h2{color:#eaf3f5;}
-  [data-theme="dark"] .ajukan-info-item{border-bottom-color:rgba(255,255,255,.08);}
-  [data-theme="dark"] .ajukan-info-num{background:rgba(95,192,209,.15);color:#5FC0D1;}
-  [data-theme="dark"] .ajukan-info-body .title{color:#eaf3f5;}
-  [data-theme="dark"] .ajukan-info-body .desc{color:#8ea0a8;}
-  [data-theme="dark"] .ajukan-status-link{background:rgba(95,192,209,.1);border-color:rgba(95,192,209,.25);color:#5FC0D1;}
-
-  [data-theme="dark"] .ajukan-form-card{background:rgba(0, 0, 0, 0.8);border-color: rgba(0, 0, 0, 0.8);box-shadow:0 30px 60px -28px rgba(0,0,0,.6);}
-  [data-theme="dark"] .ajukan-form-card h3{color:#eaf3f5;}
-  [data-theme="dark"] .ajukan-form-card > p{color:#8ea0a8;}
+  [data-theme="dark"] .status-page{background:rgba(0, 0, 0, 0.2);}
+  [data-theme="dark"] .status-card{background:rgba(0, 0, 0, 0.8);border-color: rgba(0, 0, 0, 0.8);box-shadow:0 30px 60px -28px rgba(0,0,0,.6);}
+  [data-theme="dark"] .status-card h3{color:#eaf3f5;}
+  [data-theme="dark"] .status-card > p{color:#8ea0a8;}
   [data-theme="dark"] .form-field label{color:#eaf3f5;}
-  [data-theme="dark"] .form-field input, [data-theme="dark"] .form-field select, [data-theme="dark"] .form-field textarea{
-    background-color:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;
-  }
-  [data-theme="dark"] .form-field input::placeholder, [data-theme="dark"] .form-field textarea::placeholder{color:#8ea0a8;}
-  [data-theme="dark"] .form-field input:focus, [data-theme="dark"] .form-field select:focus, [data-theme="dark"] .form-field textarea:focus{
-    border-color:#5FC0D1;box-shadow:0 0 0 3px rgba(95,192,209,.18);
-  }
-  [data-theme="dark"] .form-field select{
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235FC0D1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  }
-  [data-theme="dark"] .btn-kirim{background:#5FC0D1;color:#0b1720;}
-  [data-theme="dark"] .btn-kirim:hover{background:#7fd3e0;}
-  [data-theme="dark"] .ajukan-form-footer .note{color:#8ea0a8;}
-  [data-theme="dark"] .sukses-kode{background:rgba(95,192,209,.1);border-color:rgba(95,192,209,.35);color:#eaf3f5;}
-  [data-theme="dark"] .sukses-hint{color:#8ea0a8;}
+  [data-theme="dark"] .form-field input{background:#0b1720;border-color:rgba(255,255,255,.14);color:#c3cdd2;}
+  [data-theme="dark"] .form-field input::placeholder{color:#8ea0a8;}
+  [data-theme="dark"] .form-field input:focus{border-color:#5FC0D1;box-shadow:0 0 0 3px rgba(95,192,209,.18);}
+  [data-theme="dark"] .btn-cari{background:#5FC0D1;color:#0b1720;}
+  [data-theme="dark"] .btn-cari:hover{background:#7fd3e0;}
+  [data-theme="dark"] .status-result-card{background:rgba(0, 0, 0, 0.7);border-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .status-result-kode, [data-theme="dark"] .status-result-jenis{color:#eaf3f5;}
+  [data-theme="dark"] .status-result-tanggal{color:#8ea0a8;}
+  [data-theme="dark"] .status-result-catatan{background:rgba(95,192,209,.08);color:#c3cdd2;}
+  [data-theme="dark"] .status-empty{color:#8ea0a8;border-color:rgba(255,255,255,.14);}
 
   [data-theme="dark"] .footer-desc{color:rgba(255,255,255,.5);}
   [data-theme="dark"] .footer-social a{border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.65);}
@@ -536,9 +378,9 @@
   
   <header class="hero-profil" <?php if($pageBanner?->image): ?> style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('<?php echo e(asset($pageBanner->image)); ?>');background-size:cover;background-position:center;" <?php endif; ?>>
     <div class="hero-profil-inner">
-      <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt; / &lt;span&gt;Apply&lt;/span&gt;">Beranda / <span>Layanan</span> / <span>Ajukan</span></p>
-      <h1 data-en-html="Apply for a <span class=&quot;accent&quot;>service</span>">Ajukan <span class="accent">layanan</span></h1>
-      <p data-en="Fill out the form below, your request will be recorded and you will continue the conversation via WhatsApp.">Isi formulir berikut, pengajuan Anda akan tercatat dan Anda akan melanjutkan percakapan melalui WhatsApp.</p>
+      <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt; / &lt;span&gt;Check Status&lt;/span&gt;">Beranda / <span>Layanan</span> / <span>Cek Status</span></p>
+      <h1 data-en-html="Check your <span class=&quot;accent&quot;>request status</span>">Cek status <span class="accent">pengajuan Anda</span></h1>
+      <p data-en="Enter the ticket code you received when submitting your request to see its current status.">Masukkan kode tiket yang Anda terima saat mengajukan untuk melihat status terkininya.</p>
     </div>
 
     <div class="tabs-nav">
@@ -546,10 +388,10 @@
         <a href="<?php echo e(route('layanan')); ?>" class="tab-link">
           <span data-en="Services">Layanan</span>
         </a>
-        <a href="<?php echo e(route('layanan.ajukan')); ?>" class="tab-link active">
+        <a href="<?php echo e(route('layanan.ajukan')); ?>" class="tab-link">
           <span data-en="Apply for a Service">Ajukan Layanan</span>
         </a>
-        <a href="<?php echo e(route('layanan.status')); ?>" class="tab-link">
+        <a href="<?php echo e(route('layanan.status')); ?>" class="tab-link active">
           <span data-en="Check Status">Lihat Status</span>
         </a>
       </div>
@@ -561,10 +403,10 @@
       <a href="<?php echo e(route('layanan')); ?>" class="tab-link">
         <span data-en="Services">Layanan</span>
       </a>
-      <a href="<?php echo e(route('layanan.ajukan')); ?>" class="tab-link active">
+      <a href="<?php echo e(route('layanan.ajukan')); ?>" class="tab-link">
         <span data-en="Apply for a Service">Ajukan Layanan</span>
       </a>
-      <a href="<?php echo e(route('layanan.status')); ?>" class="tab-link">
+      <a href="<?php echo e(route('layanan.status')); ?>" class="tab-link active">
         <span data-en="Check Status">Lihat Status</span>
       </a>
     </div>
@@ -572,202 +414,64 @@
 
   <div class="konten-batik">
 
-  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($stelaVideo && $stelaVideo->video_url): ?>
   
-  <section class="stela-section">
-    <div class="eyebrow" data-en="WATCH THE VIDEO">TONTON VIDEONYA</div>
-    <h2 data-en="Get to Know STELA">Sekilas STELA</h2>
-    <p data-en="STELA is the DPR RI Service Ticketing and Escalation System.">STELA merupakan Sistem Tiket dan Eskalasi Layanan.</p>
+  <section class="status-page">
+    <div class="status-inner">
 
-    <div class="stela-card">
-      <span class="stela-badge">
-        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        <span data-en="Introduction Video">Video Perkenalan</span>
-      </span>
-      <div class="stela-video-wrap">
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($stelaVideo->embed_url): ?>
-          <iframe src="<?php echo e($stelaVideo->embed_url); ?>" title="Sekilas STELA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <?php else: ?>
-          <a href="<?php echo e($stelaVideo->video_url); ?>" target="_blank" rel="noopener" class="stela-video-fallback">
-            <span class="stela-play-icon">
-              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </span>
-            <span data-en="Watch Video">Tonton Video</span>
-          </a>
-        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-      </div>
-    </div>
+      <div class="status-card">
+        <div class="eyebrow" data-en="CHECK STATUS">CEK STATUS</div>
+        <h3 data-en="Find Your Request">Temukan Pengajuan Anda</h3>
+        <p data-en="Enter the ticket code you received when submitting your request.">Masukkan kode tiket yang Anda terima saat mengajukan layanan.</p>
 
-    <a href="<?php echo e($stelaVideo->link_url ?: 'https://stela.dpr.go.id'); ?>" target="_blank" rel="noopener" class="stela-link">
-      <span data-en="Visit STELA DPR RI">Kunjungi STELA DPR RI</span>
-      <svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-    </a>
-  </section>
-  <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-
-  
-  <section class="ajukan-page">
-    <div class="ajukan-grid">
-
-      
-      <div class="ajukan-info">
-        <div class="eyebrow" data-en="HOW IT WORKS">ALUR PENGAJUAN</div>
-        <h2 data-en="Three Easy Steps">Tiga Langkah Mudah</h2>
-
-        <div class="ajukan-info-list">
-          <div class="ajukan-info-item">
-            <div class="ajukan-info-num">1</div>
-            <div class="ajukan-info-body">
-              <div class="title" data-en="Fill Out the Form">Isi Formulir</div>
-              <div class="desc" data-en="Fill in your details and the service you need.">Lengkapi data diri dan layanan yang Anda butuhkan.</div>
-            </div>
+        <form class="status-form" method="POST" action="<?php echo e(route('layanan.status.check')); ?>">
+          <?php echo csrf_field(); ?>
+          <div class="form-field">
+            <label for="kode" data-en="Ticket code">Kode Tiket</label>
+            <input type="text" id="kode" name="kode" value="<?php echo e(old('kode')); ?>" placeholder="LYN-XXXXXXXX" required>
+            <?php $__errorArgs = ['kode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
           </div>
-          <div class="ajukan-info-item">
-            <div class="ajukan-info-num">2</div>
-            <div class="ajukan-info-body">
-              <div class="title" data-en="Continue on WhatsApp">Lanjut ke WhatsApp</div>
-              <div class="desc" data-en="You'll receive a ticket code and continue the conversation with our team on WhatsApp.">Anda akan menerima kode tiket dan melanjutkan percakapan dengan tim kami di WhatsApp.</div>
-            </div>
-          </div>
-          <div class="ajukan-info-item">
-            <div class="ajukan-info-num">3</div>
-            <div class="ajukan-info-body">
-              <div class="title" data-en="Track the Status">Pantau Status</div>
-              <div class="desc" data-en="Check your request status anytime using your ticket code.">Cek status pengajuan Anda kapan saja menggunakan kode tiket Anda.</div>
-            </div>
-          </div>
-        </div>
+          <button type="submit" class="btn-cari">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span data-en="CHECK">CEK STATUS</span>
+          </button>
+        </form>
 
-        <a href="<?php echo e(route('layanan.status')); ?>" class="ajukan-status-link">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <span data-en="Already applied? Check your status">Sudah mengajukan? Cek status pengajuan</span>
-        </a>
-      </div>
-
-      
-      <div class="ajukan-form-card">
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($submitted)): ?>
-          <div class="sukses-card">
-            <div class="sukses-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <h3 data-en="Request Recorded">Pengajuan Tercatat</h3>
-            <p data-en="Save this ticket code — you'll need it to check your request status.">Simpan kode tiket ini — Anda akan membutuhkannya untuk cek status pengajuan.</p>
-            <div class="sukses-kode"><?php echo e($submitted->kode); ?></div>
-            <div class="sukses-hint" data-en="Tap the button below to continue the conversation on WhatsApp.">Ketuk tombol di bawah untuk melanjutkan percakapan di WhatsApp.</div>
-            <div class="sukses-actions">
-              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($waUrl): ?>
-                <a href="<?php echo e($waUrl); ?>" target="_blank" rel="noopener" class="btn-wa">
-                  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                  <span data-en="Continue on WhatsApp">Lanjut ke WhatsApp</span>
-                </a>
-              <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-              <a href="<?php echo e(route('layanan.status')); ?>" class="link-ulang" data-en="Check request status">Cek status pengajuan</a>
+        <?php if($searched): ?>
+          <?php if($results->isEmpty()): ?>
+            <div class="status-empty" data-en="No request found for this ticket code.">Tidak ditemukan pengajuan untuk kode tiket ini.</div>
+          <?php else: ?>
+            <div class="status-results">
+              <?php $__currentLoopData = $results; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="status-result-card">
+                  <div class="status-result-head">
+                    <span class="status-result-kode"><?php echo e($result->kode); ?></span>
+                    <?php
+                      $badgeStyle = match($result->status) {
+                        'selesai' => 'background:rgba(31,157,124,.1);color:#1f9d7c;',
+                        'diproses' => 'background:rgba(201,163,78,.14);color:#a8843a;',
+                        'ditolak' => 'background:rgba(176,65,62,.1);color:#b0413e;',
+                        default => 'background:rgba(20,128,140,.1);color:var(--teal);',
+                      };
+                    ?>
+                    <span class="status-badge" style="<?php echo e($badgeStyle); ?>"><?php echo e(\App\Models\ServiceRequest::STATUSES[$result->status] ?? $result->status); ?></span>
+                  </div>
+                  <div class="status-result-jenis"><?php echo e($result->jenis_layanan); ?></div>
+                  <div class="status-result-tanggal"><?php echo e($result->created_at->format('d M Y H:i')); ?></div>
+                  <?php if($result->catatan_admin): ?>
+                    <div class="status-result-catatan"><?php echo e($result->catatan_admin); ?></div>
+                  <?php endif; ?>
+                </div>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
-          </div>
-        <?php else: ?>
-          <h3 data-en="Service Request Form">Formulir Pengajuan Layanan</h3>
-          <p data-en="Fill out the form below, our team will contact you via WhatsApp.">Isi formulir berikut, tim kami akan menghubungi Anda melalui WhatsApp.</p>
-
-          <form class="ajukan-form" method="POST" action="<?php echo e(route('layanan.ajukan.store')); ?>">
-            <?php echo csrf_field(); ?>
-
-            <div class="form-row">
-              <div class="form-field">
-                <label for="nama" class="required" data-en="Full name">Nama lengkap</label>
-                <input type="text" id="nama" name="nama" value="<?php echo e(old('nama')); ?>" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s]+" title="Nama hanya boleh berisi huruf" required>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['nama'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-              </div>
-              <div class="form-field">
-                <label for="email" class="required">Email</label>
-                <input type="email" id="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="nama@email.com" required>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-field">
-                <label for="no_tlpn" class="required" data-en="WhatsApp / phone number">Nomor WhatsApp / Telepon</label>
-                <input type="tel" id="no_tlpn" name="no_tlpn" value="<?php echo e(old('no_tlpn')); ?>" placeholder="08xxxxxxxxxx" inputmode="numeric" pattern="0[0-9]{9,13}" minlength="10" maxlength="14" title="Masukkan nomor HP/WhatsApp yang valid, contoh: 08123456789" required>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['no_tlpn'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-              </div>
-              <div class="form-field">
-                <label for="instansi" data-en="Work unit / Institution">Unit kerja / Instansi</label>
-                <input type="text" id="instansi" name="instansi" value="<?php echo e(old('instansi')); ?>" placeholder="Opsional" data-en-placeholder="Optional">
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['instansi'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-field full">
-                <label for="jenis_layanan" class="required" data-en="Service type">Jenis Layanan</label>
-                <select id="jenis_layanan" name="jenis_layanan" required>
-                  <option value="" disabled <?php echo e(old('jenis_layanan', $jenisSelected) ? '' : 'selected'); ?>>Pilih jenis layanan</option>
-                  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $jenisOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $jenis): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                    <option value="<?php echo e($jenis); ?>" <?php if(old('jenis_layanan', $jenisSelected) === $jenis): echo 'selected'; endif; ?>><?php echo e($jenis); ?></option>
-                  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
-                </select>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['jenis_layanan'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-field full">
-                <label for="pesan" class="required" data-en="Request details">Detail Kebutuhan</label>
-                <textarea id="pesan" name="pesan" placeholder="Jelaskan kebutuhan layanan Anda..." data-en-placeholder="Describe your service request..." required><?php echo e(old('pesan')); ?></textarea>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['pesan'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-              </div>
-            </div>
-
-            <div class="ajukan-form-footer">
-              <button type="submit" class="btn-kirim">
-                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                <span data-en="SUBMIT REQUEST">AJUKAN LAYANAN</span>
-              </button>
-              <span class="note" data-en="Your data will be kept confidential.">Data Anda akan kami jaga kerahasiaannya.</span>
-            </div>
-          </form>
-        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+          <?php endif; ?>
+        <?php endif; ?>
       </div>
 
     </div>
@@ -921,22 +625,7 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
         }, { threshold });
         observer.observe(section);
     }
-    observeSection(".ajukan-page", 0.1);
-    observeSection(".stela-section", 0.15);
-
-    const noTlpnInput = document.getElementById("no_tlpn");
-    if (noTlpnInput) {
-        noTlpnInput.addEventListener("input", () => {
-            noTlpnInput.value = noTlpnInput.value.replace(/[^0-9]/g, "").slice(0, 14);
-        });
-    }
-
-    const namaInput = document.getElementById("nama");
-    if (namaInput) {
-        namaInput.addEventListener("input", () => {
-            namaInput.value = namaInput.value.replace(/[^A-Za-z\s]/g, "");
-        });
-    }
+    observeSection(".status-page", 0.1);
   </script>
 
 <?php echo $__env->make('partials.interactive-cursor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
@@ -944,4 +633,4 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
 <?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
 </html>
-<?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/layanan-ajukan.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/layanan-status.blade.php ENDPATH**/ ?>

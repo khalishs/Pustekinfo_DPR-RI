@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masuk - Pustekinfo DPR RI</title>
-    <link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}?v=2">
+    <link rel="icon" type="image/png" href="<?php echo e(asset('images/favicon-bg.png')); ?>?v=2">
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font Awesome untuk Ikon -->
@@ -83,7 +83,7 @@
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            background-image: url('{{ asset('images/group-batik.png') }}');
+            background-image: url('<?php echo e(asset('images/group-batik.png')); ?>');
             background-repeat: no-repeat;
             background-position: center center;
             background-size: 10000px auto;
@@ -157,14 +157,14 @@
 
     <!-- Sisi Kiri: Branding (Hidden di HP, muncul di MD ke atas) -->
     <div class="ct-left hidden md:flex md:w-5/12 text-white p-12 flex-col justify-between relative overflow-hidden shadow-2xl"
-         style="background-image: url('{{ asset('images/latar2.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+         style="background-image: url('<?php echo e(asset('images/latar2.png')); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         
 
         <!-- Konten Tengah -->
         <div class="mt-16 md:mt-20 mb-auto mx-auto flex flex-col items-center text-center z-10">
             <!-- Ganti src dengan logo asli Anda -->
             <div class="logo-frame mb-4 flex items-center justify-center p-6 lg:p-8 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-                <img src="{{ asset('images/Logo.png') }}" alt="Logo Pustekinfo" class="h-20 lg:h-24 object-contain fallback-logo">
+                <img src="<?php echo e(asset('images/Logo.png')); ?>" alt="Logo Pustekinfo" class="h-20 lg:h-24 object-contain fallback-logo">
                 <!-- Fallback jika gambar tidak ada (CSS Hacking untuk demo) -->
                 <div class="w-24 h-24 flex items-center justify-center font-bold text-5xl text-teal-400 unique-logo-placeholder hidden">//</div>
             </div>
@@ -194,7 +194,7 @@
         <div class="relative z-10 w-full max-w-md lg:max-w-lg xl:max-w-xl mx-auto my-auto bg-white rounded-3xl p-5 sm:p-8 md:p-10 lg:p-12 shadow-xl shadow-gray-200/50 border border-gray-100 mobile-card">
             
             <div class="back mb-4 flex items-center justify-between">
-                <a href="{{ route('home') }}" class="inline-flex items-center text-sm font-semibold text-teal-600 hover:text-teal-700">
+                <a href="<?php echo e(route('home')); ?>" class="inline-flex items-center text-sm font-semibold text-teal-600 hover:text-teal-700">
                     <i class="fa-solid fa-arrow-left mr-2"></i>
                     Kembali
                 </a>
@@ -203,20 +203,21 @@
 
             <!-- Logo & Greeting -->
             <div class="text-greeting text-center mb-8">
-                <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="h-14 sm:h-16 lg:h-20 mx-auto mb-4 object-contain mobile-logo">
+                <img src="<?php echo e(asset('images/Logo.png')); ?>" alt="Logo" class="h-14 sm:h-16 lg:h-20 mx-auto mb-4 object-contain mobile-logo">
                 <h3 class="text-2xl lg:text-3xl font-bold text-[#0a2f5c]">Selamat Datang</h3>
                 <p class="text-xs lg:text-sm text-gray-500 mt-1 px-2 sm:px-4 leading-relaxed mobile-text">Silakan masuk untuk melanjutkan</p>
             </div>
 
-            @if (session('status'))
+            <?php if(session('status')): ?>
                 <div class="mb-4 rounded-lg border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-700">
-                    {{ session('status') }}
+                    <?php echo e(session('status')); ?>
+
                 </div>
-            @endif
+            <?php endif; ?>
 
             <!-- Form input Laravel -->
-            <form action="{{ route('login.post') }}" method="POST" class="space-y-5">
-                @csrf
+            <form action="<?php echo e(route('login.post')); ?>" method="POST" class="space-y-5">
+                <?php echo csrf_field(); ?>
 
                 <!-- Input Username / Email -->
                 <div class="relative">
@@ -225,11 +226,18 @@
                     </span>
                     <input type="text" name="login" id="login" 
                         class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm transition-all mobile-input"
-                        placeholder="Username" required value="{{ old('login') }}">
+                        placeholder="Username" required value="<?php echo e(old('login')); ?>">
                 </div>
-                @error('login')
-                    <span class="text-xs text-red-500 block -mt-3 pl-1">{{ $message }}</span>
-                @enderror
+                <?php $__errorArgs = ['login'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-xs text-red-500 block -mt-3 pl-1"><?php echo e($message); ?></span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
                 <!-- Input Password -->
                 <div class="relative">
@@ -243,9 +251,16 @@
                         <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
                     </button>
                 </div>
-                @error('password')
-                    <span class="text-xs text-red-500 block -mt-3 pl-1">{{ $message }}</span>
-                @enderror
+                <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-xs text-red-500 block -mt-3 pl-1"><?php echo e($message); ?></span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
                 <!-- Opsi Tambahan (Ingat Saya & Lupa Password) -->
                 <div class="flex items-center justify-between text-xs pt-1">
@@ -253,9 +268,9 @@
                         <input type="checkbox" name="remember" class="w-4 h-4 rounded text-teal-600 border-gray-300 focus:ring-teal-500 accent-teal-600">
                         <span>Ingat Saya</span>
                     </label>
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="text-teal-600 font-medium hover:underline">Lupa Password?</a>
-                    @endif
+                    <?php if(Route::has('password.request')): ?>
+                        <a href="<?php echo e(route('password.request')); ?>" class="text-teal-600 font-medium hover:underline">Lupa Password?</a>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Tombol Masuk -->
@@ -273,7 +288,7 @@
 
         <!-- Footer Hak Cipta -->
         <div class="footer text-center text-xs text-gray-400 mt-8 md:mt-4">
-            &copy; {{ date('Y') }} Pustekinfo DPR RI. All rights reserved.
+            &copy; <?php echo e(date('Y')); ?> Pustekinfo DPR RI. All rights reserved.
         </div>
     </div>
 
@@ -306,7 +321,7 @@
             applyTheme(isDark);
         });
     </script>
-@include('partials.form-validation')
-@include('partials.page-loading')
+<?php echo $__env->make('partials.form-validation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
-</html>
+</html><?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/login.blade.php ENDPATH**/ ?>
