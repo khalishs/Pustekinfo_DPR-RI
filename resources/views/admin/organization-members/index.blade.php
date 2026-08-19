@@ -4,8 +4,13 @@
 @section('content')
 <div class="page-head">
   <h2>Struktur Organisasi</h2>
-  <a href="{{ route('admin.organization-members.create') }}" class="btn btn-primary">+ Tambah Anggota</a>
+  @if($atCapacity)
+    <span class="btn btn-outline" style="opacity:.6;cursor:not-allowed;" title="Sudah mencapai batas maksimal (1 Kepala + 4 Bidang)">Struktur sudah penuh (5/5)</span>
+  @else
+    <a href="{{ route('admin.organization-members.create') }}" class="btn btn-primary">+ Tambah Anggota</a>
+  @endif
 </div>
+<p style="color:#7a8a92;font-size:13px;margin:-10px 0 16px;">Struktur organisasi dibatasi maksimal 5 anggota: 1 Kepala dan 4 Bidang.</p>
 <div class="card">
   <div class="table-responsive">
   <table>

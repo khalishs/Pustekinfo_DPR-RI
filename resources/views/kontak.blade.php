@@ -1114,7 +1114,7 @@
           <div class="form-row">
             <div class="form-field full">
               <label for="pesan" class="required" data-en="Message">Pesan</label>
-              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." required>{{ old('pesan') }}</textarea>
+              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." minlength="10" required>{{ old('pesan') }}</textarea>
               @error('pesan')<small class="error">{{ $message }}</small>@enderror
             </div>
           </div>

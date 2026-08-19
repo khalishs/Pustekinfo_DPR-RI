@@ -766,7 +766,7 @@
             <div class="form-row">
               <div class="form-field full">
                 <label for="pesan" class="required" data-en="Request details">Detail Kebutuhan</label>
-                <textarea id="pesan" name="pesan" placeholder="Jelaskan kebutuhan layanan Anda..." data-en-placeholder="Describe your service request..." required>{{ old('pesan') }}</textarea>
+                <textarea id="pesan" name="pesan" placeholder="Jelaskan kebutuhan layanan Anda..." data-en-placeholder="Describe your service request..." minlength="10" required>{{ old('pesan') }}</textarea>
                 @error('pesan')<small class="error">{{ $message }}</small>@enderror
               </div>
             </div>

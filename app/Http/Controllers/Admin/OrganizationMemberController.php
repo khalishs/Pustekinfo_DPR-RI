@@ -6,24 +6,41 @@ use App\Http\Controllers\Controller;
 use App\Models\OrganizationMember;
 use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class OrganizationMemberController extends Controller
 {
+    const MAX_KEPALA = 1;
+    const MAX_BIDANG = 4;
+
     public function index()
     {
+        $members = OrganizationMember::orderBy('sort_order')->get();
+
         return view('admin.organization-members.index', [
-            'members' => OrganizationMember::orderBy('sort_order')->get(),
+            'members'    => $members,
+            'atCapacity' => $this->kepalaCount($members) >= self::MAX_KEPALA && $this->bidangCount($members) >= self::MAX_BIDANG,
         ]);
     }
 
     public function create()
     {
-        return view('admin.organization-members.form', ['member' => new OrganizationMember()]);
+        if ($this->kepalaCount() >= self::MAX_KEPALA && $this->bidangCount() >= self::MAX_BIDANG) {
+            return redirect()->route('admin.organization-members.index')
+                ->with('error', 'Struktur organisasi sudah penuh (maksimal 1 Kepala dan 4 Bidang).');
+        }
+
+        return view('admin.organization-members.form', [
+            'member'      => new OrganizationMember(),
+            'kepalaFull'  => $this->kepalaCount() >= self::MAX_KEPALA,
+            'bidangFull'  => $this->bidangCount() >= self::MAX_BIDANG,
+        ]);
     }
 
     public function store(Request $request)
     {
         $data = $this->validated($request);
+        $this->assertLevelCapacity($data['level']);
         $data['is_active'] = $request->boolean('is_active');
         $data['show_name'] = $request->boolean('show_name');
         $data['show_photo'] = $request->boolean('show_photo');
@@ -39,12 +56,17 @@ class OrganizationMemberController extends Controller
 
     public function edit(OrganizationMember $organizationMember)
     {
-        return view('admin.organization-members.form', ['member' => $organizationMember]);
+        return view('admin.organization-members.form', [
+            'member'     => $organizationMember,
+            'kepalaFull' => $this->kepalaCount() >= self::MAX_KEPALA && $organizationMember->level !== 'kepala',
+            'bidangFull' => $this->bidangCount() >= self::MAX_BIDANG && $organizationMember->level !== 'bidang',
+        ]);
     }
 
     public function update(Request $request, OrganizationMember $organizationMember)
     {
         $data = $this->validated($request);
+        $this->assertLevelCapacity($data['level'], $organizationMember);
         $data['is_active'] = $request->boolean('is_active');
         $data['show_name'] = $request->boolean('show_name');
         $data['show_photo'] = $request->boolean('show_photo');
@@ -93,5 +115,32 @@ class OrganizationMemberController extends Controller
             'show_photo'          => 'sometimes|boolean',
             'is_active'           => 'sometimes|boolean',
         ]);
+    }
+
+    private function kepalaCount(?\Illuminate\Support\Collection $members = null): int
+    {
+        return $members ? $members->where('level', 'kepala')->count() : OrganizationMember::where('level', 'kepala')->count();
+    }
+
+    private function bidangCount(?\Illuminate\Support\Collection $members = null): int
+    {
+        return $members ? $members->where('level', 'bidang')->count() : OrganizationMember::where('level', 'bidang')->count();
+    }
+
+    private function assertLevelCapacity(string $level, ?OrganizationMember $excluding = null): void
+    {
+        $query = OrganizationMember::where('level', $level);
+        if ($excluding && $excluding->exists) {
+            $query->where('id', '!=', $excluding->id);
+        }
+
+        $max = $level === 'kepala' ? self::MAX_KEPALA : self::MAX_BIDANG;
+
+        if ($query->count() >= $max) {
+            $label = $level === 'kepala' ? 'Kepala' : 'Bidang';
+            throw ValidationException::withMessages([
+                'level' => "Jumlah anggota level {$label} sudah mencapai batas maksimal ({$max}).",
+            ]);
+        }
     }
 }
