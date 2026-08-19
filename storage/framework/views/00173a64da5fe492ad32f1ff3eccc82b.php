@@ -1,4 +1,4 @@
-{{-- resources/views/kontak.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
+<link rel="icon" type="image/png" href="<?php echo e(asset('images/favicon-bg.png')); ?>">
 <style>
   :root{
     --navy:#12242E;
@@ -39,7 +39,7 @@
     inset:0;
     z-index:-1;
     pointer-events:none;
-    background-image:url('{{ asset('images/group-batik.png') }}');
+    background-image:url('<?php echo e(asset('images/group-batik.png')); ?>');
     background-repeat:no-repeat;
     background-position:center top;
     background-size:10000px auto;
@@ -225,21 +225,27 @@
     .burger{display: none;}
 
 
-  .profile-menu{position:relative;}
-  .profile-avatar-btn{width:34px;height:34px;border-radius:50%;border:none;padding:0;cursor:pointer;background:transparent;flex-shrink:0;transition:box-shadow .2s ease;}
-  .profile-avatar-btn:hover{box-shadow:0 0 0 3px rgba(20,128,140,.15);}
-  .profile-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--navy);color:var(--white);font-weight:700;font-size:13px;text-transform:uppercase;flex-shrink:0;}
-  .profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;min-width:220px;background:var(--white);border:1px solid #e7ecee;border-radius:14px;padding:8px;box-shadow:0 24px 50px -20px rgba(11,34,51,.28);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s ease, transform .2s ease, visibility .2s ease;z-index:30;}
-  .profile-dropdown.open{opacity:1;visibility:visible;transform:translateY(0);}
-  .profile-dropdown-user{display:flex;align-items:center;gap:10px;padding:8px 10px 12px;border-bottom:1px solid #f1f4f5;margin-bottom:6px;}
-  .profile-dropdown-user .profile-avatar{width:34px;height:34px;font-size:13px;}
-  .profile-dropdown-name{font-size:13.5px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
-  .profile-dropdown-user-info{display:flex;flex-direction:column;gap:2px;min-width:0;}
-  .profile-dropdown-email{font-size:11.5px;font-weight:500;color:#7a8a92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
-  #logout-form{display:block;}
-  .profile-dropdown-logout{width:100%;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:none;background:none;color:#b0413e;font-size:13.5px;font-weight:700;cursor:pointer;text-align:left;transition:background .15s ease;}
-  .profile-dropdown-logout:hover{background:rgba(176,65,62,.08);}
-  .profile-dropdown-logout svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .profile-box{
+    display:flex;align-items:center;gap:10px;
+    padding:6px 16px 6px 6px;border-radius:24px;
+    border:1px solid #dfe4e7;background:var(--white);
+  }
+  .profile-avatar{
+    width:32px;height:32px;border-radius:50%;
+    object-fit:cover;flex-shrink:0;
+  }
+  .profile-name{
+    font-size:13.5px;font-weight:700;color:var(--navy);
+    white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis;
+  }
+  #logout-form{display:flex;align-items:center;}
+  .logout-btn{
+    padding:9px 18px;border-radius:20px;
+    border:1px solid #e3b8b8;background:var(--white);
+    color:#b0413e;font-size:13px;font-weight:700;
+    cursor:pointer;transition:.2s ease;
+  }
+  .logout-btn:hover{background:#b0413e;color:var(--white);border-color:#b0413e;}
 
   @media (max-width:900px){
     .navbar{padding:10px 16px;gap:8px;}
@@ -273,9 +279,10 @@
     .nav-actions{gap:6px;flex-shrink:0;}
     .lang-btn{padding:6px 12px;font-size:11.5px;}
     .btn-login{padding:8px 14px;font-size:12.5px;white-space:nowrap;}
-    .profile-avatar-btn{width:28px;height:28px;}
-    .profile-avatar-btn .profile-avatar{width:28px;height:28px;font-size:11px;}
-    .profile-dropdown{right:-8px;min-width:200px;}
+    .profile-box{padding:4px 10px 4px 4px;gap:6px;}
+    .profile-avatar{width:26px;height:26px;}
+    .profile-name{font-size:11.5px;max-width:80px;}
+    .logout-btn{padding:6px 12px;font-size:11px;white-space:nowrap;}
 
     .burger{display:flex;}
     .nav-links{
@@ -315,6 +322,8 @@
 
   @media (max-width:420px){
     .btn-login{padding:8px 10px;}
+    .profile-name{display:none;}
+    .profile-box{padding:4px;}
   }
 
   /* ---------- Hero / Page Banner (sama seperti Profil, Layanan, Informasi) ---------- */
@@ -359,7 +368,7 @@
     inset:0;
     z-index:-1;
     pointer-events:none;
-    background-image:url('{{ asset('images/group-batik.png') }}');
+    background-image:url('<?php echo e(asset('images/group-batik.png')); ?>');
     background-repeat:no-repeat;
     background-position:center top;
     background-size:10000px auto;
@@ -664,43 +673,160 @@
     background:linear-gradient(10deg, #057888 0%, #052D46 55%, #052D46 100%);
   }
 
-  .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #052D46 55%, #052D46 100%);}
-  .footer{position:relative;background:#052D46;padding:64px 100px 0;overflow:hidden;}
-  .footer::before{
-    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background-image:url('{{ asset('images/batik_footer.png') }}');
-    background-repeat:no-repeat;background-position:center center;background-size:cover;
-    opacity:.08;filter:brightness(0) invert(1);
+  /* ---------- Footer (sama seperti beranda) ---------- */
+  .footer{
+    position:relative;
+    background:#052D46;
+    padding:64px 100px 0;
+    overflow:hidden;
   }
-  .footer-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;}
+  /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
+  .footer::before{
+    content:"";position:absolute;inset:-40px 0 -80px;
+    background-repeat:no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+    background-image:url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>');
+    background-position:left -100px bottom -30px,right -80px top -40px,30% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
+    background-size:480px auto,320px auto,150px auto,130px auto,170px auto,140px auto,220px auto;
+    filter:brightness(0) invert(1);opacity:.5;pointer-events:none;z-index:0;
+  }
+  .footer-inner{
+    position:relative;
+    z-index:1;
+    max-width:1240px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1fr;
+    gap:40px;
+    padding-bottom:50px;
+  }
+
   .footer-brand{display:flex;align-items:center;gap:12px;}
-  .footer-brand-logo{width:190px;height:auto;object-fit:contain;}
-  .footer-desc{margin-top:18px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.75;max-width:260px;}
-  .footer-social{margin-top:22px;display:flex;gap:10px;}
-  .footer-social a{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:.2s ease;}
-  .footer-social a:hover{background:var(--teal);border-color:var(--teal);color:var(--white);}
-  .footer-social svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-  .footer-col .head{color:rgba(255,255,255,.85);font-size:11.5px;font-weight:800;letter-spacing:.1em;padding-bottom:12px;border-bottom:2px solid var(--teal);display:inline-block;}
-  .footer-links{margin-top:20px;display:flex;flex-direction:column;gap:14px;}
-  .footer-links a{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:500;transition:.2s ease;width:max-content;}
-  .footer-links a .chev{font-size:11px;color:var(--teal);}
-  .footer-links a:hover{color:var(--white);gap:10px;}
-  .footer-contact{margin-top:20px;display:flex;flex-direction:column;gap:16px;}
-  .footer-contact .item{display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,.65);font-size:13px;line-height:1.6;}
-  .footer-contact .item svg{width:16px;height:16px;stroke:var(--teal);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:1px;}
-  .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:22px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
-  .footer-bottom p{color:rgba(255,255,255,.45);font-size:12.5px;font-weight:500;}
+  .footer-brand-logo{
+    width:190px;
+    height:auto;
+    object-fit:contain;
+  }
+
+  .footer-desc{
+    margin-top:18px;
+    color:rgba(255,255,255,.55);
+    font-size:13px;
+    line-height:1.75;
+    max-width:260px;
+  }
+
+  .footer-social{
+    margin-top:22px;
+    display:flex;
+    gap:10px;
+  }
+  .footer-social a{
+    width:34px;height:34px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,.14);
+    color:rgba(255,255,255,.7);
+    display:flex;align-items:center;justify-content:center;
+    transition:.2s ease;
+  }
+  .footer-social a:hover{
+    background:var(--teal);
+    border-color:var(--teal);
+    color:var(--white);
+  }
+  .footer-social svg{
+    width:15px;height:15px;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .footer-col .head{
+    color:rgba(255,255,255,.85);
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.1em;
+    padding-bottom:12px;
+    border-bottom:2px solid var(--teal);
+    display:inline-block;
+  }
+  .footer-links{
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .footer-links a{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:rgba(255,255,255,.6);
+    font-size:13.5px;
+    font-weight:500;
+    transition:.2s ease;
+    width:max-content;
+  }
+  .footer-links a .chev{
+    font-size:11px;
+    color:var(--teal);
+  }
+  .footer-links a:hover{color:var(--white);}
+
+  .footer-contact{
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .footer-contact .item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    color:rgba(255,255,255,.65);
+    font-size:13px;
+    line-height:1.6;
+  }
+  .footer-contact .item svg{
+    width:16px;height:16px;
+    stroke:var(--teal);
+    fill:none;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    flex-shrink:0;
+    margin-top:1px;
+  }
+
+  .footer-bottom{
+    border-top:1px solid rgba(255,255,255,.1);
+    padding:22px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .footer-bottom p{
+    color:rgba(255,255,255,.45);
+    font-size:12.5px;
+    font-weight:500;
+  }
 
   @media (max-width:900px){
     .footer{padding:50px 20px 0;}
     .footer::before{
-      background-size:180% auto;
+      background-size:170px auto,140px auto,65px auto,55px auto,70px auto,60px auto,90px auto;
+      background-position:left -40px bottom -10px,right -40px top -20px,38% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
+      opacity:.1;
     }
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
     .footer-brand-logo{width:150px;}
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
   }
-  @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
+  @media (max-width:560px){
+    .footer-inner{grid-template-columns:1fr;}
+  }
 
   /* ---------- Dark mode ---------- */
   [data-theme="dark"] html{background:#0b1720;}
@@ -719,6 +845,8 @@
   [data-theme="dark"] .nav-dropdown a:hover{background:rgba(255,255,255,.06);color:#eaf3f5;}
 
   [data-theme="dark"] .lang-btn,
+  [data-theme="dark"] .profile-box,
+  [data-theme="dark"] .logout-btn,
   [data-theme="dark"] .dl-btn,
   [data-theme="dark"] .galeri-filter,
   [data-theme="dark"] .agenda-cal-nav button{
@@ -727,14 +855,9 @@
   [data-theme="dark"] .lang-btn:hover{background:rgba(255,255,255,.08);border-color:#5FC0D1;color:#5FC0D1;}
   [data-theme="dark"] .btn-login{background:#5FC0D1;color:#0b1720;}
   [data-theme="dark"] .btn-login:hover{background:#7fd3e0;}
-  [data-theme="dark"] .profile-avatar{background:#5FC0D1;color:#0b1720;}
-  [data-theme="dark"] .profile-avatar-btn:hover{box-shadow:0 0 0 3px rgba(95,192,209,.18);}
-  [data-theme="dark"] .profile-dropdown{background:#122530;border-color:rgba(255,255,255,.1);box-shadow:0 24px 50px -20px rgba(0,0,0,.6);}
-  [data-theme="dark"] .profile-dropdown-user{border-bottom-color:rgba(255,255,255,.08);}
-  [data-theme="dark"] .profile-dropdown-name{color:#eaf3f5;}
-  [data-theme="dark"] .profile-dropdown-email{color:#8ea0a8;}
-  [data-theme="dark"] .profile-dropdown-logout{color:#ff8f8a;}
-  [data-theme="dark"] .profile-dropdown-logout:hover{background:rgba(255,143,138,.12);}
+  [data-theme="dark"] .profile-name{color:#eaf3f5;}
+  [data-theme="dark"] .logout-btn{color:#ff8f8a;border-color:rgba(255,143,138,.35);}
+  [data-theme="dark"] .logout-btn:hover{background:#b0413e;color:#fff;border-color:#b0413e;}
 
   @media (max-width:900px){
     [data-theme="dark"] .nav-links{background:#0f1e28;border-bottom-color:rgba(255,255,255,.08);}
@@ -841,20 +964,20 @@
     </filter>
   </svg>
 
-  {{-- ================= NAVBAR ================= --}}
+  
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
-      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
+      <img src="<?php echo e(asset('images/logo_pustekinfo_landscape.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
-      <li><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
-      <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
-      <li><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
-      <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
-      <li><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
-      <li class="active"><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
+      <li><a href="<?php echo e(route('home')); ?>" data-en="Home">Beranda</a></li>
+      <li><a href="<?php echo e(route('profil')); ?>" data-en="Profile">Profil </a></li>
+      <li><a href="<?php echo e(route('layanan')); ?>" data-en="Services">Layanan</a></li>
+      <li><a href="<?php echo e(route('informasi')); ?>" data-en="Information">Informasi</a></li>
+      <li><a href="<?php echo e(route('galeri')); ?>" data-en="Gallery">Galeri</a></li>
+      <li class="active"><a href="<?php echo e(route('kontak')); ?>" data-en="Contact">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
@@ -867,37 +990,14 @@
         </span>
       </button>
       <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
-      @auth
-        <div class="profile-menu">
-          <button type="button" class="profile-avatar-btn" id="profileMenuBtn" aria-haspopup="true" aria-expanded="false" aria-label="Menu akun">
-            <span class="profile-avatar" aria-hidden="true">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
-          </button>
-          <div class="profile-dropdown" id="profileDropdown">
-            <div class="profile-dropdown-user">
-              <span class="profile-avatar" aria-hidden="true">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
-              <div class="profile-dropdown-user-info">
-                <span class="profile-dropdown-name">{{ auth()->user()->name }}</span>
-                <span class="profile-dropdown-email">{{ auth()->user()->email }}</span>
-              </div>
-            </div>
-            <form id="logout-form" method="POST" action="{{ route('logout') }}">
-              @csrf
-              <button type="submit" class="profile-dropdown-logout" data-en="Log out">
-                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                <span>Keluar</span>
-              </button>
-            </form>
-          </div>
-        </div>
-      @endauth
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
-  {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  
+  <header class="hero-profil" <?php if($pageBanner?->image): ?> style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('<?php echo e(asset($pageBanner->image)); ?>');background-size:cover;background-position:center;" <?php endif; ?>>
     <div class="hero-profil-inner">
       <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Contact&lt;/span&gt;">Beranda / <span>Kontak</span></p>
       <h1 data-en-html="We're ready to <span class=&quot;accent&quot;>help you</span>">Kami siap <span class="accent">membantu Anda</span></h1>
@@ -907,11 +1007,11 @@
 
   <div class="konten-batik">
 
-  {{-- ================= INFORMASI KONTAK & FORM ================= --}}
+  
   <section class="kontak-page">
     <div class="kontak-grid">
 
-      {{-- Kolom kiri: Informasi kontak --}}
+      
       <div class="kontak-info">
         <div class="eyebrow" data-en="CONTACT INFORMATION">INFORMASI KONTAK</div>
         <h2 data-en="Have a Question?">Ada Pertanyaan?</h2>
@@ -923,7 +1023,7 @@
           </div>
           <div class="kontak-info-body">
             <div class="title" data-en="Address">Alamat</div>
-            <div class="desc" data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</div>
+            <div class="desc" data-en="<?php echo e($setting->address_en ?: ($setting->address ?? 'Address not set')); ?>"><?php echo e($setting->address ?? 'Alamat belum diatur'); ?></div>
           </div>
         </div>
 
@@ -933,7 +1033,7 @@
           </div>
           <div class="kontak-info-body">
             <div class="title" data-en="Phone">Telepon</div>
-            <div class="desc">{{ $setting->phone ?? '-' }}</div>
+            <div class="desc"><?php echo e($setting->phone ?? '-'); ?></div>
           </div>
         </div>
 
@@ -943,68 +1043,98 @@
           </div>
           <div class="kontak-info-body">
             <div class="title">Email</div>
-            <div class="desc">{{ $setting->email ?? '-' }}</div>
+            <div class="desc"><?php echo e($setting->email ?? '-'); ?></div>
           </div>
         </div>
       </div>
       </div>
 
 
-      {{-- Kolom kanan: Form kirim pesan --}}
+      
       <div class="kontak-form-card">
         <h3 data-en="Send a Message">Kirim Pesan</h3>
         <p data-en="Fill out the form below, our team will respond within 1&times;24 working hours.">Isi formulir berikut, tim kami akan merespons dalam 1&times;24 jam kerja.</p>
 
-        @if(session('status'))
+        <?php if(session('status')): ?>
           <div style="margin-bottom:20px;padding:14px 18px;border-radius:10px;background:#e6f7ee;color:#1f9d7c;font-size:13.5px;font-weight:600;">
-            {{ session('status') }}
+            <?php echo e(session('status')); ?>
+
           </div>
-          @if(session('waUrl'))
-            <a href="{{ session('waUrl') }}" target="_blank" rel="noopener" class="btn-kirim" style="text-decoration:none;margin-bottom:20px;">
-              <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-              <span data-en="Continue on WhatsApp">Lanjut ke WhatsApp</span>
-            </a>
-          @endif
-        @endif
-        <form class="kontak-form" method="POST" action="{{ route('kontak.kirim') }}">
-          @csrf
+        <?php endif; ?>
+        <form class="kontak-form" method="POST" action="<?php echo e(route('kontak.kirim')); ?>">
+          <?php echo csrf_field(); ?>
 
           <div class="form-row">
             <div class="form-field">
               <label for="nama" class="required" data-en="Full name">Nama lengkap</label>
-              <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s]+" title="Nama hanya boleh berisi huruf" required>
-              @error('nama')<small class="error">{{ $message }}</small>@enderror
+              <input type="text" id="nama" name="nama" value="<?php echo e(old('nama')); ?>" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s]+" title="Nama hanya boleh berisi huruf" required>
+              <?php $__errorArgs = ['nama'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
             <div class="form-field">
               <label for="email" class="required">Email</label>
-              <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="nama@email.com" required>
-              @error('email')<small class="error">{{ $message }}</small>@enderror
+              <input type="email" id="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="nama@email.com" required>
+              <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-field">
               <label for="instansi" data-en="Work unit / Institution">Unit kerja / Instansi</label>
-              <input type="text" id="instansi" name="instansi" value="{{ old('instansi') }}" placeholder="Opsional" data-en-placeholder="Optional">
-              @error('instansi')<small class="error">{{ $message }}</small>@enderror
+              <input type="text" id="instansi" name="instansi" value="<?php echo e(old('instansi')); ?>" placeholder="Opsional" data-en-placeholder="Optional">
+              <?php $__errorArgs = ['instansi'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
             <div class="form-field">
               <label for="kategori" data-en="Category">Kategori</label>
               <select id="kategori" name="kategori">
-                <option value="umum" data-en="General question" @selected(old('kategori', 'umum') === 'umum')>Pertanyaan umum</option>
-                <option value="teknis" data-en="Technical support" @selected(old('kategori') === 'teknis')>Bantuan teknis</option>
-                <option value="kerjasama" data-en="Partnership" @selected(old('kategori') === 'kerjasama')>Kerja sama</option>
-                <option value="pengaduan" data-en="Complaint" @selected(old('kategori') === 'pengaduan')>Pengaduan</option>
+                <option value="umum" data-en="General question" <?php if(old('kategori', 'umum') === 'umum'): echo 'selected'; endif; ?>>Pertanyaan umum</option>
+                <option value="teknis" data-en="Technical support" <?php if(old('kategori') === 'teknis'): echo 'selected'; endif; ?>>Bantuan teknis</option>
+                <option value="kerjasama" data-en="Partnership" <?php if(old('kategori') === 'kerjasama'): echo 'selected'; endif; ?>>Kerja sama</option>
+                <option value="pengaduan" data-en="Complaint" <?php if(old('kategori') === 'pengaduan'): echo 'selected'; endif; ?>>Pengaduan</option>
               </select>
-              @error('kategori')<small class="error">{{ $message }}</small>@enderror
+              <?php $__errorArgs = ['kategori'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-field full">
               <label for="pesan" class="required" data-en="Message">Pesan</label>
-              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." minlength="10" required>{{ old('pesan') }}</textarea>
-              @error('pesan')<small class="error">{{ $message }}</small>@enderror
+              <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..." data-en-placeholder="Write your message here..." minlength="10" required><?php echo e(old('pesan')); ?></textarea>
+              <?php $__errorArgs = ['pesan'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
           </div>
 
@@ -1021,17 +1151,17 @@
     </div>
   </section>
 
-  {{-- ================= LOKASI ================= --}}
-  @if(($setting->show_location ?? true) && !empty($setting->maps_embed_url))
+  
+  <?php if($setting->show_location ?? true): ?>
   <section class="lokasi">
     <div class="lokasi-inner">
       <div class="eyebrow" data-en="LOCATION">LOKASI</div>
       <h2 data-en="Find Us">Temukan Kami</h2>
 
       <div class="lokasi-map">
-        {{-- Link peta diatur melalui Admin Panel > Pengaturan Footer > Link Peta (Google Maps Embed) --}}
+        
         <iframe
-          src="{{ $setting->maps_embed_url }}"
+          src="<?php echo e($setting->maps_embed_url ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4137668829876!2d106.79718367398998!3d-6.209030293778832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f6b735ae6133%3A0x214dde968c25b376!2sSekretariat%20Jenderal%20Dewan%20Perwakilan%20Rakyat%20Republik%20Indonesia!5e0!3m2!1sid!2sus!4v1784135196454!5m2!1sid!2sus'); ?>"
           width="100%"
           height="100%"
           style="border:0;"
@@ -1043,27 +1173,27 @@
       </div>
     </div>
   </section>
-  @endif
+  <?php endif; ?>
 
   </div>
-  {{-- /.konten-batik --}}
+  
 
   <div class="footer-divider"></div>
 
-  {{-- ================= FOOTER (sama seperti beranda) ================= --}}
+  
   <footer class="footer">
     <div class="footer-inner">
 
       <div class="footer-col">
         <div class="footer-brand">
-          <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
+          <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="footer-brand-logo">
         </div>
         <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
 
         <div class="footer-social">
-          <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
-          <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
-          <a href="{{ $setting->x_url ?? '#' }}" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
+          <a href="<?php echo e($setting->instagram_url ?? '#'); ?>" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+          <a href="<?php echo e($setting->youtube_url ?? '#'); ?>" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
+          <a href="<?php echo e($setting->x_url ?? '#'); ?>" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
         </div>
       </div>
 
@@ -1092,15 +1222,17 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
+            <span data-en="<?php echo e($setting->address_en ?: ($setting->address ?? 'Address not set')); ?>"><?php echo e($setting->address ?? 'Alamat belum diatur'); ?></span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            {{ $setting->phone ?? '-' }}
+            <?php echo e($setting->phone ?? '-'); ?>
+
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
-            {{ $setting->email ?? '-' }}
+            <?php echo e($setting->email ?? '-'); ?>
+
           </div>
         </div>
       </div>
@@ -1191,22 +1323,6 @@
         });
     });
 
-    const profileMenuBtn = document.getElementById("profileMenuBtn");
-    const profileDropdown = document.getElementById("profileDropdown");
-    if (profileMenuBtn && profileDropdown) {
-        profileMenuBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const isOpen = profileDropdown.classList.toggle("open");
-            profileMenuBtn.setAttribute("aria-expanded", String(isOpen));
-        });
-        document.addEventListener("click", (e) => {
-            if (!profileDropdown.contains(e.target) && !profileMenuBtn.contains(e.target)) {
-                profileDropdown.classList.remove("open");
-                profileMenuBtn.setAttribute("aria-expanded", "false");
-            }
-        });
-    }
-
     // Fade-in saat scroll
     function observeSection(selector, threshold = 0.15) {
         const section = document.querySelector(selector);
@@ -1233,8 +1349,8 @@
 
   </script>
 
-@include('partials.interactive-cursor')
-@include('partials.form-validation')
-@include('partials.page-loading')
+<?php echo $__env->make('partials.interactive-cursor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.form-validation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
-</html>
+</html><?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/kontak.blade.php ENDPATH**/ ?>

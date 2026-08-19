@@ -51,10 +51,11 @@
       <div class="form-group">
         <label class="required">Level</label>
         <select name="level" required>
-          <option value="kepala" {{ old('level', $member->level) == 'kepala' ? 'selected' : '' }}>Kepala (baris atas bagan — hanya 1)</option>
-          <option value="bidang" {{ old('level', $member->level ?? 'bidang') == 'bidang' ? 'selected' : '' }}>Bidang (baris bawah bagan — bisa banyak)</option>
+          <option value="kepala" {{ old('level', $member->level) == 'kepala' ? 'selected' : '' }} {{ $kepalaFull ? 'disabled' : '' }}>Kepala (baris atas bagan — hanya 1){{ $kepalaFull ? ' — sudah terisi' : '' }}</option>
+          <option value="bidang" {{ old('level', $member->level ?? 'bidang') == 'bidang' ? 'selected' : '' }} {{ $bidangFull ? 'disabled' : '' }}>Bidang (baris bawah bagan — maksimal 4){{ $bidangFull ? ' — sudah penuh' : '' }}</option>
         </select>
-        <small>Bagan organisasi cuma 2 baris: 1 Kepala di atas, dan semua anggota "Bidang" berjajar di bawahnya.</small>
+        @error('level')<small class="error">{{ $message }}</small>@enderror
+        <small>Bagan organisasi cuma 2 baris: 1 Kepala di atas, dan maksimal 4 anggota "Bidang" berjajar di bawahnya (total maksimal 5 anggota).</small>
       </div>
 
       <div class="form-group form-span-2">

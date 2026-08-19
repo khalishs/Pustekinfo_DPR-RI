@@ -322,13 +322,20 @@
     background:radial-gradient(circle,rgba(20,128,140,.2),transparent 72%);
     animation:admin-pulse-glow 2s ease-in-out infinite;
   }
-  .admin-loading-logo{
-    position:relative;z-index:1;width:60px;height:60px;border-radius:50%;
-    background:#fff;padding:11px;object-fit:contain;
-    box-shadow:0 8px 20px -6px rgba(11,34,51,.35);
+  .admin-loading-logo-wrap{
+    position:relative;z-index:1;width:60px;height:60px;
     animation:admin-logo-breathe 2s ease-in-out infinite;
   }
-  [data-theme="dark"] .admin-loading-logo{background:#2b3036;}
+  .admin-loading-logo-frame{
+    position:absolute;inset:0;border-radius:50%;
+    background:#fff;
+    box-shadow:0 8px 20px -6px rgba(11,34,51,.35);
+  }
+  [data-theme="dark"] .admin-loading-logo-frame{background:#2b3036;}
+  .admin-loading-logo{
+    position:relative;display:block;width:100%;height:100%;
+    padding:11px;object-fit:contain;
+  }
   @keyframes admin-orbit-spin{to{transform:rotate(360deg);}}
   @keyframes admin-pulse-glow{0%,100%{transform:scale(.85);opacity:.5;}50%{transform:scale(1.3);opacity:1;}}
   @keyframes admin-logo-breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
@@ -625,9 +632,9 @@
         <a href="<?php echo e(route('admin.layanan-pengajuan.index')); ?>" class="<?php echo e(request()->routeIs('admin.layanan-pengajuan.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span>
           Pengajuan Layanan
-          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(($pendingLayananCount ?? 0) > 0): ?>
+          <?php if(($pendingLayananCount ?? 0) > 0): ?>
             <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);"><?php echo e($pendingLayananCount); ?></span>
-          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+          <?php endif; ?>
         </a>
         <a href="<?php echo e(route('admin.stela-videos.index')); ?>" class="<?php echo e(request()->routeIs('admin.stela-videos.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
@@ -661,13 +668,13 @@
 
       <details class="nav-group" open>
         <summary>Banner</summary>
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = \App\Models\PageBanner::PAGES; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bannerPage => $bannerLabel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+        <?php $__currentLoopData = \App\Models\PageBanner::PAGES; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bannerPage => $bannerLabel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
           <a href="<?php echo e(route('admin.page-banners.edit', $bannerPage)); ?>" class="<?php echo e(request()->routeIs('admin.page-banners.*') && request()->route('page') === $bannerPage ? 'active' : ''); ?>">
             <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/></svg></span>
             Banner <?php echo e($bannerLabel); ?>
 
           </a>
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </details>
 
       <details class="nav-group" open>
@@ -691,9 +698,9 @@
         <a href="<?php echo e(route('admin.messages.index')); ?>" class="<?php echo e(request()->routeIs('admin.messages.*') ? 'active' : ''); ?>">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span>
           Pesan Masuk
-          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(($unreadMessagesCount ?? 0) > 0): ?>
+          <?php if(($unreadMessagesCount ?? 0) > 0): ?>
             <span class="badge-count" style="margin-left:auto;background:var(--danger);color:#fff;border-color:var(--danger);"><?php echo e($unreadMessagesCount); ?></span>
-          <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+          <?php endif; ?>
         </a>
       </details>
     </nav>
@@ -739,12 +746,12 @@
       </div>
     </div>
     <div class="content">
-      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('success')): ?>
+      <?php if(session('success')): ?>
         <div class="flash"><?php echo e(session('success')); ?></div>
-      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('error')): ?>
+      <?php endif; ?>
+      <?php if(session('error')): ?>
         <div class="flash flash-error"><?php echo e(session('error')); ?></div>
-      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+      <?php endif; ?>
       <?php echo $__env->yieldContent('content'); ?>
     </div>
   </div>
@@ -946,7 +953,10 @@
       overlay.innerHTML =
         '<div class="admin-loading-box">' +
           '<div class="admin-loading-orbit">' +
-            '<img src="<?php echo e(asset('images/Logo.png')); ?>" alt="Logo Pustekinfo" class="admin-loading-logo">' +
+            '<div class="admin-loading-logo-wrap">' +
+              '<span class="admin-loading-logo-frame"></span>' +
+              '<img src="<?php echo e(asset('images/Logo.png')); ?>" alt="Logo Pustekinfo" class="admin-loading-logo">' +
+            '</div>' +
           '</div>' +
           '<div class="admin-loading-copy">' +
             '<span class="admin-loading-heading">Tolong menunggu sesaat<span class="admin-loading-dots"><i>.</i><i>.</i><i>.</i></span></span>' +
@@ -1144,4 +1154,4 @@
     })();
   </script>
 </body>
-</html><?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/admin/layout.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/admin/layout.blade.php ENDPATH**/ ?>

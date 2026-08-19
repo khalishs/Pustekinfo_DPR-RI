@@ -459,7 +459,10 @@
   }
 
   /* ================= BAGAN ORGANISASI ================= */
-  .org-chart{margin-top:48px;display:flex;flex-direction:column;align-items:center;}
+  .org-chart{position:relative;margin-top:48px;display:flex;flex-direction:column;align-items:center;}
+  .org-chart .org-node{position:relative;z-index:1;}
+  .org-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible;}
+  .org-lines line{stroke:rgba(20,131,156,.28);stroke-width:2;}
   .org-node{
     background:var(--white);border-radius:16px;padding:22px 26px;text-align:center;
     box-shadow:0 16px 32px -20px rgba(11,34,51,.2);min-width:220px;max-width:280px;
@@ -490,24 +493,12 @@
   .org-node.top .org-node-desc{color:rgba(255,255,255,.68);}
   .org-node.top .org-node-photo{border-color:rgba(255,255,255,.55);}
 
-  .org-connector{width:2px;height:32px;background:linear-gradient(180deg, rgba(20,131,156,.55), rgba(20,131,156,.15));}
-
   .org-row{
-    position:relative;display:flex;gap:30px;flex-wrap:wrap;justify-content:center;
-    margin-top:0;padding-top:26px;
-  }
-  .org-row::before{
-    content:"";position:absolute;top:0;left:10%;right:10%;height:2px;
-    background:rgba(20,131,156,.28);
-  }
-  .org-row .org-node::before{
-    content:"";position:absolute;top:-26px;left:50%;width:2px;height:26px;
-    background:rgba(20,131,156,.28);transform:translateX(-50%);
+    display:flex;gap:56px 30px;flex-wrap:wrap;justify-content:center;
+    margin-top:58px;
   }
   @media (max-width:640px){
-    .org-row{flex-direction:column;align-items:center;padding-top:0;}
-    .org-row::before{display:none;}
-    .org-row .org-node::before{content:"";position:static;display:block;width:2px;height:26px;margin:0 auto;background:rgba(20,131,156,.28);transform:none;}
+    .org-row{flex-direction:column;align-items:center;gap:56px;}
   }
 
   .unit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px;}
@@ -691,9 +682,7 @@
   [data-theme="dark"] .org-node .org-node-name{color:#5FC0D1;}
   [data-theme="dark"] .org-node .org-node-desc{color:#8ea0a8;}
   [data-theme="dark"] .org-node-photo{border-color:rgba(255,255,255,.14);}
-  [data-theme="dark"] .org-connector{background:rgba(255,255,255,.14);}
-  [data-theme="dark"] .org-row::before,
-  [data-theme="dark"] .org-row .org-node::before{background:rgba(255,255,255,.14);}
+  [data-theme="dark"] .org-lines line{stroke:rgba(255,255,255,.14);}
 
   /* Visi & Misi (kartu MISI, versi terang) */
   [data-theme="dark"] .vm-card:not(.dark){background:#122530;box-shadow:0 20px 40px -24px rgba(0,0,0,.5);}
@@ -899,8 +888,9 @@
       </div>
       <h2 data-en="Pustekinfo's Organizational Structure">Struktur Organisasi Pustekinfo</h2>
 
-      <div class="org-chart">
-        <div class="org-node top">
+      <div class="org-chart" id="orgChart">
+        <svg class="org-lines" aria-hidden="true"></svg>
+        <div class="org-node top" id="orgKepala">
           @if($kepala?->show_photo && $kepala->photo)
             <div class="org-node-photo" style="background-image:url('{{ asset($kepala->photo) }}');"></div>
           @endif
@@ -913,8 +903,7 @@
           @endif
         </div>
 
-        <div class="org-connector"></div>
-        <div class="org-row">
+        <div class="org-row" id="orgRow">
           @forelse($bidangList as $b)
             <div class="org-node">
               @if($b->show_photo && $b->photo)
@@ -1197,7 +1186,65 @@
     });
   }
 
+  // ---- Garis penghubung bagan struktur organisasi (dihitung dari posisi
+  // asli tiap kotak, bukan persentase tebakan, supaya nggak pernah kelewat
+  // dan tetap nyambung walau kotaknya wrap ke baris baru) ----
+  function drawOrgLines(){
+    const chart = document.getElementById('orgChart');
+    const svg = chart ? chart.querySelector('.org-lines') : null;
+    const kepala = document.getElementById('orgKepala');
+    const row = document.getElementById('orgRow');
+    if (!chart || !svg || !kepala || !row) return;
+
+    const nodes = Array.from(row.querySelectorAll('.org-node'));
+    const chartRect = chart.getBoundingClientRect();
+    const relRect = (el) => {
+      const r = el.getBoundingClientRect();
+      return { left: r.left - chartRect.left, top: r.top - chartRect.top, right: r.right - chartRect.left, bottom: r.bottom - chartRect.top, width: r.width };
+    };
+
+    svg.setAttribute('viewBox', `0 0 ${chartRect.width} ${chartRect.height}`);
+
+    if (!nodes.length) { svg.innerHTML = ''; return; }
+
+    const kRect = relRect(kepala);
+    const axisX = kRect.left + kRect.width / 2;
+
+    // Kelompokkan node per baris (posisi top yang sama = satu baris, hasil dari flex-wrap)
+    const groups = [];
+    nodes.forEach((n) => {
+      const r = relRect(n);
+      let g = groups.find((g) => Math.abs(g.top - r.top) < 2);
+      if (!g) { g = { top: r.top, bottom: r.bottom, rects: [] }; groups.push(g); }
+      g.rects.push(r);
+      g.bottom = Math.max(g.bottom, r.bottom);
+    });
+    groups.sort((a, b) => a.top - b.top);
+
+    const segments = [];
+    let anchorY = kRect.bottom;
+    groups.forEach((g) => {
+      const spineY = anchorY + (g.top - anchorY) / 2;
+      segments.push([axisX, anchorY, axisX, spineY]);
+      const xs = g.rects.map((r) => r.left + r.width / 2);
+      if (xs.length > 1) segments.push([Math.min(...xs), spineY, Math.max(...xs), spineY]);
+      xs.forEach((x, i) => segments.push([x, spineY, x, g.rects[i].top]));
+      anchorY = g.bottom;
+    });
+
+    svg.innerHTML = segments.map(([x1, y1, x2, y2]) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />`).join('');
+  }
+
+  let orgLinesResizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(orgLinesResizeTimer);
+    orgLinesResizeTimer = setTimeout(drawOrgLines, 150);
+  });
+  window.addEventListener('load', drawOrgLines);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawOrgLines);
+
   document.addEventListener('DOMContentLoaded', () => {
+    drawOrgLines();
 
     // ---- Reveal animasi tiap section ----
     const sections = document.querySelectorAll('section.page-section');
@@ -1206,6 +1253,7 @@
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
           revealObserver.unobserve(entry.target);
+          if (entry.target.id === 'struktur-organisasi') setTimeout(drawOrgLines, 850);
         }
       });
     }, { threshold: 0.15 });

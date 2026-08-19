@@ -625,7 +625,7 @@
 
   <div class="konten-batik">
 
-  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($stelaVideo && $stelaVideo->video_url): ?>
+  <?php if($stelaVideo && $stelaVideo->video_url): ?>
   
   <section class="stela-section">
     <div class="eyebrow" data-en="WATCH THE VIDEO">TONTON VIDEONYA</div>
@@ -638,7 +638,7 @@
         <span data-en="Introduction Video">Video Perkenalan</span>
       </span>
       <div class="stela-video-wrap">
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($stelaVideo->embed_url): ?>
+        <?php if($stelaVideo->embed_url): ?>
           <iframe src="<?php echo e($stelaVideo->embed_url); ?>" title="Sekilas STELA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <?php else: ?>
           <a href="<?php echo e($stelaVideo->video_url); ?>" target="_blank" rel="noopener" class="stela-video-fallback">
@@ -647,7 +647,7 @@
             </span>
             <span data-en="Watch Video">Tonton Video</span>
           </a>
-        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+        <?php endif; ?>
       </div>
     </div>
 
@@ -656,7 +656,7 @@
       <svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
     </a>
   </section>
-  <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+  <?php endif; ?>
 
   
   <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
@@ -700,7 +700,7 @@
 
       
       <div class="ajukan-form-card">
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($submitted)): ?>
+        <?php if(isset($submitted)): ?>
           <div class="sukses-card">
             <div class="sukses-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
             <h3 data-en="Request Recorded">Pengajuan Tercatat</h3>
@@ -708,12 +708,12 @@
             <div class="sukses-kode"><?php echo e($submitted->kode); ?></div>
             <div class="sukses-hint" data-en="Tap the button below to continue the conversation on WhatsApp.">Ketuk tombol di bawah untuk melanjutkan percakapan di WhatsApp.</div>
             <div class="sukses-actions">
-              <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($waUrl): ?>
+              <?php if($waUrl): ?>
                 <a href="<?php echo e($waUrl); ?>" target="_blank" rel="noopener" class="btn-wa">
                   <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                   <span data-en="Continue on WhatsApp">Lanjut ke WhatsApp</span>
                 </a>
-              <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+              <?php endif; ?>
               <a href="<?php echo e(route('layanan.status')); ?>" class="link-ulang" data-en="Check request status">Cek status pengajuan</a>
             </div>
           </div>
@@ -728,26 +728,26 @@
               <div class="form-field">
                 <label for="nama" class="required" data-en="Full name">Nama lengkap</label>
                 <input type="text" id="nama" name="nama" value="<?php echo e(old('nama')); ?>" placeholder="Nama Anda" data-en-placeholder="Your name" pattern="[A-Za-z\s]+" title="Nama hanya boleh berisi huruf" required>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['nama'];
+                <?php $__errorArgs = ['nama'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+unset($__errorArgs, $__bag); ?>
               </div>
               <div class="form-field">
                 <label for="email" class="required">Email</label>
                 <input type="email" id="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="nama@email.com" required>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['email'];
+                <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+unset($__errorArgs, $__bag); ?>
               </div>
             </div>
 
@@ -755,26 +755,26 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
               <div class="form-field">
                 <label for="no_tlpn" class="required" data-en="WhatsApp / phone number">Nomor WhatsApp / Telepon</label>
                 <input type="tel" id="no_tlpn" name="no_tlpn" value="<?php echo e(old('no_tlpn')); ?>" placeholder="08xxxxxxxxxx" inputmode="numeric" pattern="0[0-9]{9,13}" minlength="10" maxlength="14" title="Masukkan nomor HP/WhatsApp yang valid, contoh: 08123456789" required>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['no_tlpn'];
+                <?php $__errorArgs = ['no_tlpn'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+unset($__errorArgs, $__bag); ?>
               </div>
               <div class="form-field">
                 <label for="instansi" data-en="Work unit / Institution">Unit kerja / Instansi</label>
                 <input type="text" id="instansi" name="instansi" value="<?php echo e(old('instansi')); ?>" placeholder="Opsional" data-en-placeholder="Optional">
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['instansi'];
+                <?php $__errorArgs = ['instansi'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+unset($__errorArgs, $__bag); ?>
               </div>
             </div>
 
@@ -783,33 +783,33 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
                 <label for="jenis_layanan" class="required" data-en="Service type">Jenis Layanan</label>
                 <select id="jenis_layanan" name="jenis_layanan" required>
                   <option value="" disabled <?php echo e(old('jenis_layanan', $jenisSelected) ? '' : 'selected'); ?>>Pilih jenis layanan</option>
-                  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $jenisOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $jenis): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+                  <?php $__currentLoopData = $jenisOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $jenis): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($jenis); ?>" <?php if(old('jenis_layanan', $jenisSelected) === $jenis): echo 'selected'; endif; ?>><?php echo e($jenis); ?></option>
-                  <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['jenis_layanan'];
+                <?php $__errorArgs = ['jenis_layanan'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+unset($__errorArgs, $__bag); ?>
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-field full">
                 <label for="pesan" class="required" data-en="Request details">Detail Kebutuhan</label>
-                <textarea id="pesan" name="pesan" placeholder="Jelaskan kebutuhan layanan Anda..." data-en-placeholder="Describe your service request..." required><?php echo e(old('pesan')); ?></textarea>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__errorArgs = ['pesan'];
+                <textarea id="pesan" name="pesan" placeholder="Jelaskan kebutuhan layanan Anda..." data-en-placeholder="Describe your service request..." minlength="10" required><?php echo e(old('pesan')); ?></textarea>
+                <?php $__errorArgs = ['pesan'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?><small class="error"><?php echo e($message); ?></small><?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+unset($__errorArgs, $__bag); ?>
               </div>
             </div>
 
@@ -821,7 +821,7 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
               <span class="note" data-en="Your data will be kept confidential.">Data Anda akan kami jaga kerahasiaannya.</span>
             </div>
           </form>
-        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+        <?php endif; ?>
       </div>
 
     </div>
@@ -1015,4 +1015,4 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
 <?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
 </html>
-<?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/layanan-ajukan.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/layanan-ajukan.blade.php ENDPATH**/ ?>
