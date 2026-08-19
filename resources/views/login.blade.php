@@ -87,6 +87,7 @@
             background-repeat: no-repeat;
             background-position: center center;
             background-size: 10000px auto;
+            filter: url(#batikBoostLight);
             opacity: .05;
         }
         [data-theme="dark"] .login-batik-bg{
@@ -144,6 +145,13 @@
           0 0 0 0 0.5137
           0 0 0 0 0.6118
           0 0 0 4.5 0"/>
+      </filter>
+      <filter id="batikBoostLight">
+        <feColorMatrix type="matrix" values="
+          0 0 0 0 0.0784
+          0 0 0 0 0.5137
+          0 0 0 0 0.6118
+          0 0 0 2.6 0"/>
       </filter>
     </svg>
 
