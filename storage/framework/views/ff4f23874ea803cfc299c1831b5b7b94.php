@@ -164,4 +164,4 @@
     });
   })();
 </script>
-<?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/partials/page-loading.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/partials/page-loading.blade.php ENDPATH**/ ?>
