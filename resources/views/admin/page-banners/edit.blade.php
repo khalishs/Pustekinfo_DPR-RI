@@ -33,7 +33,7 @@
   </form>
 
   @if($banner->exists && $banner->image)
-    <form id="deleteBannerForm" action="{{ route('admin.page-banners.destroy', $pageKey) }}" method="POST" onsubmit="return confirm('Hapus banner halaman {{ $label }}?')">
+    <form id="deleteBannerForm" action="{{ route('admin.page-banners.destroy', $pageKey) }}" method="POST" data-confirm="Hapus banner halaman {{ $label }}?">
       @csrf @method('DELETE')
     </form>
   @endif

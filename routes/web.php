@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AgendaEventController;
 use App\Http\Controllers\Admin\GalleryItemController;
 use App\Http\Controllers\Admin\LeadershipController;
 use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\Admin\LocationSettingController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LayananController;
@@ -143,6 +144,8 @@ Route::post('/kontak/kirim', [KontakController::class, 'kirim'])
     Route::put('sambutan', [LeadershipController::class, 'update'])->name('leadership.update');
     Route::get('pengaturan', [SiteSettingController::class, 'edit'])->name('settings.edit');
     Route::put('pengaturan', [SiteSettingController::class, 'update'])->name('settings.update');
+    Route::get('pengaturan/lokasi', [LocationSettingController::class, 'edit'])->name('location-settings.edit');
+    Route::put('pengaturan/lokasi', [LocationSettingController::class, 'update'])->name('location-settings.update');
     Route::resource('gallery-categories', GalleryCategoryController::class)->except('show')->parameters(['gallery-categories' => 'galleryCategory']);
     Route::patch('gallery-categories/{galleryCategory}/toggle-active', [GalleryCategoryController::class, 'toggleActive'])->name('gallery-categories.toggle-active');
 

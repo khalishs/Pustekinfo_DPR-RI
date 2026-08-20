@@ -35,7 +35,7 @@
               <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             </button>
           </form>
-          <form action="{{ route('admin.timeline.destroy', $item) }}" method="POST" onsubmit="return confirm('Hapus poin ini?')">
+          <form action="{{ route('admin.timeline.destroy', $item) }}" method="POST" data-confirm="Hapus poin ini?">
             @csrf @method('DELETE')
             <button class="btn-icon btn-icon-delete" title="Hapus" aria-label="Hapus">
               <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>

@@ -25,14 +25,11 @@ class SiteSettingController extends Controller
             'instagram_url' => 'nullable|url',
             'youtube_url'   => 'nullable|url',
             'x_url'         => 'nullable|url',
-            'maps_embed_url' => 'nullable|url',
         ]);
-
-        $data['show_location'] = $request->boolean('show_location');
 
         $setting = SiteSetting::first() ?? new SiteSetting();
         $setting->fill($data)->save();
 
-        return redirect()->route('admin.settings.edit')->with('success', 'Pengaturan footer diperbarui.');
+        return redirect()->route('admin.settings.edit')->with('success', 'Pengaturan kontak diperbarui.');
     }
 }

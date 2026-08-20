@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ServiceRequestTicketMail;
 use App\Models\Service;
 use App\Models\ServiceRequest;
 use App\Models\SiteSetting;
@@ -9,6 +10,8 @@ use App\Models\StelaVideo;
 use App\Models\PageBanner;
 use App\Support\NormalizesPhoneNumbers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class LayananController extends Controller
@@ -82,6 +85,18 @@ class LayananController extends Controller
         $waNumber = $this->toWhatsappNumber($setting->phone) ?? $this->toWhatsappNumber(self::FALLBACK_WA_NUMBER);
         $waMessage = $this->buildWaMessage($serviceRequest);
         $waUrl = $waNumber ? 'https://wa.me/' . $waNumber . '?text=' . rawurlencode($waMessage) : null;
+
+        try {
+            Mail::to($serviceRequest->email)->send(new ServiceRequestTicketMail($serviceRequest, $waUrl));
+        } catch (\Throwable $e) {
+            // Jangan gagalkan pengajuan gara-gara email bermasalah — kode tiket
+            // tetap tercatat & bisa dicek manual lewat halaman Cek Status Layanan.
+            Log::error('Gagal mengirim email tiket pengajuan layanan.', [
+                'kode'  => $serviceRequest->kode,
+                'email' => $serviceRequest->email,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         return view('layanan-ajukan', [
             'setting'      => $setting,

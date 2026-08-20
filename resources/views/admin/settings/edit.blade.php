@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Pengaturan Footer')
+@section('title', 'Pengaturan Kontak')
 @section('content')
 <div class="card">
   <form action="{{ route('admin.settings.update') }}" method="POST">
@@ -45,19 +45,9 @@
         <input type="url" name="x_url" value="{{ old('x_url', $setting->x_url) }}" placeholder="https://x.com/...">
       </div>
 
-      <div class="form-group form-span-2">
-        <label><input type="checkbox" name="show_location" value="1" style="width:auto;display:inline-block;" {{ old('show_location', $setting->show_location ?? true) ? 'checked' : '' }}> Tampilkan section Lokasi di halaman Kontak</label>
-        <small>Jika dinonaktifkan, seluruh section Lokasi (judul, peta, dsb) akan disembunyikan dari halaman Kontak.</small>
-      </div>
-
-      <div class="form-group form-span-2">
-        <label>Link Peta (Google Maps Embed)</label>
-        <input type="url" name="maps_embed_url" value="{{ old('maps_embed_url', $setting->maps_embed_url) }}" placeholder="https://www.google.com/maps/embed?pb=...">
-        <small>Buka Google Maps &rarr; Bagikan &rarr; Sematkan peta &rarr; salin kode iframe &rarr; ambil hanya nilai atribut <code>src="..."</code>-nya, lalu tempel di sini. Kosongkan untuk memakai peta default.</small>
-        @error('maps_embed_url')<small class="error">{{ $message }}</small>@enderror
-      </div>
-
     </div>
+
+    <p style="margin-top:4px;color:#7a8a92;font-size:12.5px;">Pengaturan section Lokasi (peta &amp; tampil/sembunyikan) sekarang ada di menu <a href="{{ route('admin.location-settings.edit') }}" style="color:var(--teal);font-weight:700;">Pengaturan Lokasi</a> tersendiri.</p>
 
     <div class="form-actions">
       <button class="btn btn-primary">Simpan</button>

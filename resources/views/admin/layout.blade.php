@@ -250,17 +250,6 @@
 
   .content{padding:30px 36px 64px;width:100%;}
 
-  .flash{
-    display:flex;align-items:center;gap:10px;
-    margin-bottom:18px;padding:13px 18px;border-radius:12px;
-    font-size:13.5px;font-weight:700;
-    background:#e6f7ee;color:var(--success);
-    border:1px solid #c9ecd9;
-  }
-  .flash::before{content:"✓";display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--success);color:#fff;font-size:11px;flex-shrink:0;}
-  .flash-error{background:#fbeaea;color:var(--danger);border-color:#f2cfcf;}
-  .flash-error::before{content:"✕";background:var(--danger);}
-
   .sync-banner{
     display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
     margin-bottom:18px;padding:12px 18px;border-radius:12px;
@@ -357,6 +346,253 @@
   .admin-loading-sub{display:block;font-size:13px;font-weight:600;color:#8a97a0;}
 
   .btn.is-loading,.btn-icon.is-loading{opacity:.55;pointer-events:none;}
+
+  /* ---------- Popup sukses (muncul setelah tambah/update berhasil) ---------- */
+  .admin-success-overlay{
+    position:fixed;inset:0;z-index:10001;
+    background:rgba(6,18,26,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+  }
+  .admin-success-overlay.is-visible{opacity:1;pointer-events:auto;}
+
+  .admin-success-box{
+    position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;
+    background:#fff;border-radius:28px;padding:40px 44px 30px;
+    box-shadow:0 32px 80px -18px rgba(31,157,124,.35),0 16px 40px -14px rgba(11,34,51,.4);
+    text-align:center;width:min(90vw,360px);
+    transform:scale(.8) translateY(14px);
+    opacity:0;
+    transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .3s ease;
+  }
+  [data-theme="dark"] .admin-success-box{background:#23272c;box-shadow:0 32px 80px -18px rgba(31,157,124,.22),0 16px 40px -14px rgba(0,0,0,.5);}
+  .admin-success-overlay.is-visible .admin-success-box{transform:scale(1) translateY(0);opacity:1;}
+
+  .admin-success-close{
+    position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:50%;
+    border:none;background:transparent;color:#b7c2c7;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;
+    transition:background .15s ease,color .15s ease;
+  }
+  .admin-success-close:hover{background:#f1f4f5;color:#5b6b73;}
+  [data-theme="dark"] .admin-success-close:hover{background:rgba(255,255,255,.08);color:#c3cdd2;}
+
+  .admin-success-badge{position:relative;width:78px;height:78px;margin-bottom:6px;flex-shrink:0;}
+  .admin-success-badge::before{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle,rgba(31,157,124,.22),transparent 70%);
+    transform:scale(.3);opacity:0;
+    animation:admin-success-glow .7s .05s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .admin-success-badge svg{position:relative;width:100%;height:100%;overflow:visible;}
+  .admin-success-badge circle{
+    fill:none;stroke:var(--success);stroke-width:3.5;
+    stroke-dasharray:214;stroke-dashoffset:214;
+    transform:rotate(-90deg);transform-origin:39px 39px;
+    animation:admin-success-ring .55s .05s cubic-bezier(.65,0,.35,1) forwards;
+  }
+  .admin-success-badge path{
+    fill:none;stroke:var(--success);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:52;stroke-dashoffset:52;
+    animation:admin-success-check .3s .5s cubic-bezier(.65,0,.35,1) forwards;
+  }
+  @keyframes admin-success-glow{0%{transform:scale(.3);opacity:1;}100%{transform:scale(1.5);opacity:0;}}
+  @keyframes admin-success-ring{to{stroke-dashoffset:0;}}
+  @keyframes admin-success-check{to{stroke-dashoffset:0;}}
+
+  .admin-success-heading{
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.01em;
+    opacity:0;transform:translateY(6px);
+    animation:admin-success-fade-up .4s .55s ease forwards;
+  }
+  [data-theme="dark"] .admin-success-heading{color:#eaf3f5;}
+  .admin-success-text{
+    margin-top:2px;font-size:13.5px;font-weight:600;color:#5b6b73;line-height:1.55;
+    opacity:0;transform:translateY(6px);
+    animation:admin-success-fade-up .4s .65s ease forwards;
+  }
+  [data-theme="dark"] .admin-success-text{color:#8a97a0;}
+  @keyframes admin-success-fade-up{to{opacity:1;transform:translateY(0);}}
+
+  .admin-success-progress{
+    width:100%;height:3px;border-radius:3px;margin-top:22px;
+    background:rgba(31,157,124,.15);overflow:hidden;
+  }
+  .admin-success-progress i{
+    display:block;height:100%;width:100%;background:var(--success);
+    transform-origin:left;transform:scaleX(1);
+  }
+  .admin-success-overlay.is-visible .admin-success-progress i{
+    animation:admin-success-countdown 3.2s .3s linear forwards;
+  }
+  @keyframes admin-success-countdown{from{transform:scaleX(1);}to{transform:scaleX(0);}}
+
+  /* ---------- Popup gagal (muncul kalau tambah/update/hapus ditolak) ---------- */
+  .admin-error-overlay{
+    position:fixed;inset:0;z-index:10001;
+    background:rgba(6,18,26,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+  }
+  .admin-error-overlay.is-visible{opacity:1;pointer-events:auto;}
+
+  .admin-error-box{
+    position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;
+    background:#fff;border-radius:28px;padding:40px 44px 30px;
+    box-shadow:0 32px 80px -18px rgba(176,65,62,.35),0 16px 40px -14px rgba(11,34,51,.4);
+    text-align:center;width:min(90vw,360px);
+    transform:scale(.8) translateY(14px);
+    opacity:0;
+    transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .3s ease;
+  }
+  [data-theme="dark"] .admin-error-box{background:#23272c;box-shadow:0 32px 80px -18px rgba(176,65,62,.25),0 16px 40px -14px rgba(0,0,0,.5);}
+  .admin-error-overlay.is-visible .admin-error-box{transform:scale(1) translateY(0);opacity:1;}
+
+  .admin-error-close{
+    position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:50%;
+    border:none;background:transparent;color:#b7c2c7;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;
+    transition:background .15s ease,color .15s ease;
+  }
+  .admin-error-close:hover{background:#f1f4f5;color:#5b6b73;}
+  [data-theme="dark"] .admin-error-close:hover{background:rgba(255,255,255,.08);color:#c3cdd2;}
+
+  .admin-error-badge{position:relative;width:78px;height:78px;margin-bottom:6px;flex-shrink:0;}
+  .admin-error-badge::before{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle,rgba(176,65,62,.22),transparent 70%);
+    transform:scale(.3);opacity:0;
+    animation:admin-error-glow .7s .05s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .admin-error-badge svg{position:relative;width:100%;height:100%;overflow:visible;}
+  .admin-error-badge circle{
+    fill:none;stroke:var(--danger);stroke-width:3.5;
+    stroke-dasharray:214;stroke-dashoffset:214;
+    transform:rotate(-90deg);transform-origin:39px 39px;
+    animation:admin-error-ring .55s .05s cubic-bezier(.65,0,.35,1) forwards;
+  }
+  .admin-error-badge path{
+    fill:none;stroke:var(--danger);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:74;stroke-dashoffset:74;
+    animation:admin-error-cross .4s .5s cubic-bezier(.65,0,.35,1) forwards;
+  }
+  @keyframes admin-error-glow{0%{transform:scale(.3);opacity:1;}100%{transform:scale(1.5);opacity:0;}}
+  @keyframes admin-error-ring{to{stroke-dashoffset:0;}}
+  @keyframes admin-error-cross{to{stroke-dashoffset:0;}}
+  @keyframes admin-error-shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-6px);}
+    40%{transform:translateX(5px);}
+    60%{transform:translateX(-3px);}
+    80%{transform:translateX(2px);}
+  }
+  .admin-error-overlay.is-visible .admin-error-box{animation:admin-error-shake .5s .5s;}
+
+  .admin-error-heading{
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.01em;
+    opacity:0;transform:translateY(6px);
+    animation:admin-error-fade-up .4s .55s ease forwards;
+  }
+  [data-theme="dark"] .admin-error-heading{color:#eaf3f5;}
+  .admin-error-text{
+    margin-top:2px;font-size:13.5px;font-weight:600;color:#5b6b73;line-height:1.55;
+    opacity:0;transform:translateY(6px);
+    animation:admin-error-fade-up .4s .65s ease forwards;
+  }
+  [data-theme="dark"] .admin-error-text{color:#8a97a0;}
+  @keyframes admin-error-fade-up{to{opacity:1;transform:translateY(0);}}
+
+  .admin-error-progress{
+    width:100%;height:3px;border-radius:3px;margin-top:22px;
+    background:rgba(176,65,62,.15);overflow:hidden;
+  }
+  .admin-error-progress i{
+    display:block;height:100%;width:100%;background:var(--danger);
+    transform-origin:left;transform:scaleX(1);
+  }
+  .admin-error-overlay.is-visible .admin-error-progress i{
+    animation:admin-error-countdown 4.2s .3s linear forwards;
+  }
+  @keyframes admin-error-countdown{from{transform:scaleX(1);}to{transform:scaleX(0);}}
+
+  /* ---------- Popup konfirmasi (ganti dialog confirm() bawaan browser, dipakai buat aksi hapus dkk) ---------- */
+  .admin-confirm-overlay{
+    position:fixed;inset:0;z-index:10002;
+    background:rgba(6,18,26,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+  }
+  .admin-confirm-overlay.is-visible{opacity:1;pointer-events:auto;}
+
+  .admin-confirm-box{
+    position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;
+    background:#fff;border-radius:28px;padding:40px 44px 34px;
+    box-shadow:0 32px 80px -18px rgba(201,163,78,.35),0 16px 40px -14px rgba(11,34,51,.4);
+    text-align:center;width:min(90vw,360px);
+    transform:scale(.8) translateY(14px);
+    opacity:0;
+    transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .3s ease;
+  }
+  [data-theme="dark"] .admin-confirm-box{background:#23272c;box-shadow:0 32px 80px -18px rgba(201,163,78,.22),0 16px 40px -14px rgba(0,0,0,.5);}
+  .admin-confirm-overlay.is-visible .admin-confirm-box{transform:scale(1) translateY(0);opacity:1;}
+
+  .admin-confirm-badge{position:relative;width:78px;height:78px;margin-bottom:6px;flex-shrink:0;}
+  .admin-confirm-badge::before{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,163,78,.25),transparent 70%);
+    transform:scale(.3);opacity:0;
+    animation:admin-confirm-glow .7s .05s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .admin-confirm-badge svg{position:relative;width:100%;height:100%;overflow:visible;}
+  .admin-confirm-badge .ring{
+    fill:none;stroke:var(--gold);stroke-width:3.5;
+    stroke-dasharray:214;stroke-dashoffset:214;
+    transform:rotate(-90deg);transform-origin:39px 39px;
+    animation:admin-confirm-ring .55s .05s cubic-bezier(.65,0,.35,1) forwards;
+  }
+  .admin-confirm-badge .mark-stem,
+  .admin-confirm-badge .mark-dot{
+    fill:var(--gold);opacity:0;transform:scale(.4);transform-origin:39px 39px;
+    animation:admin-confirm-pop .3s .5s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .admin-confirm-badge .mark-dot{animation-delay:.58s;}
+  @keyframes admin-confirm-glow{0%{transform:scale(.3);opacity:1;}100%{transform:scale(1.5);opacity:0;}}
+  @keyframes admin-confirm-ring{to{stroke-dashoffset:0;}}
+  @keyframes admin-confirm-pop{to{opacity:1;transform:scale(1);}}
+
+  .admin-confirm-heading{
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.01em;
+    opacity:0;transform:translateY(6px);
+    animation:admin-confirm-fade-up .4s .55s ease forwards;
+  }
+  [data-theme="dark"] .admin-confirm-heading{color:#eaf3f5;}
+  .admin-confirm-text{
+    margin-top:2px;font-size:13.5px;font-weight:600;color:#5b6b73;line-height:1.55;
+    opacity:0;transform:translateY(6px);
+    animation:admin-confirm-fade-up .4s .65s ease forwards;
+  }
+  [data-theme="dark"] .admin-confirm-text{color:#8a97a0;}
+  @keyframes admin-confirm-fade-up{to{opacity:1;transform:translateY(0);}}
+
+  .admin-confirm-actions{
+    display:flex;gap:12px;width:100%;margin-top:24px;
+    opacity:0;transform:translateY(6px);
+    animation:admin-confirm-fade-up .4s .72s ease forwards;
+  }
+  .admin-confirm-actions button{
+    flex:1;padding:12px 16px;border-radius:12px;border:1.5px solid transparent;
+    font-size:13.5px;font-weight:700;cursor:pointer;transition:background .15s ease,border-color .15s ease;
+    font-family:inherit;
+  }
+  .admin-confirm-cancel{background:#f1f4f5;color:#5b6b73;}
+  .admin-confirm-cancel:hover{background:#e5e9eb;}
+  [data-theme="dark"] .admin-confirm-cancel{background:rgba(255,255,255,.06);color:#c3cdd2;}
+  [data-theme="dark"] .admin-confirm-cancel:hover{background:rgba(255,255,255,.1);}
+  .admin-confirm-ok{background:var(--danger);color:#fff;}
+  .admin-confirm-ok:hover{background:#943530;}
 
   .card{
     background:#fff;border-radius:16px;padding:26px;
@@ -521,8 +757,6 @@
   [data-theme="dark"] .topbar{background:rgba(27,30,34,.85);border-color:rgba(255,255,255,.06);}
   [data-theme="dark"] .topbar-titles p{color:#8b929a;}
   [data-theme="dark"] .topbar-chip{background:rgba(20,128,140,.15);border-color:rgba(20,128,140,.28);}
-  [data-theme="dark"] .flash{background:rgba(31,157,124,.13);color:#6fd6b3;border-color:rgba(31,157,124,.26);}
-  [data-theme="dark"] .flash-error{background:rgba(176,65,62,.15);color:#e79a97;border-color:rgba(176,65,62,.32);}
   [data-theme="dark"] .card{background:#24282d;border-color:rgba(255,255,255,.06);box-shadow:0 8px 28px -16px rgba(0,0,0,.4);}
   [data-theme="dark"] th{color:#8b929a;border-bottom-color:rgba(255,255,255,.22);}
   [data-theme="dark"] td{border-bottom-color:rgba(255,255,255,.13);}
@@ -694,6 +928,10 @@
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
           Pengaturan Kontak
         </a>
+        <a href="{{ route('admin.location-settings.edit') }}" class="{{ request()->routeIs('admin.location-settings.*') ? 'active' : '' }}">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          Pengaturan Lokasi
+        </a>
         <a href="{{ route('admin.messages.index') }}" class="{{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
           <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span>
           Pesan Masuk
@@ -745,12 +983,6 @@
       </div>
     </div>
     <div class="content">
-      @if(session('success'))
-        <div class="flash">{{ session('success') }}</div>
-      @endif
-      @if(session('error'))
-        <div class="flash flash-error">{{ session('error') }}</div>
-      @endif
       @yield('content')
     </div>
   </div>
@@ -933,6 +1165,82 @@
 
   </script>
 
+  <script>
+    // Popup konfirmasi (ganti dialog confirm() bawaan browser) — form yang
+    // butuh konfirmasi sebelum submit (mis. tombol hapus) cukup dikasih
+    // atribut data-confirm="Pesan konfirmasinya". Ditaruh sebelum semua
+    // script submit lain (form-validation, loading overlay) & pakai capture
+    // phase supaya intersep paling awal dan bisa menahan submit yang asli
+    // sampai user pilih Ya/Batal.
+    (function(){
+      function ask(message, okLabel){
+        return new Promise(function(resolve){
+          var overlay = document.createElement('div');
+          overlay.className = 'admin-confirm-overlay';
+          overlay.setAttribute('aria-hidden', 'true');
+          overlay.innerHTML =
+            '<div class="admin-confirm-box">' +
+              '<div class="admin-confirm-badge">' +
+                '<svg viewBox="0 0 78 78">' +
+                  '<circle class="ring" cx="39" cy="39" r="34"></circle>' +
+                  '<rect class="mark-stem" x="35.5" y="20" width="7" height="26" rx="3.5"></rect>' +
+                  '<circle class="mark-dot" cx="39" cy="55" r="4.2"></circle>' +
+                '</svg>' +
+              '</div>' +
+              '<span class="admin-confirm-heading">Konfirmasi</span>' +
+              '<span class="admin-confirm-text"></span>' +
+              '<div class="admin-confirm-actions">' +
+                '<button type="button" class="admin-confirm-cancel">Batal</button>' +
+                '<button type="button" class="admin-confirm-ok"></button>' +
+              '</div>' +
+            '</div>';
+          document.body.appendChild(overlay);
+          overlay.querySelector('.admin-confirm-text').textContent = message;
+          overlay.querySelector('.admin-confirm-ok').textContent = okLabel || 'Ya, Hapus';
+
+          var settled = false;
+          function close(result){
+            if (settled) return;
+            settled = true;
+            overlay.classList.remove('is-visible');
+            overlay.setAttribute('aria-hidden', 'true');
+            document.removeEventListener('keydown', onKey);
+            setTimeout(function(){ overlay.remove(); }, 300);
+            resolve(result);
+          }
+          function onKey(e){ if (e.key === 'Escape') close(false); }
+
+          overlay.querySelector('.admin-confirm-cancel').addEventListener('click', function(){ close(false); });
+          overlay.querySelector('.admin-confirm-ok').addEventListener('click', function(){ close(true); });
+          overlay.addEventListener('click', function(e){ if (e.target === overlay) close(false); });
+          document.addEventListener('keydown', onKey);
+
+          requestAnimationFrame(function(){
+            overlay.classList.add('is-visible');
+            overlay.setAttribute('aria-hidden', 'false');
+          });
+        });
+      }
+
+      document.addEventListener('submit', function(e){
+        var form = e.target;
+        if (!(form instanceof HTMLFormElement)) return;
+        var message = form.getAttribute('data-confirm');
+        if (!message || form.dataset.confirmed === '1') return;
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        ask(message, form.getAttribute('data-confirm-yes')).then(function(ok){
+          if (ok) {
+            form.dataset.confirmed = '1';
+            if (form.requestSubmit) form.requestSubmit(); else form.submit();
+          }
+        });
+      }, true);
+    })();
+  </script>
+
   {{-- Validasi "wajib diisi" & format field pakai tampilan sendiri (bukan balon
        bawaan Chrome/browser) — dipakai bareng dengan halaman publik, lihat
        resources/views/partials/form-validation.blade.php --}}
@@ -1072,7 +1380,7 @@
 
       // Submit form (simpan/hapus/update-status/dsb)
       document.addEventListener('submit', function(e){
-        if (e.defaultPrevented) return; // dibatalkan, mis. confirm() hapus di-Cancel
+        if (e.defaultPrevented) return; // dibatalkan, mis. validasi gagal atau popup konfirmasi hapus di-Batal
         var form = e.target;
         startBar();
         var copy = formLoadingCopy(form);
@@ -1152,6 +1460,94 @@
       document.addEventListener('visibilitychange', function(){
         if (!document.hidden) poll();
       });
+    })();
+
+    // Popup sukses (tambah/update/hapus/dsb berhasil) — muncul dari flash
+    // session('success') setelah redirect, menggantikan banner flash polos.
+    (function(){
+      var message = @json(session('success'));
+      if (!message) return;
+
+      var overlay = document.createElement('div');
+      overlay.className = 'admin-success-overlay';
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.innerHTML =
+        '<div class="admin-success-box">' +
+          '<button type="button" class="admin-success-close" aria-label="Tutup">&times;</button>' +
+          '<div class="admin-success-badge">' +
+            '<svg viewBox="0 0 78 78">' +
+              '<circle cx="39" cy="39" r="34"></circle>' +
+              '<path d="M22 40 L33 51 L58 24"></path>' +
+            '</svg>' +
+          '</div>' +
+          '<span class="admin-success-heading">Berhasil!</span>' +
+          '<span class="admin-success-text"></span>' +
+          '<div class="admin-success-progress"><i></i></div>' +
+        '</div>';
+      document.body.appendChild(overlay);
+      overlay.querySelector('.admin-success-text').textContent = message;
+
+      var dismissed = false;
+      function hide(){
+        if (dismissed) return;
+        dismissed = true;
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
+        setTimeout(function(){ overlay.remove(); }, 300);
+      }
+      overlay.querySelector('.admin-success-close').addEventListener('click', hide);
+      overlay.addEventListener('click', function(e){ if (e.target === overlay) hide(); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') hide(); });
+
+      requestAnimationFrame(function(){
+        overlay.classList.add('is-visible');
+        overlay.setAttribute('aria-hidden', 'false');
+      });
+      setTimeout(hide, 3500);
+    })();
+
+    // Popup gagal (tambah/update/hapus/dsb ditolak) — muncul dari flash
+    // session('error') setelah redirect, menggantikan banner flash polos.
+    (function(){
+      var message = @json(session('error'));
+      if (!message) return;
+
+      var overlay = document.createElement('div');
+      overlay.className = 'admin-error-overlay';
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.innerHTML =
+        '<div class="admin-error-box">' +
+          '<button type="button" class="admin-error-close" aria-label="Tutup">&times;</button>' +
+          '<div class="admin-error-badge">' +
+            '<svg viewBox="0 0 78 78">' +
+              '<circle cx="39" cy="39" r="34"></circle>' +
+              '<path d="M26 26 L52 52 M52 26 L26 52"></path>' +
+            '</svg>' +
+          '</div>' +
+          '<span class="admin-error-heading">Gagal!</span>' +
+          '<span class="admin-error-text"></span>' +
+          '<div class="admin-error-progress"><i></i></div>' +
+        '</div>';
+      document.body.appendChild(overlay);
+      overlay.querySelector('.admin-error-text').textContent = message;
+
+      var dismissed = false;
+      function hide(){
+        if (dismissed) return;
+        dismissed = true;
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
+        setTimeout(function(){ overlay.remove(); }, 300);
+      }
+      overlay.querySelector('.admin-error-close').addEventListener('click', hide);
+      overlay.addEventListener('click', function(e){ if (e.target === overlay) hide(); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') hide(); });
+
+      requestAnimationFrame(function(){
+        overlay.classList.add('is-visible');
+        overlay.setAttribute('aria-hidden', 'false');
+      });
+      setTimeout(hide, 4500);
     })();
   </script>
 </body>

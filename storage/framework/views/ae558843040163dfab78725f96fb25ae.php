@@ -354,4 +354,4 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
 <?php echo $__env->make('partials.form-validation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 <?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
-</html><?php /**PATH C:\Users\Khalish\Documents\Pustekinfo_DPR-RI\resources\views/login.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/login.blade.php ENDPATH**/ ?>
