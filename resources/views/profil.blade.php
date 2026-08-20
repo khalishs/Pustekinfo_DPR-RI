@@ -18,11 +18,12 @@
     --line:rgba(255,255,255,.18);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
   body{
     font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
     background:var(--white);
+    overflow-x:hidden;
   }
   [data-theme="dark"] body::before{
     content:"";

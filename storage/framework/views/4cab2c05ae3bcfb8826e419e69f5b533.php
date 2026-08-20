@@ -1,13 +1,13 @@
-{{-- resources/views/layanan.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Layanan - Pustekinfo | Pusat Teknologi Informasi DPR RI</title>
+<title><?php echo e($news->title); ?> - Pustekinfo | Pusat Teknologi Informasi DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ asset('images/favicon-bg.png') }}">
+<link rel="icon" type="image/png" href="<?php echo e(asset('images/favicon-bg.png')); ?>">
 <style>
   :root{
     --navy:#12242E;
@@ -32,7 +32,7 @@
     inset:0;
     z-index:-1;
     pointer-events:none;
-    background-image:url('{{ asset('images/group-batik.png') }}');
+    background-image:url('<?php echo e(asset('images/group-batik.png')); ?>');
     background-repeat:no-repeat;
     background-position:center top;
     background-size:10000px auto;
@@ -53,10 +53,7 @@
   ul{list-style:none;}
   img{max-width:100%;display:block;}
 
-  h1, h2, h3, h4,
-  .section-inner > h2,
-  .svc-feature,
-  .svc-cta {
+  h1, h2, h3, h4 {
     font-family:'Plus Jakarta Sans', system-ui, sans-serif;
   }
 
@@ -70,7 +67,8 @@
     position:fixed;top:0;left:0;width:100%;z-index:9999;
   }
   .navbar-logo{height:50px;width:190px;object-fit:contain;object-position:left center;
-   pointer-events:none;}
+    pointer-events:none;}
+  .navbar{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eaeaea;position:fixed;top:0;left:0;width:100%;z-index:9999;}
   .brand{display:flex;align-items:center;gap:12px;}
   .brand-logo{width:50px;height:50px;object-fit:contain;}
   .nav-links{display:flex;align-items:center;gap:34px;}
@@ -78,27 +76,6 @@
   .nav-links li.active a{color:var(--teal);}
   .nav-links li.active{position:relative;}
   .nav-links li.active::after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:2px;background:var(--teal);view-transition-name:nav-underline;}
-
-  .nav-item-dropdown{position:relative;}
-  .nav-dropdown{
-    position:absolute;top:calc(100% + 22px);left:50%;
-    transform:translateX(-50%) translateY(8px);
-    min-width:220px;background:var(--white);
-    border:1px solid #e7dcc6;border-radius:12px;padding:10px;
-    box-shadow:0 24px 50px -20px rgba(11,34,51,.25);
-    opacity:0;visibility:hidden;
-    transition:opacity .2s ease, transform .2s ease, visibility .2s ease;
-    z-index:20;
-  }
-  .nav-item-dropdown:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
-  .nav-dropdown a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;font-size:14px;font-weight:600;color:#5b6b73;transition:.15s ease;}
-  .nav-dropdown a:hover{background:var(--mist);color:var(--navy);}
-  @media (max-width:900px){
-    .nav-dropdown{position:static;transform:none;opacity:1;visibility:visible;display:none;box-shadow:none;border:none;padding:0 0 0 14px;margin-top:4px;}
-    .nav-item-dropdown.open .nav-dropdown{display:block;}
-    .nav-dropdown a{padding:10px 4px;border-bottom:1px solid #f1f4f5;border-radius:0;}
-  }
-  .caret{font-size:10px;opacity:.6;}
   .nav-actions{display:flex;align-items:center;gap:12px;}
 
   /* ---------- Tombol mode gelap (di navbar, sebelah tombol translate) ---------- */
@@ -128,6 +105,7 @@
     .theme-fab{width:32px;height:32px;}
     .theme-fab-icon{width:16px;height:16px;}
   }
+
   .lang-btn{padding:8px 16px;border-radius:20px;border:1px solid #dfe4e7;font-size:13px;font-weight:700;color:#5b6b73;background:var(--white);cursor:pointer;}
   .btn-login{padding:10px 22px;border-radius:20px;border:none;background:var(--navy);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;}
   .profile-menu{position:relative;}
@@ -170,12 +148,12 @@
     .nav-links li.active::after{display:none;}
   }
 
-  /* ================= HERO LAYANAN (sama pola seperti hero profil) ================= */
+  /* ================= HERO (breadcrumb, pola sama seperti halaman lain) ================= */
   .hero-profil{
     margin-top:70px;
     position:relative;
     background:#073D5F;
-    padding:90px 24px 0;
+    padding:90px 24px 60px;
     overflow:hidden;
   }
   .hero-profil::before{
@@ -183,154 +161,44 @@
     background:radial-gradient(60% 60% at 85% 0%, rgba(79,179,172,.25), transparent 60%);
     pointer-events:none;
   }
-  .hero-profil-inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;text-align:center;}
+  .hero-profil-inner{position:relative;z-index:2;max-width:820px;margin:0 auto;text-align:center;}
   .breadcrumb{color:rgba(255,255,255,.55);font-size:13px;font-weight:600;margin-bottom:18px;}
   .breadcrumb span{color:var(--teal);}
   .hero-profil h1{
-    color:var(--white);font-size:34px;font-weight:800;line-height:1.28;letter-spacing:-.01em;
-    max-width:680px;margin:0 auto;
+    color:var(--white);font-size:32px;font-weight:800;line-height:1.32;letter-spacing:-.01em;
   }
-  .hero-profil h1 .accent{color:#5FC0D1;}
-  .hero-profil p{
-    margin:20px auto 0;max-width:600px;color:rgba(255,255,255,.7);font-size:15px;line-height:1.75;font-weight:500;
+  .article-badge{
+    display:inline-block;margin-bottom:16px;
+    background:rgba(255,255,255,.14);color:var(--white);
+    font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    padding:6px 14px;border-radius:20px;
   }
-  @media (max-width:900px){.hero-profil{margin-top:62px;padding:70px 20px 44px;}.hero-profil h1{font-size:24px;}}
+  .article-meta{
+    margin-top:22px;display:flex;justify-content:center;gap:22px;flex-wrap:wrap;
+    color:rgba(255,255,255,.65);font-size:13px;font-weight:600;
+  }
+  .article-meta span{display:flex;align-items:center;gap:6px;}
+  .article-meta svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0;}
 
-  /* ================= STICKY TABS (SCROLLSPY) ================= */
-  .tabs-nav{position:relative;z-index:5;margin-top:46px;}
-  .tabs-scroll{
-    display:flex;gap:0;max-width:1240px;margin:0 auto;padding:0 24px;
-    overflow-x:auto;scrollbar-width:none;
-    border-bottom:1px solid rgba(255,255,255,.14);
-  }
-  .tabs-scroll::-webkit-scrollbar{display:none;}
-  .tab-link{
-    display:flex;align-items:center;gap:7px;
-    white-space:nowrap;padding:18px 6px;margin-right:36px;
-    color:rgba(255,255,255,.55);font-weight:700;font-size:13.5px;
-    position:relative;transition:color .2s ease, transform .2s ease;flex-shrink:0;
-  }
-  .tab-link::after{
-    content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;
-    background:var(--teal);border-radius:2px 2px 0 0;
-    transform:scaleX(0);transform-origin:left;opacity:.5;
-    transition:transform .25s ease, opacity .25s ease;
-  }
-  .tab-link:hover{color:var(--white);transform:translateY(-1px);}
-  .tab-link:hover::after{transform:scaleX(1);}
-  .tab-link.active{color:var(--white);}
-  .tab-link.active::after{transform:scaleX(1);opacity:1;}
-
-  .tabs-nav-sticky{
-    position:fixed;top:-70px;left:0;width:100%;z-index:9998;
-    background:#073D5F;
-    border-bottom:1px solid rgba(255,255,255,.1);
-    box-shadow:0 12px 24px -18px rgba(11,34,51,.5);
-    transition:.35s ease;
-  }
-  .tabs-nav-sticky.show{top:70px;}
-  .tabs-nav-sticky .tabs-scroll{border-bottom:none;}
-
-  /* ================= GENERIC SECTION ================= */
-  .eyebrow{
-    display:flex;align-items:center;gap:10px;
-    font-family: 'Work Sans', system-ui, sans-serif;
-    color:var(--teal);font-size:12px;font-weight:700;letter-spacing:.12em;
-  }
-  .eyebrow.eyebrow-dash::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block;flex-shrink:0;}
-
-  section.page-section{
-    padding:80px 100px;
-    scroll-margin-top:150px;
-    opacity:0;transform:translateY(50px);
-    transition:opacity .8s ease, transform .8s ease;
-  }
-  section.page-section.show{opacity:1;transform:translateY(0);}
-  section.page-section:nth-child(even){background:var(--mist);}
-  .section-inner{max-width:1240px;margin:0 auto;}
-  .section-inner > h2{
-    margin-top:14px;font-size:30px;font-weight:800;color:var(--navy);
-    letter-spacing:-.01em;max-width:640px;
-  }
-
-  @media (max-width:900px){
-    section.page-section{padding:60px 20px;}
-    .tabs-nav-sticky.show{top:56px;}
-    .tabs-scroll{overflow-x:auto;}
-  }
-
-  /* ================= KARTU LAYANAN ================= */
-  .svc-grid{display:grid;grid-template-columns:38% 1fr;gap:40px;margin-top:40px;align-items:stretch;}
-  .svc-icon-box{
-    position:relative;
-    border-radius:1px 16px 1px 16px;
-    background:radial-gradient(120% 120% at 20% 15%, var(--teal) 0%, transparent 55%),
-      linear-gradient(160deg, var(--navy) 0%, var(--navy) 45%, var(--teal) 100%);
-    overflow:hidden;
-    min-height:280px;
-    box-shadow:0 30px 60px -30px rgba(11,34,51,.4);
-    cursor:pointer;
-    transition:box-shadow .35s ease;
-  }
-  .svc-icon-box:hover{
-    box-shadow:0 30px 60px -30px rgba(11,34,51,.4), 0 0 50px -6px rgba(20,128,140,.6);
-  }
-  .svc-icon-box img{
-    position:absolute;inset:0;
-    width:100%;height:100%;object-fit:cover;
-    transition:transform .5s ease;
-  }
-  .svc-icon-box:hover img{transform:scale(1.08);}
-
-  .svc-content{display:flex;flex-direction:column;justify-content:center;}
-  .svc-content > .desc{color:#5b6b73;font-size:14px;line-height:1.75;}
-
-  .svc-features{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  .svc-feature{
-    display:flex;align-items:center;gap:10px;
-    padding:13px 16px;border-radius:10px;
-    border:1px solid #e7ecee;background:var(--white);
-    font-size:13px;font-weight:700;color:var(--navy);
-    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-  }
-  .svc-feature:hover{
-    transform:translateY(-2px);
-    border-color:var(--teal);
-    box-shadow:0 12px 24px -16px rgba(20,128,140,.5);
-  }
-  .svc-feature-icon{
-    width:22px;height:22px;border-radius:50%;flex-shrink:0;
-    background:rgba(20,128,140,.1);color:var(--teal);
-    display:flex;align-items:center;justify-content:center;
-    transition:transform .3s cubic-bezier(.34,1.56,.64,1), background-color .2s ease, color .2s ease;
-  }
-  .svc-feature-icon svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
-  .svc-feature:hover .svc-feature-icon{background:var(--teal);color:var(--white);transform:scale(1.15) rotate(-8deg);}
-
-  .svc-cta{
-    margin-top:18px;display:flex;align-items:center;gap:10px;
-    padding:14px 18px;border-radius:12px;
-    background:rgba(20,128,140,.08);border:1px solid rgba(20,128,140,.16);
+  /* ================= ARTIKEL ================= */
+  .article-wrap{max-width:760px; margin-top:70px; margin-bottom: 70px; margin-left:420px; padding:56px 24px 90px; background-color: rgba(255, 255, 255, 0.7); border-radius: 10px;}
+  .article-image{width:100%;height:380px;object-fit:cover;border-radius:16px;margin-bottom:40px;box-shadow:0 30px 60px -30px rgba(11,34,51,.3);}
+  .article-body{color:#354049;font-size:16px;line-height:1.9;font-weight:400;white-space:pre-line;}
+  .article-body p{margin-bottom:18px;}
+  .article-back{
+    display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;
     color:var(--teal);font-size:13.5px;font-weight:700;
   }
-  .svc-cta svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .article-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
 
-  @media (max-width:900px){
-    .svc-grid{grid-template-columns:1fr;gap:24px;}
-    .svc-icon-box{min-height:180px;}
-  }
-  @media (max-width:560px){
-    .svc-features{grid-template-columns:1fr;}
-  }
-
-  /* ================= FOOTER (sama seperti halaman lain) ================= */
+  /* ================= FOOTER ================= */
   .footer-divider{height:3px;background:linear-gradient(10deg, #057888 0%, #052D46 55%, #052D46 100%);}
   .footer{position:relative;background:#052D46;padding:64px 100px 0;overflow:hidden;}
   /* Motif batik dekoratif di ujung kiri footer — sama seperti beranda */
   .footer::before{
     content:"";position:absolute;inset:-40px 0 -80px;
     background-repeat:no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-    background-image:url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}'),url('{{ asset('images/motif-batik.png') }}');
+    background-image:url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>'),url('<?php echo e(asset('images/motif-batik.png')); ?>');
     background-position:left -100px bottom -30px,right -80px top -40px,30% 68%,35% 15%,55% 82%,75% 20%,90% 75%;
     background-size:480px auto,320px auto,150px auto,130px auto,170px auto,140px auto,220px auto;
     filter:brightness(0) invert(1);opacity:.5;pointer-events:none;z-index:0;
@@ -363,6 +231,7 @@
     .footer-inner{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:40px;}
     .footer-brand-logo{width:150px;}
     .footer-bottom{flex-direction:column;text-align:center;padding:20px 0;}
+    .article-image{height:220px;}
   }
   @media (max-width:560px){.footer-inner{grid-template-columns:1fr;}}
 
@@ -407,50 +276,31 @@
     [data-theme="dark"] .nav-links li a{border-bottom-color:rgba(255,255,255,.06);}
   }
 
-  /* ---- Layanan-specific dark overrides ---- */
-  [data-theme="dark"] .hero-profil{background:#071219;}
+  /* ---------- Dark mode: page-specific ---------- */
+  [data-theme="dark"] .hero-profil{background:#08131b;}
   [data-theme="dark"] .hero-profil::before{background:radial-gradient(60% 60% at 85% 0%, rgba(95,192,209,.18), transparent 60%);}
-  [data-theme="dark"] .breadcrumb{color:rgba(255,255,255,.4);}
+  [data-theme="dark"] .breadcrumb{color:rgba(255,255,255,.45);}
+  [data-theme="dark"] .breadcrumb a{color:#8ea0a8;}
   [data-theme="dark"] .breadcrumb span{color:#5FC0D1;}
   [data-theme="dark"] .hero-profil h1{color:#eaf3f5;}
-  [data-theme="dark"] .hero-profil h1 .accent{color:#5FC0D1;}
-  [data-theme="dark"] .hero-profil p{color:rgba(255,255,255,.6);}
+  [data-theme="dark"] .article-badge{background:rgba(255,255,255,.08);color:#eaf3f5;}
+  [data-theme="dark"] .article-meta{color:#8ea0a8;}
 
-  [data-theme="dark"] .tabs-nav{border-color:transparent;}
-  [data-theme="dark"] .tabs-scroll{border-bottom-color:rgba(255,255,255,.1);}
-  [data-theme="dark"] .tab-link{color:rgba(255,255,255,.45);}
-  [data-theme="dark"] .tab-link:hover{color:#eaf3f5;}
-  [data-theme="dark"] .tab-link.active{color:#eaf3f5;}
-  [data-theme="dark"] .tab-link::after{background:#5FC0D1;}
-  [data-theme="dark"] .tabs-nav-sticky{background:#071219;border-bottom-color:rgba(255,255,255,.08);box-shadow:0 12px 24px -18px rgba(0,0,0,.6);}
+  [data-theme="dark"] .article-back{color:#5FC0D1;}
+  [data-theme="dark"] .article-image{box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
+  [data-theme="dark"] .article-body{color:#c3cdd2;}
 
-  [data-theme="dark"] .eyebrow{color:#5FC0D1;}
-  [data-theme="dark"] .eyebrow.eyebrow-dash::before{background:#5FC0D1;}
-  [data-theme="dark"] section.page-section:nth-child(even){background:#0f1e28;}
-  [data-theme="dark"] .section-inner > h2{color:#eaf3f5;}
-
-  [data-theme="dark"] .svc-icon-box{
-    background:radial-gradient(120% 120% at 20% 15%, #5FC0D1 0%, transparent 55%),
-      linear-gradient(160deg, #0b1720 0%, #0b1720 45%, #14839C 100%);
-    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
-  }
-  [data-theme="dark"] .svc-icon-box:hover{
-    box-shadow:0 30px 60px -30px rgba(0,0,0,.6), 0 0 50px -6px rgba(95,192,209,.65);
-  }
-  [data-theme="dark"] .svc-content > .desc{color:#8ea0a8;}
-  [data-theme="dark"] .svc-feature{background:#122530;border-color:rgba(255,255,255,.1);color:#eaf3f5;}
-  [data-theme="dark"] .svc-feature:hover{border-color:#5FC0D1;box-shadow:0 12px 24px -16px rgba(95,192,209,.4);}
-  [data-theme="dark"] .svc-feature-icon{background:rgba(95,192,209,.15);color:#5FC0D1;}
-  [data-theme="dark"] .svc-feature:hover .svc-feature-icon{background:#5FC0D1;color:#0b1720;}
-  [data-theme="dark"] .svc-cta{background:rgba(95,192,209,.1);border-color:rgba(95,192,209,.25);color:#5FC0D1;}
-
-  [data-theme="dark"] .footer-social a{border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+  [data-theme="dark"] .footer-desc{color:rgba(255,255,255,.5);}
+  [data-theme="dark"] .footer-social a{border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.65);}
   [data-theme="dark"] .footer-social a:hover{background:#5FC0D1;border-color:#5FC0D1;color:#0b1720;}
-  [data-theme="dark"] .footer-col .head{border-bottom-color:#5FC0D1;}
+  [data-theme="dark"] .footer-col .head{color:rgba(255,255,255,.8);border-bottom-color:#5FC0D1;}
+  [data-theme="dark"] .footer-links a{color:rgba(255,255,255,.55);}
   [data-theme="dark"] .footer-links a .chev{color:#5FC0D1;}
   [data-theme="dark"] .footer-links a:hover{color:#eaf3f5;}
+  [data-theme="dark"] .footer-contact .item{color:rgba(255,255,255,.6);}
   [data-theme="dark"] .footer-contact .item svg{stroke:#5FC0D1;}
-  [data-theme="dark"] .footer-bottom{border-top-color:rgba(255,255,255,.08);}
+  [data-theme="dark"] .footer-bottom{border-top-color:rgba(255,255,255,.1);}
+  [data-theme="dark"] .footer-bottom p{color:rgba(255,255,255,.4);}
 </style>
 <script>
   if (localStorage.getItem('theme') === 'dark') {
@@ -477,20 +327,20 @@
     </filter>
   </svg>
 
-  {{-- ================= NAVBAR ================= --}}
+  
   <nav class="navbar">
     <div class="brand">
-      <img src="{{ asset('images/logo_pustekinfo_landscape.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
-      <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
+      <img src="<?php echo e(asset('images/logo_pustekinfo_landscape.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-light">
+      <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="navbar-logo navbar-logo-dark">
     </div>
 
     <ul class="nav-links">
-      <li><a href="{{ route('home') }}" data-en="Home">Beranda</a></li>
-      <li><a href="{{ route('profil') }}" data-en="Profile">Profil </a></li>
-      <li class="active"><a href="{{ route('layanan') }}" data-en="Services">Layanan</a></li>
-      <li><a href="{{ route('informasi') }}" data-en="Information">Informasi</a></li>
-      <li><a href="{{ route('galeri') }}" data-en="Gallery">Galeri</a></li>
-      <li><a href="{{ route('kontak') }}" data-en="Contact">Kontak</a></li>
+      <li><a href="<?php echo e(route('home')); ?>" data-en="Home">Beranda</a></li>
+      <li><a href="<?php echo e(route('profil')); ?>" data-en="Profile">Profil</a></li>
+      <li><a href="<?php echo e(route('layanan')); ?>" data-en="Services">Layanan</a></li>
+      <li class="active"><a href="<?php echo e(route('informasi')); ?>" data-en="Information">Informasi</a></li>
+      <li><a href="<?php echo e(route('galeri')); ?>" data-en="Gallery">Galeri</a></li>
+      <li><a href="<?php echo e(route('kontak')); ?>" data-en="Contact">Kontak</a></li>
     </ul>
 
     <div class="nav-actions">
@@ -503,21 +353,21 @@
         </span>
       </button>
       <button class="lang-btn" id="langToggle" aria-label="Ganti bahasa" aria-pressed="false">EN</button>
-      @auth
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
         <div class="profile-menu">
           <button type="button" class="profile-avatar-btn" id="profileMenuBtn" aria-haspopup="true" aria-expanded="false" aria-label="Menu akun">
-            <span class="profile-avatar" aria-hidden="true">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+            <span class="profile-avatar" aria-hidden="true"><?php echo e(strtoupper(substr(auth()->user()->name, 0, 1))); ?></span>
           </button>
           <div class="profile-dropdown" id="profileDropdown">
             <div class="profile-dropdown-user">
-              <span class="profile-avatar" aria-hidden="true">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+              <span class="profile-avatar" aria-hidden="true"><?php echo e(strtoupper(substr(auth()->user()->name, 0, 1))); ?></span>
               <div class="profile-dropdown-user-info">
-                <span class="profile-dropdown-name">{{ auth()->user()->name }}</span>
-                <span class="profile-dropdown-email">{{ auth()->user()->email }}</span>
+                <span class="profile-dropdown-name"><?php echo e(auth()->user()->name); ?></span>
+                <span class="profile-dropdown-email"><?php echo e(auth()->user()->email); ?></span>
               </div>
             </div>
-            <form id="logout-form" method="POST" action="{{ route('logout') }}">
-              @csrf
+            <form id="logout-form" method="POST" action="<?php echo e(route('logout')); ?>">
+              <?php echo csrf_field(); ?>
               <button type="submit" class="profile-dropdown-logout" data-en="Log out">
                 <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 <span>Keluar</span>
@@ -525,119 +375,76 @@
             </form>
           </div>
         </div>
-      @endauth
+      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
       <button class="burger" id="burgerBtn" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
-  {{-- ================= HERO ================= --}}
-  <header class="hero-profil" @if($pageBanner?->image) style="background-image:linear-gradient(160deg, rgba(7,61,95,.85) 0%, rgba(7,61,95,.7) 50%, rgba(20,131,156,.55) 100%), url('{{ asset($pageBanner->image) }}');background-size:cover;background-position:center;" @endif>
+  
+  <header class="hero-profil">
     <div class="hero-profil-inner">
-      <p class="breadcrumb" data-en-html="Home / &lt;span&gt;Services&lt;/span&gt;">Beranda / <span>Layanan</span></p>
-      <h1 data-en-html="Information Technology <span class=&quot;accent&quot;>Services</span>">Layanan <span class="accent">Teknologi Informasi</span></h1>
-      <p data-en="Six pillars of information technology services that support the institution's digital operations at all times.">Enam pilar layanan teknologi informasi yang menopang operasional digital lembaga setiap saat.</p>
-    </div>
-
-    <div class="tabs-nav">
-      <div class="tabs-scroll">
-        <a href="#layanan-list" class="tab-link active" data-target="layanan-list">
-          <span data-en="Services">Layanan</span>
-        </a>
-        <a href="{{ route('layanan.ajukan') }}" class="tab-link">
-          <span data-en="Apply for a Service">Ajukan Layanan</span>
-        </a>
-        <a href="{{ route('layanan.status') }}" class="tab-link">
-          <span data-en="Check Status">Status Layanan</span>
-        </a>
+      <p class="breadcrumb"><a href="<?php echo e(route('home')); ?>" data-en="Home">Beranda</a> / <a href="<?php echo e(route('informasi')); ?>" data-en="Information">Informasi</a> / <span data-en="News">Berita</span></p>
+      <span class="article-badge" data-en="<?php echo e($news->category_en ?: $news->category); ?>"><?php echo e($news->category); ?></span>
+      <h1 data-en="<?php echo e($news->title_en ?: $news->title); ?>"><?php echo e($news->title); ?></h1>
+      <div class="article-meta">
+        <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <?php echo e($news->published_at?->format('d M Y')); ?></span>
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($news->author): ?>
+          <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <?php echo e($news->author); ?></span>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($news->reading_minutes): ?>
+          <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <?php echo e($news->reading_minutes); ?> <span data-en="min read">menit baca</span></span>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
       </div>
     </div>
   </header>
 
-  <div class="tabs-nav-sticky" id="tabsSticky">
-    <div class="tabs-scroll">
-      <a href="#layanan-list" class="tab-link active" data-target="layanan-list">
-        <span data-en="Services">Layanan</span>
-      </a>
-      <a href="{{ route('layanan.ajukan') }}" class="tab-link">
-        <span data-en="Apply for a Service">Ajukan Layanan</span>
-      </a>
-      <a href="{{ route('layanan.status') }}" class="tab-link">
-        <span data-en="Check Status">Status Layanan</span>
-      </a>
-    </div>
-  </div>
+  
+  <div class="article-wrap">
+    <a href="<?php echo e(route('informasi')); ?>" class="article-back">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="Back to Information">Kembali ke Informasi</span>
+    </a>
 
-  {{-- ================= PILAR LAYANAN ================= --}}
-  <div id="layanan-list">
-  @foreach($services as $s)
-    <section id="{{ $s['id'] }}" class="page-section">
-      <div class="section-inner">
-        <div class="eyebrow eyebrow-dash" data-en="INFORMATION TECHNOLOGY SERVICES">LAYANAN TEKNOLOGI INFORMASI</div>
-        <h2 data-en="{{ $s['title_en'] ?: $s['title'] }}">{{ $s['title'] }}</h2>
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($news->image): ?>
+      <img src="<?php echo e(asset($news->image)); ?>" alt="<?php echo e($news->title); ?>" class="article-image">
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-        <div class="svc-grid">
-          <div class="svc-icon-box">
-            <img src="{{ asset($s['icon']) }}" alt="{{ $s['title'] }}">
-          </div>
-          <div class="svc-content">
-            <p class="desc" data-en="{{ $s['desc_en'] ?: $s['desc'] }}">{{ $s['desc'] }}</p>
-
-            <div class="svc-features">
-              @foreach($s['features'] as $i => $f)
-                <div class="svc-feature">
-                  <span class="svc-feature-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
-                  <span data-en="{{ ($s['features_en'][$i] ?? null) ?: $f }}">{{ $f }}</span>
-                </div>
-              @endforeach
-            </div>
-
-            <div class="svc-cta">
-              <svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-              <span data-en="{{ $s['cta_en'] ?: $s['cta'] }}">{{ $s['cta'] }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  @endforeach
+    <div class="article-body" data-en="<?php echo e(($news->content_en ?: $news->excerpt_en) ?: ($news->content ?: $news->excerpt)); ?>"><?php echo e($news->content ?: $news->excerpt); ?></div>
   </div>
 
   <div class="footer-divider"></div>
 
-  {{-- ================= FOOTER ================= --}}
+  
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-col">
         <div class="footer-brand">
-          <img src="{{ asset('images/landscape_putih.png') }}" alt="Logo Pustekinfo" class="footer-brand-logo">
+          <img src="<?php echo e(asset('images/landscape_putih.png')); ?>" alt="Logo Pustekinfo" class="footer-brand-logo">
         </div>
         <p class="footer-desc" data-en="Serving work units and the public in information technology, networking, and data security.">Melayani unit kerja dan masyarakat dalam bidang teknologi informasi, jaringan, dan keamanan data.</p>
         <div class="footer-social">
-          <a href="{{ $setting->instagram_url ?? '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
-          <a href="{{ $setting->youtube_url ?? '#' }}" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
-          <a href="{{ $setting->x_url ?? '#' }}" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
+          <a href="<?php echo e($setting->instagram_url ?? '#'); ?>" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+          <a href="<?php echo e($setting->youtube_url ?? '#'); ?>" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 8.5a4 4 0 0 0-2.8-2.8C17.4 5.2 12 5.2 12 5.2s-5.4 0-7.2.5A4 4 0 0 0 2 8.5 41 41 0 0 0 2 12a41 41 0 0 0 0 3.5 4 4 0 0 0 2.8 2.8c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a4 4 0 0 0 2.8-2.8A41 41 0 0 0 22 12a41 41 0 0 0 0-3.5z"/><polygon points="10 9 15 12 10 15"/></svg></a>
+          <a href="<?php echo e($setting->x_url ?? '#'); ?>" aria-label="X"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></a>
         </div>
       </div>
 
       <div class="footer-col">
         <span class="head" data-en="LINKS">TAUTAN</span>
         <div class="footer-links">
-          <a href="#"><span class="chev">›</span> <span data-en="Academic System">Sistem Akademik</span></a>
-          <a href="#"><span class="chev">›</span> <span data-en="HR System">Sistem Kepegawaian</span></a>
-          <a href="#"><span class="chev">›</span> <span data-en="Finance System">Sistem Keuangan</span></a>
-          <a href="#"><span class="chev">›</span> PPID</a>
+          <a href="<?php echo e(route('profil')); ?>"><span class="chev">›</span> <span data-en="Profile">Profil</span></a>
+          <a href="<?php echo e(route('layanan')); ?>"><span class="chev">›</span> <span data-en="Services">Layanan</span></a>
+          <a href="<?php echo e(route('informasi')); ?>"><span class="chev">›</span> <span data-en="Information">Informasi</span></a>
+          <a href="<?php echo e(route('galeri')); ?>"><span class="chev">›</span> <span data-en="Gallery">Galeri</span></a>
         </div>
       </div>
 
       <div class="footer-col">
         <span class="head" data-en="HELP">BANTUAN</span>
         <div class="footer-links">
-          <a href="#"><span class="chev">›</span> Helpdesk</a>
-          <a href="#"><span class="chev">›</span> <span data-en="Complaints">Pengaduan</span></a>
-          <a href="#"><span class="chev">›</span> FAQ</a>
-          <a href="#"><span class="chev">›</span> Whistleblowing</a>
+          <a href="<?php echo e(route('kontak')); ?>"><span class="chev">›</span> <span data-en="Contact">Kontak</span></a>
         </div>
       </div>
 
@@ -646,29 +453,59 @@
         <div class="footer-contact">
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span data-en="{{ $setting->address_en ?: ($setting->address ?? 'Address not set') }}">{{ $setting->address ?? 'Alamat belum diatur' }}</span>
+            <span data-en="<?php echo e($setting->address_en ?: ($setting->address ?? 'Address not set')); ?>"><?php echo e($setting->address ?? 'Alamat belum diatur'); ?></span>
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            {{ $setting->phone ?? '-' }}
+            <?php echo e($setting->phone ?? '-'); ?>
+
           </div>
           <div class="item">
             <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
-            {{ $setting->email ?? '-' }}
+            <?php echo e($setting->email ?? '-'); ?>
+
           </div>
         </div>
       </div>
     </div>
 
     <div class="footer-inner footer-bottom">
-      <p data-en="© {{ date('Y') }} Pustekinfo. All rights reserved.">© {{ date('Y') }} Pustekinfo. Seluruh hak dilindungi.</p>
+      <p data-en="© <?php echo e(date('Y')); ?> Pustekinfo. All rights reserved.">© <?php echo e(date('Y')); ?> Pustekinfo. Seluruh hak dilindungi.</p>
       <p data-en="Mockup reference — not an official site">Referensi mockup — bukan situs resmi</p>
     </div>
   </footer>
 
 <script>
+  const burgerBtn = document.getElementById("burgerBtn");
+  const navLinks = document.querySelector(".nav-links");
+  burgerBtn.addEventListener("click", () => {
+    burgerBtn.classList.toggle("open");
+    navLinks.classList.toggle("open");
+  });
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      burgerBtn.classList.remove("open");
+      navLinks.classList.remove("open");
+    });
+  });
 
-  // ---- Dark mode toggle ----
+  // ---- Dropdown menu akun ----
+  const profileMenuBtn = document.getElementById("profileMenuBtn");
+  const profileDropdown = document.getElementById("profileDropdown");
+  if (profileMenuBtn && profileDropdown) {
+    profileMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = profileDropdown.classList.toggle("open");
+      profileMenuBtn.setAttribute("aria-expanded", String(isOpen));
+    });
+    document.addEventListener("click", (e) => {
+      if (!profileDropdown.contains(e.target) && !profileMenuBtn.contains(e.target)) {
+        profileDropdown.classList.remove("open");
+        profileMenuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
   const themeToggle = document.getElementById("themeToggle");
 
   function applyTheme(isDark) {
@@ -718,92 +555,10 @@
           applyLang(next);
       });
   }
-
-  // ---- Dropdown Profil di mobile ----
-  const profilDropdown = document.getElementById("profilDropdown");
-  if (profilDropdown && window.innerWidth <= 900) {
-    profilDropdown.querySelector("a").addEventListener("click", (e) => {
-      e.preventDefault();
-      profilDropdown.classList.toggle("open");
-    });
-  }
-
-  // ---- Burger menu ----
-  const burgerBtn = document.getElementById("burgerBtn");
-  const navLinks = document.querySelector(".nav-links");
-  burgerBtn.addEventListener("click", () => {
-    burgerBtn.classList.toggle("open");
-    navLinks.classList.toggle("open");
-  });
-  navLinks.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      burgerBtn.classList.remove("open");
-      navLinks.classList.remove("open");
-    });
-  });
-
-  // ---- Dropdown menu akun ----
-  const profileMenuBtn = document.getElementById("profileMenuBtn");
-  const profileDropdown = document.getElementById("profileDropdown");
-  if (profileMenuBtn && profileDropdown) {
-    profileMenuBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isOpen = profileDropdown.classList.toggle("open");
-      profileMenuBtn.setAttribute("aria-expanded", String(isOpen));
-    });
-    document.addEventListener("click", (e) => {
-      if (!profileDropdown.contains(e.target) && !profileMenuBtn.contains(e.target)) {
-        profileDropdown.classList.remove("open");
-        profileMenuBtn.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-
-    // ---- Reveal animasi tiap section ----
-    const sections = document.querySelectorAll('section.page-section');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    sections.forEach(sec => revealObserver.observe(sec));
-
-    // ---- Munculkan tab sticky setelah melewati hero ----
-    const heroProfil = document.querySelector(".hero-profil");
-    const tabsSticky = document.getElementById("tabsSticky");
-
-    window.addEventListener("scroll", () => {
-      const heroBottom = heroProfil.offsetTop + heroProfil.offsetHeight;
-      if (window.scrollY > heroBottom - 70) {
-        tabsSticky.classList.add("show");
-      } else {
-        tabsSticky.classList.remove("show");
-      }
-    });
-
-    // ---- Smooth scroll untuk semua trigger tab ----
-    document.querySelectorAll('.tab-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const hash = link.getAttribute('href').split('#')[1];
-        const target = document.getElementById(hash);
-        if (target) {
-          e.preventDefault();
-          const offset = 150;
-          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      });
-    });
-
-  });
 </script>
 
-@include('partials.interactive-cursor')
-@include('partials.page-loading')
+<?php echo $__env->make('partials.interactive-cursor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.page-loading', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
 </html>
+<?php /**PATH C:\laragon\www\Pustekinfo-DPR\resources\views/berita-detail.blade.php ENDPATH**/ ?>

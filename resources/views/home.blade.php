@@ -22,11 +22,13 @@
 
   html{
     scroll-behavior:smooth;
+    overflow-x:hidden;
 }
   body{
     font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
     background: var(--white);
+    overflow-x:hidden;
   }
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
@@ -1214,23 +1216,32 @@
     padding:8px 14px;
     border-radius:1px 10px 1px 10px;
   }
-  .berita-featured-body{margin-top:auto; background-color: rgb(0, 0, 0, 0.5); height:220px;width: 700px;padding-left: 20px; padding-bottom:20px; margin-left: -33px;margin-bottom: -33px;}
+  .berita-featured-body{
+    position:absolute;
+    left:0;right:0;bottom:0;
+    background:linear-gradient(0deg, rgba(6,18,26,.9) 0%, rgba(6,18,26,.65) 55%, transparent 100%);
+    padding:56px 26px 24px;
+  }
   .berita-featured-body h3{
     color:var(--white);
-    font-size:23px;
+    font-size:21px;
     font-weight:800;
     line-height:1.35;
     max-width:420px;
   }
   .berita-featured-body p{
-    margin-top:22px;
-    color:rgba(255,255,255,.72);
-    font-size:10px;
-    line-height:1.10;
-    max-width:560px;
+    margin-top:10px;
+    color:rgba(255,255,255,.75);
+    font-size:13px;
+    line-height:1.6;
+    max-width:520px;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
   }
   .berita-featured .meta{
-    margin-top:22px;
+    margin-top:14px;
     display:flex;
     gap:20px;
     flex-wrap:wrap;
@@ -1250,7 +1261,7 @@
     stroke-width:1.8;
   }
   .berita-featured .read-more{
-    margin-top:22px;
+    margin-top:14px;
     display:inline-block;
     color:var(--white);
     font-size:12.5px;
@@ -1330,7 +1341,9 @@
   @media (max-width:900px){
     .berita{padding:60px 20px 80px;}
     .berita-grid{grid-template-columns:1fr;gap:36px;}
-    .berita-featured{min-height:auto;padding:28px;}
+    .berita-featured{min-height:360px;padding:24px;}
+    .berita-featured-body{padding:48px 20px 20px;}
+    .berita-featured-body h3{font-size:18px;max-width:100%;}
   }
 
   /* ---------- Agenda Kegiatan ---------- */
@@ -1757,15 +1770,27 @@
   .galeri{padding:60px 20px 80px;}
   .galeri-filters{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;}
   .galeri-filter{white-space:nowrap;}
+  /* Grid 2 kolom — item "Big" (dipilih di CMS) tampil lebar penuh sebagai
+     sorotan, sisanya (med/wide/small) seragam setengah lebar berdampingan. */
   .galeri-grid{
     grid-template-columns:repeat(2,1fr);
     grid-template-rows:none;
+    grid-auto-rows:minmax(150px,auto);
   }
-  .galeri-card{min-height:130px;}
-  .galeri-card.big{grid-column:1/3;grid-row:auto;min-height:200px;}
-  .galeri-card.med{grid-row:auto;}
-  .galeri-card.wide{grid-column:1/3;grid-row:auto;}
-  .galeri-card.small{grid-row:auto;}
+  .galeri-card,
+  .galeri-card.med,
+  .galeri-card.wide,
+  .galeri-card.small{
+    grid-column:auto;
+    grid-row:auto;
+    min-height:150px;
+  }
+  .galeri-card.big{
+    grid-column:1/3;
+    grid-row:auto;
+    min-height:220px;
+  }
+  .galeri-grid.filtered .galeri-card.big{min-height:150px;}
 }
 
 /* ---------- Akses Cepat & Dokumen ---------- */
@@ -3072,7 +3097,7 @@
 
 
 const profilDropdown = document.getElementById("profilDropdown");
-if (window.innerWidth <= 900) {
+if (profilDropdown && window.innerWidth <= 900) {
     profilDropdown.querySelector("a").addEventListener("click", (e) => {
         e.preventDefault();
         profilDropdown.classList.toggle("open");

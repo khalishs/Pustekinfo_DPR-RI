@@ -18,12 +18,13 @@
     --line:rgba(255,255,255,.18);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
   body{
     font-family:'Work Sans',system-ui,sans-serif;
     color:var(--ink);
     position:relative;
     background-color:#14839C1A;
+    overflow-x:hidden;
   }
   body::before{
     content:"";
@@ -722,7 +723,7 @@
 
   // ---- Dropdown Profil di mobile ----
   const profilDropdown = document.getElementById("profilDropdown");
-  if (window.innerWidth <= 900) {
+  if (profilDropdown && window.innerWidth <= 900) {
     profilDropdown.querySelector("a").addEventListener("click", (e) => {
       e.preventDefault();
       profilDropdown.classList.toggle("open");
